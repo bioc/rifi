@@ -19,7 +19,7 @@ Rifi framework has the following dependencies, whereas the brackets indicate the
   
   [doMC](https://cran.r-project.org/web/packages/doMC/index.html) (>= 1.3.7)
   
-  parallel](https://rdocumentation.org/packages/parallel/versions/3.6.2) (>= 3.6.2)
+  [parallel](https://rdocumentation.org/packages/parallel/versions/3.6.2) (>= 3.6.2)
   
   [dplyr](https://www.rdocumentation.org/packages/dplyr/versions/0.7.8) (>= 1.0.7)
   
