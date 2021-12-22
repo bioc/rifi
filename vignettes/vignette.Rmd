@@ -211,14 +211,16 @@ head(result$input_df)
 
    **inp** data frame: dataframe containing the relative intensities for each
     timepoint as well as information about ID, position and strand and the
-    addition column of segment positions.
+    addition column of segment positions
+    
    **thrsh** integer: is used to remove all replicates with an intensity of 0
-    or below from the input dataframe.
+    or below from the input dataframe
 
 ### 3. `Filtration_Below_Background`
 
 At this point, a custom filtration function can be applied to remove replicates
-that are below the background.  
+that are below the background.
+´
 This is especially useful for microarrays data. We supply a function **TODO**
 that filters for background but retains replicates that show a promising pattern
 even when they are below background. When a different custom function is applied
@@ -227,6 +229,7 @@ over all timepoints. The output must be a character string containing **FLT**
 for all replicates that should be filtered. Additional arguments must be hard
 coded or given as default value, as additional arguments can not be passed into
 `rifi_preprocess`.  
+
 Application outside of `rifi_preprocess` can modify the 'filtration' column in
 the input dataframe in any way, as that rows with replicates that should be
 filtered contain the character string **FLT**.
@@ -265,12 +268,16 @@ probe_df <- make_df(inp = result$input_df, cores = 2, bg = 100, rm_FLT = T)
 head(probe_df)
 ```
 
-  - **inp** data frame: dataframe containing the relative intensities for each
-    timepoint as well as information about ID, position and strand and the
-    addition column of segment positions.
-  - **cores** integer: the number of assigned cores for the task.
-  - **bg** integer: the intensity threshold used to set the background.
-  - **rm_FLT** logical: T/F used to use the filter or not.
+   **y** numeric: vector of values
+
+   **z** numeric/character: vector of identifiers (IDs in our case)
+
+   **pen** integer: penalty value
+
+   **stran** logical: TRUE/FALSE
+
+   **n_out** integer: number of allowed outliers
+
 
 ### 5. `segment_pos`
 
@@ -309,16 +316,20 @@ probe_df <- finding_PDD(probe = probe_df, cores = 2, pen = 2, pen_out = 2,
                         thrsh = 0.001)
 ```
 
-   **probe** data frame: dataframe output of `segment_pos`.
-   **cores** integer: number of assigned cores for the task.
+   **probe** data frame: dataframe output of `segment_pos`
+
+   **cores** integer: number of assigned cores for the task
+
    **pen** integer: an internal parameter for the dynamic programming. Higher
-    values result in fewer fragments. Advised to be kept at 2. Default is 2.
+    values result in fewer fragments. Advised to be kept at 2. Default is 2
+
    **pen_out** integer: an internal parameter for the dynamic programming.
     Higher values result in fewer possible outliers. Advised to be kept at 1.
-    Default is 1.
-   **thrsh** integer: an internal parameter that allows fragments with slopes
-    steeper than the threshold to be flagged with "_PDD_". Higher values
-    result in fewer candidates. Advised to be kept at 0.001. Default is 0.001.
+    Default is 1
+
+   **thrsh** integer: an internal parameter that allows fragments with slope.
+    steeper than the threshold to be flagged with "_PDD_". Higher value
+    result in fewer candidates. Advised to be kept at 0.001. Default is 0.001
 
 ### 7. `finding_TI`
 
@@ -337,14 +348,17 @@ probe_df <- finding_TI(probe = probe_df, cores = 2, pen = 10, thrsh = 0.5,
                        add = 1000)
 ```
 
-   **probe** data frame: dataframe dataframe output of `finding_PDD`.
+   **probe** data frame: dataframe dataframe output of `finding_PDD`
+   
    **pen** integer: internal parameter for the dynamic programming (see
    `rifi_preprocess`). Higher values result in fewer fragments. Default
-    is 10.
+    is 10
+    
    **thrsh** integer: defines that percentage, where 0.5 refers to 75% of
-    probes and -0.5 to 25%. When set to -1, everything is flagged as TI.
+    probes and -0.5 to 25%. When set to -1, everything is flagged as TI
+    
    **add** integer: defines the number of nucleotides before the potential TI
-    event that should be flagged as TI as well (default is 1000 nucleotides).
+    event that should be flagged as TI as well (default is 1000 nucleotides)
 
 
 ### 8. Fit Specific Filtrations
@@ -381,48 +395,61 @@ preprocess_minimal <- rifi_preprocess(example_input_minimal, cores = 2,
                              add = 1000)
 head(preprocess_minimal)
 ```
-
+   
    **inp**: The input dataframe containing the relative intensities for each
     timepoint as well as information about ID, position and strand
     ("input_df").
-   **cores**: the number of assigned cores for the task.
-   **FUN_filter_BG**: A function of x, returning a character string
-    containing **FLT**. x is the numeric vector of the intensity from all time
-    points.
-   **FUN_filter_STD**: A function of x, returning a character string
-    containing **FLT**. x is the numeric vector of the intensity from all time
-    points.
+
+   **cores**: the number of assigned cores for the task
+
+   **FUN_filter_BG**: A function of x, returning a character string containing
+    **FLT**. x is the numeric vector of the intensity from all time points.
+
+   **FUN_filter_STD**: A function of x, returning a character string containing
+   **FLT**. x is the numeric vector of the intensity from all time points.
+
    **FUN_filter_TI**: A function of x, returning a character string
     containing **FLT**. x is the numeric vector of the intensity from all time
     points.
+
    **bg**: For microarrays data, a threshold over which the last time point has
     to be fitted with the above background mode. Should be roughly the
     background value. Set to 0 for RNAseq data.
+
    **rm_FLT**: Set to TRUE to remove probes, where all replicates are
     filtered.
+
    **logbook**: Per default a new logbook is generated to save information
     about penalties, if a logbook already exists it would be used.
+
    **thrsh_check**: The thrsh argument is used to remove all replicates with
     an intensity of 0 or below from the input dataframe. As well it could be
     used to remove all replicates with an intensity below this threshold.
+
    **dista**: The amount of nucleotides between two position segments.
+
    **pen_PDD**: The 'pen_PDD' argument is an internal parameter for the
     dynamic programming and defaults to 2.
+
    **pen_out_PDD**: The 'pen_out_PDD' argument is an internal parameter for
     the dynamic programming and defaults to 1.
+
    **thrsh_PDD**: the 'thrsh_PDD' argument is an internal parameter that
     allows fragments with slopes steeper than the threshold to be flagged with
     "_PDD_". Higher values result in fewer candidates. Advised to be kept
     at 0.001. Default is 0.001.
+
    **pen_TI**: The 'pen_TI' argument is an internal parameter for the dynamic
     programming and defaults to 10.
+
    **thrsh_TI**: The 'thrsh_TI' argument defines the percentage of probes
     with higher relative intensity at time points later than 0 needed to flag
     the region as TI, where 0.5 refers to 75% of probes and -0.5 to 25%. When
     set to -1, everything is flagged as TI.
+
    **add**: range of nucleotides before a potential TI event wherein IDs are
     fitted with the TI fit.
-
+    
 
 ## III. `rifi_fit`
 
@@ -435,8 +462,11 @@ intensity**. The second uses `TI_fit` function to estimate **delay** and
 The function used are:
 
   1.  `nls2_fit`
+  
   2.  `TI_fit`
+  
   3.  `plot_nls2`
+  
   4.  `plot_singleProbe_function`
 
 ``` {r rifi_fit}
@@ -455,31 +485,47 @@ fit_minimal <- rifi_fit(inp = preprocess_minimal$input_df,
 fit_minimal
 ```
 
-   **inp** data frame: the input data frame with correct format.
-   **probe** data frame: the probe based data frame.
-   **cores** integer: the number of assigned cores for the task.
-   **details** logical: T/F to return the fit objects or just the probe.
-   **viz** logical: T/F to visualize the output.
-   **details** logical: T/F to give a more datailed output.
+   **inp** data frame: the input data frame with correct format
+
+   **probe** data frame: the probe based data frame
+
+   **cores** integer: the number of assigned cores for the task
+
+   **details** logical: T/F to return the fit objects or just the probe
+
+   **viz** logical: T/F to visualize the output
+
+   **details** logical: T/F to give a more detailed output
+
    **restr** numeric: a parameter that restricts the freedom of the fit to
-    avoid wrong TI-term_factors, ranges from 0 to 0.2.
-   **decay** numeric vector: A sequence of starting values for the decay.
-    Default is seq(.08, 0.11, by=.02).
+    avoid wrong TI-term_factors, ranges from 0 to 0.2
+
+   **decay** numeric vector: A sequence of starting values for the decay
+    Default is seq(.08, 0.11, by=.02)
+
    **delay** numeric vector: A sequence of starting values for the delay.
-    Default is seq(0,10, by=.1).
+    Default is seq(0,10, by=.1)
+
    **k** numeric vector: A sequence of starting values for the synthesis rate.
-    Default is seq(0.1,1,0.2).
-   **intyf** numeric vector: A sequence of starting values. Default is 0.2.
+    Default is seq(0.1,1,0.2)
+
+   **intyf** numeric vector: A sequence of starting values. Default is 0.2
+
    **TI_k** numeric vector: A sequence of starting values for the synthesis
-    rate. Default is seq(0, 1, by = 0.5).
+    rate. Default is seq(0, 1, by = 0.5)
+
    **TI_decay** numeric vector: A sequence of starting values for the decay.
-    Default is c(0.05, 0.1, 0.2, 0.5, 0.6).
+    Default is c(0.05, 0.1, 0.2, 0.5, 0.6)
+
    **TI** numeric vector: A sequence of starting values for the TI. Default is
-    seq(0, 1, by = 0.5).
+    seq(0, 1, by = 0.5)
+
    **TI_delay** numeric vector: A sequence of starting values for the delay.
-    Default is seq(0, 2, by = 0.5).
+    Default is seq(0, 2, by = 0.5)
+
    **TI_rest_delay** numeric vector: A sequence of starting values. Default
-    is seq(0, 2, by = 0.5).
+    is seq(0, 2, by = 0.5)
+
 
 ### 1. `nls2_fit`
 
@@ -517,17 +563,24 @@ nls2_fit(inp=preprocess_minimal$input_df, probe=preprocess_minimal$probe_df,
    **data_i**: The input dataframe containing the relative intensities for
     each timepoint as well as information about ID, position, strand and
     filtration (Table_1).
+
    **data_f**: The input data frame with **ID**, **position**, **strand**,
     **intensity**, **probe_TI**, **flag** and **position_segment**. Intensity
     column refers to time 0 (Table_2).
+
    **cores** integer: the number of assigned cores for the task.
+
    **decay** numeric vector: A sequence of starting values for the decay.
     Default is seq(.08, 0.11, by=.02).
+
    **delay** numeric vector: A sequence of starting values for the delay.
     Default is seq(0, 10, by=.1).
+
    **k** numeric vector: A sequence of starting values for the synthesis rate.
     Default is seq(0.1, 1, 0.2).
+
    **intyf** numeric vector: A sequence of starting values. Default is 0.2.
+
 
 ``` {r echo = T}
 data(fit_minimal)
@@ -567,25 +620,26 @@ TI_fit(inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
        ti_delay = seq(0, 2, by = 0.5), rest_delay = seq(0, 2, by = 0.5))
 ```
 
-   **inp** data frame: dataframe input containing the relative intensities for
+   **data_i**: The input dataframe containing the relative intensities for
     each timepoint as well as information about ID, position, strand and
-    filtration (Table_1).
-   **probe** data frame: data frame input with **ID**, **position**,
-    **strand**, **intensity**, **probe_TI**, **flag** and
-    **position_segment**. Intensity column is only at time 0 (Table_2).
-   **cores** integer: the number of assigned cores for the task.
-   **restr** integer: the parameter that restricts the freedom of the fit to
-    avoid wrong TI-term_factors, ranges from 0 to 0.2.
-   **decay** numeric vector: A vector of starting values for the decay. Default
-    is c(0.05, 0.1, 0.2, 0.5, 0.6).
-   **k** numeric vector: A sequence of starting values for the synthesis rate.
-    Default is seq(0, 1, by = 0.5).
-   **ti** numeric vector: A sequence of starting values. Default is seq(0, 1,
-    by = 0.5).
-   **ti_delay** numeric vector: A sequence of starting values. Default is
-    seq(0, 2, by = 0.5).
-   **rest_delay** numeric vector: A sequence of starting values. Default is
-    seq(0, 2, by = 0.5).
+    filtration (Table_1)
+
+   **data_f**: The input data frame with **ID**, **position**, **strand**,
+    **intensity**, **probe_TI**, **flag** and **position_segment**. Intensity
+    column refers to time 0 (Table_2)
+    
+   **cores** integer: the number of assigned cores for the task
+
+   **decay** numeric vector: A sequence of starting values for the decay.
+    Default is seq(.08, 0.11, by=.02).
+
+   **delay** numeric vector: A sequence of starting values for the delay.
+    Default is seq(0, 10, by=.1).
+
+   **k** numeric vector: A sequence of starting values for the synthesis rate.  
+   Default is seq(0.1, 1, 0.2).
+
+   **intyf** numeric vector: A sequence of starting values. Default is 0.2.
 
 ``` {r echo = T}
 data(fit_minimal)
@@ -626,9 +680,11 @@ plot_singleProbe_function(data = res4[[2]], inp = inp, cores = cores)
 ```
 
    **data** data frame: data frame output from TI fit with the coefficients
-    (Table_4).
+    (Table_4)
+    
    **inp** data frame: data frame with the intensities from different timepoint
-    (Table_1).
+    (Table_1)
+    
    **cores** integer: the number of assigned cores for the task.
 
 ``` {r TIPlot, echo=FALSE, fig.cap="**TI model fit**", out.width = '100%'}
@@ -639,15 +695,21 @@ knitr::include_graphics("TIPlot.png")
 
 The parameters included on the legend:
 
-   **id**: ID of the probe or bin.
-   **pos**: position on the genome the end of the delay.
+   **id**: ID of the probe or bin
+
+   **pos**: position on the genome the end of the delay
+
    **delay**: delay predicted by TI_fit. The time taken by the RNAP to reach
     the point of the termination by TI.
+
    **ti_delay**: time between the timepoint at which the TI effect starts to
-    wear off and the time point at which the delay ends.
-   **half_life**: decay coefficient (ln2/decay).
-   **TI**: termination factor.
-   **term_prob**: TI termination factor.
+    wear off and the time point at which the delay ends
+
+   **half_life**: decay coefficient (ln2/decay)
+
+   **TI**: termination factor
+
+   **term_prob**: TI termination factor
 
 ## III. `rifi penalties`
 
@@ -660,8 +722,11 @@ The parameters included on the legend:
 penalties for the dynamic programming. Four functions are called:
 
 1.  `fragment_delay_pen`
+
 2.  `fragment_HL_pen`
+
 3.  `fragment_inty_pen`
+
 4.  `fragment_TI_pen`
 
 These functions return the amount of statistically correct and statistically
@@ -700,25 +765,34 @@ pen_TI<-make_pen(probe = fit_minimal, FUN = rifi:::fragment_TI_pen,
 ```
 
    **probe** data frame: the probe based data frame.
+
    **FUN** function: one of the four bottom level functions (see details).
+
    **cores** integer: the number of assigned cores for the task.
+
    **logs** numeric vector: the logbook vector.
+
    **dpt** integer: the number of times a full iteration cycle is repeated with
     a more narrow range based on the previous cycle. Default is 2.
+
    **smpl_min** integer: the smaller end of the sampling size. Default is 10.
+
    **smpl_max** integer: the larger end of the sampling size. Default is 100.
+
    **sta_pen** numeric: the lower starting penalty. Default is 0.5.
+
    **end_pen** numeric: the higher starting penalty. Default is 4.5.
+
    **rez_pen** numeric: the number of penalties iterated within the penalty
     range. Default is 9.
-   **sta_pen_out** numeric: the lower starting outlier penalty. Default
-    is 0.5.
-   **end_pen_out** numeric: the higher starting outlier penalty. Default
-    is 3.5.
+
+   **sta_pen_out** numeric: the lower starting outlier penalty. Default is 0.5.
+
+   **end_pen_out** numeric: the higher starting outlier penalty. Default is 3.5.
+
    **rez_pen_out** numeric: the number of outlier penalties iterated within
     the outlier penalty range. Default is 7.
-   **stranded** logical: T/F or stranded = logbook[1] when calling FUN
-    function.
+<br/><br/>
 
 #### 1. `fragment_delay_pen`
 
@@ -726,7 +800,8 @@ pen_TI<-make_pen(probe = fit_minimal, FUN = rifi:::fragment_TI_pen,
 penalties for the dynamic programming of delay fragment. The function used for
 `fragment_delay_pen` is `score_fun_linear`. `score_fun_linear` scores the values
 of y on how close they are to a linear fit, for more details check
-'functions_scoring.r'.
+`functions_scoring.r`.
+<br/><br/>
 
 #### 2. `fragment_HL_pen`
 
@@ -734,6 +809,7 @@ of y on how close they are to a linear fit, for more details check
 penalties for the dynamic programming of delay fragment. The function used for
 `fragment_HL_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y on
 how close they are to the mean, for more details check 'functions_scoring.r'.
+<br/><br/>
 
 #### 3. `fragment_inty_pen`
 
@@ -742,6 +818,7 @@ penalties for the dynamic programming of delay fragment. The function used for
 `fragment_inty_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y
 on how close they are to the mean, for more details check
 'functions_scoring.r'.
+<br/><br/>
 
 #### 4. `fragment_TI_pen`
 
@@ -750,14 +827,20 @@ penalties for the dynamic programming of delay fragment. The function used for
 `fragment_TI_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y on
 how close they are to the mean, for more details check 'functions_scoring.r'.
 
-   **probe** data frame: the probe based data frame.
-   **pen** numeric: the number of penalties iterated within the penalty range.
+   **probe** data frame: the probe based data frame
+
+   **pen** numeric: the number of penalties iterated within the penalty range
+
    **pen_out** numeric: the number of penalties assigned for outliers iterated
-    within the penalty range.
-   **from** numeric: the size of the shortest considered position segment.
-   **to** numeric: the size of the longest considered position segment.
-   **cores** integer: the number of assigned cores for the task.
-   **stranded** logical: T/F or stranded = logbook[1] when calling .FUN.
+    within the penalty range
+
+   **from** numeric: the size of the shortest considered position segment
+
+   **to** numeric: the size of the longest considered position segment
+
+   **cores** integer: the number of assigned cores for the task
+   
+<br/><br/>
 
 ### 2. `viz_pen_obj`
 
@@ -800,42 +883,58 @@ penalties_minimal <-  rifi_penalties(probe = fit_minimal, details = TRUE,
                                      sta_pen_out = 0.5, end_pen_out = 4.5,
                                      rez_pen_out = 9)
 ```
+<br/><br/>
+   **probe** data frame: the probe based data frame
 
-   **probe** data frame: the probe based data frame.
    **details** logical: whether to return the penalty objects or just the
     logbook.
+
    **viz** logical: whether to visualize the output or not. Default is FALSE
-   **top_i** integer: the number of top results visualized. Default is all.
-   **cores** integer: the number of assigned cores for the task.
+
+   **top_i** integer: the number of top results visualized. Default is all
+
+   **cores** integer: the number of assigned cores for the task
+
    **dpt** integer: the number of times a full iteration cycle is repeated with
-    a more narrow range based on the previous cycle. Default is 2.
-   **smpl_min** integer: the smaller end of the sampling size. Default is 10.
-   **smpl_max** integer: the larger end of the sampling size. Default is 100.
-   **sta_pen** numeric: the lower starting penalty. Default is 0.5.
-   **end_pen** numeric: the higher starting penalty. Default is 4.5.
+    a more narrow range based on the previous cycle. Default is 2
+
+   **smpl_min** integer: the smaller end of the sampling size. Default is 10
+
+   **smpl_max** integer: the larger end of the sampling size. Default is 100
+
+   **sta_pen** numeric: the lower starting penalty. Default is 0.5
+
+   **end_pen** numeric: the higher starting penalty. Default is 4.5
+
    **rez_pen** numeric: the number of penalties iterated within the penalty
-    range. Default is 9.
-   **sta_pen_out** numeric: the lower starting outlier penalty. Default
-    is 0.5.
-   **end_pen_out** numeric: the higher starting outlier penalty. Default
-    is 3.5.
+    range. Default is 9
+
+   **sta_pen_out** numeric: the lower starting outlier penalty. Default is 0.5
+
+   **end_pen_out** numeric: the higher starting outlier penalty. Default is 3.5
+
    **rez_pen_out** numeric: the number of outlier penalties iterated within
     the outlier penalty range. Default is 7.
+<br/><br/>
 
 ## IV. `rifi fragmentation`
 
 `rifi_fragmentation` conveniently wraps all fragmentation steps, wraps the
 functions: `fragment_delay`, `fragment_HL`, `fragment_inty`, `TUgether` and
 `fragment_TI`.
-
+<br/>
 The functions called are:
 
 1.  `fragment_delay`
-2.  `fragment_HL`
-3.  `fragment_inty`
-4.  `fragment_TI`
-5.  `TUgether`
 
+2.  `fragment_HL`
+
+3.  `fragment_inty`
+
+4.  `fragment_TI`
+
+5.  `TUgether`
+<br/><br/>
 ``` {r rifi_fragmentation}
 data(fit_minimal)
 data(penalties_minimal)
@@ -851,113 +950,130 @@ fragmentation_minimal <-  rifi_fragmentation(probe = fit_minimal, cores = 2,
   pen_TI = penalties_minimal["TI_penalty"],
   pen_out_TI = penalties_minimal["TI_outlier_penalty"])
 ```
+<br/><br/>
+   **probe** probe data frame: the probe based data frame
 
-   **probe** probe data frame: the probe based data frame.
-   **cores** integer: the number of assigned cores for the task.
-   **logbook** numeric vector: the logbook vector, if it exists.
+   **cores** integer: the number of assigned cores for the task
+
+   **logbook** numeric vector: the logbook vector, if it exists
+
    **pen_delay** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer fragments. Default is the auto generated
-    value.
+    value
+
    **pen_out_delay** numeric: an internal parameter for the dynamic
     programming. Higher values result in fewer allowed outliers. Default is the
-    auto generated value.
+    auto generated value
+
    **pen_HL** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer fragments. Default is the auto generated
-    value.
+    value
+
    **pen_out_HL** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer allowed outliers. Default is the auto
-    generated value.
+    generated value
+
    **pen_inty** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer fragments. Default is the auto generated
-    value.
+    value
+
    **pen_out_inty** numeric: an internal parameter for the dynamic
     programming. Higher values result in fewer allowed outliers. Default is the
-    auto generated value.
+    auto generated value
+
    **pen_TI** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer fragments. Default is the auto generated
-    value.
+    value
+
    **pen_out_TI** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer allowed outliers. Default is the auto
-    generated value.
+    generated value
+
 
 ``` {r echo = T}
 data(fragmentation_minimal)
 head(fragmentation_minimal)
 ```
-
+<br/><br/>
 ### 1. `fragment_delay`
 
 `fragment_delay` makes delay_fragments based on position_segments and assigns
 all gathered information to the probe based data frame. The columns
 "delay_fragment", "velocity_fragment", "intercept" and "slope" are added.
 `fragment_delay` makes delay_fragments, assigns slopes, velocity (1/slope) and intercepts for the TU calculation.
-
+<br/><br/>
 The function used are:
 
    `score_fun_linear`
 
 `score_fun_linear` is the score function used by dynamic programming for delay
 fragmentation, for more details, see below.
-
+<br/><br/>
 ``` {r fragment_delay}
 probe_df<-fragment_delay(probe = fit_minimal, cores = 2,
                          pen = penalties_minimal["delay_penalty"],
                          pen_out = penalties_minimal["delay_outlier_penalty"])
 head(probe_df)
 ```
+<br/><br/>
+   **probe** data frame: the probe based data frame
 
-   **probe** data frame: the probe based data frame.
-   **cores** cores: integer: the number of assigned cores for the task.
+   **cores** cores: integer: the number of assigned cores for the task
+
    **pen** numeric: an internal parameter for the dynamic programming. Higher
-    values result in fewer fragments. Default is the auto generated value.
-   **pen_out** numeric: an internal parameter for the dynamic programming.
+    values result in fewer fragments. Default is the auto generated value
+
+   **pen_out** numeric: an internal parameter for the dynamic programming
     Higher values result in fewer allowed outliers. Default is the auto
-    generated value.
-
-
+    generated value
+<br/><br/>
 ### 2. `fragment_HL`
 
 `fragment_HL` performs the half_life fragmentation based on delay_fragments
 and assigns all gathered information to the probe based data frame. The columns
 "HL_fragment" and "HL_mean_fragment" are added. `fragment_HL` makes
 half-life_fragments and assigns the mean of each fragment.
-
+<br/><br/>
 The function used are:
 
    `score_fun_ave`
 
 `score_fun_ave` is the score function used by dynamic programming for half-life
 fragmentation, for more details, see below.
-
+<br/><br/>
 ``` {r fragment_HL}
 probe_df<-fragment_HL(probe = probe_df, cores = 2,
                       pen = penalties_minimal["half_life_penalty"],
                       pen_out = penalties_minimal["half_life_outlier_penalty"])
 head(probe_df)
 ```
+<br/><br/>
+   **probe** data frame: the probe based data frame
 
-   **probe** data frame: the probe based data frame.
-   **cores** integer: the number of assigned cores for the task.
+   **cores** integer: the number of assigned cores for the task
+
    **pen** numeric: an internal parameter for the dynamic programming. Higher
-    values result in fewer fragments. Default is the auto generated value.
+    values result in fewer fragments. Default is the auto generated value
+
    **pen_out** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer allowed outliers. Default is the auto
     generated value.
 
+<br/><br/>
 ### 3. `fragment_inty`
 
 `fragment_inty` performs the intensity fragmentation based on HL_fragments and
 assigns all gathered information to the probe based data frame. The columns
 "intensity_fragment" and "intensity_mean_fragment" are added. `fragment_inty`
 makes intensity_fragments and assigns the mean of each fragment.
-
+<br/><br/>
 The function used are:
 
    `score_fun_ave`
 
 `score_fun_ave` is the score function used by dynamic programming for intensity
 fragmentation, for more details, see below.
-
+<br/><br/>
 ``` {r fragment_inty}
 probe_df<-fragment_inty(probe = probe_df, cores = 2,
                         pen = penalties_minimal["intensity_penalty"],
@@ -965,19 +1081,23 @@ probe_df<-fragment_inty(probe = probe_df, cores = 2,
                           penalties_minimal["intensity_outlier_penalty"])
 head(probe_df)
 ```
+<br/><br/>
+   **probe** data frame: the probe based data frame
 
-   **probe** data frame: the probe based data frame.
-   **cores** integer: the number of assigned cores for the task.
+   **cores** integer: the number of assigned cores for the task
+
    **pen** numeric: an internal parameter for the dynamic programming. Higher
-    values result in fewer fragments. Default is the auto generated value.
+    values result in fewer fragments. Default is the auto generated value
+
    **pen_out** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer allowed outliers. Default is the auto
     generated value.
+
    **stranded** logical: must be TRUE if stranded information is given and
-    FALSE if not. Default is the auto generated value.
-
+    FALSE if not. Default is the auto generated value
+<br/><br/>
 ### 4. `TUgether`
-
+<br/><br/>
 `TUgether` combines delay fragments into TUs and adds a new column "TU".
 
 The function used is:
@@ -991,11 +1111,14 @@ The function used is:
 probe_df<-TUgether(probe = probe_df, cores = 2, pen = -0.75)
 head(probe_df)
 ```
-
-   **probe** data frame: the probe based data frame.
-   **cores** integer: the number of assigned cores for the task.
+<br/><br/>
+   **probe** data frame: the probe based data frame
+   
+   **cores** integer: the number of assigned cores for the task
+   
    **pen** numeric: an internal parameter for the dynamic programming. Lower
-    values result in fewer fragments. Default is the auto generated value.
+    values result in fewer fragments. Default is the auto generated value
+<br/><br/>
 
 ### 5. `fragment_TI`
 
@@ -1011,28 +1134,34 @@ The function used are:
 `score_fun_ave` is the score function used by dynamic programming for TI
 fragmentation, for more details, see below.
 
+<br/><br/>
 ``` {r fragment_TI}
 probe_df<-fragment_TI(probe = probe_df, cores = 2,
                       pen = penalties_minimal["TI_penalty"],
                       pen_out = penalties_minimal["TI_outlier_penalty"])
 head(probe_df)
 ```
+<br/><br/>
 
-   **probe** data frame: the probe based data frame.
-   **cores** integer: the number of assigned cores for the task.
+   **probe** data frame: the probe based data frame
+   
+   **cores** integer: the number of assigned cores for the task
+   
    **pen** numeric: an internal parameter for the dynamic programming. Higher
-    values result in fewer fragments. Default is the auto generated value.
+    values result in fewer fragments. Default is the auto generated value
+    
    **pen_out** numeric: an internal parameter for the dynamic programming.
     Higher values result in fewer allowed outliers. Default is the auto
-    generated value.
+    generated value
+    
    **stranded** logical: must be TRUE if stranded information is given and
-    FALSE if not. Default is the auto generated value.
-
+    FALSE if not. Default is the auto generated value
+<br/><br/>
 ``` {r echo = T}
 data(fragmentation_minimal)
 head(fragmentation_minimal)
 ```
-
+<br/><br/>
 ## IV. `rifi_stats`
 
 `rifi_stats` wraps all statistical prediction steps.
@@ -1048,13 +1177,15 @@ The function wrapped are:
 7.  `apply_manova`
 8.  `apply_t_test_ti`
 
+<br/><br/>
 ``` {r rifi_stats}
 data(fragmentation_minimal)
 stats_minimal <- rifi_stats(probe = fragmentation_minimal, dista = 300)
 stats_minimal
 ```
-
-   **probe** data frame: the probe based data frame.
+<br/><br/>
+   **probe** data frame: the probe based data frame
+   
    **dista** integer: the maximal distance allowed between two successive
     fragments.
 
@@ -1079,14 +1210,18 @@ difference between the predicted positions is compared to the negative
 threshold, **ps** is assigned otherwise, and if the difference is higher than
 the positive threshold, **iTSS_I** is assigned.
 
+<br/><br/>
 ``` {r predict_ps_itss, eval=FALSE}
 data(fragmentation_minimal)
 predict_ps_itss(data = fragmentation_minimal, maxDis = 300)
 ```
+<br/><br/>
 
-   **data** dataframe: the probe based data frame.
+   **data** dataframe: the probe based data frame
+   
    **maxDis** integer: the maximal distance allowed between two successive
-    fragments.
+    fragments
+<br/><br/>
 
 ### 2. `apply_Ttest_delay`
 
@@ -1097,12 +1232,14 @@ between 2 segments showing pausing site **ps** and internal starting site
 point from the second segment and added them to the residuals of each model,
 the sum is subjected to `t-test`.
 
+<br/><br/>
 ``` {r apply_Ttest_delay, eval=F}
 data(stats_minimal)
 apply_Ttest_delay(data = stats_minimal)
 ```
+<br/><br/>
 
-   **data** dataframe: the probe based data frame.
+   **data** dataframe: the probe based data frame
 
 ### 3. `apply_ancova`
 
@@ -1111,12 +1248,15 @@ fragments showing either pausing site (ps) or internal starting site (ITSS_I).
 `apply_ancova` brings both fragments to the same position and apply `ancova`
 test.
 
+<br/><br/>
 ``` {r apply_ancova, eval=F}
 data(stats_minimal)
 apply_ancova(data = stats_minimal)
 ```
+<br/><br/>
 
    **data** dataframe: the probe based data frame.
+<br/><br/>
 
 ### 4. `apply_length_event`
 
@@ -1124,12 +1264,15 @@ apply_ancova(data = stats_minimal)
 extract the length between 2 delay fragments showing either pausing site or
 iTSS_I.
 
+<br/><br/>
 ``` {r apply_length_event, eval=F}
 apply_length_event(data = stats_minimal, Strand=1)
 ```
+<br/><br/>
 
-   **data** dataframe: the probe based data frame.
+   **data** dataframe: the probe based data frame
 
+<br/><br/>
 ### 5. `apply_t_test`
 
 `apply_t_test` uses the statistical `t_test` to check if the fold-change of
@@ -1137,30 +1280,31 @@ half-life (HL) fragments and the fold-change intensity fragments respectively is
 significant. `apply_t_test` compares the mean of two neighboring fragments
 within the same TU to check if the fold-change is significant. Fragments with
 distance above threshold are not subjected to t-test.
-
+<br/><br/>
 The functions used are:
 
 1.  `fragment_function`
 2.  `t_test_function`
-
+<br/><br/>
 #### 1. `fragment_function`
-
+<br/><br/>
 `fragment_function` checks number of fragments inside TU, only fragments above 2
 are gathered for analysis.
-
+<br/><br/>
 #### 2. `t_test_function`
 
 `t_test_function` makes fold-change and apply t-test, assign fragments names and
 ratio, add columns with the corresponding p_values.
-
+<br/><br/>
 ``` {r apply_t_test, eval=F}
 data(stats_minimal)
 apply_t_test(data = stats_minimal, threshold = 300)
 ```
-
-   **data** data frame: the probe based data frame.
-   **threshold** integer: threshold.
-
+<br/><br/>
+   **data** data frame: the probe based data frame
+   
+   **threshold** integer: threshold
+<br/><br/>
 ### 6. `fold_change`
 
 `fold_change` sets a fold-change ratio between the neighboring fragments of
@@ -1190,12 +1334,12 @@ Comparing the synthesis ratio to threshold, an event is assigned:
 a. synthesis ratio > 1 -> New start
 b. synthesis ratio < 1 -> Termination
 c. synthesis ratio = 1 -> No change in synthesis rate
-
+<br/><br/>
 ``` {r fold_change, eval=F}
 data(stats_minimal)
 fold_change(data = stats_minimal)
 ```
-
+<br/><br/>
    **data** data frame: the probe based data frame.
 
 ### 7. `apply_manova`
@@ -1215,10 +1359,12 @@ the function used is:
 and two dependents variables (HL and intensity). The dataframe template is
 depicted below. The lm fit is applied and p_value is extracted.
 
+<br/><br/>
 ``` {r apply_manova, eval=F}
 data(stats_minimal)
 apply_manova(data = stats_minimal)
 ```
+<br/><br/>
 
    **data** data frame: the probe based data frame.
 
@@ -1231,11 +1377,14 @@ excluding the outliers. Two new columns are added, "ti_fragments" and
 "p_value_tiTest" referring to TI fragments subjected to t-test and their
 p_value.
 
+<br/><br/>
 ``` {r apply_t_test_ti, eval=F}
 data(stats_minimal)
 apply_t_test_ti(data = stats_minimal)
 ```
-   **data** dataframe: the probe based data frame.
+<br/><br/>
+
+   **data** dataframe: the probe based data frame
 
 ## V. `rifi_summary`
 
@@ -1254,6 +1403,7 @@ The functions used are:
 7. `dataframe_summary_events_velocity`
 8. `dataframe_summary_TI`
 
+<br/><br/>
 ``` {r rifi_summary}
 data(stats_minimal)
 data(annot_g_minimal)
@@ -1272,14 +1422,15 @@ hand. The output is a list of 2 elements.
 The output data frame from `gff3_preprocess` function contains the following
 columns:
 
-a. *region*: CDS or any other available like UTRs, ncRNA, asRNA.
-b. *start*: start position of the gene.
-c. *end*: end position of the gene.
-d. *strand*: +/-.
+a. *region*: CDS or any other available like UTRs, ncRNA, asRNA
+b. *start*: start position of the gene
+c. *end*: end position of the gene
+d. *strand*: +/-
 e. *gene*: gene annotation if available otherwise locus_tag annotation replaces
-it.
-f. *locus_tag*: locus_tag annotation.
+it
+f. *locus_tag*: locus_tag annotation
 
+<br/><br/>
 ``` {r gff3_preprocess}
  gff3_preprocess(
  path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
@@ -1288,8 +1439,9 @@ f. *locus_tag*: locus_tag annotation.
  path = gzfile(system.file("extdata", "gff_synechocystis_6803.gff.gz",
 package = "rifi")))
 ```
+<br/><br/>
 
-**path** path: path to the directory containing the gff3 file.
+**path** path: path to the directory containing the gff3 file
 
 ### 2.  `event_dataframe`
 
@@ -1305,53 +1457,82 @@ The second data frame adds a new column to indicate the position of **ps** and
 **iTSS_I** event. The output data frame contains the following columns:
 
    **region**: feature of the genome e.g. CD, ncRNA, 5'UTR ect....
-   **gene**: gene annotation.
-   **locus_tag**: locus tag annotation.
-   **strand**: strand if data is stranded.
-   **TU**: TU annotation from Rifi workflow.
-   **position**: position on the genome.
-   **FC_fragment_intensity**: The intensity fragments subjected to fold
-    change.
-   **FC_intensity**: fold change of two intensity fragments.
-   **p_value_intensity**: p_value of the fold change of two intensity
-    fragments.
-   **FC_fragment_HL**: The halflife fragments subjected to fold change.
-   **FC_HL**: fold change of two HL fragments.
-   **p_value_HL**: p_value of the fold change of two HL fragments.
-   **FC_HL_intensity_fragment**: The fragments subjected to ratio of
-    fold-change of two intensity fragments and the two half-life fragments.
-   **FC_HL_intensity**: ratio of fold-change of two intensity fragments and
-    the two half-life fragments.
-   **FC_int_adapted**: fold change of two intensity fragments.
-   **FC_HL_adapted**: fold change of two HL fragments adapted to the
-    intensity fragments.
-   **p_value_Manova**: p_value of the statistical test Manova applied to
-    FC_HL_intensity.
-   **synthesis_ratio**: ratio of FC_HL_intensity.
-   **synthesis_ratio_event**: event related to ratio.
-   **pausing_site**: presence or absence of ps is indicated by +/-.
-   **ITSS_I**: presence or absence of ITSS_I is indicated by +/-.
-   **event_ps_itss_p_value_Ttest**: p_value of the t-test applied to ps
-    and iTSS_I.
-   **ps_ts_fragment**: The fragments subjected to ps and iTSS_I.
-   **event_position**: event position.
-   **delay**: delay coefficient extracted from the fit.
-   **half_life**: half-life coefficient extracted from the fit.
-   **intensity**: intensity coefficient extracted from the fit.
 
+   **gene**: gene annotation
+
+   **locus_tag**: locus tag annotation
+
+   **strand**: strand if data is stranded
+
+   **TU**: TU annotation
+
+   **position**: position on the genome
+
+   **FC_fragment_intensity**: The intensity fragments subjected to fold change
+
+   **FC_intensity**: fold change of two intensity fragments
+
+   **p_value_intensity**: p_value of the fold change of two intensity fragments
+
+   **FC_fragment_HL**: The halflife fragments subjected to fold change
+
+   **FC_HL**: fold change of two HL fragments
+
+   **p_value_HL**: p_value of the fold change of two HL fragments
+
+   **FC_HL_intensity_fragment**: The fragments subjected to ratio of
+    fold-change of two intensity fragments and the two half-life fragments
+
+   **FC_HL_intensity**: ratio of fold-change of two intensity fragments and
+    the two half-life fragments
+
+   **FC_int_adapted**: fold change of two intensity fragments
+
+   **FC_HL_adapted**: fold change of two HL fragments adapted to the
+    intensity fragments
+
+   **p_value_Manova**: p_value of the statistical test Manova applied to
+    FC_HL_intensity
+
+   **synthesis_ratio**: ratio of FC_HL_intensity
+
+   **synthesis_ratio_event**: event related to ratio
+
+   **pausing_site**: presence or absence of ps is indicated by +/-
+
+   **ITSS_I**: presence or absence of ITSS_I is indicated by +/-
+
+   **event_ps_itss_p_value_Ttest**: p_value of the t-test applied to ps and
+   iTSS_I.
+
+   **ps_ts_fragment**: The fragments subjected to ps and iTSS_I
+
+   **event_position**: event position
+
+   **delay**: delay coefficient extracted from the fit
+
+   **half_life**: half-life coefficient extracted from the fit
+
+   **intensity**: intensity coefficient extracted from the fit
+
+<br/><br/>
 ``` {r event_dataframe, eval=F}
 data(stats_minimal)
 data(annot_g_minimal)
 event_dataframe(data = stats_minimal, data_annotation = annot_g_minimal[[1]])
 ```
+<br/><br/>
 
-   **probe** data frame: the probe based data frame.
-   **data_annotation** data frame: the coordinates extracted from gff3 file.
+   **probe** data frame: the probe based data frame
+   
+   **data_annotation** data frame: the coordinates extracted from gff3 file
 
 The function used are:
 
 1.  `position_function`
+
 2.  `annotation_function_event`
+
 3.  `strand_function`
 
 #### 1. `position_function`
@@ -1379,44 +1560,77 @@ second one is intensity fragment based.
   a. Table.1:
 
    **ID**: ID of each probe
+
    **feature_type**: the corresponding region from annotation file
+
    **gene**: the corresponding gene from annotation file
+
    **locus_tag**: the corresponding locus tag from annotation file
+
    **position**: probe or bin position
+
    **strand**: indicated by +/-
+
    **TU**: transcription unit annotation
+
    **delay_fragment**: delay fragment
-   **delay**: delay.
+
+   **delay**: delay
+
    **HL_fragment**: half_life fragment
+
    **half_life**: half_life
+
    **intensity_fragments**: intensity fragment
+
    **intensity**: intensity
+
    **flag**: flagged probe
-   **TI_termination_factor**: Transcription interference factor.
+
+   **TI_termination_factor**: Transcription interference factor
+
 
   b. Table.2:
 
-   **feature_type**: the corresponding region from annotation file.
-   **gene**: the corresponding gene from annotation file.
-   **locus_tag**: the corresponding locus tag from annotation file.
+   **feature_type**: the corresponding region from annotation file
+
+   **gene**: the corresponding gene from annotation file
+
+   **locus_tag**: the corresponding locus tag from annotation file
+
    **first_position_frg**: position of the first bin or probe on the
     corresponding intensity fragment.
-   **last_position_frg**: position of the last bin or probe on the
-    corresponding intensity fragment.
-   **strand**: indicated by +/- .
-   **TU**: transcription unit annotation.
-   **segment**: segment base.
-   **delay_fragment**: delay fragment.
-   **HL_fragment**: half_life fragment.
-   **half_life**: half_life mean of the fragment
-   **HL_SD**: half_life standard deviation.
-   **HL_SE**: half_life standard error.
-   **intensity_fragments**: intensity fragment.
-   **intensity**: intensity mean of the fragment.
-   **intensity_SD**: intensity standard deviation.
-   **intensity_SE**: intensity standard error.
-   **velocity**: velocity of the delay fragment.
 
+   **last_position_frg**: position of the last bin or probe on the
+    corresponding intensity fragment
+
+   **strand**: indicated by +/- 
+
+   **TU**: transcription unit annotation
+
+   **segment**: segment base
+
+   **delay_fragment**: delay fragment
+
+   **HL_fragment**: half_life fragment
+
+   **half_life**: half_life mean of the fragment
+
+   **HL_SD**: half_life standard deviation
+
+   **HL_SE**: half_life standard error
+
+   **intensity_fragments**: intensity fragment
+
+   **intensity**: intensity mean of the fragment
+
+   **intensity_SD**: intensity standard deviation
+
+   **intensity_SE**: intensity standard error
+
+   **velocity**: velocity of the delay fragment
+
+<br/><br/>
 ### 3. `dataframe_summary_events`
 
 `dataframe_summary_events` creates one table relating gene annotation to all
@@ -1425,143 +1639,226 @@ events. The events are assigned on the first column.
 The table contains the following columns:
 
    **event**: event type, either pausing site, internal starting site I,
-    internal starting site II, terminal or velocity.
-   **FC_HL**: fold change of two half-live fragments.
-   **FC_HL_adapted**: fold change of two half-live fragments.
-   **FC_intensity**: fold change of two intensities fragments.
+    internal starting site II, terminal or velocity
+
+   **FC_HL**: fold change of two half-live fragments
+
+   **FC_HL_adapted**: fold change of two half-live fragments
+
+   **FC_intensity**: fold change of two intensities fragments
+
    **FC_HL/FC_intensity**: ratio between fold change of two half_lives
-    fragments and fold change of two intensities fragments.
-   **event_position_[nt]**: position of the event.
-   **velocity_ratio**: ratio of velocity of two delay fragments.
-   **p_value**: p_value from statistical test.
-   **p_adjusted**: adjusted p_value using false discovery rate (FDR).
-   **feature_type**: region annotation from the annotation.
-   **gene**: gene annotation from the annotation.
-   **locus_tag**: locus tag annotation from the annotation.
-   **strand**: strand indicated by +/-.
-  - **TU**: TU annotation.
+    fragments and fold change of two intensities fragments
+
+   **event_position_[nt]**: position of the event
+
+   **velocity_ratio**: ratio of velocity of two delay fragments
+
+   **p_value**: p_value from statistical test
+
+   **p_adjusted**: adjusted p_value using false discovery rate (FDR)
+
+   **feature_type**: region annotation from the annotation
+
+   **gene**: gene annotation from the annotation
+
+   **locus_tag**: locus tag annotation from the annotation
+
+   **strand**: strand indicated by +/-
+
+  - **TU**: TU annotation
+
    **segment_1**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the first fragment.
+    intensity fragment from the first fragment
+
    **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the second fragment.
+    intensity fragment from the second fragment
+
    **event_position_[nt]**: event of the position on bases. The position is
     calculated dividing the last position of the first fragment and the first
-    position of the second fragment.
+    position of the second fragment
+
    **event_duration_[min]**: event duration on minutes. The duration is
-    calculated from the intercept of two delay fragment at the position 0.
-   **gap_fragments_[nt]**: gap in distance on bases between two fragments.
-   **features**: number of fragments involved on the event.
-  
+    calculated from the intercept of two delay fragment at the position 0
+
+   **gap_fragments_[nt]**: gap in distance on bases between two fragments
+
+   **features**: number of fragments involved on the event
+
+ <br/><br/> 
 ### 4. `dataframe_summary_events_HL_int`
 
 `dataframe_summary_events_HL_int` creates one table relating gene annotation to
 all termination and new starting sites detected from half_life and intensity
 ratios. The events are assigned on the first column.
 
-   **event**: event type, either internal starting site II or termination.
-   **p_value**: p_value from statistical test.
-   **p_adjusted**: adjusted p_value using false discovery rate (FDR).
-   **FC_HL**: fold change of two hal-flive fragments.
-   **FC_HL_adapted**: fold change of two half-live fragments.
-   **FC_intensity**: fold change of two intensities fragments.
+   **event**: event type, either internal starting site II or termination
+
+   **p_value**: p_value from statistical test
+
+   **p_adjusted**: adjusted p_value using false discovery rate (FDR)
+
+   **FC_HL**: fold change of two half-live fragments
+
+   **FC_HL_adapted**: fold change of two half-live fragments
+
+   **FC_intensity**: fold change of two intensities fragments
+
    **FC_HL/FC_intensity**: ratio between fold change of two half_lives
-    fragments and fold change of two intensities fragments.
+    fragments and fold change of two intensities fragments
+
    **event_position_[nt]**: event of the position on bases. The position is
     calculated dividing the last position of the first fragment and the first
-    position of the second fragment.
-   **feature_type**: region annotation from the annotation.
-   **gene**: gene annotation from the annotation.
-   **locus_tag**: locus tag annotation from the annotation.
-   **strand**: strand indicated by +/-.
-   **TU**: TU annotation.
+    position of the second fragment
+
+   **feature_type**: region annotation from the annotation
+
+   **gene**: gene annotation from the annotation
+
+   **locus_tag**: locus tag annotation from the annotation
+
+   **strand**: strand indicated by +/-
+
+   **TU**: TU annotation
+
    **segment_1**: gathers segment, TU, delay fragment, half_live fragment and
     intensity fragment from the first fragment.
-   **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the second fragment.
-   **gap_fragments_[nt]**: gap in distance on bases between two fragments.
-   **features**: number of fragments involved on the event.
 
+   **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
+    intensity fragment from the second fragment
+
+   **gap_fragments_[nt]**: gap in distance on bases between two fragments
+
+   **features**: number of fragments involved on the event
+
+<br/><br/>
 ### 5. `dataframe_summary_events_ps_itss` 
 
 `dataframe_summary_events_ps_itss`  creates one table relating gene annotation
 with pausing sites and internal starting sites events detected from delay
 fragments. The events are assigned on the first column.
 
-   **event**: event type, either internal starting site I or pausing site.
-   **p_value**: p_value from statistical test.
-   **p_adjusted**: adjusted p_value using false discovery rate (FDR).
+   **event**: event type, either internal starting site I or pausing site
+   
+   **p_value**: p_value from statistical test
+
+   **p_adjusted**: adjusted p_value using false discovery rate (FDR)
+
    **event_position_[nt]**: event of the position on bases. The position is
     calculated dividing the last position of the first fragment and the first
     position of the second fragment.
-   **velocity_ratio**: ratio of velocity of two delay fragments.
-   **feature_type**: region annotation from the annotation.
-   **gene**: gene annotation from the annotation.
-   **locus_tag**: locus tag annotation from the annotation.
-   **strand**: strand indicated by +/-.
-   **TU**: TU annotation.
-   **segment_1**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the first fragment.
-   **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the second fragment.
-   **event_duration_[min]**: event duration on minutes. The duration is
-    calculated from the intercept of two delay fragment at the position 0.
-   **gap_fragments_[nt]**: gap in distance on bases between two fragments.
-   **features**: number of fragments involved on the event.
 
+   **velocity_ratio**: ratio of velocity of two delay fragments
+
+   **feature_type**: region annotation from the annotation
+
+   **gene**: gene annotation from the annotation
+
+   **locus_tag**: locus tag annotation from the annotation
+
+   **strand**: strand indicated by +/-
+
+   **TU**: TU annotation
+
+   **segment_1**: gathers segment, TU, delay fragment, half_live fragment and
+    intensity fragment from the first fragment
+
+   **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
+    intensity fragment from the second fragment
+
+   **event_duration_[min]**: event duration on minutes. The duration is
+    calculated from the intercept of two delay fragment at the position 0
+
+   **gap_fragments_[nt]**: gap in distance on bases between two fragments
+   
+   **features**: number of fragments involved on the event
+
+<br/><br/>
 ### 6. `dataframe_summary_events_velocity`
 
 `dataframe_summary_events_velocity`  creates one table relating gene annotation
 with velocity ration detected from delay fragments. The events are assigned
 on the first column.
 
-   **event**: velocity ratio.
-   **p_value**: p_value from statistical test.
-   **p_adjusted**: adjusted p_value using false discovery rate (FDR).
+   **event**: velocity ratio
+
+   **p_value**: p_value from statistical test
+
+   **p_adjusted**: adjusted p_value using false discovery rate (FDR)
+
    **event_position_[nt]**: event of the position on bases. The position is
     calculated dividing the last position of the first fragment and the first
-    position of the second fragment.
-   **velocity_ratio**: ratio of velocity of two delay fragments.
-   **feature_type**: region annotation from the annotation.
-   **gene**: gene annotation from the annotation.
-   **locus_tag**: locus tag annotation from the annotation.
-   **strand**: strand indicated by +/-.
-   **TU**: TU annotation.
-   **segment_1**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the first fragment.
-   **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
-    intensity fragment from the second fragment.
-   **event_duration_[min]**: event duration on minutes. The duration is
-    calculated from the intercept of two delay fragment at the position 0.
-   **gap_fragments_[nt]**: gap in distance on bases between two fragments.
-   **features**: number of fragments involved on the event.
+    position of the second fragment
 
+   **velocity_ratio**: ratio of velocity of two delay fragments
+
+   **feature_type**: region annotation from the annotation
+
+   **gene**: gene annotation from the annotation
+
+   **locus_tag**: locus tag annotation from the annotation
+
+   **strand**: strand indicated by +/-
+
+   **TU**: TU annotation
+
+   **segment_1**: gathers segment, TU, delay fragment, half_live fragment and
+    intensity fragment from the first fragment
+
+   **segment_2**: gathers segment, TU, delay fragment, half_live fragment and
+    intensity fragment from the second fragment
+
+   **event_duration_[min]**: event duration on minutes. The duration is
+    calculated from the intercept of two delay fragment at the position 0
+
+   **gap_fragments_[nt]**: gap in distance on bases between two fragments
+
+   **features**: number of fragments involved on the event
+
+<br/><br/>
 ### 7. `dataframe_summary_TI`
 
 `dataframe_summary_TI` creates one table relating gene annotation to
 transcription interference.
 
-   **event**: transcription interference (TI).
+   **event**: transcription interference (TI)
+
    **TI_fragment**: TI fragments involved on one TI events. If the fragments
   involved are more than 1 than a combination of 2 fragments are selected
-  to determine the event position.
-   **TI_termination_factor**: TI termination factor for each fragment.
-   **p_value**: p_value from statistical test.
-   **p_adjusted**: adjusted p_value using false discovery rate (FDR).
-   **feature_type**: region annotation from the annotation.
-   **gene**: gene annotation from the annotation.
-   **locus_tag**: locus tag annotation from the annotation.
-   **strand**: strand indicated by +/-.
-   **TU**: TU annotation.
+  to determine the event position
+
+   **TI_termination_factor**: TI termination factor for each fragment
+
+   **p_value**: p_value from statistical test
+
+   **p_adjusted**: adjusted p_value using false discovery rate (FDR)
+
+   **feature_type**: region annotation from the annotation
+
+   **gene**: gene annotation from the annotation
+
+   **locus_tag**: locus tag annotation from the annotation
+
+   **strand**: strand indicated by +/-
+
+   **TU**: TU annotation
+
    **event_duration_[min]**: event duration on minutes. The duration is
-    calculated from the intercept of two delay fragment at the position 0.
-   **gap_fragments_[nt]**: gap in distance on bases between two fragments.
-   **features**: number of fragments involved on the event.
+    calculated from the intercept of two delay fragment at the position 0
+
+   **gap_fragments_[nt]**: gap in distance on bases between two fragments
+
+   **features**: number of fragments involved on the event
+
    **event_position_[nt]**: event of the position on bases. The position is
     calculated dividing the last position of the first fragment and the first
-    position of the second fragment.
-   **position_1**: position start of the TI.
-   **position_2**: position end of the TI.
+    position of the second fragment
 
+   **position_1**: position start of the TI
+
+   **position_2**: position end of the TI
+
+<br/><br/>
 ## VI. `rifi_visualization`
 
 `rifi_visualization` plots the whole genome with genes, transcription units
@@ -1576,112 +1873,184 @@ frame only with events for segments and genes as input.
 
 The functions used are:
 
-   `event_dataframe`: see `rifi_summary` section.
-   `gff3_preprocess`: see `rifi_summary` section.
-   `strand_selection`: check if data is stranded and arrange by position.
-   `splitGenome_function`: splits the genome into fragments.
+   `event_dataframe`: see `rifi_summary` section
+   
+   `gff3_preprocess`: see `rifi_summary` section
+   
+   `strand_selection`: check if data is stranded and arrange by position
+   
+   `splitGenome_function`: splits the genome into fragments
+   
    `indice_function`: assign a new column to the data to distinguish between
-    fragments, outliers and terminals from delay, HL and intensity.
+    fragments, outliers and terminals from delay, HL and intensity
+    
    `TU_annotation`: designs the segments border for the genes and TUs
-    annotation.
+    annotation
+    
    `gene_annot_function`: requires gff3 file, returns a dataframe adjusting
     each fragment according to the annotation. It allows the plot of genes and
-    TUs shared in two pages.
-   `label_log2_function`: adds log scale to intensity values.
-   `label_square_function`: adds square scale to coverage values.
+    TUs shared in two pages
+    
+   `label_log2_function`: adds log scale to intensity values
+   
+   `label_square_function`: adds square scale to coverage values
+   
    `coverage_function`: the function is used only in case of coverage is
-    available.
+    available
+    
    `secondaryAxis`: adjusts the halflife or delay to 20 in case of the
     dataframe row numbers is equal to 1 and the halflife or delay exceed the
-    limit, they are plotted with different shape and color.
+    limit, they are plotted with different shape and color
+    
    `add_genomeBorders`: resolves the issue when the annotated genes are on the
     borders and can not be plotted. The function splits the region in 2 adding
     the row corresponding to the split part to the next page except for the
-    first page.
-   `my_arrow`: creates an arrow for the annotation.
+    first page
+    
+   `my_arrow`: creates an arrow for the annotation
+   
    `arrange_byGroup`: selects the last row for each segment and add 40
-    nucleotides in case of negative strand for a nice plot.
+    nucleotides in case of negative strand for a nice plot
+    
    `regr`: plots the predicted delay from linear regression. If data is
-    stranded (strand==1) and if the data is on negative strand.
-   `meanPosition`: assign a mean position for the plot.
-   `delay_mean`: adds a column in case of velocity is NA or equal to 60. The
-    mean of the delay is calculated excluding terminals and outliers.
-   `my_segment_T`: plots terminals and pausing sites labels.
-   `my_segment_NS`: plots internal starting sites 'iTSS'.
-   `min_value`: returns minimum value for event plots in intensity plot.
-   `velocity_fun`: function to plot velocity.
-   `limit_function`: for values above 10 or 20 in delay and hl. Limit of the
-    axis is set differently. yaxis limit is applied only if we have more than 3
-    values above 10 and lower or equal to 20. An exception is added in case a
+    stranded (strand==1) and if the data is on negative strand
+    
+   `meanPosition`: assign a mean position for the plot
+   
+  	`delay_mean`: adds a column in case of velocity is NA or equal to 60. The
+    mean of the delay is calculated excluding terminals and outliers
+
+   `my_segment_T`: plots terminals and pausing sites labels
+
+   `my_segment_NS`: plots internal starting sites 'iTSS'
+
+   `min_value`: returns minimum value for event plots in intensity plot
+
+   `velocity_fun`: function to plot velocity
+
+   `limit_function`: for values above 10 or 20 in delay and hl, Limit of the
+    axis is set differently. yaxis limit is applied only if 3 values above 10
+    and lower or equal to 20 are present. An exception is added in case a
     dataframe has less than 3 rows and 1 or more values are above 10, the rest
-    of the values above 20 are adjusted to 20 on `secondaryAxis` function.
+    of the values above 20 are adjusted to 20 on `secondaryAxis` function
+
    `empty_boxes`: used only in case the dataframe from the positive strand is
-    not empty, the TU are annotated.
+    not empty, the TU are annotated
+
    `function_TU_arrow`: avoids plotting arrows when a TU is split into two
-    pages.
+    pages
+
    `terminal_plot_lm`: draws a linear regression line when terminal outliers
     have an intensity above a certain threshold and are consecutive. Usually are
-    smallRNA (ncRNA, asRNA).
-   `slope_function`: replaces slope lower than 0.0009 to 0.
-   `velo_function`: replaces infinite velocity with NA.
-   `TI_frag_threshold`: splits the TI fragments on the same TI event.
+    smallRNA (ncRNA, asRNA)
 
-   **data** dataframe: the probe based dataframe.
+   `slope_function`: replaces slope lower than 0.0009 to 0
+
+   `velo_function`: replaces infinite velocity with NA
+
+   `TI_frag_threshold`: splits the TI fragments on the same TI event
+
+The arguments used are:
+
+   **data** dataframe: the probe based dataframe
+   
    **genomeLength** integer: genome length extracted from `gff3_preprocess` 
-  function.
-   **annot** dataframe: the annotation file.
-   **coverage** integer: in case the coverage is available.
-   **chr_fwd** string object: coverage of the forward strand.
-   **chr_rev** string object: coverage of the reverse strand.
-   **region** dataframe: gff3 features of the genome.
-   **color_region** string vector: vector of colors.
-   **color_TU** string: TU color.
-   **fontface** integer: value assigning labels font.
-   **color_text.1** string: TU text color.
-   **color_text.2** string: genes text color.
-   **size_tu** integer: TU font size.
-   **size_locusTag** integer: locus_tag font size.
-   **Strand** logical: indicated by T/F if data is stranded or not.
-   **Limit** integer: value for yaxis limit.
-   **shape** integer: value for shape.
-   **shape_outlier** integer: value for outlier shape.
-   **col_outiler** string: outlier's color.
+  function
+  
+   **annot** dataframe: the annotation file
+   
+   **coverage** integer: in case the coverage is available
+   
+   **chr_fwd** string object: coverage of the forward strand
+   
+   **chr_rev** string object: coverage of the reverse strand
+   
+   **region** dataframe: gff3 features of the genome
+   
+   **color_region** string vector: vector of colors
+   
+   **color_TU** string: TU color
+   
+   **fontface** integer: value assigning labels font
+   
+   **color_text.1** string: TU text color
+   
+   **color_text.2** string: genes text color
+   
+   **size_tu** integer: TU font size
+   
+   **size_locusTag** integer: locus_tag font size
+   
+   **Strand** logical: indicated by T/F if data is stranded or not
+   
+   **Limit** integer: value for yaxis limit
+   
+   **shape** integer: value for shape
+   
+   **shape_outlier** integer: value for outlier shape
+   
+   **col_outiler** string: outlier's color
+   
    **color_TU** string. TU's color
-   **limit_intensity** integer: intensity limit if applicable.
-   **face** string: label font.
-   **tick_length** integer: value for ticks.
-   **arrow.color** string: arrows color.
-   **minVelocity** integer: threshold to fix the minimum of velocity.
-   **medianVelocity** integer: threshold to fix the maximum of velocity.
-   **threshold_intensity** integer: Threshold for intensity to plot terminals.
-   **col_above20** string: color for probes/bin above value 20.
-   **fontface** integer: font type.
-   **shape_above20** integer: shape for probes/bins above value 20.
-   **axis_text_y_size** integer: text size for yaxis.
-   **axis_title_y_size** integer: title size for yaxis.
-   **Alpha** integer: color transparency degree.
-   **col_coverage** integer: color for coverage plot.
+   
+   **limit_intensity** integer: intensity limit if applicable
+   
+   **face** string: label font
+   
+   **tick_length** integer: value for ticks
+   
+   **arrow.color** string: arrows color
+   
+   **minVelocity** integer: threshold to fix the minimum of velocity
+   
+   **medianVelocity** integer: threshold to fix the maximum of velocity
+   
+   **threshold_intensity** integer: Threshold for intensity to plot terminals
+   
+   **col_above20** string: color for probes/bin above value 20
+   
+   **fontface** integer: font type
+   
+   **shape_above20** integer: shape for probes/bins above value 20
+   
+   **axis_text_y_size** integer: text size for yaxis
+   
+   **axis_title_y_size** integer: title size for yaxis
+   
+   **Alpha** integer: color transparency degree
+   
+   **col_coverage** integer: color for coverage plot
+   
    **p_value_TI** integer: p_value of TI fragments selected to be plotted,
-    default 0.05.
+    default 0.05
+    
    **p_value_manova** integer: p_value of manova test fragments to plot,
-    default 0.05.
+    default 0.05
+    
    **p_value_int** integer: p_value of intensity fragments foldchange
-    to plot, default 0.05.
+    to plot, default 0.05
+    
    **p_value_HL** integer: p_value of half_life fragments foldchange to
-    plot, default 0.05.
+    plot, default 0.05
+    
    **p_value_event** integer: p_value of ttest from pausing site and
-    iTSS_I events to plot, default 0.05.
+    iTSS_I events to plot, default 0.05
+    
    **termination_threshold** integer: threshold for termination to plot,
-    default 1.
+    default 1
+    
    **HL_threshold** integer: threshold for HL fold change selected to plot,
-  default 20.
+  default 20
+  
    **vel_threshold** integer: threshold for velocity ratio selected to plot,
-  default 200.
+  default 200
+  
    **iTSS_threshold** integer: threshold for iTSS_II selected to plot,
-    default 1.01.
+    default 1.01
+    
    **event_duration** integer: threshold for pausing sites and iTSS_I
     selected to plot, default plot all events selecting the maximum value.
-
+<br/><br/>
 ``` {r rifi_visualization}
  data(stats_minimal)
  data(annot_g_minimal)
@@ -1703,37 +2072,39 @@ The functions used are:
  p_value_hl=0.05, event_duration=40, HL_threshold=20,
  vel_threshold = 200)
 ```
-
+<br/><br/>
 ``` {r genome_plot_1, echo=T, fig.cap="**Fragments Plot Forward Strand**", out.width = '100%'}
 #Forward strand
 knitr::include_graphics("genome_plot_1.png")
 ```
-
+<br/><br/>
 ``` {r genome_plot_2, echo=T, fig.cap="**Fragments Plot Reverse Strand**", out.width = '100%'}
 #Reverse strand
 knitr::include_graphics("genome_plot_2.png")
 ```
-
+<br/><br/>
 The plot shows 4 sections: annotation, delay, half-life and intensity/coverage.
 
 ### 1. Annotation
 
-   **TU**: Transcription unit annotation from Rifi workflow.
-   **Locus tag**: Locus_tag annotation from genome annotation.
+   **TU**: Transcription unit annotation from Rifi workflow
+
+   **Locus tag**: Locus_tag annotation from genome annotation
+
    **gene**: gene annotation from genome annotation. If gene annotation is not
-    available, locus_tag is given instead.
+   available, locus_tag is given instead
 
 ### 2. Delay
 
    **Delay**: Delay fragments, fragments annotation, "+/++/+++" indicates
    velocity degree, events are indicated by "PS" or "iTSS", "*" indicates
-   significant statistical test.
+   significant statistical test
 
 ### 3. Half-life
 
    **Half-life**: HL fragments, fragments annotation, events like termination
    and iTTS_II are indicated by "Ter" or "NS"; "*" indicates
-   significant statistical test for HL fold change.
+   significant statistical test for HL fold change
 
 ### 4. Intensity/coverage
 
@@ -1742,17 +2113,17 @@ The plot shows 4 sections: annotation, delay, half-life and intensity/coverage.
     line above the fragments indicate the mean of TI factor for each fragment
     and dots indicate TI factor for each bin. Dot vertical green lines shows TI
     fragments, "Tinterf(*)" indicate significant statistical test between
-    fragments.
+    fragments
+    
    **Coverage**: In case of available coverage, it could be plotted on the same
-    section as intensity.
+    section as intensity
 
 ### 5. Additional features
 
-   **outliers**: are indicated by square shape an grey color, both are
-    parameters.
-   **outliers**: are indicated by square shape an grey color, both are
-    parameters.
-
+   **outliers**: are indicated by square shape an grey color
+    
+   **high values**: are indicated by square shape an cyan color
+<br/><br/>
 ## VII. `rifi_wrapper`
 
 `rifi_wrapper` conveniently wraps all functions included on rifi. The
@@ -1761,25 +2132,36 @@ function allows the user in just one click to run the whole workflow.
 The function used are:
 
   `check_input`: see above
+  
   `rifi_preprocess`: see above
+  
   `rifi_fit`: see above
+  
   `rifi_penalties`: see above
+  
   `rifi_fragmentation`: see above
+  
   `rifi_stats`: see above
+  
   `rifi_summary`: see above
+  
   `rifi_visualization`: see above
 
 The arguments used are:
 
   **inp** data frame: the input data frame with correct format
+
   **cores** integer: the number of assigned cores for the task
+
   **gff** path: path to an annotation file in gff format
-  **bg** numeric: threshold over which the last time point has to be to be
+
+  **bg** numeric: threshold over which the last time point has to be to be 
   fitted with the above background mode
+
   **restr**  numeric: a parameter that restricts the freedom of the fit to
-  avoid wrong TI-term_factors, ranges from 0 to 0.2
+  void wrong TI-term_factors, ranges from 0 to 0.2
 
-
+<br/><br/>
 ``` {r rifi_wrapper, eval=F}
 data(example_input_e_coli)
 data(example_input_synechocystis_6803)
@@ -1788,11 +2170,13 @@ gff = annot_g_minimal[[1]], bg = 4000,  restr = 0.1)
 wrapper_minimal
 }
 ```
-
+<br/><br/>
 ## VIII. Additional functions
 
 1.  `score_fun_linear`
+
 2.  `score_fun_ave`
+
 3.  `score_fun_increasing`
 
 All these 3 functions are using the dynamic programming approach to part a
@@ -1827,11 +2211,17 @@ score_fun_linear(y, x, z = x, pen, stran, n_out = min(10,
 ```
 
    **y** numeric: vector of values.
+
    **x** numeric: vector of position values.
+
    **z** numeric/character: vector of identifiers (IDs in our case).
+
    **pen** integer: penalty value.
+
    **stran** logical: TRUE/FALSE.
+
    **n_out** integer: number of allowed outliers.
+
 
 ### 2. `score_fun_ave`
 
@@ -1846,16 +2236,20 @@ previously. Outliers are those values with high difference from the mean, they
 are stored but excluded from the next calculation. The output of the function is
 a vector of IDs separated by ",", a vector of mean separated by "_" and a
 vector of outliers separated by ",".
-
+<br/><br/>
 ``` {r score_fun_ave, eval=F}
 score_fun_ave(y, z, pen, n_out = min(10, max(1, 0.4*length(z))))
 ```
+<br/><br/>
+   **y** numeric: vector of values
 
-   **y** numeric: vector of values.
-   **z** numeric/character: vector of identifiers (IDs in our case).
-   **pen** integer: penalty value.
-   **stran** logical: TRUE/FALSE.
-   **n_out** integer: number of allowed outliers.
+   **z** numeric/character: vector of identifiers (IDs in our case)
+
+   **pen** integer: penalty value
+
+   **stran** logical: TRUE/FALSE
+
+   **n_out** integer: number of allowed outliers
 
 ### 3. `score_fun_increasing`
 
@@ -1864,10 +2258,11 @@ score_fun_ave(y, z, pen, n_out = min(10, max(1, 0.4*length(z))))
 comparing to their position, **x**. The sum of differences is stored and a new
 value **y** is added. The difference is newly calculated and the sum is stored.
 After several rounds, the maximum score is selected and TU is assigned.
-
+<br/><br/>
 ``` {r score_fun_increasing, eval=F}
 score_fun_increasing(x, y)
 ```
-
-   **y** numeric: vector of values.
-   **x** numeric: vector of position values.
+<br/><br/>
+   **y** numeric: vector of values
+   
+   **x** numeric: vector of position values
