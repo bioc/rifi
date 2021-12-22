@@ -1,0 +1,54 @@
+Package: rifi
+Title: 'rifi' anyalyses data from rifampicin time series ceated by microarray or RNAseq
+Version: 0.99.0
+Authors@R: 
+    person(given = "Loubna",
+           family = "Youssar",
+           role = c("aut", "cre"),
+           email = "loubna.youssar@biologie.uni-freiburg.de",
+           comment = c(ORCID = "0000-0002-3512-8333"))
+    person(given = "Walja",
+           family = "Wanney",
+           role = c("aut", "cre"),
+           email = "walja.wanney@students.uni-freiburg.de")
+    person(given = "Jens",
+           family = "Georg",
+           role = c("aut", "cre"),
+           email = "jens.georg@biologie.uni-freiburg.de")
+Description: 'rifi' analyses data from rifampicin time series created by microarray or RNAseq. 'rifi' is a transcriptome data analysis tool for the holistic identification of regulatory processes. Comprehensive output tables and visualization are produced.
+Depends:
+	R (>= 3.5.0)
+Imports:
+	car,
+	cowplot,
+	doMC,
+	parallel,
+	dplyr,
+	egg,
+	foreach,
+	ggplot2,
+	graphics,
+	grDevices,
+	grid,
+	methods,
+	nls2,
+	nnet,
+	rlang,
+	scales,
+	stats,
+	stringr,
+	tibble,
+	utils
+Suggests:
+	DescTools,
+	knitr,
+	rmarkdown,
+	BiocStyle
+VignetteBuilder: knitr	
+biocViews: RNASeq, DifferentialExpression, GeneRegulation, Transcriptomics, Regression, Microarray, Software
+BugReports: https://github.com/CyanolabFreiburg/rifi
+License: GPL-3 + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.12
+Language: en-US
