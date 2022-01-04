@@ -17,7 +17,7 @@ Authors@R:
            email = "jens.georg@biologie.uni-freiburg.de")
 Description: 'rifi' analyses data from rifampicin time series created by microarray or RNAseq. 'rifi' is a transcriptome data analysis tool for the holistic identification of regulatory processes. Comprehensive output tables and visualization are produced.
 Depends:
-	R (>= 3.6.3)
+	R (>= 4.1.2)
 Imports:
 	car,
 	cowplot,
@@ -38,7 +38,7 @@ Imports:
 	stats,
 	stringr,
 	tibble,
-	utils
+	utils	
 Suggests:
 	DescTools,
 	knitr,

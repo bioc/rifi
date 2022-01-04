@@ -26,12 +26,12 @@ knitr::opts_chunk$set(
 )
 ```
 
-``` {r,echo = FALSE, message = FALSE}
+``` {r, echo = FALSE, message = FALSE}
 require(rifi)
 ```
 
 ## 0. Installation
-``` {r,eval = FALSE}
+``` {r, eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE))
     install.packages("BiocManager")
 
@@ -60,7 +60,7 @@ a third phase, the delayed increase phase. The **TI-termination-factor**
 extracted from this phase is a measure of transcription termination induced by
 transcription interference. 
 <br/><br/>
-``` {r fit_models, echo=FALSE, fig.cap="**Fit models**", out.width = '100%'}
+``` {r fit_models, echo = FALSE, fig.cap = "**Fit models**", out.width = '100%'}
 knitr::include_graphics("fit_models.png")
 ```
 <br/><br/>
@@ -82,7 +82,7 @@ events can be extracted; **iTSS** (internal transcription start sites) type I
 and type II, **pausing_sites**, **velocity_changes**,**processing_sites** and
 **terminations**, as well as **TI** (transcription interference).<br/><br/>
 <br/><br/>
-``` {r hirarchy3, echo=FALSE, fig.cap="**Fragments Hirarchy**", out.width = '100%'}
+``` {r hirarchy3, echo = FALSE, fig.cap = "**Fragments Hirarchy**", out.width = '100%'}
 knitr::include_graphics("hirarchy3.png")
 ```
 <br/>

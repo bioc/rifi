@@ -229,10 +229,7 @@ regr <- function(input, ind, data) {
       tryCatch({
       if(nrow(df) <= 2){
         df <- data.frame()
-        break ()
-      }
-        }, error=function(e){}
-      )
+      }else{
       #positions are adjusted to 0 or subtracted from genome length, the fit
       #is the same.
       df$position_adjusted <- abs(max(df$position) - df$position) + 1
@@ -264,13 +261,18 @@ regr <- function(input, ind, data) {
           df.f <- df.o
         }
         df_bind <- rbind(df_bind, df.f)
-      }
+          }
+        }
+      }, error=function(e){}
+      )
       #revert the delay predicted to adjust it to the positions of the dataframe
       if(nrow(df_bind) != 0){
       df_bind <- as.data.frame(df_bind %>%
                                  group_by(get('delay_fragment')) %>%
                                  mutate(delay.p_rev = rev(get('delay.p'))))
       df <- df_bind
+      }else{
+        df <- data.frame()
       }
     }
   }

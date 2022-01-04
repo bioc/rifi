@@ -632,14 +632,14 @@ rifi_visualization <-
             ),
             panel.border = element_blank()
           )
-        if (nrow(df2.1) != 0) {
+        if (nrow(df2) != 0) {
           p1 <- p1 +
             ggtitle(
               paste0(
                 "ID: ",
-                df2.1$ID[1],
+                df2$ID[1],
                 "-",
-                last(df2.1$ID),
+                last(df2$ID),
                 "; ",
                 "FC*: ",
                 "significant t-test of two consecutive segments",
