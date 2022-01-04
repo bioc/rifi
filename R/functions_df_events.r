@@ -13,6 +13,7 @@ position_function <- function(x, input, argument, column) {
   input
 }
 
+
 annotation_function_event <-
   function(x, input, strand, input_annotation) {
     input_annotation[, "region"]  <-

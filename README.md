@@ -9,7 +9,7 @@ Rifi framework is an open source R package, attempted to estimate decay by probe
 
 Rifi framework has the following dependencies, whereas the brackets indicate the version Rifi has been build and tested on. Make sure the requirements are satisfied by your system. 
 
-    [devtools](https://www.rdocumentation.org/packages/devtools/versions/1.13.6) (>= 1.13.6)
+  [devtools](https://www.rdocumentation.org/packages/devtools/versions/1.13.6) (>= 1.13.6)
   
   [roxygen2](https://cran.r-project.org/web/packages/roxygen2/index.html) (>= 7.1.12)
 

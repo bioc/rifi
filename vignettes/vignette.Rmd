@@ -160,7 +160,7 @@ and/or warnings by running "check_input": <br/><br/>
 <details><summary>**See all errors and warnings**</summary>
 <p>    
 
-```{r, echo = FALSE, error=TRUE, warning=TRUE, message=TRUE, purl=FALSE}
+```{r, echo = FALSE, error = TRUE, warning = TRUE, message = TRUE, purl = FALSE}
 print("Rule 1")
 input_df_1 <- example_input_e_coli
 colnames(input_df_1)[2] <- "TWO"
@@ -270,7 +270,7 @@ all replicates from the input dataframe and the columns **probe_TI** and
 is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 <br/><br/>
 ``` {r make_df}
-probe_df <- make_df(inp = result$input_df, cores = 2, bg = 100, rm_FLT = T)
+probe_df <- make_df(inp = result$input_df, cores = 2, bg = 100, rm_FLT = TRUE)
 head(probe_df)
 ```
 <br/><br/>
@@ -395,7 +395,7 @@ preprocess_minimal <- rifi_preprocess(example_input_minimal, cores = 2,
                              FUN_filter_BG = function(x){"_"},
                              FUN_filter_STD = function(x){"_"}, 
                              FUN_filter_TI = function(x){"_"},bg = 0,
-                             rm_FLT = F, thrsh_check = 0, dista = 300,
+                             rm_FLT = FALSE, thrsh_check = 0, dista = 300,
                              run_PDD = FALSE, pen_PDD = 2, pen_out_PDD = 1,
                              thrsh_PDD = 0.001, pen_TI = 10, thrsh_TI = 0.5,
                              add = 1000)
@@ -479,8 +479,8 @@ The function used are:
 #data(preprocess_synechocystis_6803)
 data(preprocess_minimal)
 fit_minimal <- rifi_fit(inp = preprocess_minimal$input_df,
-                     probe = preprocess_minimal$probe_df, cores = 2, viz = F,
-                     details = F, restr = 0.2, decay=seq(.08, 0.11, by=.02),
+                     probe = preprocess_minimal$probe_df, cores = 2, viz = FALSE,
+                     details = FALSE, restr = 0.2, decay=seq(.08, 0.11, by=.02),
                      delay=seq(0,10, by=.1), k=seq(0.1,1,0.2), intyf=0.2,
                      TI_k = seq(0, 1, by = 0.5),
                      TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
@@ -547,12 +547,12 @@ background. Finally probes flagged with ***TI*** are fitted with TI model. The
 output data is an extension of Table_2, **delay** and **half-life**
 coefficients are added (see below "head(probe)").
 <br/><br/>
-``` {r echo = T}
+``` {r echo = TRUE}
 data(preprocess_e_coli)
 head(preprocess_e_coli[[1]])
 ```
 <br/><br/>
-``` {r echo = T}
+``` {r echo = TRUE}
 data(preprocess_e_coli)
 Table_2 <- preprocess_e_coli[[2]]
 head(Table_2[,c(1:4,12:ncol(Table_2))])
@@ -586,7 +586,7 @@ nls2_fit(inp=preprocess_minimal$input_df, probe=preprocess_minimal$probe_df,
 
    **intyf** numeric vector: A sequence of starting values. Default is 0.2.
 <br/><br/>
-``` {r echo = T}
+``` {r echo = TRUE}
 data(fit_minimal)
 Table_3 <- fit_minimal[,-ncol(fit_minimal)]
 head(Table_3)
@@ -647,7 +647,7 @@ TI_fit(inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
 
    **intyf** numeric vector: A sequence of starting values. Default is 0.2.
 <br/><br/>
-``` {r echo = T}
+``` {r echo = TRUE}
 data(fit_minimal)
 head(fit_minimal)
 ```
@@ -853,14 +853,14 @@ are ranked from worst to best for correct-wrong ratio, and color coded by
 penalty, while the outlier-penalty is given as a number for each point. Red and
 green dots represent the wrong and correct splits respectively.
 <br/><br/>
-``` {r viz_pen_obj, eval=F}
+``` {r viz_pen_obj, eval = FALSE}
 viz_pen_obj(obj = pen_delay, top_i = 10)
 ```
 <br/>
    **obj** object: penalty object (make_pen output)
    **top_i** integer: the number of top results visualized. Default is all.
 <br/><br/>
-``` {r penalty, echo=FALSE, fig.cap="**penalty plot**", out.width = '100%'}
+``` {r penalty, echo = FALSE, fig.cap = "**penalty plot**", out.width = '100%'}
 knitr::include_graphics("penalty.png")
 ```
 <br/>
@@ -986,7 +986,7 @@ fragmentation_minimal <-  rifi_fragmentation(probe = fit_minimal, cores = 2,
     Higher values result in fewer allowed outliers. Default is the auto
     generated value
 <br/><br/>
-``` {r echo = T}
+``` {r echo = TRUE}
 data(fragmentation_minimal)
 head(fragmentation_minimal)
 ```
@@ -1155,7 +1155,7 @@ head(probe_df)
    **stranded** logical: must be TRUE if stranded information is given and
     FALSE if not. Default is the auto generated value
 <br/><br/>
-``` {r echo = T}
+``` {r echo = TRUE}
 data(fragmentation_minimal)
 head(fragmentation_minimal)
 ```
@@ -2039,6 +2039,14 @@ The arguments used are:
     
    **event_duration** integer: threshold for pausing sites and iTSS_I
     selected to plot, default plot all events selecting the maximum value.
+    
+   **HL_threshold_color** string: color for HL fold change plot
+    
+   **vel_threshold_color** string: color for velocity ratio plot
+   
+   **ps_color** string: color for pausing site plot
+   
+   **iTSS_I_color** string: color for iTSS_I plot
 <br/><br/>
 ``` {r rifi_visualization}
  data(stats_minimal)

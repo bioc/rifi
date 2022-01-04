@@ -117,6 +117,10 @@
 #' default 1.2.
 #' @param event_duration integer: threshold for pausing sites and iTSS_I
 #' selected to plot, default plot all events selecting the maximum value.
+#' @param HL_threshold_color string: color for HL fold change plot
+#' @param vel_threshold_color string: color for velocity ratio plot
+#' @param ps_color string: color for pausing site plot
+#' @param iTSS_I_color string: color for iTSS_I plot
 #'
 #' @return The visualization.
 #'
@@ -136,10 +140,11 @@
 #' minVelocity = 3000, medianVelocity = 6000, threshold_intensity = 4000,
 #' col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
 #' axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
-#' p_value_TI=0.05, p_value_manova=0.05, termination_threshold=1,
-#' iTSS_threshold=1.01, p_value_int=0.05, p_value_event=0.05,
-#' p_value_hl=0.05, event_duration=40, HL_threshold=20,
-#' vel_threshold = 200)
+#' p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
+#' iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
+#' p_value_hl = 0.05, event_duration = 40, HL_threshold=20,
+#' vel_threshold = 200, HL_threshold_color="green4", 
+#' vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 #'
 #' @export
 
@@ -197,7 +202,11 @@ rifi_visualization <-
            p_value_hl = 0.05,
            event_duration = 40,
            HL_threshold = 20,
-           vel_threshold = 200) {
+           vel_threshold = 200,
+           HL_threshold_color = "green4",
+           vel_threshold_color = "grey52",
+           ps_color="orange",
+           iTSS_I_color="blue") {
   ##########################data preparation##################################
     input <- event_dataframe(data, data_annotation = annot)
     #I. add coverage if its available from RNA-seq
@@ -219,9 +228,6 @@ rifi_visualization <-
     #replace slope lower than 0.0009 to 0
     tmp.1 <- slope_function(tmp.1)
     tmp.2 <- slope_function(tmp.2)
-    #dataframe containing all events from both strands
-    tmp.1.d <- strand_selection(input, "+")
-    tmp.2.d <- strand_selection(input, "-")
     #III. split the genome into fragments
     gLength <- seq_len(genomeLength)
     names(gLength) <- seq_along(gLength)
@@ -236,18 +242,14 @@ rifi_visualization <-
       onefile = TRUE
     )
     an.newLine <- data.frame()
-    suppressWarnings(print(for (i in seq_len(length(frag) - 1)) {
+    suppressWarnings(for (i in seq_len(length(frag) - 1)) {
       p <- list()
       print(i)
       if (i == 1) {
         frag[i] <- 0
-     pos.1 <- frag[i]
-        pos.2 <- frag[i + 1] + 500
       } else if (i == (length(frag) - 1)) {
         #to have homogeneous annotation scaling, 10000 is added to the last
         #frag vector.
-        pos.1 <- frag[i] - 500
-        pos.2 <- frag[i] + 10000
         frag[i + 1] <- frag[i] + 10000
       }
      ###########################data adjustment###########################
@@ -255,15 +257,13 @@ rifi_visualization <-
       #strand df2
       df1 <-
         tmp.1[between(tmp.1$position, frag[i], frag[c(i + 1)]), ]
-      #define the main dataframe with events positive strand df1.1, negative
-      #strand df2.1
-      df1.1 <-
-        tmp.1.d[between(tmp.1.d$position, frag[i], frag[c(i + 1)]), ]
       df2 <-
         tmp.2[between(tmp.2$position, frag[i], frag[c(i + 1)]), ]
-      df2.1 <-
-        tmp.2.d[between(tmp.2.d$position, frag[i], frag[c(i + 1)]), ]
       df1_1 <- df1[!is.na(df1$ID), ]
+      #avoid plot empty pages in case of small data
+      if(nrow(df1) == 0 & nrow(df2) == 0 & nrow(data) < 10000) {
+        next ()
+      }
       #an is the annotation dataframe upon the position on the plot, its used
       # to loop into exactly the number of region contained in the gff3
       an <- annot[between(annot$start, frag[i], frag[c(i + 1)]), ]
@@ -711,7 +711,7 @@ rifi_visualization <-
       ########################ggplot positive strand#######################
         #first plot for intensity segments
         p1 <-
-          ggplot(df1, aes(x = get('position'), y = get('intensity'))) +
+            ggplot(df1, aes(x = get('position'), y = get('intensity'))) +
           scale_x_continuous(limits = c(frag[i], frag[i + 1])) +
           scale_y_continuous(
             trans = 'log2',
@@ -891,7 +891,7 @@ rifi_visualization <-
           df1$half_life <- 20
         }
        p2 <-
-          ggplot(df1, aes(x = get('position'), y = get('half_life'))) +
+           ggplot(df1, aes(x = get('position'), y = get('half_life'))) +
           scale_x_continuous(limits = c(frag[i], frag[i + 1])) +
           scale_y_continuous(
             limits = c(0, Limit_h_df1),
@@ -1165,7 +1165,7 @@ rifi_visualization <-
             }
             if (nrow(df1 %>%
                      filter(get('indice') == 1) %>%
-                     filter(get('slope') == 0)) > 3) {
+                     filter(get('slope') == 0)) > 2) {
               p3 <- p3 +
                 geom_line(
                   data = df1 %>%
@@ -1407,7 +1407,7 @@ rifi_visualization <-
                 yend = 3,
                 dis = 50,
                 ytext = 3.8,
-                color = "orange",
+                color = ps_color,
                 linetype = "dashed",
                 df = "pausing",
                 fontface = fontface
@@ -1429,7 +1429,7 @@ rifi_visualization <-
                 yend = 3,
                 dis = 50,
                 ytext = 3.8,
-                color = "orange",
+                color = ps_color,
                 linetype = "dashed",
                 df = "pausing",
                 fontface = fontface
@@ -1449,7 +1449,7 @@ rifi_visualization <-
                 yend = 3,
                 dis = 50,
                 ytext = 3.8,
-                color = "orange",
+                color = ps_color,
                 linetype = "dashed",
                 df = "pausing",
                 fontface = fontface
@@ -1484,7 +1484,7 @@ rifi_visualization <-
                 yend = 3.2,
                 dis = 10,
                 ytext = 3.6,
-                color = 4,
+                color = iTSS_I_color,
                 linetype = "dotted",
                 fontface = fontface
               )
@@ -1505,7 +1505,7 @@ rifi_visualization <-
                 yend = 3.2,
                 dis = 10,
                 ytext = 3.6,
-                color = 4,
+                color = iTSS_I_color,
                 linetype = "dotted",
                 fontface = fontface
               )
@@ -1524,7 +1524,7 @@ rifi_visualization <-
                 yend = 3.2,
                 dis = 10,
                 ytext = 3.6,
-                color = 4,
+                color = iTSS_I_color,
                 linetype = "dotted",
                 fontface = fontface
               )
@@ -1625,7 +1625,7 @@ rifi_visualization <-
               yend = 3,
               dis = 10,
               ytext = 3.4,
-              color = "grey52",
+              color = HL_threshold_color,
               linetype = "dashed",
               fontface = fontface
             )
@@ -1644,7 +1644,7 @@ rifi_visualization <-
               yend = 3,
               dis = 10,
               ytext = 3.4,
-              color = "grey52",
+              color = vel_threshold_color,
               linetype = "dashed",
               fontface = fontface
             )
@@ -2221,7 +2221,7 @@ rifi_visualization <-
                 size = .5
               )
           }
-          #######################delay plot reverse strand##################
+      #######################delay plot reverse strand##################
           #plot delay segment and outliers
           df2 <- indice_function(df2, "delay_fragment")
           if (nrow(df2 %>%
@@ -2257,8 +2257,7 @@ rifi_visualization <-
             #in case a fragment is split on two pages, each break get a
             #different velocity
             #upon the corresponding delay therefore a segment is checked
-            #first if its flaking
-            #the borders
+            #first if its flaking the borders
             if (nrow(df.c) != 0) {
               p6 <- p6 +
                 geom_smooth(
@@ -2276,7 +2275,7 @@ rifi_visualization <-
             }
             if (nrow(df2 %>%
                      filter(get('indice') == 1) %>%
-                     filter(get('slope') == 0)) > 3) {
+                     filter(get('slope') == 0)) > 2) {
               p6 <- p6 +
                 geom_line(
                   data = df2 %>%
@@ -2509,7 +2508,7 @@ rifi_visualization <-
                 yend = 3,
                 dis = 50,
                 ytext = 3.8,
-                color = "orange",
+                color = ps_color,
                 linetype = "dotted",
                 df = "pausing",
                 fontface = fontface
@@ -2530,7 +2529,7 @@ rifi_visualization <-
                 yend = 3,
                 dis = 50,
                 ytext = 3.8,
-                color = "orange",
+                color = ps_color,
                 linetype = "dotted",
                 df = "pausing",
                 fontface = fontface
@@ -2552,7 +2551,7 @@ rifi_visualization <-
                 yend = 3,
                 dis = 50,
                 ytext = 3.8,
-                color = "orange",
+                color = ps_color,
                 linetype = "dotted",
                 df = "pausing",
                 fontface = fontface
@@ -2585,7 +2584,7 @@ rifi_visualization <-
                 yend = 3.2,
                 dis = 10,
                 ytext = 3.6,
-                color = 4,
+                color = iTSS_I_color,
                 linetype = "dotted",
                 fontface = fontface
               )
@@ -2605,7 +2604,7 @@ rifi_visualization <-
                 yend = 3.2,
                 dis = 10,
                 ytext = 3.6,
-                color = 4,
+                color = iTSS_I_color,
                 linetype = "dotted",
                 fontface = fontface
               )
@@ -2624,7 +2623,7 @@ rifi_visualization <-
                 yend = 3.2,
                 dis = 10,
                 ytext = 3.6,
-                color = 4,
+                color = iTSS_I_color,
                 linetype = "dotted",
                 fontface = fontface
               )
@@ -2723,7 +2722,7 @@ rifi_visualization <-
               yend = 3,
               dis = 10,
               ytext = 3.4,
-              color = "grey52",
+              color = HL_threshold_color,
               linetype = "dashed",
               fontface = fontface
             )
@@ -2742,7 +2741,7 @@ rifi_visualization <-
               yend = 3,
               dis = 10,
               ytext = 3.4,
-              color = "grey52",
+              color = vel_threshold_color,
               linetype = "dashed",
               fontface = fontface
             )
@@ -2773,6 +2772,6 @@ rifi_visualization <-
         heights = c(4.5, 4.5, 4.5, 6, 4.5, 4.5, 4.5),
         bottom = textGrob(Title, gp = gpar(fontsize = 6))
       )
-    }))
+    })
     dev.off()
   }

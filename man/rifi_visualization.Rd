@@ -107,7 +107,11 @@ rifi_visualization(
   p_value_hl = 0.05,
   event_duration = 40,
   HL_threshold = 20,
-  vel_threshold = 200
+  vel_threshold = 200,
+  HL_threshold_color = "green4",
+  vel_threshold_color = "grey52",
+  ps_color = "orange",
+  iTSS_I_color = "blue"
 )
 }
 \arguments{
@@ -209,6 +213,14 @@ default 20.}
 
 \item{vel_threshold}{integer: threshold for velocity ratio selected to plot,
 default 200.}
+
+\item{HL_threshold_color}{string: color for HL fold change plot}
+
+\item{vel_threshold_color}{string: color for velocity ratio plot}
+
+\item{ps_color}{string: color for pausing site plot}
+
+\item{iTSS_I_color}{string: color for iTSS_I plot}
 }
 \value{
 The visualization.
@@ -291,9 +303,10 @@ face="bold", tick_length = .3, arrow.color = "darkseagreen1",
 minVelocity = 3000, medianVelocity = 6000, threshold_intensity = 4000,
 col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
 axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
-p_value_TI=0.05, p_value_manova=0.05, termination_threshold=1,
-iTSS_threshold=1.01, p_value_int=0.05, p_value_event=0.05,
-p_value_hl=0.05, event_duration=40, HL_threshold=20,
-vel_threshold = 200)
+p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
+iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
+p_value_hl = 0.05, event_duration = 40, HL_threshold=20,
+vel_threshold = 200, HL_threshold_color="green4", 
+vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 
 }
