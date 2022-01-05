@@ -143,7 +143,7 @@
 #' p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
 #' iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
 #' p_value_hl = 0.05, event_duration = 40, HL_threshold=20,
-#' vel_threshold = 200, HL_threshold_color="green4", 
+#' vel_threshold = 200, HL_threshold_color="green4",
 #' vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 #'
 #' @export
@@ -205,9 +205,9 @@ rifi_visualization <-
            vel_threshold = 200,
            HL_threshold_color = "green4",
            vel_threshold_color = "grey52",
-           ps_color="orange",
-           iTSS_I_color="blue") {
-  ##########################data preparation##################################
+           ps_color = "orange",
+           iTSS_I_color = "blue") {
+    ##########################data preparation##################################
     input <- event_dataframe(data, data_annotation = annot)
     #I. add coverage if its available from RNA-seq
     tmp <-
@@ -235,12 +235,13 @@ rifi_visualization <-
     frag <- splitGenome_function(x = fl, gLength = gLength)
     #################################plot###############################
     #IV. the general plot
-    pdf(
-      "genome_fragments.pdf",
+    pdf.options(
+      reset = TRUE,
+      onefile = TRUE,
       width = 8,
-      height = 5.3,
-      onefile = TRUE
+      height = 5.3
     )
+    pdf("genome_fragments.pdf")
     an.newLine <- data.frame()
     suppressWarnings(for (i in seq_len(length(frag) - 1)) {
       p <- list()
@@ -252,22 +253,22 @@ rifi_visualization <-
         #frag vector.
         frag[i + 1] <- frag[i] + 10000
       }
-     ###########################data adjustment###########################
+      ###########################data adjustment###########################
       #define the main dataframe with segments positive strand df1, negative
       #strand df2
       df1 <-
-        tmp.1[between(tmp.1$position, frag[i], frag[c(i + 1)]), ]
+        tmp.1[between(tmp.1$position, frag[i], frag[c(i + 1)]),]
       df2 <-
-        tmp.2[between(tmp.2$position, frag[i], frag[c(i + 1)]), ]
-      df1_1 <- df1[!is.na(df1$ID), ]
+        tmp.2[between(tmp.2$position, frag[i], frag[c(i + 1)]),]
+      df1_1 <- df1[!is.na(df1$ID),]
       #avoid plot empty pages in case of small data
-      if(nrow(df1) == 0 & nrow(df2) == 0 & nrow(data) < 10000) {
+      if (nrow(df1) == 0 & nrow(df2) == 0 & nrow(data) < 10000) {
         next ()
       }
       #an is the annotation dataframe upon the position on the plot, its used
       # to loop into exactly the number of region contained in the gff3
-      an <- annot[between(annot$start, frag[i], frag[c(i + 1)]), ]
-      an <- an[!duplicated(an), ]
+      an <- annot[between(annot$start, frag[i], frag[c(i + 1)]),]
+      an <- an[!duplicated(an),]
       #in case of no data nor annotation are available
       if (nrow(an) == 0 & nrow(df1) == 0 & nrow(df2) == 0) {
         next ()
@@ -305,7 +306,7 @@ rifi_visualization <-
           segment_data_t.1 <- TU_annotation(df1, "TU", 3, 6, color_TU)
           segment_data_t.1 <-
             segment_data_t.1[grep("_NA", segment_data_t.1$annotation,
-                                  invert = TRUE), ]
+                                  invert = TRUE),]
           if (nrow(segment_data_t.1) == 0) {
             segment_data_t.1 <- empty_boxes(
               ystart = 3,
@@ -322,7 +323,7 @@ rifi_visualization <-
             if (length(tu_border) != 0) {
               segment_data_t.1.tuLeft <-
                 segment_data_t.1[-which(tu_border ==
-                                          segment_data_t.1$annotation), ]
+                                          segment_data_t.1$annotation),]
             } else{
               segment_data_t.1.tuLeft <- segment_data_t.1
             }
@@ -357,10 +358,11 @@ rifi_visualization <-
             rbind(segment_data_g.p2, segment_data_g.2)
         }
       }, warning = function(war) {
+        
       },
       error = function(err) {
-      }
-      )
+        
+      })
       segment_data_t.2 <- data.frame()
       segment_data_g.1 <- data.frame()
       segment_data_g.2 <- data.frame()
@@ -369,12 +371,12 @@ rifi_visualization <-
       #TU and genes annotation in the negative strand
       tryCatch({
         if (nrow(df2) != 0) {
-          segment_data_t.2 <- TU_annotation(df2, "TU", -3, -6, color_TU)
+          segment_data_t.2 <- TU_annotation(df2, "TU",-3,-6, color_TU)
           segment_data_t.2 <-
             segment_data_t.2[grep("_NA", segment_data_t.2$annotation,
-                                  invert = TRUE), ]
+                                  invert = TRUE),]
           if (nrow(segment_data_t.2) == 0) {
-            segment_data_t.2 <- empty_boxes(-3, -6, frag = frag, i = i)
+            segment_data_t.2 <- empty_boxes(-3,-6, frag = frag, i = i)
           } else{
             #function to find TUs split into 2 pages
             tu_border <-
@@ -383,7 +385,7 @@ rifi_visualization <-
             if (length(tu_border) != 0) {
               segment_data_t.2.tuLeft <-
                 segment_data_t.2[-which(tu_border ==
-                                          segment_data_t.2$annotation), ]
+                                          segment_data_t.2$annotation),]
             } else{
               segment_data_t.2.tuLeft <- segment_data_t.2
             }
@@ -418,10 +420,11 @@ rifi_visualization <-
             rbind(segment_data_g.m2, segment_data_g.2)
         }
       }, warning = function(war) {
+        
       },
       error = function(err) {
-      }
-      )
+        
+      })
       df.annt <-
         rbind(
           segment_data_t.1,
@@ -497,7 +500,7 @@ rifi_visualization <-
               fill = df.annt$color
             ) +
             geom_text(
-              data = df.annt[grep("TU", df.annt$annotation), ],
+              data = df.annt[grep("TU", df.annt$annotation),],
               aes((get('xstart') + get('xend')) / 2, (get('ystart') +
                                                         get('yend')) / 2,
                   label = get('annotation')),
@@ -509,11 +512,11 @@ rifi_visualization <-
         }
         #avoid 5'UTR and 3'UTR label
         df.annt.1 <-
-          df.annt[grep("UTR", df.annt$region, invert = TRUE), ]
+          df.annt[grep("UTR", df.annt$region, invert = TRUE),]
         if (nrow(df.annt.1) != 0) {
           p7 <- p7 +
             geom_text(
-              data = df.annt.1[which(df.annt.1$ystart %in% c(7.4, -7.4)), ],
+              data = df.annt.1[which(df.annt.1$ystart %in% c(7.4,-7.4)),],
               aes((get('xstart') + get('xend')) / 2, (get('ystart') +
                                                         get('yend')) / 2,
                   label = get('annotation')),
@@ -523,7 +526,7 @@ rifi_visualization <-
               check_overlap = TRUE
             ) +
             geom_text(
-              data = df.annt.1[which(df.annt.1$ystart %in% c(11.8, -11.8)), ],
+              data = df.annt.1[which(df.annt.1$ystart %in% c(11.8,-11.8)),],
               aes((get('xstart') + get('xend')) / 2, (get('ystart') +
                                                         get('yend')) / 2,
                   label = get('gene')),
@@ -612,7 +615,7 @@ rifi_visualization <-
           scale_y_continuous(
             trans = 'log2',
             labels = label_log2_function,
-            sec.axis = sec_axis(~ . * 1, name = "Coverage",
+            sec.axis = sec_axis( ~ . * 1, name = "Coverage",
                                  labels = label_square_function)
           ) +
           theme_bw() +
@@ -643,9 +646,9 @@ rifi_visualization <-
                 "; ",
                 "FC*: ",
                 "significant t-test of two consecutive segments",
-                "; Term: termination, NS: new start, PS: pausing site,
-                iTSS_I: internal starting site, TI: transcription
-                interferance."
+                "; Term: termination, NS: new start, PS: pausing site,",
+                "iTSS_I: internal starting site,",
+                 "TI: transcription interferance."
               )
             ) +
             theme(plot.title = element_text(size = 6, hjust = .5))
@@ -656,7 +659,7 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, 10),
             breaks = seq(0, 10, by = 2),
-            sec.axis = sec_axis(~ . * 1, name = "Half-life [min]", breaks =
+            sec.axis = sec_axis( ~ . * 1, name = "Half-life [min]", breaks =
                                    seq(0, Limit, by = 2))
           ) +
           labs(y = "Half-life [min]") +
@@ -682,7 +685,7 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, Limit),
             breaks = seq(0, Limit, by = 2),
-            sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+            sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
                                    seq(0, Limit, by = 2))
           ) +
           labs(y = "Delay [min]") +
@@ -708,16 +711,16 @@ rifi_visualization <-
       #This part of the script runs only in case of the dataframe from the
       #positive strand is not empty
       if (nrow(df1) != 0) {
-      ########################ggplot positive strand#######################
+        ########################ggplot positive strand#######################
         #first plot for intensity segments
         p1 <-
-            ggplot(df1, aes(x = get('position'), y = get('intensity'))) +
+          ggplot(df1, aes(x = get('position'), y = get('intensity'))) +
           scale_x_continuous(limits = c(frag[i], frag[i + 1])) +
           scale_y_continuous(
             trans = 'log2',
             labels = label_log2_function,
             limits = c(NA, NA),
-            sec.axis = sec_axis(~ . * 1, name = "Coverage",
+            sec.axis = sec_axis( ~ . * 1, name = "Coverage",
                                  labels = label_square_function)
           ) +
           labs(y = "Intensity [A.U]") +
@@ -744,19 +747,19 @@ rifi_visualization <-
         #asterisk is added.
         if (length(grep("TI", df1$flag)) != 0) {
           #grep only flagged probes/bins with TI
-          df1_ti_a <- df1[grep("TI", df1$flag), ]
+          df1_ti_a <- df1[grep("TI", df1$flag),]
           for (l in seq_along(unique(df1_ti_a$TU))) {
-            df1_ti <- df1_ti_a[which(df1_ti_a$TU == unique(df1_ti_a$TU)[l]), ]
+            df1_ti <- df1_ti_a[which(df1_ti_a$TU == unique(df1_ti_a$TU)[l]),]
             #grep only TI without any termination as NA, T or O
             df1_ti <-
               df1_ti[grep(paste0("\\TI_\\d+", "$"),
-                          df1_ti$TI_termination_fragment), ]
+                          df1_ti$TI_termination_fragment),]
             #grep only non-NA rows
             df1_ti <-
-              df1_ti[!is.na(df1_ti$TI_mean_termination_factor), ]
+              df1_ti[!is.na(df1_ti$TI_mean_termination_factor),]
             # Eliminate TI factor above 1
             df1_ti <-
-              df1_ti[which(df1_ti$TI_termination_factor < 1), ]
+              df1_ti[which(df1_ti$TI_termination_factor < 1),]
             #TI is ignored if it contains only 3 probes/bins
             if (nrow(df1_ti) < 3 |
                 nrow(df1_ti %>% group_by(get('TI_termination_fragment'))) ==
@@ -820,12 +823,12 @@ rifi_visualization <-
               # is plotted.
               # we select only the first position of each TI fragment
               df1.1_ti <-
-                df1_ti[!duplicated(df1_ti$TI_termination_fragment), ]
+                df1_ti[!duplicated(df1_ti$TI_termination_fragment),]
               #plot vertical lines on the middle of each 2 fragments.
               if (nrow(df1.1_ti) > 1) {
                 TIs <- TI_frag_threshold(df1.1_ti, TI_threshold)
                 df1.1_ti_thr <-
-                  df1.1_ti[which(df1.1_ti$TI_termination_fragment %in% TIs), ]
+                  df1.1_ti[which(df1.1_ti$TI_termination_fragment %in% TIs),]
                 p1 <- p1 +
                   geom_vline(
                     df1.1_ti_thr,
@@ -890,14 +893,15 @@ rifi_visualization <-
         if (all(df1$half_life > 20)) {
           df1$half_life <- 20
         }
-       p2 <-
-           ggplot(df1, aes(x = get('position'), y = get('half_life'))) +
+        p2 <-
+          ggplot(df1, aes(x = get('position'), y = get('half_life'))) +
           scale_x_continuous(limits = c(frag[i], frag[i + 1])) +
           scale_y_continuous(
             limits = c(0, Limit_h_df1),
             breaks = Breaks_h,
-            sec.axis = sec_axis(~ . * 1, name = "Half-life [min]", breaks =
-                                  Breaks_h)) +
+            sec.axis = sec_axis( ~ . * 1, name = "Half-life [min]", breaks =
+                                   Breaks_h)
+          ) +
           labs(y = "Half-life [min]") +
           theme_bw() +
           background_grid(major = "xy", minor = "none") +
@@ -925,7 +929,7 @@ rifi_visualization <-
               scale_y_continuous(
                 limits = c(0, Limit_h_df1),
                 breaks = Breaks_h,
-                sec.axis = sec_axis(~ . * 1, name = "Half-life [min]", breaks =
+                sec.axis = sec_axis( ~ . * 1, name = "Half-life [min]", breaks =
                                        Breaks_h)
               )
           }
@@ -952,7 +956,7 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, Limit_df1),
             breaks = Breaks_d,
-            sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+            sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
                                    Breaks_d)
           ) +
           labs(y = "Delay [min]") +
@@ -981,7 +985,7 @@ rifi_visualization <-
               scale_y_continuous(
                 limits = c(0, Limit_df1),
                 breaks = Breaks_d,
-                sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+                sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
                                        Breaks_d)
               )
           }
@@ -1016,7 +1020,7 @@ rifi_visualization <-
                          aes(col = get('intensity_fragment')),
                          size = .5)
             #eliminate outliers probes or bins
-            df1_wo <- df1[which(df1$indice == 1), ]
+            df1_wo <- df1[which(df1$indice == 1),]
             #assign a mean position for the plot
             df1_wo <- meanPosition(df1_wo, "intensity_fragment")
             if (length(df1_wo$intensity_fragment) != 0) {
@@ -1065,7 +1069,7 @@ rifi_visualization <-
                          aes(col = get('HL_fragment')),
                          size = .5)
             #eliminate outliers probes or bins
-            df1_wo <- df1[which(df1$indice == 1), ]
+            df1_wo <- df1[which(df1$indice == 1),]
             #assign a mean position for the plot
             df1_wo <- meanPosition(df1_wo, "HL_fragment")
             if (length(df1_wo$HL_fragment) != 0) {
@@ -1086,7 +1090,7 @@ rifi_visualization <-
                   size = 1.3,
                   check_overlap = TRUE
                 )
-              }
+            }
           }
           #plot HL outliers
           if (nrow(df1 %>% filter(get('indice') == 2)) != 0) {
@@ -1193,7 +1197,7 @@ rifi_visualization <-
               )
           }
           df1_wo <-
-            df1[grep(paste0("\\D_\\d+", "$"), df1$delay_fragment), ]
+            df1[grep(paste0("\\D_\\d+", "$"), df1$delay_fragment),]
           if (nrow(df1_wo) != 0) {
             df1_wo <- meanPosition(df1_wo, "delay_fragment")
             df1_wo <-
@@ -1232,7 +1236,7 @@ rifi_visualization <-
         forggtitle_NS <- 0
         df1_syR_T <- NA
         if (length(which(!is.na(df1$synthesis_ratio))) != 0) {
-          df1_syR <- df1[which(!is.na(df1$synthesis_ratio)), ]
+          df1_syR <- df1[which(!is.na(df1$synthesis_ratio)),]
           #in case last position matches with an event which needs to be
           #on the next page of the plot.
           if (last(df1_syR$position) == frag[c(i + 1)]) {
@@ -1240,7 +1244,8 @@ rifi_visualization <-
               df1_syR[which(df1_syR$position ==
                               frag[c(i + 1)]), "FC_HL_intensity_fragment"]
             df1_syR[which(df1_syR$FC_HL_intensity_fragment == fc_seg),
-                    c("synthesis_ratio_event", "p_value_Manova")] <- NA
+                    c("synthesis_ratio_event", "p_value_Manova")] <-
+              NA
           }
           if (length(which(
             df1_syR$synthesis_ratio < termination_threshold &
@@ -1250,7 +1255,7 @@ rifi_visualization <-
               df1_syR[which(
                 df1_syR$synthesis_ratio < termination_threshold &
                   !is.na(df1_syR$FC_HL_intensity_fragment)
-              ), ]
+              ),]
             df1_syR_T <-
               arrange_byGroup(df1_syR_T, "FC_HL_intensity_fragment")
             forggtitle_ter <- nrow(df1_syR_T)
@@ -1321,7 +1326,7 @@ rifi_visualization <-
               df1_syR[which(
                 df1_syR$synthesis_ratio > iTSS_threshold &
                   !is.na(df1_syR$FC_HL_intensity_fragment)
-              ), ]
+              ),]
             df1_syR_T <-
               arrange_byGroup(df1_syR_T, "FC_HL_intensity_fragment")
             forggtitle_NS <- nrow(df1_syR_T)
@@ -1393,11 +1398,11 @@ rifi_visualization <-
             filter(na.omit(get('event_duration')) <= event_duration)
           if (nrow(df1_ps %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                     < p_value_event)) != 0) {
+                          < p_value_event)) != 0) {
             df1_ps_s <-
               df1_ps %>%
               filter(get('event_ps_itss_p_value_Ttest')
-                                < p_value_event)
+                     < p_value_event)
             p3 <-
               my_segment_T(
                 p3,
@@ -1415,11 +1420,11 @@ rifi_visualization <-
           }
           if (nrow(df1_ps %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                     > p_value_event)) != 0) {
+                          > p_value_event)) != 0) {
             df1_ps_b <-
               df1_ps %>%
               filter(get('event_ps_itss_p_value_Ttest')
-                                > p_value_event)
+                     > p_value_event)
             p3 <-
               my_segment_T(
                 p3,
@@ -1437,7 +1442,8 @@ rifi_visualization <-
           }
           if (nrow(df1_ps %>%
                    filter(is.na(
-            get('event_ps_itss_p_value_Ttest')))) != 0) {
+                     get('event_ps_itss_p_value_Ttest')
+                   ))) != 0) {
             df1_ps_s <- df1_ps %>%
               filter(is.na('event_ps_itss_p_value_Ttest'))
             p3 <-
@@ -1467,14 +1473,14 @@ rifi_visualization <-
           df1_itss <-
             df1_itss %>%
             filter(na.omit(get('event_duration'))
-                                <= event_duration)
+                   <= event_duration)
           if (nrow(df1_itss %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                       < p_value_event)) != 0) {
+                          < p_value_event)) != 0) {
             df1_itss_s <-
               df1_itss %>%
               filter(get('event_ps_itss_p_value_Ttest')
-                                  < p_value_event)
+                     < p_value_event)
             p3 <-
               my_segment_NS(
                 p3,
@@ -1491,11 +1497,11 @@ rifi_visualization <-
           }
           if (nrow(df1_itss %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                       > p_value_event)) != 0) {
+                          > p_value_event)) != 0) {
             df1_itss_b <-
               df1_itss %>%
               filter(get('event_ps_itss_p_value_Ttest')
-                                  > p_value_event)
+                     > p_value_event)
             p3 <-
               my_segment_NS(
                 p3,
@@ -1535,7 +1541,7 @@ rifi_visualization <-
         #select the last row for each segment and add 40 nucleotides in case
         #of negative strand for a nice plot
         df1 <- indice_function(df1, "intensity_fragment")
-        df1_wo <- df1[which(df1$indice == 1), ]
+        df1_wo <- df1[which(df1$indice == 1),]
         #select the last row for each segment and add 40 nucleotides in case
         #of negative strand for a nice plot
         df1_wo_pvalue <-
@@ -1543,7 +1549,7 @@ rifi_visualization <-
         if (nrow(df1_wo_pvalue) != 0) {
           df1_p_val_int <-
             df1_wo_pvalue[which(df1_wo_pvalue$p_value_intensity
-                                < p_value_int), ]
+                                < p_value_int),]
           if (nrow(df1_p_val_int) != 0) {
             p1 <- p1 +
               geom_text(
@@ -1560,7 +1566,7 @@ rifi_visualization <-
           }
           df1_p_val_int <-
             df1_wo_pvalue[which(df1_wo_pvalue$p_value_intensity
-                                > p_value_int), ]
+                                > p_value_int),]
           if (nrow(df1_p_val_int) != 0) {
             p1 <- p1 +
               geom_text(
@@ -1578,11 +1584,11 @@ rifi_visualization <-
         }
         #add FC for HL ratio test if p_value is significant
         df1 <- indice_function(df1, "HL_fragment")
-        df1_wo <- df1[which(df1$indice == 1), ]
+        df1_wo <- df1[which(df1$indice == 1),]
         df1_p_val_hl <-  arrange_byGroup(df1_wo, "p_value_HL")
         if (nrow(df1_p_val_hl) != 0) {
           df1_p_val_hl <-
-            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL < p_value_hl), ]
+            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL < p_value_hl),]
           if (nrow(df1_p_val_hl) != 0) {
             p2 <- p2 +
               geom_text(
@@ -1597,7 +1603,7 @@ rifi_visualization <-
               )
           }
           df1_p_val_hl <-
-            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL > p_value_hl), ]
+            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL > p_value_hl),]
           if (nrow(df1_p_val_hl) != 0) {
             p2 <- p2 +
               geom_text(
@@ -1614,7 +1620,7 @@ rifi_visualization <-
         }
         #Select rows with FC_HL event and draw a line
         df1_hl <- arrange_byGroup(df1, "FC_HL")
-        df1_hl <- df1_hl[which(df1_hl$FC_HL < HL_threshold), ]
+        df1_hl <- df1_hl[which(df1_hl$FC_HL < HL_threshold),]
         if (nrow(df1_hl) != 0) {
           p2 <-
             my_segment_NS(
@@ -1633,7 +1639,7 @@ rifi_visualization <-
         #Select rows with velocity_ratio event and draw a line
         df1_v <- arrange_byGroup(df1, "velocity_ratio")
         df1_v <-
-          df1_v[which(df1_v$velocity_ratio < vel_threshold), ]
+          df1_v[which(df1_v$velocity_ratio < vel_threshold),]
         if (nrow(df1_v) != 0) {
           p3 <-
             my_segment_NS(
@@ -1711,7 +1717,7 @@ rifi_visualization <-
         Title <- NA
         # #add empty boxes
         if (nrow(segment_data_t.2) == 0) {
-          segment_data_t.2 <- empty_boxes(-3.5, -5.5, frag = frag, i = i)
+          segment_data_t.2 <- empty_boxes(-3.5,-5.5, frag = frag, i = i)
         } else {
           p7 <- p7 +
             geom_rect(
@@ -1733,7 +1739,8 @@ rifi_visualization <-
             trans = 'log2',
             labels = label_log2_function,
             limits = c(NA, NA),
-            sec.axis = sec_axis(~ . * 1, name = "Coverage [A.U]")) +
+            sec.axis = sec_axis( ~ . * 1, name = "Coverage [A.U]")
+          ) +
           labs(y = "Intensity [A.U]") +
           theme_bw() +
           background_grid(major = "xy", minor = "none") +
@@ -1760,8 +1767,9 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, 10),
             breaks = seq(0, 10, by = 2),
-            sec.axis = sec_axis(~ . * 1, name = "Half-life [min]", breaks =
-                                   seq(0, Limit, by = 2))) +
+            sec.axis = sec_axis( ~ . * 1, name = "Half-life [min]", breaks =
+                                   seq(0, Limit, by = 2))
+          ) +
           labs(y = "Half-life [min]") +
           theme_bw() +
           background_grid(major = "xy", minor = "none") +
@@ -1788,7 +1796,7 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, 10),
             breaks = seq(0, 10, by = 2),
-            sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+            sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
                                    seq(0, Limit, by = 2))
           ) +
           labs(y = "Delay [min]") +
@@ -1814,7 +1822,7 @@ rifi_visualization <-
       }
       #############################reverse strand#############################
       if (nrow(df2) != 0) {
-      ##############################ggplot reverse strand#####################
+        ##############################ggplot reverse strand#####################
         p4 <-
           ggplot(df2, aes(x = get('position'), y = get('intensity'))) +
           scale_x_continuous(limits = c(frag[i], frag[i + 1])) +
@@ -1822,8 +1830,9 @@ rifi_visualization <-
             trans = 'log2',
             labels = label_log2_function,
             limits = c(NA, NA),
-            sec.axis = sec_axis(~ . * 1, name = "Coverage",
-                                 labels = label_square_function)) +
+            sec.axis = sec_axis( ~ . * 1, name = "Coverage",
+                                 labels = label_square_function)
+          ) +
           coord_trans(y = 'reverse') +
           labs(y = "Intensity [A.U]") +
           theme_bw() +
@@ -1863,7 +1872,7 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, Limit_h_df2),
             breaks = Breaks_h2,
-            sec.axis = sec_axis(~ . * 1, name = "Half-life [min]", breaks =
+            sec.axis = sec_axis( ~ . * 1, name = "Half-life [min]", breaks =
                                    Breaks_h2)
           ) +
           labs(y = "Half-life [min]") +
@@ -1940,7 +1949,7 @@ rifi_visualization <-
           scale_y_continuous(
             limits = c(0, Limit_df2),
             breaks = Breaks_d2,
-            sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+            sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
                                    Breaks_d2)
           ) +
           labs(y = "Delay [min]") +
@@ -1970,7 +1979,7 @@ rifi_visualization <-
               scale_y_continuous(
                 limits = c(0, Limit_df2),
                 breaks = Breaks_d2,
-                sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+                sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
                                        Breaks_d2)
               ) +
               coord_trans(y = 'reverse')
@@ -1979,15 +1988,15 @@ rifi_visualization <-
         #############################TI plot reverse strand###################
         #plot transcription interference on the background
         if (length(grep("TI", df2$flag)) != 0) {
-          df2_ti_a <- df2[grep("TI", df2$flag), ]
+          df2_ti_a <- df2[grep("TI", df2$flag),]
           #looping into TUs
           for (l in seq_along(unique(df2_ti_a$TU))) {
-            df2_ti <- df2_ti_a[which(df2_ti_a$TU == unique(df2_ti_a$TU)[l]), ]
+            df2_ti <- df2_ti_a[which(df2_ti_a$TU == unique(df2_ti_a$TU)[l]),]
             df2_ti <-
               df2_ti[grep(paste0("\\TI_\\d+", "$"),
-                          df2_ti$TI_termination_fragment), ]
+                          df2_ti$TI_termination_fragment),]
             df2_ti <-
-              df2_ti[!is.na(df2_ti$TI_mean_termination_factor), ]
+              df2_ti[!is.na(df2_ti$TI_mean_termination_factor),]
             if (nrow(df2_ti) < 3 |
                 nrow(df2_ti %>%
                      group_by(get('TI_termination_fragment'))) ==
@@ -2049,7 +2058,7 @@ rifi_visualization <-
               if (nrow(df2.1_ti) > 1) {
                 TIs <- TI_frag_threshold(df2.1_ti, TI_threshold)
                 df2.1_ti_thr <-
-                  df2.1_ti[which(df2.1_ti$TI_termination_fragment %in% TIs), ]
+                  df2.1_ti[which(df2.1_ti$TI_termination_fragment %in% TIs),]
                 p4 <- p4 +
                   geom_vline(
                     df2.1_ti_thr,
@@ -2061,7 +2070,7 @@ rifi_visualization <-
                 if (length(na.omit(df2.1_ti$p_value_TI)) != 0) {
                   if (nrow(df2.1_ti %>%
                            filter(get('p_value_TI')
-                                               < p_value_TI)) != 0) {
+                                  < p_value_TI)) != 0) {
                     p4 <- p4 +
                       geom_text(
                         data = df2.1_ti,
@@ -2078,7 +2087,7 @@ rifi_visualization <-
                   }
                   else if (nrow(df2.1_ti %>%
                                 filter(get('p_value_TI')
-                                                    > p_value_TI)) != 0) {
+                                       > p_value_TI)) != 0) {
                     p4 <- p4 +
                       geom_text(
                         data = df2.1_ti,
@@ -2121,7 +2130,7 @@ rifi_visualization <-
                            filter(get('indice') == 1),
                          aes(col = get('intensity_fragment')),
                          size = .5)
-            df2_wo <- df2[which(df2$indice == 1), ]
+            df2_wo <- df2[which(df2$indice == 1),]
             df2_wo <- meanPosition(df2_wo, "intensity_fragment")
             if (length(df2_wo$intensity_fragment) != 0) {
               p4 <- p4 +
@@ -2164,7 +2173,7 @@ rifi_visualization <-
                         ),
                         col = get('col_coverage'))
           }
-      ########################HL plot reverse strand#######################
+          ########################HL plot reverse strand#######################
           df2 <- indice_function(df2, "HL_fragment")
           if (nrow(df2 %>%
                    filter(get('indice') == 1)) != 0) {
@@ -2173,7 +2182,7 @@ rifi_visualization <-
                            filter(get('indice') == 1),
                          aes(col = get('HL_fragment')),
                          size = .5)
-            df2_wo <- df2[which(df2$indice == 1), ]
+            df2_wo <- df2[which(df2$indice == 1),]
             df2_wo <- meanPosition(df2_wo, "HL_fragment")
             if (length(df2_wo$HL_fragment) != 0) {
               p5 <- p5 +
@@ -2221,7 +2230,7 @@ rifi_visualization <-
                 size = .5
               )
           }
-      #######################delay plot reverse strand##################
+          #######################delay plot reverse strand##################
           #plot delay segment and outliers
           df2 <- indice_function(df2, "delay_fragment")
           if (nrow(df2 %>%
@@ -2275,7 +2284,7 @@ rifi_visualization <-
             }
             if (nrow(df2 %>%
                      filter(get('indice') == 1) %>%
-                     filter(get('slope') == 0)) > 2) {
+                     filter(get('slope') == 0)) >= 3) {
               p6 <- p6 +
                 geom_line(
                   data = df2 %>%
@@ -2302,7 +2311,7 @@ rifi_visualization <-
               )
           }
           df2_wo <-
-            df2[grep(paste0("\\D_\\d+", "$"), df2$delay_fragment), ]
+            df2[grep(paste0("\\D_\\d+", "$"), df2$delay_fragment),]
           if (nrow(df2_wo) != 0) {
             df2_wo <- meanPosition(df2_wo, "delay_fragment")
             df2_wo <-
@@ -2341,7 +2350,7 @@ rifi_visualization <-
         forggtitle_NS <- 0
         df2_syR_T <- NA
         if (length(which(!is.na(df2$synthesis_ratio))) != 0) {
-          df2_syR <- df2[which(!is.na(df2$synthesis_ratio)), ]
+          df2_syR <- df2[which(!is.na(df2$synthesis_ratio)),]
           if (length(which(
             df2_syR$synthesis_ratio < termination_threshold &
             !is.na(df2_syR$FC_HL_intensity_fragment)
@@ -2350,9 +2359,9 @@ rifi_visualization <-
               df2_syR[which(
                 df2_syR$synthesis_ratio < termination_threshold &
                   !is.na(df2_syR$FC_HL_intensity_fragment)
-              ), ]
+              ),]
             df2_syR_T <-
-              df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
+              df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity),]
             forggtitle_ter <- nrow(df2_syR_T)
             if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
               df2_syR_T.m <-
@@ -2421,9 +2430,9 @@ rifi_visualization <-
               df2_syR[which(
                 df2_syR$synthesis_ratio > iTSS_threshold &
                   !is.na(df2_syR$FC_HL_intensity_fragment)
-              ), ]
+              ),]
             df2_syR_T <-
-              df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
+              df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity),]
             forggtitle_NS <- nrow(df2_syR_T)
             if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
               df2_syR_T.m <-
@@ -2494,11 +2503,11 @@ rifi_visualization <-
           #with a legend
           if (nrow(df2_ps %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                     < p_value_event)) != 0) {
+                          < p_value_event)) != 0) {
             df2_ps_s <-
               df2_ps %>%
               filter(get('event_ps_itss_p_value_Ttest')
-                                < p_value_event)
+                     < p_value_event)
             p6 <-
               my_segment_T(
                 p6,
@@ -2536,8 +2545,9 @@ rifi_visualization <-
               )
           }
           if (nrow(df2_ps %>%
-                   filter(is.na(get('event_ps_itss_p_value_Ttest')
-          ))) != 0) {
+                   filter(is.na(
+                     get('event_ps_itss_p_value_Ttest')
+                   ))) != 0) {
             df2_ps_b <-
               df2_ps %>% filter(is.na(get(
                 'event_ps_itss_p_value_Ttest'
@@ -2571,7 +2581,7 @@ rifi_visualization <-
             filter(na.omit(get('event_duration')) <= event_duration)
           if (nrow(df2_itss %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                       < p_value_event)) != 0) {
+                          < p_value_event)) != 0) {
             df2_itss_s <-
               df2_itss %>%
               filter(get('event_ps_itss_p_value_Ttest') < p_value_event)
@@ -2591,7 +2601,7 @@ rifi_visualization <-
           }
           if (nrow(df2_itss %>%
                    filter(get('event_ps_itss_p_value_Ttest')
-                                       > p_value_event)) != 0) {
+                          > p_value_event)) != 0) {
             df2_itss_b <-
               df2_itss %>%
               filter(get('event_ps_itss_p_value_Ttest') > p_value_event)
@@ -2610,10 +2620,14 @@ rifi_visualization <-
               )
           }
           if (nrow(df2_itss %>%
-                   filter(is.na(get('event_ps_itss_p_value_Ttest')))) != 0) {
+                   filter(is.na(
+                     get('event_ps_itss_p_value_Ttest')
+                   ))) != 0) {
             df2_itss_b <-
               df2_itss %>%
-              filter(is.na(get('event_ps_itss_p_value_Ttest')))
+              filter(is.na(get(
+                'event_ps_itss_p_value_Ttest'
+              )))
             p6 <-
               my_segment_NS(
                 p6,
@@ -2632,15 +2646,15 @@ rifi_visualization <-
         ####################FC reverse strand###################
         #add FC for intensity ratio test if p_value is significant
         df2 <- indice_function(df2, "intensity_fragment")
-        df2_wo <- df2[which(df2$indice == 1), ]
+        df2_wo <- df2[which(df2$indice == 1),]
         #select the last row for each segment and add 40 nucleotides in case
         #of negative strand for a nice plot
         df2_wo_pvalue <-
-          df2_wo[!duplicated(df2_wo$p_value_intensity), ]
+          df2_wo[!duplicated(df2_wo$p_value_intensity),]
         if (nrow(df2_wo_pvalue) != 0) {
           df2_p_val_int <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_intensity
-                                < p_value_int), ]
+                                < p_value_int),]
           if (nrow(df2_p_val_int) != 0) {
             p4 <- p4 +
               geom_text(
@@ -2657,7 +2671,7 @@ rifi_visualization <-
           }
           df2_p_val_int <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_intensity
-                                > p_value_int), ]
+                                > p_value_int),]
           if (nrow(df2_p_val_int) != 0) {
             p4 <- p4 +
               geom_text(
@@ -2671,15 +2685,15 @@ rifi_visualization <-
                 size = 1,
                 check_overlap = TRUE
               )
-            }
+          }
         }
         #add FC for HL ratio test if p_value is significant
         df2 <- indice_function(df2, "HL_fragment")
-        df2_wo <- df2[which(df2$indice == 1), ]
-        df2_wo_pvalue <-  df2_wo[!duplicated(df2_wo$p_value_HL), ]
+        df2_wo <- df2[which(df2$indice == 1),]
+        df2_wo_pvalue <-  df2_wo[!duplicated(df2_wo$p_value_HL),]
         if (nrow(df2_wo_pvalue) != 0) {
           df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL < p_value_hl), ]
+            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL < p_value_hl),]
           if (nrow(df2_p_val_hl) != 0) {
             p5 <- p5 +
               geom_text(
@@ -2694,7 +2708,7 @@ rifi_visualization <-
               )
           }
           df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl), ]
+            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl),]
           if (nrow(df2_p_val_hl) != 0) {
             p5 <- p5 +
               geom_text(
@@ -2710,8 +2724,8 @@ rifi_visualization <-
           }
         }
         #Select rows with FC_HL event and draw a line
-        df2_hl <- df2[!duplicated(df2$FC_HL), ]
-        df2_hl <- df2_hl[which(df2_hl$FC_HL < HL_threshold), ]
+        df2_hl <- df2[!duplicated(df2$FC_HL),]
+        df2_hl <- df2_hl[which(df2_hl$FC_HL < HL_threshold),]
         if (nrow(df2_hl) != 0) {
           p5 <-
             my_segment_NS(
@@ -2728,9 +2742,9 @@ rifi_visualization <-
             )
         }
         #Select rows with velocity_ratio event and draw a line
-        df2_v <- df2[!duplicated(df2$velocity_ratio), ]
+        df2_v <- df2[!duplicated(df2$velocity_ratio),]
         df2_v <-
-          df2_v[which(df2_v$velocity_ratio < vel_threshold), ]
+          df2_v[which(df2_v$velocity_ratio < vel_threshold),]
         if (nrow(df2_v) != 0) {
           p6 <-
             my_segment_NS(

@@ -306,7 +306,7 @@ axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
 p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
 iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
 p_value_hl = 0.05, event_duration = 40, HL_threshold=20,
-vel_threshold = 200, HL_threshold_color="green4", 
+vel_threshold = 200, HL_threshold_color="green4",
 vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 
 }

@@ -59,7 +59,8 @@ Rifi framework has the following dependencies, whereas the brackets indicate the
 ```html
 if (!requireNamespace("BiocManager", quietly=TRUE))
     install.packages("BiocManager")
-    BiocManager::install("rifi")
+    
+BiocManager::install("rifi")
 ```
 
 ### To install directly from github:
