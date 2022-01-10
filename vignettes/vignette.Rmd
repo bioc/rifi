@@ -1858,13 +1858,9 @@ including genes, as-RNA, ncRNA, 5/3'UTR if available and TUs as segments.
 `rifi_visualization` plots delay, HL and intensity fragments with statistical
 t-test between the neighboring fragment, significant t-tests are assigned with
 '*'. The events are also indicated with asterisks if p_value is significant.
-`rifi_visualization` includes `event_dataframe` function to generate a data
-frame only with events for segments and genes as input.
 
 The functions used are:
 
-   `event_dataframe`: see `rifi_summary` section
-   
    `gff3_preprocess`: see `rifi_summary` section
    
    `strand_selection`: check if data is stranded and arrange by position
@@ -2061,24 +2057,24 @@ The arguments used are:
  size_tu = 1.6, size_locusTag = 1.6, size_gene = 1.6, Limit = 10,
  shape=22, col_outiler = "grey50", Alpha=0.5,
  col_coverage = "grey", shape_outlier = 13, limit_intensity = NA,
- face="bold", tick_length = .3, arrow.color = "darkseagreen1",
+ face ="bold", tick_length = .3, arrow.color = "darkseagreen1",
  minVelocity = 3000, medianVelocity = 6000, threshold_intensity = 4000,
  col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
  axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
- p_value_TI=0.05, p_value_manova=0.05, termination_threshold=1,
- iTSS_threshold=1.01, p_value_int=0.05, p_value_event=0.05,
- p_value_hl=0.05, event_duration=40, HL_threshold=20,
- vel_threshold = 200)
+ p_value_TI = 0.05, p_value_manova = 0.05, termination_threshold = 1,
+ iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
+ p_value_hl = 0.05, event_duration = 40, HL_threshold = 20,
+ vel_threshold = 200, ps_color = "orange", iTSS_I_color = "blue")
 ```
 <br/><br/>
 ``` {r genome_plot_1, echo=T, fig.cap="**Fragments Plot Forward Strand**", out.width = '100%'}
 #Forward strand
-knitr::include_graphics("genome_plot_1.png")
+ knitr::include_graphics("genome_plot_1.png")
 ```
 <br/><br/>
 ``` {r genome_plot_2, echo=T, fig.cap="**Fragments Plot Reverse Strand**", out.width = '100%'}
 #Reverse strand
-knitr::include_graphics("genome_plot_2.png")
+ knitr::include_graphics("genome_plot_2.png")
 ```
 <br/>
 The plot shows 4 sections: annotation, delay, half-life and intensity/coverage.

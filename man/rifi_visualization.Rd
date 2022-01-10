@@ -14,6 +14,15 @@ between the neighboring fragment,
 significant t-test is assigned with '\emph{'.
 t-test and Manova statistical test are also depicted as '}'.
 The functions used are:
+annotation_plot: plots the corresponding annotation
+positive_strand_function: plots delay, HL, intensity and events of positive
+strand
+negative_strand_function: plots delay, HL, intensity and events of negative
+strand
+empty_data_positive: plots empty boxes in case no data is available for
+positive strand
+empty_data_negative: plots empty boxes in case no data is available for
+negative strand
 strand_selection: check if data is stranded and arrange by position.
 splitGenome_function: splits the genome into fragments
 indice_function: assign a new column to the data to distinguish between
@@ -76,13 +85,13 @@ rifi_visualization(
   color_text.1 = "grey0",
   color_text.2 = "black",
   color_TU = "blue",
+  Alpha = 0.5,
   size_tu = 1.6,
   size_locusTag = 1.6,
   size_gene = 1.6,
   Limit = 10,
   shape = 22,
   col_outiler = "grey50",
-  Alpha = 0.5,
   col_coverage = "grey",
   shape_outlier = 13,
   limit_intensity = NA,
@@ -138,6 +147,8 @@ function.}
 
 \item{color_TU}{string. TU color}
 
+\item{Alpha}{integer: color transparency degree.}
+
 \item{size_tu}{integer: TU size}
 
 \item{size_locusTag}{integer: locus_tag size}
@@ -149,8 +160,6 @@ function.}
 \item{shape}{integer: value for shape.}
 
 \item{col_outiler}{string: outlier color.}
-
-\item{Alpha}{integer: color transparency degree.}
 
 \item{col_coverage}{integer: color for coverage plot.}
 
@@ -238,6 +247,15 @@ between the neighboring fragment,
 significant t-test is assigned with '\emph{'.
 t-test and Manova statistical test are also depicted as '}'.
 The functions used are:
+annotation_plot: plots the corresponding annotation
+positive_strand_function: plots delay, HL, intensity and events of positive
+strand
+negative_strand_function: plots delay, HL, intensity and events of negative
+strand
+empty_data_positive: plots empty boxes in case no data is available for
+positive strand
+empty_data_negative: plots empty boxes in case no data is available for
+negative strand
 strand_selection: check if data is stranded and arrange by position.
 splitGenome_function: splits the genome into fragments
 indice_function: assign a new column to the data to distinguish between

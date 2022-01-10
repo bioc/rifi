@@ -7,7 +7,7 @@
 #' @importFrom doMC registerDoMC
 #' @importFrom foreach %dopar% foreach
 #' @importFrom graphics abline axis curve legend par points text plot
-#' @importFrom grDevices adjustcolor dev.off pdf
+#' @importFrom grDevices adjustcolor dev.off pdf pdf.options
 #' @importFrom grid arrow unit textGrob gpar
 #' @importFrom stats coef lm manova na.omit nls p.adjust quantile residuals
 #' @importFrom stats t.test sd var

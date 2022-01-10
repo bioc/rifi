@@ -15,6 +15,7 @@ splitGenome_function <- function(x, gLength) {
   fl_v[1] <- 0
   frag <- as.numeric(as.character(names(fl_v)))
   frag <- c(frag, last(gLength))
+  frag <- frag[!duplicated(frag)]
   return(frag)
 }
 
