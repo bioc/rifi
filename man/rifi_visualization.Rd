@@ -100,7 +100,6 @@ rifi_visualization(
   arrow.color = "darkseagreen1",
   minVelocity = 3000,
   medianVelocity = 6000,
-  threshold_intensity = 4000,
   col_above20 = "#00FFFF",
   fontface = "plain",
   shape_above20 = 14,
@@ -178,8 +177,6 @@ function.}
 
 \item{medianVelocity}{integer: threshold to fix the maximum of velocity.}
 
-\item{threshold_intensity}{integer: Threshold for intensity to plot terminals}
-
 \item{col_above20}{string: color for probes/bin above value 20.}
 
 \item{fontface}{integer: font type}
@@ -222,7 +219,8 @@ plot, default -2.}
 plot, default 2.}
 
 \item{HL_threshold}{integer: threshold for HL fold change selected to plot,
-default 20.}
+default 1. Grey color shows HL fold less than 1 and green color indicates
+the opposite.}
 
 \item{vel_threshold}{integer: threshold for velocity ratio selected to plot,
 default 200.}
@@ -322,7 +320,7 @@ size_tu = 1.6, size_locusTag = 1.6, size_gene = 1.6, Limit = 10,
 shape=22, col_outiler = "grey50", Alpha=0.5,
 col_coverage = "grey", shape_outlier = 13, limit_intensity = NA,
 face="bold", tick_length = .3, arrow.color = "darkseagreen1",
-minVelocity = 3000, medianVelocity = 6000, threshold_intensity = 4000,
+minVelocity = 3000, medianVelocity = 6000, 
 col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
 axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
 p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,

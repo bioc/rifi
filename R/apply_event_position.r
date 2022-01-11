@@ -32,8 +32,8 @@ apply_event_position <- function(data) {
   event_1 <- which(data[, "pausing_site"] == "+")
   event_2 <- which(data[, "iTSS_I"] == "+")
   event <- c(event_1, event_2)
-
   data[, "event_position"] <- NA
+  
   for (i in seq_along(event)) {
     ps <- data[event[i], "ps_ts_fragment"]
     ps_1 <- unlist(str_split(ps, ":"))

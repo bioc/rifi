@@ -4,7 +4,8 @@
 \alias{rifi_stats}
 \title{rifi_stats: conveniently wraps all statistical prediction steps.
 Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-apply_t_test, fold_change, apply_manova and apply_t_test_ti.}
+apply_event_position, apply_t_test, fold_change, apply_manova and
+apply_t_test_ti.}
 \usage{
 rifi_stats(probe, dista = 300)
 }
@@ -73,7 +74,8 @@ respective TI fragment}
 \description{
 rifi_stats: conveniently wraps all statistical prediction steps.
 Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-apply_t_test, fold_change, apply_manova and apply_t_test_ti.
+apply_event_position, apply_t_test, fold_change, apply_manova and
+apply_t_test_ti.
 }
 \examples{
 data(fragmentation_minimal)

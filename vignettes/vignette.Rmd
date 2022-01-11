@@ -1258,21 +1258,14 @@ apply_ancova(data = stats_minimal)
 ### 4. `apply_event_position`
 
 `apply_event_position` extract the position between 2 segments with pausing site or iTSS_I event.
-
-### 5. `apply_length_event`
-
-`apply_length_event` is a short version of `apply_Ttest_delay` function to
-extract the length between 2 delay fragments showing either pausing site or
-iTSS_I.
 <br/><br/>
-``` {r apply_length_event, eval=F}
-apply_length_event(data = stats_minimal, Strand=1)
+``` {r apply_event_position, eval=F}
+data(stats_minimal)
+apply_event_position(data = stats_minimal)
 ```
 <br/>
-   **data** dataframe: the probe based data frame
-<br/><br/>
 
-### 6. `apply_t_test`
+### 5. `apply_t_test`
 
 `apply_t_test` uses the statistical `t_test` to check if the fold-change of
 half-life (HL) fragments and the fold-change intensity fragments respectively is
@@ -1305,7 +1298,7 @@ apply_t_test(data = stats_minimal, threshold = 300)
    **threshold** integer: threshold
 <br/><br/>
 
-### 7. `fold_change`
+### 6. `fold_change`
 
 `fold_change` sets a fold-change ratio between the neighboring fragments of
 Half_life (HL) and intensity of two successive fragments. Two intensity
@@ -1342,7 +1335,7 @@ fold_change(data = stats_minimal)
 <br/>
    **data** data frame: the probe based data frame.
 
-### 8. `apply_manova`
+### 7. `apply_manova`
 
 `apply_manova` checks if the ratio of HL ratio and intensity ratio is
 statistically significant. `apply_manova` compares the variance between two
@@ -1367,7 +1360,7 @@ apply_manova(data = stats_minimal)
 
    **data** data frame: the probe based data frame.
 
-### 9. `apply_t_test_ti`
+### 8. `apply_t_test_ti`
 
 `apply_t_test_ti` compares the mean of two neighboring TI fragments within the
 same TU using the statistical t_test to check if two neighboring TI fragments
@@ -2029,10 +2022,11 @@ The arguments used are:
     default 1
     
    **HL_threshold** integer: threshold for HL fold change selected to plot,
-  default 20
+    default 1. Grey color shows HL fold less than 1 and green color indicates 
+    the opposite.
   
    **vel_threshold** integer: threshold for velocity ratio selected to plot,
-  default 200
+    default 200
   
    **iTSS_threshold** integer: threshold for iTSS_II selected to plot,
     default 1.01
@@ -2041,7 +2035,7 @@ The arguments used are:
    plot, default is -2.
    
    **event_duration_itss** integer: threshold for itss_I selected to plot,
-   default is 2.
+    default is 2.
     
    **HL_threshold_color** string: color for HL fold change plot
     

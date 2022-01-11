@@ -118,7 +118,8 @@
 #' @param termination_threshold integer: threshold for termination to plot,
 #' default .8.
 #' @param HL_threshold integer: threshold for HL fold change selected to plot,
-#' default 20.
+#' default 1. Grey color shows HL fold less than 1 and green color indicates 
+#' the opposite.
 #' @param vel_threshold integer: threshold for velocity ratio selected to plot,
 #' default 200.
 #' @param iTSS_threshold integer: threshold for iTSS_II selected to plot,
