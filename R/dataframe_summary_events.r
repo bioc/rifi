@@ -126,7 +126,7 @@ dataframe_summary_events <- function(data, data_annotation) {
                                               ev_fragments[2]), "position"][1])
                         / 2)
     velocity_ratio <- c(velocity_ratio, NA)
-    p_value <- c(p_value, d$event_ps_itss_p_value_Ttest)
+    p_value <- c(p_value, as.numeric(d$event_ps_itss_p_value_Ttest))
     feature_type <-
       c(
         feature_type,
@@ -203,7 +203,7 @@ dataframe_summary_events <- function(data, data_annotation) {
              tmp_merged$intensity_fragment == ev_fragments[4]),
              "position"][1]) / 2)
     velocity_ratio <- c(velocity_ratio, NA)
-    p_value <- c(p_value, d$p_value_Manova)
+    p_value <- c(p_value, as.numeric(d$p_value_Manova))
     feature_type <-
       c(
         feature_type,
@@ -287,7 +287,7 @@ dataframe_summary_events <- function(data, data_annotation) {
            tmp_merged[which(tmp_merged$intensity_fragment ==
                               ev_fragments[2]), "position"][1]) / 2)
     velocity_ratio <- c(velocity_ratio, NA)
-    p_value <- c(p_value, d$p_value_intensity)
+    p_value <- c(p_value, as.numeric(d$p_value_intensity))
     feature_type <-
       c(
         feature_type,
@@ -370,7 +370,7 @@ dataframe_summary_events <- function(data, data_annotation) {
           tmp_merged[which(tmp_merged$HL_fragment ==
                              ev_fragments[2]), "position"][1]) / 2)
     velocity_ratio <- c(velocity_ratio, NA)
-    p_value <- c(p_value, d$p_value_HL)
+    p_value <- c(p_value, as.numeric(d$p_value_HL))
     feature_type <-
       c(
         feature_type,
@@ -443,7 +443,7 @@ for (i in seq_along(uniqDelay)) {
         tmp_merged$delay_fragment == ev_fragments[2])[1], "velocity_fragment"] /
           tmp_merged[which(tmp_merged$delay_fragment ==
                              ev_fragments[1])[1], "velocity_fragment"])
-    p_value <- c(p_value, d$p_value_slope)
+    p_value <- c(p_value, as.numeric(d$p_value_slope))
     feature_type <-
       c(
         feature_type,
@@ -513,10 +513,11 @@ for (i in seq_along(uniqDelay)) {
       gap_fragments,
       features
     )
-  df$p_value <- formatC(df$p_value, format = "e", digits = 2)
+  df$p_value <- formatC(as.numeric(as.character(df$p_value)), format = "e", 
+                        digits = 2)
   df <-
     as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
-  p_adjusted <- p.adjust(df$p_value, method = "fdr")
+  p_adjusted <- as.numeric(as.character(p.adjust(df$p_value, method = "fdr")))
   df <-
     tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                        .after = 2)

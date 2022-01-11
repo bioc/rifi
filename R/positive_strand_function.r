@@ -14,7 +14,6 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
                                      arrow.color = arrow.color,
                                      minVelocity = minVelocity,
                                      medianVelocity = medianVelocity,
-                                     threshold_intensity = threshold_intensity,
                                      shape_above20 = shape_above20,
                                      col_above20 = col_above20,
                                      fontface = fontface,
@@ -30,7 +29,10 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
                                      p_value_int = p_value_int,
                                      p_value_event = p_value_event,
                                      p_value_hl = p_value_hl,
-                                     event_duration = event_duration,
+                                     event_duration_ps = 
+                                         event_duration_ps,
+                                     event_duration_itss = 
+                                         event_duration_itss,
                                      HL_threshold = HL_threshold,
                                      vel_threshold = vel_threshold,
                                      HL_threshold_color = HL_threshold_color,
@@ -774,7 +776,7 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
         #select pausing site duration
         df1_ps <-
             df1_ps %>%
-            filter(na.omit(get('event_duration')) <= event_duration)
+            filter(na.omit(get('event_duration')) <= event_duration_ps)
         if (nrow(df1_ps %>%
                  filter(
                      get('event_ps_itss_p_value_Ttest')
@@ -856,7 +858,7 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
         df1_itss <-
             df1_itss %>%
             filter(na.omit(get('event_duration'))
-                   <= event_duration)
+                   >= event_duration_itss)
         if (nrow(df1_itss %>%
                  filter(
                      get('event_ps_itss_p_value_Ttest')
@@ -971,50 +973,33 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
                 )
         }
     }
-    #add FC for HL ratio test if p_value is significant
+    #add FC for HL ratio lower than HL_threshold upon p_value significance
     data_p <- indice_function(data_p, "HL_fragment")
     df1_wo <- data_p[which(data_p$indice == 1),]
+    df1_hl <- arrange_byGroup(data_p, "FC_HL")
     df1_p_val_hl <-
-        arrange_byGroup(df1_wo, "p_value_HL")
+        df1_hl[which(df1_hl$FC_HL < HL_threshold),]
     if (nrow(df1_p_val_hl) != 0) {
         df1_p_val_hl <-
-            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL < p_value_hl),]
+            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL <= p_value_hl),]
         if (nrow(df1_p_val_hl) != 0) {
-            p2 <- p2 +
-                geom_text(
-                    data = df1_p_val_hl,
-                    aes(
-                        x = get('position'),
-                        y = get('HL_mean_fragment')
-                    ),
-                    label = "FC*",
-                    size = 1,
-                    check_overlap = TRUE
-                )
+            p2 <- my_segment_NS(
+                p2,
+                data = df1_hl,
+                "HL*",
+                y = 0,
+                yend = 3,
+                dis = 10,
+                ytext = 3.4,
+                color = "grey52",
+                linetype = "dashed",
+                fontface = fontface
+            )
         }
         df1_p_val_hl <-
             df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL > p_value_hl),]
         if (nrow(df1_p_val_hl) != 0) {
-            p2 <- p2 +
-                geom_text(
-                    data = df1_p_val_hl,
-                    aes(
-                        x = get('position'),
-                        y = get('HL_mean_fragment')
-                    ),
-                    label = "FC",
-                    size = 1,
-                    check_overlap = TRUE
-                )
-        }
-    }
-    #Select rows with FC_HL event and draw a line
-    df1_hl <- arrange_byGroup(data_p, "FC_HL")
-    df1_hl <-
-        df1_hl[which(df1_hl$FC_HL < HL_threshold),]
-    if (nrow(df1_hl) != 0) {
-        p2 <-
-            my_segment_NS(
+            p2 <- my_segment_NS(
                 p2,
                 data = df1_hl,
                 "HL",
@@ -1026,25 +1011,44 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
                 linetype = "dashed",
                 fontface = fontface
             )
+        }
     }
-    #Select rows with velocity_ratio event and draw a line
-    df1_v <- arrange_byGroup(data_p, "velocity_ratio")
-    df1_v <-
-        df1_v[which(df1_v$velocity_ratio < vel_threshold),]
-    if (nrow(df1_v) != 0) {
-        p3 <-
-            my_segment_NS(
-                p3,
-                data = df1_v,
-                "V",
+    #add FC for HL ratio higher than HL_threshold upon p_value significance
+    df1_p_val_hl <-
+        df1_hl[which(df1_hl$FC_HL >= HL_threshold),]
+    if (nrow(df1_p_val_hl) != 0) {
+        df1_p_val_hl <-
+            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL <= p_value_hl),]
+        if (nrow(df1_p_val_hl) != 0) {
+            p2 <- my_segment_NS(
+                p2,
+                data = df1_hl,
+                "HL*",
                 y = 0,
                 yend = 3,
                 dis = 10,
                 ytext = 3.4,
-                color = "grey52",
+                color = "green",
                 linetype = "dashed",
                 fontface = fontface
             )
+        }
+        df1_p_val_hl <-
+            df1_wo_pvalue[which(df1_wo_pvalue$p_value_HL > p_value_hl),]
+        if (nrow(df1_p_val_hl) != 0) {
+            p2 <- my_segment_NS(
+                p2,
+                data = df1_hl,
+                "HL",
+                y = 0,
+                yend = 3,
+                dis = 10,
+                ytext = 3.4,
+                color = "green",
+                linetype = "dashed",
+                fontface = fontface
+            )
+        }
     }
     ##########################title positive strand#######################
     if (i == 1) {

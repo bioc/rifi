@@ -109,13 +109,14 @@ rifi_visualization(
   TI_threshold = 1.1,
   p_value_TI = 0.05,
   p_value_manova = 0.05,
-  termination_threshold = 1,
-  iTSS_threshold = 1.01,
+  termination_threshold = 0.8,
+  iTSS_threshold = 1.2,
   p_value_int = 0.05,
   p_value_event = 0.05,
   p_value_hl = 0.05,
-  event_duration = 40,
-  HL_threshold = 20,
+  event_duration_ps = -2,
+  event_duration_itss = 2,
+  HL_threshold = 1,
   vel_threshold = 200,
   HL_threshold_color = "green4",
   vel_threshold_color = "grey52",
@@ -214,8 +215,11 @@ iTSS_I events to plot, default 0.05.}
 \item{p_value_hl}{integer: p_value of half_life fragments fold-change to
 plot, default 0.05.}
 
-\item{event_duration}{integer: threshold for pausing sites and iTSS_I
-selected to plot, default plot all events selecting the maximum value.}
+\item{event_duration_ps}{integer: threshold for pausing sites selected to
+plot, default -2.}
+
+\item{event_duration_itss}{integer: threshold for iTSS_I selected to
+plot, default 2.}
 
 \item{HL_threshold}{integer: threshold for HL fold change selected to plot,
 default 20.}
@@ -323,8 +327,8 @@ col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
 axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
 p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
 iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
-p_value_hl = 0.05, event_duration = 40, HL_threshold=20,
-vel_threshold = 200, HL_threshold_color="green4",
+p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2,
+HL_threshold=20, vel_threshold = 200, HL_threshold_color="green4",
 vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 
 }

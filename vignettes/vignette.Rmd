@@ -1171,7 +1171,7 @@ The function wrapped are:
 1.  `predict_ps_itss`
 2.  `apply_Ttest_delay`
 3.  `apply_ancova`
-4.  `apply_event_duration`
+4.  `apply_event_position`
 5.  `apply_t_test`
 6.  `fold_change`
 7.  `apply_manova`
@@ -1208,7 +1208,8 @@ segments respectively. Both segments are subsequently subjected to lm fit and
 the positions predicted are used on the same way as on the opposite strand. The
 difference between the predicted positions is compared to the negative
 threshold, **ps** is assigned otherwise, and if the difference is higher than
-the positive threshold, **iTSS_I** is assigned.
+the positive threshold, **iTSS_I** is assigned. The event duration is 
+additionally added.
 <br/><br/>
 ``` {r predict_ps_itss, eval=FALSE}
 data(fragmentation_minimal)
@@ -1254,7 +1255,11 @@ apply_ancova(data = stats_minimal)
    **data** dataframe: the probe based data frame.
 <br/><br/>
 
-### 4. `apply_length_event`
+### 4. `apply_event_position`
+
+`apply_event_position` extract the position between 2 segments with pausing site or iTSS_I event.
+
+### 5. `apply_length_event`
 
 `apply_length_event` is a short version of `apply_Ttest_delay` function to
 extract the length between 2 delay fragments showing either pausing site or
@@ -1267,7 +1272,7 @@ apply_length_event(data = stats_minimal, Strand=1)
    **data** dataframe: the probe based data frame
 <br/><br/>
 
-### 5. `apply_t_test`
+### 6. `apply_t_test`
 
 `apply_t_test` uses the statistical `t_test` to check if the fold-change of
 half-life (HL) fragments and the fold-change intensity fragments respectively is
@@ -1300,7 +1305,7 @@ apply_t_test(data = stats_minimal, threshold = 300)
    **threshold** integer: threshold
 <br/><br/>
 
-### 6. `fold_change`
+### 7. `fold_change`
 
 `fold_change` sets a fold-change ratio between the neighboring fragments of
 Half_life (HL) and intensity of two successive fragments. Two intensity
@@ -1337,7 +1342,7 @@ fold_change(data = stats_minimal)
 <br/>
    **data** data frame: the probe based data frame.
 
-### 7. `apply_manova`
+### 8. `apply_manova`
 
 `apply_manova` checks if the ratio of HL ratio and intensity ratio is
 statistically significant. `apply_manova` compares the variance between two
@@ -1362,7 +1367,7 @@ apply_manova(data = stats_minimal)
 
    **data** data frame: the probe based data frame.
 
-### 8. `apply_t_test_ti`
+### 9. `apply_t_test_ti`
 
 `apply_t_test_ti` compares the mean of two neighboring TI fragments within the
 same TU using the statistical t_test to check if two neighboring TI fragments
@@ -1669,7 +1674,7 @@ The table contains the following columns:
     position of the second fragment
 
    **event_duration_[min]**: event duration on minutes. The duration is
-    calculated from the intercept of two delay fragment at the position 0
+    calculated from the intercept of two delay fragments at the position 0.
 
    **gap_fragments_[nt]**: gap in distance on bases between two fragments
 
@@ -1991,8 +1996,6 @@ The arguments used are:
    
    **medianVelocity** integer: threshold to fix the maximum of velocity
    
-   **threshold_intensity** integer: Threshold for intensity to plot terminals
-   
    **col_above20** string: color for probes/bin above value 20
    
    **fontface** integer: font type
@@ -2034,8 +2037,11 @@ The arguments used are:
    **iTSS_threshold** integer: threshold for iTSS_II selected to plot,
     default 1.01
     
-   **event_duration** integer: threshold for pausing sites and iTSS_I
-    selected to plot, default plot all events selecting the maximum value.
+   **event_duration_ps** integer: threshold for pausing sites selected to
+   plot, default is -2.
+   
+   **event_duration_itss** integer: threshold for itss_I selected to plot,
+   default is 2.
     
    **HL_threshold_color** string: color for HL fold change plot
     
@@ -2058,13 +2064,13 @@ The arguments used are:
  shape=22, col_outiler = "grey50", Alpha=0.5,
  col_coverage = "grey", shape_outlier = 13, limit_intensity = NA,
  face ="bold", tick_length = .3, arrow.color = "darkseagreen1",
- minVelocity = 3000, medianVelocity = 6000, threshold_intensity = 4000,
+ minVelocity = 3000, medianVelocity = 6000, 
  col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
  axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
  p_value_TI = 0.05, p_value_manova = 0.05, termination_threshold = 1,
  iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
- p_value_hl = 0.05, event_duration = 40, HL_threshold = 20,
- vel_threshold = 200, ps_color = "orange", iTSS_I_color = "blue")
+ p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2, 
+ HL_threshold = 20, vel_threshold = 200, ps_color = "orange", iTSS_I_color = "blue")
 ```
 <br/><br/>
 ``` {r genome_plot_1, echo=T, fig.cap="**Fragments Plot Forward Strand**", out.width = '100%'}

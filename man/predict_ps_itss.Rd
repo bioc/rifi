@@ -55,6 +55,7 @@ fragment}
 \item{pausing_site:}{}
 \item{iTSS_I:}{}
 \item{ps_ts_fragment:}{}
+\item{event_duration:}{}
 }
 }
 \description{

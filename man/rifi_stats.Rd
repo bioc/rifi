@@ -87,7 +87,7 @@ rifi_stats(probe = fragmentation_minimal, dista = 300)
 
 \code{apply_ancova}
 
-\code{apply_event_duration}
+\code{apply_event_position}
 
 \code{apply_t_test}
 

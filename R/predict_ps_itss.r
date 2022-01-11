@@ -44,6 +44,7 @@
 #'   \item{pausing_site:}{}
 #'   \item{iTSS_I:}{}
 #'   \item{ps_ts_fragment:}{}
+#'   \item{event_duration:}{}
 #' }
 #' 
 #' @examples
@@ -56,6 +57,7 @@ predict_ps_itss <- function(data, maxDis = 300) {
   data$pausing_site <- "-"
   data$iTSS_I <- "-"
   data$ps_ts_fragment <- NA
+  data[, "event_duration"] <- NA
 
   # select unique TUs
   uniqueTU <- unique(data$TU)
@@ -82,7 +84,7 @@ predict_ps_itss <- function(data, maxDis = 300) {
       tu <- tu[order(tu$position, decreasing = FALSE), ]
     }
 
-    # select delay segments in the TU
+    # select delay segments from TU
     del_segs <-
       unique(tu[grep(paste0("\\D_\\d+", "$"), tu$delay_fragment),
                 "delay_fragment"])
@@ -118,6 +120,8 @@ predict_ps_itss <- function(data, maxDis = 300) {
           if (y.dif <= 0) {
             if (unique(tu$strand) == "+") {
               data[which(data$ID %in% last(del.1$ID)), "pausing_site"] <- "+"
+              data[which(data$ID %in% last(del.1$ID)), "event_duration"] <- 
+                y.dif
               data[which(data$delay_fragment %in% del.1$delay_fragment[1]),
                    "ps_ts_fragment"] <-
                 paste0(
@@ -127,6 +131,7 @@ predict_ps_itss <- function(data, maxDis = 300) {
                 )
             } else {
               data[which(data$ID %in% del.2$ID[1]), "pausing_site"] <- "+"
+              data[which(data$ID %in% del.2$ID[1]), "event_duration"] <- y.dif
               data[which(data$delay_fragment %in% del.2$delay_fragment[1]),
                    "ps_ts_fragment"] <-
                 paste0(
@@ -138,6 +143,8 @@ predict_ps_itss <- function(data, maxDis = 300) {
           } else if (y.dif > 0) {
             if (unique(tu$strand) == "+") {
               data[which(data$ID %in% last(del.1$ID)), "iTSS_I"] <- "+"
+              data[which(data$ID %in% last(del.1$ID)), "event_duration"] <- 
+                y.dif
               data[which(data$delay_fragment %in% del.1$delay_fragment[1]),
                    "ps_ts_fragment"] <-
                 paste0(
@@ -147,6 +154,7 @@ predict_ps_itss <- function(data, maxDis = 300) {
                 )
             } else {
               data[which(data$ID %in% del.2$ID[1]), "iTSS_I"] <- "+"
+              data[which(data$ID %in% del.2$ID[1]), "event_duration"] <- y.dif
               data[which(data$delay_fragment %in% del.2$delay_fragment[1]),
                    "ps_ts_fragment"] <-
                 paste0(

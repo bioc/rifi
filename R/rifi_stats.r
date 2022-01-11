@@ -63,7 +63,7 @@
 #' @seealso `predict_ps_itss`
 #' @seealso `apply_Ttest_delay`
 #' @seealso `apply_ancova`
-#' @seealso `apply_event_duration`
+#' @seealso `apply_event_position`
 #' @seealso `apply_t_test`
 #' @seealso `fold_change`
 #' @seealso `apply_manova`
@@ -98,8 +98,8 @@ rifi_stats <- function(probe, dista = 300) {
   probe <- apply_Ttest_delay(data = probe)
   message("running apply_ancova...")
   probe <- apply_ancova(data = probe)
-  message("running apply_event_duration...")
-  probe <- apply_event_duration(data = probe)
+  message("running apply_event_position...")
+  probe <- apply_event_position(data = probe)
   message("running apply_t_test...")
   probe <- apply_t_test(data = probe)
   message("running fold_change...")

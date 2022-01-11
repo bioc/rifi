@@ -1,5 +1,9 @@
-    ##############################ggplot reverse strand#####################
-negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
+##############################ggplot reverse strand#####################
+negative_strand_function <- function(data_n,
+                                     data,
+                                     tmp.c2,
+                                     frag,
+                                     i,
                                      Limit = Limit,
                                      shape = shape,
                                      col_outiler = col_outiler,
@@ -11,7 +15,6 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                                      arrow.color = arrow.color,
                                      minVelocity = minVelocity,
                                      medianVelocity = medianVelocity,
-                                     threshold_intensity = threshold_intensity,
                                      shape_above20 = shape_above20,
                                      col_above20 = col_above20,
                                      fontface = fontface,
@@ -27,25 +30,26 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                                      p_value_int = p_value_int,
                                      p_value_event = p_value_event,
                                      p_value_hl = p_value_hl,
-                                     event_duration = event_duration,
+                                     event_duration_ps =
+                                         event_duration_ps,
+                                     event_duration_itss =
+                                         event_duration_itss,
                                      HL_threshold = HL_threshold,
                                      vel_threshold = vel_threshold,
                                      HL_threshold_color = HL_threshold_color,
                                      vel_threshold_color = vel_threshold_color,
                                      ps_color = ps_color,
                                      iTSS_I_color = iTSS_I_color) {
-        p4 <-
-        ggplot(data, aes(
-            x = get('position'),
-            y = get('intensity')
-        )) +
+    p4 <-
+        ggplot(data, aes(x = get('position'),
+                         y = get('intensity'))) +
         scale_x_continuous(limits = c(frag[i], frag[i + 1])) +
         scale_y_continuous(
             trans = 'log2',
             labels = label_log2_function,
             limits = c(NA, NA),
-            sec.axis = sec_axis( ~ . * 1, name = "Coverage",
-                                 labels = label_square_function)
+            sec.axis = sec_axis(~ . * 1, name = "Coverage",
+                                labels = label_square_function)
         ) +
         coord_trans(y = 'reverse') +
         labs(y = "Intensity [A.U]") +
@@ -82,16 +86,14 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         data_n$half_life <- 20
     }
     p5 <-
-        ggplot(data_n, aes(
-            x = get('position'),
-            y = get('half_life')
-        )) +
+        ggplot(data_n, aes(x = get('position'),
+                           y = get('half_life'))) +
         scale_x_continuous(limits = c(frag[i], frag[c(i + 1)])) +
         scale_y_continuous(
             limits = c(0, Limit_h_df2),
             breaks = Breaks_h2,
-            sec.axis = sec_axis( ~ . * 1, name = "Half-life [min]", breaks =
-                                     Breaks_h2)
+            sec.axis = sec_axis(~ . * 1, name = "Half-life [min]", breaks =
+                                    Breaks_h2)
         ) +
         labs(y = "Half-life [min]") +
         coord_trans(y = 'reverse') +
@@ -167,8 +169,8 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         scale_y_continuous(
             limits = c(0, Limit_df2),
             breaks = Breaks_d2,
-            sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
-                                     Breaks_d2)
+            sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+                                    Breaks_d2)
         ) +
         labs(y = "Delay [min]") +
         coord_trans(y = 'reverse') +
@@ -197,8 +199,8 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 scale_y_continuous(
                     limits = c(0, Limit_df2),
                     breaks = Breaks_d2,
-                    sec.axis = sec_axis( ~ . * 1, name = "Delay [min]", breaks =
-                                             Breaks_d2)
+                    sec.axis = sec_axis(~ . * 1, name = "Delay [min]", breaks =
+                                            Breaks_d2)
                 ) +
                 coord_trans(y = 'reverse')
         }
@@ -206,20 +208,18 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
     #############################TI plot reverse strand###################
     #plot transcription interference on the background
     if (length(grep("TI", data_n$flag)) != 0) {
-        df2_ti_a <- data_n[grep("TI", data_n$flag),]
+        df2_ti_a <- data_n[grep("TI", data_n$flag), ]
         #looping into TUs
         for (l in seq_along(unique(df2_ti_a$TU))) {
-            df2_ti <- df2_ti_a[which(df2_ti_a$TU == unique(df2_ti_a$TU)[l]),]
+            df2_ti <- df2_ti_a[which(df2_ti_a$TU == unique(df2_ti_a$TU)[l]), ]
             df2_ti <-
                 df2_ti[grep(paste0("\\TI_\\d+", "$"),
-                            df2_ti$TI_termination_fragment),]
+                            df2_ti$TI_termination_fragment), ]
             df2_ti <-
-                df2_ti[!is.na(df2_ti$TI_mean_termination_factor),]
+                df2_ti[!is.na(df2_ti$TI_mean_termination_factor), ]
             if (nrow(df2_ti) < 3 |
                 nrow(df2_ti %>%
-                     group_by(get(
-                         'TI_termination_fragment'
-                     ))) ==
+                     group_by(get('TI_termination_fragment'))) ==
                 length(unique(df2_ti$TI_termination_fragment)) |
                 all(df2_ti$TI_mean_termination_factor == 0)) {
                 p4 <- p4
@@ -234,14 +234,12 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                     (1 - df2_ti$TI_mean_termination_factor)
                 if (length(unique(df2_ti$TI_termination_fragment)) == 1) {
                     p4 <- p4 +
-                        geom_line(
-                            data = df2_ti,
-                            aes(
-                                y = get('value_l'),
-                                group = get('TI_mean_termination_factor')
-                            ),
-                            size = .2
-                        ) +
+                        geom_line(data = df2_ti,
+                                  aes(
+                                      y = get('value_l'),
+                                      group = get('TI_mean_termination_factor')
+                                  ),
+                                  size = .2) +
                         geom_point(
                             data = df2_ti,
                             aes(
@@ -258,14 +256,12 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                     df2_ti <- df2_ti %>%
                         filter(get('indice') == 1)
                     p4 <- p4 +
-                        geom_step(
-                            data = df2_ti,
-                            aes(
-                                y = get('value_l'),
-                                group = get('TI_mean_termination_factor')
-                            ),
-                            size = .2
-                        ) +
+                        geom_step(data = df2_ti,
+                                  aes(
+                                      y = get('value_l'),
+                                      group = get('TI_mean_termination_factor')
+                                  ),
+                                  size = .2) +
                         geom_point(
                             data = df2_ti,
                             aes(
@@ -283,7 +279,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 if (nrow(df2.1_ti) > 1) {
                     TIs <- TI_frag_threshold(df2.1_ti, TI_threshold)
                     df2.1_ti_thr <-
-                        df2.1_ti[which(df2.1_ti$TI_termination_fragment %in% TIs),]
+                        df2.1_ti[which(df2.1_ti$TI_termination_fragment %in% TIs), ]
                     p4 <- p4 +
                         geom_vline(
                             df2.1_ti_thr,
@@ -294,18 +290,14 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                         )
                     if (length(na.omit(df2.1_ti$p_value_TI)) != 0) {
                         if (nrow(df2.1_ti %>%
-                                 filter(
-                                     get('p_value_TI')
-                                     < p_value_TI
-                                 )) != 0) {
+                                 filter(get('p_value_TI')
+                                        < p_value_TI)) != 0) {
                             p4 <- p4 +
                                 geom_text(
                                     data = df2.1_ti,
                                     aes(
                                         x = get('position'),
-                                        y = get(
-                                            'intensity_mean_fragment'
-                                        ),
+                                        y = get('intensity_mean_fragment'),
                                         label = "Tinterf*"
                                     ),
                                     fontface = fontface,
@@ -315,18 +307,14 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                                 )
                         }
                         else if (nrow(df2.1_ti %>%
-                                      filter(
-                                          get('p_value_TI')
-                                          > p_value_TI
-                                      )) != 0) {
+                                      filter(get('p_value_TI')
+                                             > p_value_TI)) != 0) {
                             p4 <- p4 +
                                 geom_text(
                                     data = df2.1_ti,
                                     aes(
                                         x = get('position'),
-                                        y = get(
-                                            'intensity_mean_fragment'
-                                        ),
+                                        y = get('intensity_mean_fragment'),
                                         label = "Tinterf"
                                     ),
                                     fontface = fontface,
@@ -360,15 +348,11 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         if (nrow(data_n %>%
                  filter(get('indice') == 1)) != 0) {
             p4 <- p4 +
-                geom_point(
-                    data = data_n %>%
-                        filter(get('indice') == 1),
-                    aes(col = get(
-                        'intensity_fragment'
-                    )),
-                    size = .5
-                )
-            df2_wo <- data_n[which(data_n$indice == 1),]
+                geom_point(data = data_n %>%
+                               filter(get('indice') == 1),
+                           aes(col = get('intensity_fragment')),
+                           size = .5)
+            df2_wo <- data_n[which(data_n$indice == 1), ]
             df2_wo <-
                 meanPosition(df2_wo, "intensity_fragment")
             if (length(df2_wo$intensity_fragment) != 0) {
@@ -405,27 +389,23 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         }
         if (coverage == 1) {
             p4 <- p4 +
-                geom_line(
-                    data = tmp.c2,
-                    aes(
-                        x = get('position'),
-                        y = get('coverage')
-                    ),
-                    col = get('col_coverage')
-                )
+                geom_line(data = tmp.c2,
+                          aes(
+                              x = get('position'),
+                              y = get('coverage')
+                          ),
+                          col = get('col_coverage'))
         }
         ########################HL plot reverse strand#######################
         data <- indice_function(data, "HL_fragment")
         if (nrow(data %>%
                  filter(get('indice') == 1)) != 0) {
             p5 <- p5 +
-                geom_point(
-                    data = data_n %>%
-                        filter(get('indice') == 1),
-                    aes(col = get('HL_fragment')),
-                    size = .5
-                )
-            df2_wo <- data_n[which(data_n$indice == 1),]
+                geom_point(data = data_n %>%
+                               filter(get('indice') == 1),
+                           aes(col = get('HL_fragment')),
+                           size = .5)
+            df2_wo <- data_n[which(data_n$indice == 1), ]
             df2_wo <-
                 meanPosition(df2_wo, "HL_fragment")
             if (length(df2_wo$HL_fragment) != 0) {
@@ -480,12 +460,10 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         if (nrow(data_n %>%
                  filter(get('indice') == 1)) != 0) {
             p6 <- p6 +
-                geom_point(
-                    data = data_n %>%
-                        filter(get('indice') == 1),
-                    aes(col = get('delay_fragment')),
-                    size = .5
-                )
+                geom_point(data = data_n %>%
+                               filter(get('indice') == 1),
+                           aes(col = get('delay_fragment')),
+                           size = .5)
         }
         if (nrow(data_n %>%
                  filter(get('indice') == 2)) != 0) {
@@ -559,7 +537,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 )
         }
         df2_wo <-
-            data_n[grep(paste0("\\D_\\d+", "$"), data_n$delay_fragment),]
+            data_n[grep(paste0("\\D_\\d+", "$"), data_n$delay_fragment), ]
         if (nrow(df2_wo) != 0) {
             df2_wo <- meanPosition(df2_wo, "delay_fragment")
             df2_wo <-
@@ -598,7 +576,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
     forggtitle_NS <- 0
     df2_syR_T <- NA
     if (length(which(!is.na(data_n$synthesis_ratio))) != 0) {
-        df2_syR <- data_n[which(!is.na(data_n$synthesis_ratio)),]
+        df2_syR <- data_n[which(!is.na(data_n$synthesis_ratio)), ]
         if (length(which(
             df2_syR$synthesis_ratio < termination_threshold &
             !is.na(df2_syR$FC_HL_intensity_fragment)
@@ -607,13 +585,11 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 df2_syR[which(
                     df2_syR$synthesis_ratio < termination_threshold &
                         !is.na(df2_syR$FC_HL_intensity_fragment)
-                ),]
+                ), ]
             df2_syR_T <-
-                df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity),]
+                df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
             forggtitle_ter <- nrow(df2_syR_T)
-            if (length(which(
-                df2_syR_T$p_value_Manova < p_value_manova
-            )) != 0) {
+            if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
                 df2_syR_T.m <-
                     df2_syR_T %>%
                     filter(get('p_value_Manova') < p_value_manova)
@@ -632,9 +608,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                         fontface = fontface
                     )
             }
-            if (length(which(
-                df2_syR_T$p_value_Manova > p_value_manova
-            )) != 0) {
+            if (length(which(df2_syR_T$p_value_Manova > p_value_manova)) != 0) {
                 df2_syR_T.t <-
                     df2_syR_T %>%
                     filter(get('p_value_Manova') > p_value_manova)
@@ -653,13 +627,9 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                         fontface = fontface
                     )
             }
-            if (length(which(is.na(
-                df2_syR_T$p_value_Manova
-            ))) != 0) {
+            if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
                 df2_syR_T.t <- df2_syR_T %>%
-                    filter(is.na(get(
-                        'p_value_Manova'
-                    )))
+                    filter(is.na(get('p_value_Manova')))
                 p5 <-
                     my_segment_T(
                         p5,
@@ -686,13 +656,11 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 df2_syR[which(
                     df2_syR$synthesis_ratio > iTSS_threshold &
                         !is.na(df2_syR$FC_HL_intensity_fragment)
-                ),]
+                ), ]
             df2_syR_T <-
-                df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity),]
+                df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
             forggtitle_NS <- nrow(df2_syR_T)
-            if (length(which(
-                df2_syR_T$p_value_Manova < p_value_manova
-            )) != 0) {
+            if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
                 df2_syR_T.m <-
                     df2_syR_T %>%
                     filter(get('p_value_Manova') < p_value_manova)
@@ -710,9 +678,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                         fontface = fontface
                     )
             }
-            if (length(which(
-                df2_syR_T$p_value_Manova > p_value_manova
-            )) != 0) {
+            if (length(which(df2_syR_T$p_value_Manova > p_value_manova)) != 0) {
                 df2_syR_T.t <-
                     df2_syR_T %>%
                     filter(get('p_value_Manova') > p_value_manova)
@@ -730,13 +696,9 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                         fontface = fontface
                     )
             }
-            if (length(which(is.na(
-                df2_syR_T$p_value_Manova
-            ))) != 0) {
+            if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
                 df2_syR_T.t <- df2_syR_T %>%
-                    filter(is.na(get(
-                        'p_value_Manova'
-                    )))
+                    filter(is.na(get('p_value_Manova')))
                 p6 <-
                     my_segment_NS(
                         p6,
@@ -762,14 +724,12 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         #select pausing site duration
         df2_ps <-
             df2_ps %>%
-            filter(na.omit(get('event_duration')) <= event_duration)
+            filter(na.omit(get('event_duration')) <= event_duration_ps)
         #For those event with significant statistical test, are displayed
         #with a legend
         if (nrow(df2_ps %>%
-                 filter(
-                     get('event_ps_itss_p_value_Ttest')
-                     < p_value_event
-                 )) != 0) {
+                 filter(get('event_ps_itss_p_value_Ttest')
+                        < p_value_event)) != 0) {
             df2_ps_s <-
                 df2_ps %>%
                 filter(get('event_ps_itss_p_value_Ttest')
@@ -790,10 +750,8 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 )
         }
         if (nrow(df2_ps %>%
-                 filter(
-                     get('event_ps_itss_p_value_Ttest')
-                     > p_value_event
-                 )) != 0) {
+                 filter(get('event_ps_itss_p_value_Ttest')
+                        > p_value_event)) != 0) {
             df2_ps_b <-
                 df2_ps %>%
                 filter(get('event_ps_itss_p_value_Ttest') > p_value_event)
@@ -846,12 +804,10 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         #select iTSS duration
         df2_itss <-
             df2_itss %>%
-            filter(na.omit(get('event_duration')) <= event_duration)
+            filter(na.omit(get('event_duration')) >= event_duration_itss)
         if (nrow(df2_itss %>%
-                 filter(
-                     get('event_ps_itss_p_value_Ttest')
-                     < p_value_event
-                 )) != 0) {
+                 filter(get('event_ps_itss_p_value_Ttest')
+                        < p_value_event)) != 0) {
             df2_itss_s <-
                 df2_itss %>%
                 filter(get('event_ps_itss_p_value_Ttest') < p_value_event)
@@ -870,10 +826,8 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 )
         }
         if (nrow(df2_itss %>%
-                 filter(
-                     get('event_ps_itss_p_value_Ttest')
-                     > p_value_event
-                 )) != 0) {
+                 filter(get('event_ps_itss_p_value_Ttest')
+                        > p_value_event)) != 0) {
             df2_itss_b <-
                 df2_itss %>%
                 filter(get('event_ps_itss_p_value_Ttest') > p_value_event)
@@ -918,15 +872,15 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
     ####################FC reverse strand###################
     #add FC for intensity ratio test if p_value is significant
     data_n <- indice_function(data_n, "intensity_fragment")
-    df2_wo <- data_n[which(data_n$indice == 1),]
+    df2_wo <- data_n[which(data_n$indice == 1), ]
     #select the last row for each segment and add 40 nucleotides in case
     #of negative strand for a nice plot
     df2_wo_pvalue <-
-        df2_wo[!duplicated(df2_wo$p_value_intensity),]
+        df2_wo[!duplicated(df2_wo$p_value_intensity), ]
     if (nrow(df2_wo_pvalue) != 0) {
         df2_p_val_int <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_intensity
-                                < p_value_int),]
+                                <= p_value_int), ]
         if (nrow(df2_p_val_int) != 0) {
             p4 <- p4 +
                 geom_text(
@@ -943,7 +897,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
         }
         df2_p_val_int <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_intensity
-                                > p_value_int),]
+                                > p_value_int), ]
         if (nrow(df2_p_val_int) != 0) {
             p4 <- p4 +
                 geom_text(
@@ -959,50 +913,34 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 )
         }
     }
-    #add FC for HL ratio test if p_value is significant
+    #add FC for HL ratio lower than HL_threshold upon p_value significance
     data_n <- indice_function(data_n, "HL_fragment")
-    df2_wo <- data_n[which(data_n$indice == 1),]
+    df2_hl <- data_n[which(data_n$indice == 1), ]
+    df2_hl <- df2_hl[!duplicated(df2_hl$FC_HL), ]
     df2_wo_pvalue <-
-        df2_wo[!duplicated(df2_wo$p_value_HL),]
+        df2_hl[which(df2_hl$FC_HL < HL_threshold), ]
     if (nrow(df2_wo_pvalue) != 0) {
         df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL < p_value_hl),]
+            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL <= p_value_hl), ]
         if (nrow(df2_p_val_hl) != 0) {
             p5 <- p5 +
-                geom_text(
-                    data = df2_p_val_hl,
-                    aes(
-                        x = get('position'),
-                        y = get('HL_mean_fragment')
-                    ),
-                    label = "FC*",
-                    size = 1,
-                    check_overlap = TRUE
+                my_segment_NS(
+                    p5,
+                    data = df2_hl,
+                    "HL*",
+                    y = 0,
+                    yend = 3,
+                    dis = 10,
+                    ytext = 3.4,
+                    color = "grey52",
+                    linetype = "dashed",
+                    fontface = fontface
                 )
         }
         df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl),]
+            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl), ]
         if (nrow(df2_p_val_hl) != 0) {
-            p5 <- p5 +
-                geom_text(
-                    data = df2_p_val_hl,
-                    aes(
-                        x = get('position'),
-                        y = get('HL_mean_fragment')
-                    ),
-                    label = "FC",
-                    size = 1,
-                    check_overlap = TRUE
-                )
-        }
-    }
-    #Select rows with FC_HL event and draw a line
-    df2_hl <- data_n[!duplicated(data_n$FC_HL),]
-    df2_hl <-
-        df2_hl[which(df2_hl$FC_HL < HL_threshold),]
-    if (nrow(df2_hl) != 0) {
-        p5 <-
-            my_segment_NS(
+            p5 <- my_segment_NS(
                 p5,
                 data = df2_hl,
                 "HL",
@@ -1014,11 +952,50 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 linetype = "dashed",
                 fontface = fontface
             )
+        }
+    }
+    #add FC for HL ratio higher than HL_threshold upon p_value significance
+    df2_wo_pvalue <-
+        df2_hl[which(df2_hl$FC_HL >= HL_threshold), ]
+    if (nrow(df2_wo_pvalue) != 0) {
+        df2_p_val_hl <-
+            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL < p_value_hl), ]
+        if (nrow(df2_p_val_hl) != 0) {
+            p5 <- p5 +
+                my_segment_NS(
+                    p5,
+                    data = df2_hl,
+                    "HL*",
+                    y = 0,
+                    yend = 3,
+                    dis = 10,
+                    ytext = 3.4,
+                    color = "green",
+                    linetype = "dashed",
+                    fontface = fontface
+                )
+        }
+        df2_p_val_hl <-
+            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl), ]
+        if (nrow(df2_p_val_hl) != 0) {
+            p5 <- my_segment_NS(
+                p5,
+                data = df2_hl,
+                "HL",
+                y = 0,
+                yend = 3,
+                dis = 10,
+                ytext = 3.4,
+                color = "green",
+                linetype = "dashed",
+                fontface = fontface
+            )
+        }
     }
     #Select rows with velocity_ratio event and draw a line
-    df2_v <- data_n[!duplicated(data_n$velocity_ratio),]
+    df2_v <- data_n[!duplicated(data_n$velocity_ratio), ]
     df2_v <-
-        df2_v[which(df2_v$velocity_ratio < vel_threshold),]
+        df2_v[which(df2_v$velocity_ratio < vel_threshold), ]
     if (nrow(df2_v) != 0) {
         p6 <-
             my_segment_NS(
@@ -1048,7 +1025,7 @@ negative_strand_function <- function(data_n, data, tmp.c2, frag, i,
                 length(which(data_n$iTSS_I == "+")),
                 ")"
             )
-    } 
+    }
     p <- list(p6, p5, p4, Title)
     return(p)
 }

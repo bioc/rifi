@@ -113,7 +113,7 @@ dataframe_summary_events_velocity <-
             ev_fragments[2])[1], "velocity_fragment"] /
             tmp_merged[which(tmp_merged$delay_fragment ==
                                ev_fragments[1])[1], "velocity_fragment"])
-      p_value <- c(p_value, d$p_value_slope)
+      p_value <- c(p_value, as.numeric(d$p_value_slope))
       feature_type <-
         c(
           feature_type,
@@ -179,11 +179,11 @@ dataframe_summary_events_velocity <-
         gap_fragments,
         features
       )
-    df$p_value <- formatC(df$p_value, format = "e", digits = 2)
+    df$p_value <- formatC(as.numeric(df$p_value), format = "e", digits = 2)
     df <-
       as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
     p_adjusted <-
-        p.adjust(df$p_value, method = "fdr")
+      as.numeric(p.adjust(as.numeric(df$p_value), method = "fdr"))
     df <-
       tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                          .after = 2)

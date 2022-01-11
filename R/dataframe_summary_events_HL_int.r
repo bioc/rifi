@@ -125,7 +125,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
                            tmp_merged[which(tmp_merged$intensity_fragment ==
                                               ev_fragments[4]), "position"][1])
                                               / 2)
-    p_value <- c(p_value, d$p_value_Manova)
+    p_value <- c(p_value, as.numeric(d$p_value_Manova))
     feature_type <-
       c(
         feature_type,
@@ -209,7 +209,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
                            tmp_merged[which(
                              tmp_merged$intensity_fragment ==
                                ev_fragments[2]), "position"][1]) / 2)
-    p_value <- c(p_value, d$p_value_intensity)
+    p_value <- c(p_value, as.numeric(d$p_value_intensity))
     feature_type <-
       c(
         feature_type,
@@ -292,7 +292,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
                            tmp_merged[which(
                              tmp_merged$HL_fragment ==
                                ev_fragments[2]), "position"][1]) / 2)
-    p_value <- c(p_value, d$p_value_HL)
+    p_value <- c(p_value, as.numeric(d$p_value_HL))
     feature_type <-
       c(
         feature_type,
@@ -363,10 +363,10 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
       gap_fragments,
       features
     )
-  df$p_value <- formatC(df$p_value, format = "e", digits = 2)
+  df$p_value <- formatC(as.numeric(df$p_value), format = "e", digits = 2)
   df <-
     as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
-  p_adjusted <- p.adjust(df$p_value, method = "fdr")
+  p_adjusted <- as.numeric(p.adjust(df$p_value, method = "fdr"))
   df <-
     tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                        .after = 2)

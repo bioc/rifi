@@ -94,7 +94,6 @@
 #' @param arrow.color string: arrows color.
 #' @param minVelocity integer: threshold to fix the minimum of velocity.
 #' @param medianVelocity integer: threshold to fix the maximum of velocity.
-#' @param threshold_intensity integer: Threshold for intensity to plot terminals
 #' @param col_above20 string: color for probes/bin above value 20.
 #' @param fontface integer: font type
 #' @param shape_above20 integer: shape for probes/bins above value 20.
@@ -124,8 +123,10 @@
 #' default 200.
 #' @param iTSS_threshold integer: threshold for iTSS_II selected to plot,
 #' default 1.2.
-#' @param event_duration integer: threshold for pausing sites and iTSS_I
-#' selected to plot, default plot all events selecting the maximum value.
+#' @param event_duration_ps integer: threshold for pausing sites selected to 
+#' plot, default -2.
+#' @param event_duration_itss integer: threshold for iTSS_I selected to 
+#' plot, default 2.
 #' @param HL_threshold_color string: color for HL fold change plot
 #' @param vel_threshold_color string: color for velocity ratio plot
 #' @param ps_color string: color for pausing site plot
@@ -146,13 +147,13 @@
 #' shape=22, col_outiler = "grey50", Alpha=0.5,
 #' col_coverage = "grey", shape_outlier = 13, limit_intensity = NA,
 #' face="bold", tick_length = .3, arrow.color = "darkseagreen1",
-#' minVelocity = 3000, medianVelocity = 6000, threshold_intensity = 4000,
+#' minVelocity = 3000, medianVelocity = 6000, 
 #' col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
 #' axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
 #' p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
 #' iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
-#' p_value_hl = 0.05, event_duration = 40, HL_threshold=20,
-#' vel_threshold = 200, HL_threshold_color="green4",
+#' p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2,
+#' HL_threshold=20, vel_threshold = 200, HL_threshold_color="green4",
 #' vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 #'
 #' @export
@@ -195,7 +196,6 @@ rifi_visualization <-
            arrow.color = "darkseagreen1",
            minVelocity = 3000,
            medianVelocity = 6000,
-           threshold_intensity = 4000,
            col_above20 = "#00FFFF",
            fontface = "plain",
            shape_above20 = 14,
@@ -204,13 +204,14 @@ rifi_visualization <-
            TI_threshold = 1.1,
            p_value_TI = 0.05,
            p_value_manova = 0.05,
-           termination_threshold = 1,
-           iTSS_threshold = 1.01,
+           termination_threshold = 0.8,
+           iTSS_threshold = 1.2,
            p_value_int = 0.05,
            p_value_event = 0.05,
            p_value_hl = 0.05,
-           event_duration = 40,
-           HL_threshold = 20,
+           event_duration_ps = -2,
+           event_duration_itss = 2,
+           HL_threshold = 1,
            vel_threshold = 200,
            HL_threshold_color = "green4",
            vel_threshold_color = "grey52",
@@ -342,8 +343,6 @@ rifi_visualization <-
                                                arrow.color = arrow.color,
                                                minVelocity = minVelocity,
                                                medianVelocity = medianVelocity,
-                                               threshold_intensity = 
-                                                 threshold_intensity,
                                                shape_above20 = shape_above20,
                                                col_above20 = col_above20,
                                                fontface = fontface,
@@ -361,7 +360,10 @@ rifi_visualization <-
                                                p_value_int = p_value_int,
                                                p_value_event = p_value_event,
                                                p_value_hl = p_value_hl,
-                                               event_duration = event_duration,
+                                               event_duration_ps = 
+                                                 event_duration_ps,
+                                               event_duration_itss = 
+                                                 event_duration_itss,
                                                HL_threshold = HL_threshold,
                                                vel_threshold = vel_threshold,
                                                HL_threshold_color = 
@@ -400,8 +402,6 @@ rifi_visualization <-
                                                arrow.color = arrow.color,
                                                minVelocity = minVelocity,
                                                medianVelocity = medianVelocity,
-                                               threshold_intensity = 
-                                                 threshold_intensity,
                                                shape_above20 = shape_above20,
                                                col_above20 = col_above20,
                                                fontface = fontface,
@@ -419,7 +419,10 @@ rifi_visualization <-
                                                p_value_int = p_value_int,
                                                p_value_event = p_value_event,
                                                p_value_hl = p_value_hl,
-                                               event_duration = event_duration,
+                                               event_duration_ps = 
+                                                 event_duration_ps,
+                                               event_duration_itss = 
+                                                 event_duration_itss,
                                                HL_threshold = HL_threshold,
                                                vel_threshold = vel_threshold,
                                                HL_threshold_color = 
