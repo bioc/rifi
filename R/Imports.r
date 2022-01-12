@@ -17,7 +17,7 @@
 #' @importFrom rlang is_empty .data
 #' @importFrom stringr str_extract str_split
 #' @importFrom tibble add_row
-#' @importFrom utils write.table read.delim2
+#' @importFrom utils write.table read.delim2 capture.output
 #' @importFrom nnet which.is.max
 #' @noRd
 

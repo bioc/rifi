@@ -152,6 +152,7 @@ nls2_fit <-
       decay_v <- c()
       delay_v <- c()
       ID_v <- c()
+      pos_v <- c()
       inty_S0_v <- c()
       intyf_v <- c()
       Data_fit <- data.frame()
@@ -160,6 +161,7 @@ nls2_fit <-
       # assemble all IDs in a vector
       ID_v <- c(ID_v, unique(Data$ID)[i])
       ID_v <- unique(ID_v)
+      pos_v <- c(pos_v,unique(Data$position)[i])
       # I. input preparation:
       # 1. Time and intensity values are assembled in dataframe and used as
       # the first input for the fit.
@@ -198,8 +200,8 @@ nls2_fit <-
           delay = delay,
           k = k
         )
-
-        tryCatch(
+        cc <- capture.output(type="message",
+        tryCatch({
           halfLE2 <- nls2(
             inty ~ I(time < delay) * k / decay +
               (time >= delay) * I(k / decay * (exp(
@@ -210,10 +212,9 @@ nls2_fit <-
             control = list(warnOnly = TRUE),
             start = st1,
             lower = list(decay = 0.01, delay = 0.001)
-          ),
-          error = function(e) {},
-		  warning = function(e){}
-        )
+	)},
+          error = function(e) {}
+	))
       } else {
         Data_fit <- Data_fit_function(tmp)
         st1 <- expand.grid(
@@ -222,8 +223,8 @@ nls2_fit <-
           k = k,
           intyf = intyf
         )
-
-        tryCatch(
+        cc <- capture.output(type="message",
+        tryCatch({
           halfLE2 <- nls2(
             inty ~ I(time < delay) * k / decay +
               (time >= delay) * I(intyf + (k / decay - intyf) * (exp(
@@ -234,10 +235,9 @@ nls2_fit <-
             control = list(warnOnly = TRUE),
             start = st1,
             lower = list(decay = 0.01, delay = 0.001)
-          ),
-          error = function(e) {},
-		  warning = function(e){}
-        )
+	)},
+          error = function(e) {}
+        ))
       }
 
       # III. gathering the coefficients in vectors. NA is assigned to empty
@@ -267,17 +267,17 @@ nls2_fit <-
           print(paste("my error in processing HalfLE2:", i, err))
         }
       )
-      data_c <- cbind(ID_v, delay_v, decay_v, inty_S0_v, intyf_v)
+      data_c <- cbind(ID_v, pos_v, delay_v, decay_v, inty_S0_v, intyf_v)
       data_c <- unique(data_c)
       colnames(data_c) <-
-        c("ID", "delay", "half_life", "inty_S0", "intyf")
+        c("ID", "position", "delay", "half_life", "inty_S0", "intyf")
       return(data_c)
     }, mc.preschedule = FALSE, mc.cores = cores)
     fit_nls2 <- as.data.frame(do.call(rbind, n_fit))
     if (length(n_fit) == 0) {
-      fit_nls2 <- data.frame(matrix(nrow = 0, ncol = 5))
+      fit_nls2 <- data.frame(matrix(nrow = 0, ncol = 6))
       colnames(fit_nls2) <-
-        c("ID", "delay", "half_life", "inty_S0", "intyf")
+        c("ID", "position", "delay", "half_life", "inty_S0", "intyf")
     }
     probe <- probe[with(probe, order(probe$ID)), ]
     fit_nls2 <-
