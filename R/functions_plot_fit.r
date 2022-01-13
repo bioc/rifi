@@ -1,7 +1,6 @@
 plot_nls2_function <-
   function(data,
            inp,
-           cores,
            color = c(
              "blue",
              "green",
@@ -15,7 +14,6 @@ plot_nls2_function <-
              "black",
              "grey45"
            )) {
-    registerDoMC(cores)
     time <-
       as.numeric(colnames(inp)[seq_len(which(colnames(inp) %in% "ID") - 1)])
     #assign a data frame
@@ -47,9 +45,12 @@ plot_nls2_function <-
       tryCatch({
         #plot first the time and intensity for each probe/bin. The coefficients
         #are applied using the curve function in R.
+        #to make sure all data points are plotted because some probes can miss 
+        #one or more time point, a summary of intensity mean is calculated. 
         Data_fit_tmp <- as.data.frame(Data_fit[, c(1, 2)] %>%
-                          group_by(get('time')) %>%
-                            summarise_each(funs(mean(get('inty')))))
+                          group_by(time) %>%
+                            summarise_each(funs(mean(inty))))
+        ind <- unique(Data_fit$indice)
         plot(
           Data_fit_tmp[Data_fit$indice == ind[1], "time"],
           Data_fit_tmp[Data_fit$indice == ind[1], "inty"],
@@ -57,10 +58,10 @@ plot_nls2_function <-
           xlab = "Time [min]",
           ylab = "Intensity [A.U.]",
           main = paste0("ID: ", tmp$ID[1], " ", tmp$strand[1]),
+          ylim = c(min(Data_fit$inty), 1),
           xaxt = "n"
         )
         #plot the replicate in different colors
-        ind <- unique(Data_fit$indice)
         if (length(ind) > 1) {
           for (k in seq_along(ind)) {
             points(
@@ -78,11 +79,10 @@ plot_nls2_function <-
             axis(
               side = 1,
               cex.axis = 1,
-              at = c(formatC(
-                gsub("\\,", ".", data$delay[pos]),
-                digits = 1,
-                format = "f"
-              ), c(16, 32))
+              at = c(
+                round(as.numeric(
+                gsub("\\,", ".", data$delay[pos])), digits = 2),
+                time[length(time)-1])
             )
             curve((x < data$delay[pos]) *
                     data$inty_S0[pos] + (x >= data$delay[pos]) *
@@ -113,11 +113,10 @@ plot_nls2_function <-
             axis(
               side = 1,
               cex.axis = 1,
-              at = c(formatC(
-                gsub("\\,", ".", data$delay[pos]),
-                digits = 1,
-                format = "f"
-              ), c(16, 32))
+              at = c(
+                round(as.numeric(
+                  gsub("\\,", ".", data$delay[pos])), digits = 2),
+                time[length(time)-1])
             )
             curve((x < data$delay[pos]) *
                     data$inty_S0[pos] + (x >= data$delay[pos]) *
@@ -135,7 +134,7 @@ plot_nls2_function <-
                     data$inty_S0[pos] + (x >= data$delay[pos]) *
                     (data$inty_S0[pos] * (exp(-decay * (x - data$delay[pos])))),
                   from = data$delay[pos],
-                  to = 64,
+                  to = last(time),
                   type = "l",
                   add = TRUE,
                   col = color[8],
@@ -147,8 +146,8 @@ plot_nls2_function <-
             "topright",
             legend = paste("HL: ", formatC(
               data$half_life[pos],
-              format = "f",
-              digits = 4
+              digits = 3,
+              format = "fg"
             )),
             text.col = 4,
             bty = "n",
@@ -172,7 +171,6 @@ plot_nls2_function <-
 plot_singleProbe_function <-
   function(data,
            inp,
-           cores,
            color = c(
              "blue",
              "green",
@@ -186,8 +184,6 @@ plot_singleProbe_function <-
              "black",
              "grey45"
            )) {
-    registerDoMC(cores)
-
     if (nrow(data) == 0) {
       return()
     }

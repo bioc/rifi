@@ -143,7 +143,7 @@ TI_fit <-
     # vector of different timing point
     time <-
       as.numeric(colnames(inp)[seq_len(which(colnames(inp) %in% "ID") - 1)])
-
+    
     # II. extract probes IDs
     # extract the IDs of the flagged probes
     corr_IDs <- probe[grepl("TI", probe$flag), "ID"]
@@ -151,14 +151,14 @@ TI_fit <-
       probe[grepl("TI", probe$flag) &
               grepl("ABG", probe$flag), "ID"]
     section <- inp[inp$ID %in% corr_IDs, ]
-
+    
     # III. filtration
     section <- section[!grepl("FLT", section$filtration), ]
-
+    
     probe$delay[probe$ID %in% corr_IDs] <- NA
     probe$half_life[probe$ID %in% corr_IDs] <- NA
     probe$TI_termination_factor[probe$ID %in% corr_IDs] <- NA
-
+    
     # IV. generate the dataframe input with the corresponding intensity
     # values
     inty <-
@@ -182,7 +182,7 @@ TI_fit <-
     # NAs are eliminated from the dataframe.
     input_data <- na.omit(input_data)
     colnames(input_data) <- c("time", "inty", "id", "position")
-
+    
     # V. TI model
     model <-
       inty ~ I(time < ti_delay) * I(k / decay - ti / decay + bg) +
@@ -191,7 +191,7 @@ TI_fit <-
       I(time >= ti_delay + rest_delay) *
       I(bg + (k / decay - ti / decay * exp(-decay * rest_delay)) *
           exp(-decay * (time - (ti_delay + rest_delay))))
-
+    
     model2 <-
       inty ~ I(time < ti_delay) * I(k / decay - ti / decay) +
       I(time < ti_delay + rest_delay & time >= ti_delay) *
@@ -199,7 +199,7 @@ TI_fit <-
       I(time >= ti_delay + rest_delay) *
       I((k / decay - ti / decay * exp(-decay * rest_delay)) *
           exp(-decay * (time - (ti_delay + rest_delay))))
-
+    
     # VI. list of the starting values generated from a loop
     start_list <-
       "list(ti_delay = pars[i,4], k = rep(pars[i,1],length(gr)),
@@ -217,7 +217,7 @@ TI_fit <-
     ti_delay <- ti_delay
     rest_delay <- rest_delay
     pars <- expand.grid(k, decay, ti, ti_delay, rest_delay)
-
+    
     temp_res <- data.frame()
     delay_Ve <- c()
     k_Ve <- c()
@@ -230,21 +230,21 @@ TI_fit <-
     ids_Ve <- c()
     ti_delay_Ve <- c()
     term_prob_Ve <- c()
-
+    
     gr1 <- unique(input_data$id)
-
+    
     r <- mclapply(gr1, function(j) {
       gr <- j
       out <- NA
       temp_data <- input_data[which(input_data$id == gr), ]
       # normalize intensities values to 1
       temp_data$inty <- temp_data$inty / temp_data$inty[1]
-
+      
       tmp_r <- c()
       tmp_v <- c()
       # vector gathering values above 0
       value <- c()
-
+      
       # VII. fitting the probes
       for (i in seq_len(nrow(pars))) {
         tmp <- NA
@@ -260,8 +260,8 @@ TI_fit <-
             )
           },
           error = function(e) {},
-		  warning = function(e){}
-		  )
+          warning = function(e){}
+          )
         } else {
           tmp <- tryCatch({
             nls(
@@ -274,8 +274,8 @@ TI_fit <-
             )
           },
           error = function(e) {},
-		  warning = function(e){}
-		  )
+          warning = function(e){}
+          )
         }
         if (any(!is.na(tmp))) {
           if (!is(tmp, "simpleError")) {
@@ -315,7 +315,7 @@ TI_fit <-
           }
         }
       }
-
+      
       # VIII. Collect the best residuals from nls object from out and extract
       # the coefficients
       ti_delay_v <- c()
@@ -324,7 +324,7 @@ TI_fit <-
       ti_v <- c()
       bgs_v <- c()
       rest_delay_v <- c()
-
+      
       # loop into out and extract the coefficients
       for (k in seq_along(out)) {
         if (any(!is.na(out[[k]]))) {
@@ -337,7 +337,7 @@ TI_fit <-
           rest_delay_v <- c(rest_delay_v, fitted_pars[5])
         }
       }
-
+      
       # determine the lowest termination factor
       minV <- which.min(ti_v)
       ti_delay <- ti_delay_v[minV]
@@ -350,7 +350,7 @@ TI_fit <-
       positions <- unique(temp_data$position)
       ids <- unique(as.numeric(as.character(temp_data$id)))
       term_prob <- ti / k
-
+      
       if (all(is.na(out))) {
         ti_delay <- NA
         k <- NA
@@ -363,7 +363,7 @@ TI_fit <-
         ids <- unique(as.numeric(as.character(temp_data$id)))
         term_prob <- NA
       }
-
+      
       delay_Ve <- c(delay_Ve, delay)
       ti_delay_Ve <- c(ti_delay_Ve, ti_delay)
       decay_Ve <- c(decay_Ve, log(2) / decay)
@@ -373,7 +373,7 @@ TI_fit <-
       bgs_Ve <- c(bgs_Ve, bgs)
       positions_Ve <- c(positions_Ve, positions)
       ids_Ve <- c(ids_Ve, ids)
-
+      
       temp_res <- cbind(
         delay_Ve,
         ti_delay_Ve,
@@ -400,9 +400,9 @@ TI_fit <-
       return(temp_res)
     }, mc.preschedule = FALSE, mc.cores = cores)
     res3 <- as.data.frame(do.call(rbind, r))
-
+    
     res3[apply(res3, 2, is.infinite)] <- NA
-
+    
     if (length(r) == 0) {
       res3 <- data.frame(matrix(nrow = 0, ncol = 9))
       colnames(res3) <-
@@ -418,11 +418,11 @@ TI_fit <-
           "ID"
         )
     }
-
+    
     probe <- probe[with(probe, order(probe$ID)), ]
     res3 <-
       res3[with(res3, order(res3$ID)), ]
-
+    
     probe$delay[probe$ID %in% corr_IDs] <- NA
     probe$delay[probe$ID %in% corr_IDs] <- res3$delay
     probe$half_life[probe$ID %in% corr_IDs] <- NA
@@ -430,10 +430,10 @@ TI_fit <-
     probe$TI_termination_factor <- NA
     probe$TI_termination_factor[probe$ID %in% corr_IDs] <-
       res3$TI_termination_factor
-
+    
     probe <-
       probe[with(probe, order(-xtfrm(probe$strand), probe$position)), ]
-
+    
     res4 <- list(probe, res3)
     return(res4)
   }

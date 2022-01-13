@@ -117,7 +117,7 @@ plot_singleProbe_function.
 data(preprocess_minimal)
 rifi_fit(
   inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
-  cores = 2, viz = FALSE, details = FALSE, restr = 0.2,
+  viz = FALSE, details = FALSE, restr = 0.2,
   decay = seq(.08, 0.11, by = .02),
   delay = seq(0, 10, by = .1), k = seq(0.1, 1, 0.2), intyf = 0.2,
   TI_k = seq(0, 1, by = 0.5), TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
