@@ -227,8 +227,7 @@ nls2_fit <-
                              tryCatch({
                                halfLE2 <- nls2(
                                  inty ~ I(time < delay) * k / decay +
-                                   (time >= delay) *
-                                   I(intyf + (k / decay - intyf) * (exp(
+                                   (time >= delay) * I(intyf + (k / decay - intyf) * (exp(
                                      -decay * (time - delay)
                                    ))),
                                  data = Data_fit,
