@@ -171,6 +171,7 @@ plot_nls2_function <-
 plot_singleProbe_function <-
   function(data,
            inp,
+           cores = cores,
            color = c(
              "blue",
              "green",
@@ -258,6 +259,9 @@ plot_singleProbe_function <-
         ti_delay <- data[j, "ti_delay"]
         rest_delay <- data[j, "delay"] - ti_delay
         term_prob <- ti / k
+        if(is.na(ti) == TRUE){
+          next ()
+        }
         curve((k / decay - ti / decay * x / x + bg),
               from = 0,
               to = ti_delay,

@@ -1,6 +1,6 @@
 #' rifi_fit: conveniently wraps all fitting steps
 #'
-#' Wraps the functions: nls2_fit, TI_fit, plot_nls2 and
+#' Wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
 #' plot_singleProbe_function.
 #'
 #' @param inp data frame: the input data frame with correct format.
@@ -80,7 +80,7 @@
 #' data(preprocess_minimal)
 #' rifi_fit(
 #'   inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
-#'   viz = FALSE, details = FALSE, restr = 0.2,
+#'   cores = 1, viz = FALSE, details = FALSE, restr = 0.2,
 #'   decay = seq(.08, 0.11, by = .02),
 #'   delay = seq(0, 10, by = .1), k = seq(0.1, 1, 0.2), intyf = 0.2,
 #'   TI_k = seq(0, 1, by = 0.5), TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
@@ -273,6 +273,7 @@ rifi_fit <-
         plot_singleProbe_function(
           data = res4[[2]],
           inp = inp,
+          cores = cores,
           color = color
         )
       }
@@ -287,9 +288,7 @@ rifi_fit <-
         )
       )
     })
-    
     res <- probe
-    
     if (details == TRUE) {
       res <- list(probe, fit_nls[[2]], res4[[2]])
       names(res) <- c("probe_df", "fit_obj_STD", "fit_obj_TI")

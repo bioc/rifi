@@ -110,14 +110,14 @@ applied}
 }
 }
 \description{
-Wraps the functions: nls2_fit, TI_fit, plot_nls2 and
+Wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
 plot_singleProbe_function.
 }
 \examples{
 data(preprocess_minimal)
 rifi_fit(
   inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
-  viz = FALSE, details = FALSE, restr = 0.2,
+  cores = 1, viz = FALSE, details = FALSE, restr = 0.2,
   decay = seq(.08, 0.11, by = .02),
   delay = seq(0, 10, by = .1), k = seq(0.1, 1, 0.2), intyf = 0.2,
   TI_k = seq(0, 1, by = 0.5), TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
