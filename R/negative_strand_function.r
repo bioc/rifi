@@ -923,8 +923,7 @@ negative_strand_function <- function(data_n,
         df2_p_val_hl <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL <= p_value_hl), ]
         if (nrow(df2_p_val_hl) != 0) {
-            p5 <- p5 +
-                my_segment_NS(
+            p5 <- my_segment_NS(
                     p5,
                     data = df2_hl,
                     "HL*",
@@ -961,8 +960,8 @@ negative_strand_function <- function(data_n,
         df2_p_val_hl <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL < p_value_hl), ]
         if (nrow(df2_p_val_hl) != 0) {
-            p5 <- p5 +
-                my_segment_NS(
+            p5 <- 
+               my_segment_NS(
                     p5,
                     data = df2_hl,
                     "HL*",
@@ -978,7 +977,8 @@ negative_strand_function <- function(data_n,
         df2_p_val_hl <-
             df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl), ]
         if (nrow(df2_p_val_hl) != 0) {
-            p5 <- my_segment_NS(
+            p5 <- 
+             my_segment_NS(
                 p5,
                 data = df2_hl,
                 "HL",
