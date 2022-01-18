@@ -19,22 +19,19 @@ vignette: >
   
 
 ```{r setup, include = FALSE}
-knitr::opts_chunk$set(
-	echo = TRUE,
-	message = TRUE,
-	warning = TRUE
-)
+knitr::opts_chunk$set(echo = TRUE,
+                      message = TRUE,
+                      warning = TRUE)
 ```
 
 ``` {r, echo = FALSE, message = FALSE}
 require(rifi)
-sessionInfo()
 ```
 
 ## 0. Installation
 ``` {r, eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE))
-    install.packages("BiocManager")
+  install.packages("BiocManager")
 
 BiocManager::install("rifi")
 ```
@@ -175,14 +172,15 @@ input_df_3 <- example_input_e_coli
 colnames(input_df_3)[ncol(input_df_3)] <- "Banana"
 obj <- check_input(inp = input_df_3, thrsh = -1)
 print("Rule 4")
-input_df_4 <- example_input_e_coli[which(example_input_e_coli$strand == "+"),]
+input_df_4 <-
+  example_input_e_coli[which(example_input_e_coli$strand == "+"), ]
 input_df_4$strand <- "minus"
 obj <- check_input(inp = input_df_4, thrsh = -1)
 input_df_4 <- example_input_e_coli
 input_df_4$strand[1:3] <- "negative"
 obj <- check_input(inp = input_df_4, thrsh = -1)
 input_df_4 <- example_input_e_coli
-input_df_4$strand <- c("minus","plus","none")
+input_df_4$strand <- c("minus", "plus", "none")
 obj <- check_input(inp = input_df_4, thrsh = -1)
 print("Rule 5")
 input_df_5 <- example_input_e_coli
@@ -197,7 +195,7 @@ input_df_6$ID[1:3] <- "my_name|my,name"
 obj <- check_input(inp = input_df_6, thrsh = -1)
 print("Rule 7")
 input_df_7 <- example_input_e_coli
-obj <- check_input(inp = input_df_7[241:247,])
+obj <- check_input(inp = input_df_7[241:247, ])
 ```
 
 </p>
@@ -243,8 +241,9 @@ filtered contain the character string **FLT**.
 ``` {r,echo=FALSE}
 print("examples for the filtration column. The first three, but not the last
       three lines would be filtered")
-result$input_df$filtration[1:6] <- c("FLT", "_FLT_", "_FLT_your_text", NA, "_",
-                              "_passed_")
+result$input_df$filtration[1:6] <-
+  c("FLT", "_FLT_", "_FLT_your_text", NA, "_",
+    "_passed_")
 head(result$input_df[,9:15])
 ```
 <br/><br/>
@@ -271,7 +270,13 @@ all replicates from the input dataframe and the columns **probe_TI** and
 is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 <br/><br/>
 ``` {r make_df}
-probe_df <- make_df(inp = result$input_df, cores = 2, bg = 100, rm_FLT = TRUE)
+probe_df <-
+  make_df(
+    inp = result$input_df,
+    cores = 2,
+    bg = 100,
+    rm_FLT = TRUE
+  )
 head(probe_df)
 ```
 <br/><br/>
@@ -319,8 +324,14 @@ function to make groups by the difference to the slope. The input data contains
 <br/><br/>
 ``` {r finding_PDD, eval = FALSE}
 #Due to increased run time, this example is not evaluated in the vignette
-probe_df <- finding_PDD(probe = probe_df, cores = 2, pen = 2, pen_out = 2,
-                        thrsh = 0.001)
+probe_df <-
+  finding_PDD(
+    probe = probe_df,
+    cores = 2,
+    pen = 2,
+    pen_out = 2,
+    thrsh = 0.001
+  )
 ```
 <br/>
    **probe** data frame: dataframe output of `segment_pos`
@@ -351,8 +362,14 @@ needs additional parameters as **pen**, **thrsh** and **add**.
 <br/><br/>
 ``` {r finding_TI, eval=FALSE}
 #Due to increased run time, this example is not evaluated in the vignette
-probe_df <- finding_TI(probe = probe_df, cores = 2, pen = 10, thrsh = 0.5,
-                       add = 1000)
+probe_df <-
+  finding_TI(
+    probe = probe_df,
+    cores = 2,
+    pen = 10,
+    thrsh = 0.5,
+    add = 1000
+  )
 ```
 <br/>
    **probe** data frame: dataframe dataframe output of `finding_PDD`
@@ -392,14 +409,31 @@ will focus on all possible arguments that can be passed to the function.
 #data(example_input_e_coli) 
 #data(example_input_synechocystis_6803)
 data(example_input_minimal)
-preprocess_minimal <- rifi_preprocess(example_input_minimal, cores = 2,
-                             FUN_filter_BG = function(x){"_"},
-                             FUN_filter_STD = function(x){"_"}, 
-                             FUN_filter_TI = function(x){"_"},bg = 0,
-                             rm_FLT = FALSE, thrsh_check = 0, dista = 300,
-                             run_PDD = FALSE, pen_PDD = 2, pen_out_PDD = 1,
-                             thrsh_PDD = 0.001, pen_TI = 10, thrsh_TI = 0.5,
-                             add = 1000)
+preprocess_minimal <-
+  rifi_preprocess(
+    example_input_minimal,
+    cores = 2,
+    FUN_filter_BG = function(x) {
+      "_"
+    },
+    FUN_filter_STD = function(x) {
+      "_"
+    },
+    FUN_filter_TI = function(x) {
+      "_"
+    },
+    bg = 0,
+    rm_FLT = FALSE,
+    thrsh_check = 0,
+    dista = 300,
+    run_PDD = FALSE,
+    pen_PDD = 2,
+    pen_out_PDD = 1,
+    thrsh_PDD = 0.001,
+    pen_TI = 10,
+    thrsh_TI = 0.5,
+    add = 1000
+  )
 head(preprocess_minimal)
 ```
 <br/>
@@ -479,14 +513,23 @@ The function used are:
 #data(preprocess_e_coli) 
 #data(preprocess_synechocystis_6803)
 data(preprocess_minimal)
-fit_minimal <- rifi_fit(inp = preprocess_minimal$input_df,
-                     probe = preprocess_minimal$probe_df, cores = 2, viz = FALSE,
-                     details = FALSE, restr = 0.2, decay=seq(.08, 0.11, by=.02),
-                     delay=seq(0,10, by=.1), k=seq(0.1,1,0.2), intyf=0.2,
-                     TI_k = seq(0, 1, by = 0.5),
-                     TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
-                     TI = seq(0, 1, by = 0.5), TI_delay = seq(0, 2, by = 0.5),
-                     TI_rest_delay = seq(0, 2, by = 0.5))
+suppressWarnings(fit_minimal <- rifi_fit(
+  inp = preprocess_minimal$input_df,
+  probe = preprocess_minimal$probe_df,
+  cores = 2,
+  viz = FALSE,
+  details = FALSE,
+  restr = 0.2,
+  decay = seq(.08, 0.11, by = .02),
+  delay = seq(0, 10, by = .1),
+  k = seq(0.1, 1, 0.2),
+  intyf = 0.2,
+  TI_k = seq(0, 1, by = 0.5),
+  TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
+  TI = seq(0, 1, by = 0.5),
+  TI_delay = seq(0, 2, by = 0.5),
+  TI_rest_delay = seq(0, 2, by = 0.5)
+))
 fit_minimal
 ```
 <br/>
@@ -560,9 +603,19 @@ head(Table_2[,c(1:4,12:ncol(Table_2))])
 ```
 <br/><br/>
 ``` {r nls2_fit}
-nls2_fit(inp=preprocess_minimal$input_df, probe=preprocess_minimal$probe_df,
-         cores=1, decay=seq(.08, 0.11, by=.02), delay=seq(0, 10, by=.1),
-         k=seq(0.1, 1, 0.2), intyf = 0.2)
+suppressWarnings(tryCatch({
+  nls2_fit(
+    inp = preprocess_minimal$input_df,
+    probe = preprocess_minimal$probe_df,
+    cores = 1,
+    decay = seq(.08, 0.11, by = .02),
+    delay = seq(0, 10, by = .1),
+    k = seq(0.1, 1, 0.2),
+    intyf = 0.2
+  )
+},
+error = function(e) {
+}))
 ```
 <br/>
 
@@ -620,10 +673,17 @@ res vector and saved as an object. The output data is an extension of Table_2,
 (see. "head(probe)").
 <br/><br/>
 ``` {r TI_fit}
-TI_fit(inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
-       cores=1, restr = 0.01, k = seq(0, 1, by = 0.5),
-       decay = c(0.05, 0.1, 0.2, 0.5, 0.6), ti = seq(0, 1, by = 0.5),
-       ti_delay = seq(0, 2, by = 0.5), rest_delay = seq(0, 2, by = 0.5))
+TI_fit(
+  inp = preprocess_minimal$input_df,
+  probe = preprocess_minimal$probe_df,
+  cores = 1,
+  restr = 0.01,
+  k = seq(0, 1, by = 0.5),
+  decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
+  ti = seq(0, 1, by = 0.5),
+  ti_delay = seq(0, 2, by = 0.5),
+  rest_delay = seq(0, 2, by = 0.5)
+)
 ```
 <br/>
 
@@ -661,7 +721,7 @@ head(fit_minimal)
 is calculated from ln2/decay. The output is shown on nls2Plot figure.
 <br/><br/>
 ``` {r plot_nls2, eval=F}
-plot_nls2_function(data = fit_nls[[2]], inp = inp, cores = cores)
+plot_nls2_function(data = fit_minimal[[2]], inp = inp, cores = cores)
 ```
 <br/><br/>
    **data** data frame: data frame output from nls2 fit with the coefficients
@@ -683,7 +743,7 @@ knitr::include_graphics("nls2Plot.png")
 on TIPlot figure.
 <br/><br/>
 ``` {r plot_singleProbe, eval=F}
-plot_singleProbe_function(data = res4[[2]], inp = inp, cores = cores)
+plot_singleProbe_function(data = fit_minimal[[3]], inp = inp, cores = cores)
 ```
 <br/><br/>
    **data** data frame: data frame output from TI fit with the coefficients
@@ -750,23 +810,69 @@ of 4 objects) the first being the logbook.
 <br/><br/>
 ``` {r make_pen}
 data(fit_minimal)
-logbook<-as.numeric(rep(NA,8))
-pen_delay<-make_pen(probe = fit_minimal, FUN = rifi:::fragment_delay_pen,
-                    cores = 2, logs = logbook, dpt = 1, smpl_min=0,
-                    smpl_max=18, sta_pen = 0.5, end_pen = 4.5, rez_pen = 9,
-                    sta_pen_out = 0.5, end_pen_out = 3.5, rez_pen_out = 7)
-pen_HL<-make_pen(probe = fit_minimal, FUN = rifi:::fragment_HL_pen,
-                 cores = 2, logs = logbook, dpt = 1, smpl_min=0,
-                 smpl_max=18, sta_pen = 0.5, end_pen = 4.5, rez_pen = 9,
-                 sta_pen_out = 0.5, end_pen_out = 3.5, rez_pen_out = 7)
-pen_inty<-make_pen(probe = fit_minimal, FUN = rifi:::fragment_inty_pen,
-                   cores = 2, logs = logbook, dpt = 1, smpl_min=0,
-                   smpl_max=18, sta_pen = 0.5, end_pen = 4.5, rez_pen = 9,
-                   sta_pen_out = 0.5, end_pen_out = 3.5, rez_pen_out = 7)
-pen_TI<-make_pen(probe = fit_minimal, FUN = rifi:::fragment_TI_pen,
-                 cores = 2, logs = logbook, dpt = 1, smpl_min=0,
-                 smpl_max=18, sta_pen = 0.5, end_pen = 4.5, rez_pen = 9,
-                 sta_pen_out = 0.5, end_pen_out = 3.5, rez_pen_out = 7)
+logbook <- as.numeric(rep(NA, 8))
+pen_delay <-
+  make_pen(
+    probe = fit_minimal,
+    FUN = rifi:::fragment_delay_pen,
+    cores = 2,
+    logs = logbook,
+    dpt = 1,
+    smpl_min = 0,
+    smpl_max = 18,
+    sta_pen = 0.5,
+    end_pen = 4.5,
+    rez_pen = 9,
+    sta_pen_out = 0.5,
+    end_pen_out = 3.5,
+    rez_pen_out = 7
+  )
+pen_HL <- make_pen(
+  probe = fit_minimal,
+  FUN = rifi:::fragment_HL_pen,
+  cores = 2,
+  logs = logbook,
+  dpt = 1,
+  smpl_min = 0,
+  smpl_max = 18,
+  sta_pen = 0.5,
+  end_pen = 4.5,
+  rez_pen = 9,
+  sta_pen_out = 0.5,
+  end_pen_out = 3.5,
+  rez_pen_out = 7
+)
+pen_inty <-
+  make_pen(
+    probe = fit_minimal,
+    FUN = rifi:::fragment_inty_pen,
+    cores = 2,
+    logs = logbook,
+    dpt = 1,
+    smpl_min = 0,
+    smpl_max = 18,
+    sta_pen = 0.5,
+    end_pen = 4.5,
+    rez_pen = 9,
+    sta_pen_out = 0.5,
+    end_pen_out = 3.5,
+    rez_pen_out = 7
+  )
+pen_TI <- make_pen(
+  probe = fit_minimal,
+  FUN = rifi:::fragment_TI_pen,
+  cores = 2,
+  logs = logbook,
+  dpt = 1,
+  smpl_min = 0,
+  smpl_max = 18,
+  sta_pen = 0.5,
+  end_pen = 4.5,
+  rez_pen = 9,
+  sta_pen_out = 0.5,
+  end_pen_out = 3.5,
+  rez_pen_out = 7
+)
 ```
 <br/>
    **probe** data frame: the probe based data frame.
@@ -878,12 +984,23 @@ window (bottom) numbers above the dots represent the outlier-penalty.
 <br/><br/>
 ``` {r rifi_penalties}
 data(fit_minimal)
-penalties_minimal <-  rifi_penalties(probe = fit_minimal, details = TRUE,
-                                     viz = FALSE, top_i = 25, cores = 2,
-                                     dpt = 1, smpl_min = 0, smpl_max = 18,
-                                     sta_pen = 0.5, end_pen = 4.5, rez_pen = 9,
-                                     sta_pen_out = 0.5, end_pen_out = 4.5,
-                                     rez_pen_out = 9)
+penalties_minimal <-
+  rifi_penalties(
+    probe = fit_minimal,
+    details = TRUE,
+    viz = FALSE,
+    top_i = 25,
+    cores = 2,
+    dpt = 1,
+    smpl_min = 0,
+    smpl_max = 18,
+    sta_pen = 0.5,
+    end_pen = 4.5,
+    rez_pen = 9,
+    sta_pen_out = 0.5,
+    end_pen_out = 4.5,
+    rez_pen_out = 9
+  )
 ```
 <br/>
    **probe** data frame: the probe based data frame
@@ -936,17 +1053,21 @@ The functions called are:
 ``` {r rifi_fragmentation}
 data(fit_minimal)
 data(penalties_minimal)
-fragmentation_minimal <-  rifi_fragmentation(probe = fit_minimal, cores = 2,
-  logbook = penalties_minimal,
-  pen_delay = penalties_minimal["delay_penalty"],
-  pen_out_delay = penalties_minimal["delay_outlier_penalty"],
-  pen_HL = penalties_minimal["half_life_penalty"],
-  pen_out_HL = penalties_minimal["half_life_outlier_penalty"],
-  pen_inty = penalties_minimal["intensity_penalty"],
-  pen_out_inty = penalties_minimal["intensity_outlier_penalty"],
-  pen_TU = -0.75,
-  pen_TI = penalties_minimal["TI_penalty"],
-  pen_out_TI = penalties_minimal["TI_outlier_penalty"])
+fragmentation_minimal <-
+  rifi_fragmentation(
+    probe = fit_minimal,
+    cores = 2,
+    logbook = penalties_minimal,
+    pen_delay = penalties_minimal["delay_penalty"],
+    pen_out_delay = penalties_minimal["delay_outlier_penalty"],
+    pen_HL = penalties_minimal["half_life_penalty"],
+    pen_out_HL = penalties_minimal["half_life_outlier_penalty"],
+    pen_inty = penalties_minimal["intensity_penalty"],
+    pen_out_inty = penalties_minimal["intensity_outlier_penalty"],
+    pen_TU = -0.75,
+    pen_TI = penalties_minimal["TI_penalty"],
+    pen_out_TI = penalties_minimal["TI_outlier_penalty"]
+  )
 ```
 <br/>
    **probe** probe data frame: the probe based data frame
@@ -1008,9 +1129,12 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_delay}
-probe_df<-fragment_delay(probe = fit_minimal, cores = 2,
-                         pen = penalties_minimal["delay_penalty"],
-                         pen_out = penalties_minimal["delay_outlier_penalty"])
+probe_df <- fragment_delay(
+  probe = fit_minimal,
+  cores = 2,
+  pen = penalties_minimal["delay_penalty"],
+  pen_out = penalties_minimal["delay_outlier_penalty"]
+)
 head(probe_df)
 ```
 <br/>
@@ -1041,9 +1165,12 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_HL}
-probe_df<-fragment_HL(probe = probe_df, cores = 2,
-                      pen = penalties_minimal["half_life_penalty"],
-                      pen_out = penalties_minimal["half_life_outlier_penalty"])
+probe_df <- fragment_HL(
+  probe = probe_df,
+  cores = 2,
+  pen = penalties_minimal["half_life_penalty"],
+  pen_out = penalties_minimal["half_life_outlier_penalty"]
+)
 head(probe_df)
 ```
 <br/>
@@ -1074,10 +1201,13 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_inty}
-probe_df<-fragment_inty(probe = probe_df, cores = 2,
-                        pen = penalties_minimal["intensity_penalty"],
-                        pen_out = 
-                          penalties_minimal["intensity_outlier_penalty"])
+probe_df <- fragment_inty(
+  probe = probe_df,
+  cores = 2,
+  pen = penalties_minimal["intensity_penalty"],
+  pen_out =
+    penalties_minimal["intensity_outlier_penalty"]
+)
 head(probe_df)
 ```
 <br/>
@@ -1135,9 +1265,12 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_TI}
-probe_df<-fragment_TI(probe = probe_df, cores = 2,
-                      pen = penalties_minimal["TI_penalty"],
-                      pen_out = penalties_minimal["TI_outlier_penalty"])
+probe_df <- fragment_TI(
+  probe = probe_df,
+  cores = 2,
+  pen = penalties_minimal["TI_penalty"],
+  pen_out = penalties_minimal["TI_outlier_penalty"]
+)
 head(probe_df)
 ```
 <br/>
@@ -1257,7 +1390,8 @@ apply_ancova(data = stats_minimal)
 
 ### 4. `apply_event_position`
 
-`apply_event_position` extract the position between 2 segments with pausing site or iTSS_I event.
+`apply_event_position` extract the position between 2 segments with pausing site
+or iTSS_I event.
 <br/><br/>
 ``` {r apply_event_position, eval=F}
 data(stats_minimal)
@@ -1397,7 +1531,7 @@ The functions used are:
 ``` {r rifi_summary}
 data(stats_minimal)
 data(annot_g_minimal)
-summary_minimal <- rifi_summary(stats_minimal, data_annotation = 
+summary_minimal <- rifi_summary(stats_minimal, data_annotation =
                                   annot_g_minimal[[1]])
 summary_minimal
 ```
@@ -1422,12 +1556,13 @@ it
 f. *locus_tag*: locus_tag annotation
 <br/><br/>
 ``` {r gff3_preprocess}
- gff3_preprocess(
- path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
- )
- gff3_preprocess(
- path = gzfile(system.file("extdata", "gff_synechocystis_6803.gff.gz",
-package = "rifi")))
+gff3_preprocess(path = gzfile(system.file(
+  "extdata", "gff_e_coli.gff3.gz", package = "rifi"
+)))
+gff3_preprocess(path = gzfile(
+  system.file("extdata", "gff_synechocystis_6803.gff.gz",
+              package = "rifi")
+))
 ```
 <br/>
 
@@ -2046,25 +2181,68 @@ The arguments used are:
    **iTSS_I_color** string: color for iTSS_I plot
 <br/><br/>
 ``` {r rifi_visualization}
- data(stats_minimal)
- data(annot_g_minimal)
- rifi_visualization(data = stats_minimal, genomeLength = annot_g_minimal[[2]],
- annot = annot_g_minimal[[1]], coverage = 0, chr_fwd = NA, chr_rev = NA,
- region = c("CDS","asRNA","5'UTR","ncRNA","3'UTR","tRNA"),
- color_region = c("grey0", "red", "blue", "orange", "yellow", "green",
- "white", "darkseagreen1", "grey50", "black"),
- color_text.1 = "grey0", color_text.2 = "black", color_TU = "blue",
- size_tu = 1.6, size_locusTag = 1.6, size_gene = 1.6, Limit = 10,
- shape=22, col_outiler = "grey50", Alpha=0.5,
- col_coverage = "grey", shape_outlier = 13, limit_intensity = NA,
- face ="bold", tick_length = .3, arrow.color = "darkseagreen1",
- minVelocity = 3000, medianVelocity = 6000, 
- col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
- axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
- p_value_TI = 0.05, p_value_manova = 0.05, termination_threshold = 1,
- iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
- p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2, 
- HL_threshold = 20, vel_threshold = 200, ps_color = "orange", iTSS_I_color = "blue")
+data(stats_minimal)
+data(annot_g_minimal)
+rifi_visualization(
+  data = stats_minimal,
+  genomeLength = annot_g_minimal[[2]],
+  annot = annot_g_minimal[[1]],
+  coverage = 0,
+  chr_fwd = NA,
+  chr_rev = NA,
+  region = c("CDS", "asRNA", "5'UTR", "ncRNA", "3'UTR", "tRNA"),
+  color_region = c(
+    "grey0",
+    "red",
+    "blue",
+    "orange",
+    "yellow",
+    "green",
+    "white",
+    "darkseagreen1",
+    "grey50",
+    "black"
+  ),
+  color_text.1 = "grey0",
+  color_text.2 = "black",
+  color_TU = "blue",
+  Alpha = 0.5,
+  size_tu = 1.6,
+  size_locusTag = 1.6,
+  size_gene = 1.6,
+  Limit = 10,
+  shape = 22,
+  col_outiler = "grey50",
+  col_coverage = "grey",
+  shape_outlier = 13,
+  limit_intensity = NA,
+  face = "bold",
+  tick_length = .3,
+  arrow.color = "darkseagreen1",
+  minVelocity = 3000,
+  medianVelocity = 6000,
+  col_above20 = "#00FFFF",
+  fontface = "plain",
+  shape_above20 = 14,
+  axis_text_y_size = 3,
+  axis_title_y_size = 6,
+  TI_threshold = 1.1,
+  p_value_TI = 0.05,
+  p_value_manova = 0.05,
+  termination_threshold = 0.8,
+  iTSS_threshold = 1.2,
+  p_value_int = 0.05,
+  p_value_event = 0.05,
+  p_value_hl = 0.05,
+  event_duration_ps = -2,
+  event_duration_itss = 2,
+  HL_threshold = 1,
+  vel_threshold = 200,
+  HL_threshold_color = "green4",
+  vel_threshold_color = "grey52",
+  ps_color = "orange",
+  iTSS_I_color = "blue"
+)
 ```
 <br/><br/>
 ``` {r genome_plot_1, echo=T, fig.cap="**Fragments Plot Forward Strand**", out.width = '100%'}
@@ -2159,8 +2337,14 @@ The arguments used are:
 ``` {r rifi_wrapper, eval=F}
 data(example_input_e_coli)
 data(example_input_synechocystis_6803)
-wrapper_minimal <- rifi_wrapper(inp = example_input_e_coli, cores = 2, 
-gff = annot_g_minimal[[1]], bg = 4000,  restr = 0.1)
+wrapper_minimal <-
+  rifi_wrapper(
+    inp = example_input_e_coli,
+    cores = 2,
+    gff = annot_g_minimal[[1]],
+    bg = 4000,
+    restr = 0.1
+  )
 wrapper_minimal
 }
 ```
@@ -2202,7 +2386,7 @@ outliers.
 <br/><br/>
 ``` {r score_fun_linear, eval=F}
 score_fun_linear(y, x, z = x, pen, stran, n_out = min(10,
-                                                      max(1, 0.4*length(x))))
+                                                      max(1, 0.4 * length(x))))
 ```
 <br/>
    **y** numeric: vector of values.
@@ -2261,3 +2445,7 @@ score_fun_increasing(x, y)
    **y** numeric: vector of values
    
    **x** numeric: vector of position values
+<br/><br/>
+``` {r}
+sessionInfo()
+```
