@@ -24,7 +24,7 @@ Description: 'rifi' analyses data from rifampicin time series created by microar
 	sites in operons, sites of partial transcription termination in operons, identifies areas of likely transcriptional interference by the collision mechanism
 	and gives an estimate of the transcription velocity. 
 	All data are integrated to give an estimate of continous transcriptional units, i.e. operons. 	
-	Comprehensive output tables and visualization of the full genome result and the individual fits for all probes/bins are produced.
+	Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
 Depends:
 	R (>= 4.1)
 Imports:
