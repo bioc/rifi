@@ -1,7 +1,7 @@
 # Rifi framework
 
 ## About
-Rifi framework is an open source R package, attempted to estimate decay by probe or by bin while using microarrays or RNA-seq. The estimation of decay is a result of fit of intensities upon time serie points. Rifi automizes the processes of fitting and utilizes a dynamic programming attempt for the clustering of the genome by the coefficients extracted from the fit. 
+Rifi is an open source R package, attempted to estimate decay by probe or by bin based on high resolution microarray or RNA-seq data. The estimation of decay is a result of fit of intensities upon time serie points. Rifi automizes the processes of fitting and utilizes a dynamic programming attempt for the clustering of the genome by the coefficients extracted from the fit. Subsequently, probes/bins of equal properties	are combined into segments by dynamic programming, independent of a existing genome annotation. This allows to detect transcript segments of different stability or transcriptional events within one annotated gene. In addition to the classic decay constant/half-life analysis, 'rifi' detects processing sites, transcription pausing sites, internal transcription start sites in operons, sites of partial transcription termination in operons, identifies areas of likely transcriptional interference by the collision mechanism and gives an estimate of the transcription velocity. All data are integrated to give an estimate of continous transcriptional units, i.e. operons. Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
 
 # Installation 
 
@@ -102,6 +102,7 @@ t<sub>0</sub> | ... | t<sub>n</sub> | ID   | position   | strand |
   8.974   | ... | 3.060    | 1    | 50         | +      |
   18.612  | ... | 7.650    | 2    | 50         | +      |
   15.476  | ... | 7.022    | 2    | 50         | +      |
+  ...     | ... |...       | ...  | ...        | ...    |
   100.674 | ... | 100.460  | 300  | 4500       | -      |
   250.645 | ... | 50.460   | 300  | 4500       | -      |
   200.541 | ... | 56.460   | 300  | 4500       | -      |
