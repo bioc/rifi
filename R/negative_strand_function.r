@@ -397,8 +397,8 @@ negative_strand_function <- function(data_n,
                           col = get('col_coverage'))
         }
         ########################HL plot reverse strand#######################
-        data <- indice_function(data, "HL_fragment")
-        if (nrow(data %>%
+        data_n <- indice_function(data_n, "HL_fragment")
+        if (nrow(data_n %>%
                  filter(get('indice') == 1)) != 0) {
             p5 <- p5 +
                 geom_point(data = data_n %>%
