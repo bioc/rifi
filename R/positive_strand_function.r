@@ -985,7 +985,7 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
         if (nrow(df1_p_val_hl) != 0) {
             p2 <- my_segment_NS(
                 p2,
-                data = df1_hl,
+                data = df1_p_val_hl,
                 "HL*",
                 y = 0,
                 yend = 3,
@@ -1001,7 +1001,7 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
         if (nrow(df1_p_val_hl) != 0) {
             p2 <- my_segment_NS(
                 p2,
-                data = df1_hl,
+                data = df1_p_val_hl,
                 "HL",
                 y = 0,
                 yend = 3,
@@ -1022,7 +1022,7 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
         if (nrow(df1_p_val_hl) != 0) {
             p2 <- my_segment_NS(
                 p2,
-                data = df1_hl,
+                data = df1_p_val_hl,
                 "HL*",
                 y = 0,
                 yend = 3,
@@ -1038,7 +1038,7 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
         if (nrow(df1_p_val_hl) != 0) {
             p2 <- my_segment_NS(
                 p2,
-                data = df1_hl,
+                data = df1_p_val_hl,
                 "HL",
                 y = 0,
                 yend = 3,

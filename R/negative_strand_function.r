@@ -664,9 +664,9 @@ negative_strand_function <- function(data_n,
                 df2_syR_T.m <-
                     df2_syR_T %>%
                     filter(get('p_value_Manova') < p_value_manova)
-                p6 <-
+                p5 <-
                     my_segment_NS(
-                        p6,
+                        p5,
                         data = df2_syR_T.m,
                         "NS*",
                         y = 0,
@@ -682,9 +682,9 @@ negative_strand_function <- function(data_n,
                 df2_syR_T.t <-
                     df2_syR_T %>%
                     filter(get('p_value_Manova') > p_value_manova)
-                p6 <-
+                p5 <-
                     my_segment_NS(
-                        p6,
+                        p5,
                         data = df2_syR_T.t,
                         "NS",
                         y = 0,
@@ -699,9 +699,9 @@ negative_strand_function <- function(data_n,
             if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
                 df2_syR_T.t <- df2_syR_T %>%
                     filter(is.na(get('p_value_Manova')))
-                p6 <-
+                p5 <-
                     my_segment_NS(
-                        p6,
+                        p5,
                         data = df2_syR_T.t,
                         "NS",
                         y = 0,
@@ -925,7 +925,7 @@ negative_strand_function <- function(data_n,
         if (nrow(df2_p_val_hl) != 0) {
             p5 <- my_segment_NS(
                 p5,
-                data = df2_hl,
+                data = df2_p_val_hl,
                 "HL*",
                 y = 0,
                 yend = 3,
@@ -941,7 +941,7 @@ negative_strand_function <- function(data_n,
         if (nrow(df2_p_val_hl) != 0) {
             p5 <- my_segment_NS(
                 p5,
-                data = df2_hl,
+                data = df2_p_val_hl,
                 "HL",
                 y = 0,
                 yend = 3,
@@ -963,7 +963,7 @@ negative_strand_function <- function(data_n,
             p5 <- 
                 my_segment_NS(
                     p5,
-                    data = df2_hl,
+                    data = df2_p_val_hl,
                     "HL*",
                     y = 0,
                     yend = 3,
@@ -980,7 +980,7 @@ negative_strand_function <- function(data_n,
             p5 <- 
                 my_segment_NS(
                     p5,
-                    data = df2_hl,
+                    data = df2_p_val_hl,
                     "HL",
                     y = 0,
                     yend = 3,
