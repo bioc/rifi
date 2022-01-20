@@ -1,7 +1,23 @@
 # Rifi framework
 
 ## About
-Rifi framework is an open source R package, attempted to estimate decay by probe or by bin while using microarrays or RNA-seq. The estimation of decay is a result of fit of intensities upon time serie points. Rifi automizes the processes of fitting and utilizes a dynamic programming attempt for the clustering of the genome by the coefficients extracted from the fit. 
+Rifi is an open source R package, attempted to estimate decay by probe or by bin based on high resolution microarray or RNA-seq data. The estimation of decay is a result of fit of intensities upon time serie points. Rifi automizes the processes of fitting and utilizes a dynamic programming attempt for the clustering of the genome by the coefficients extracted from the fit. Subsequently, probes/bins of equal properties, i.e halflife, intensity or polymerase velocity,	are combined into segments by dynamic programming, independent of an existing genome annotation. This allows to detect transcript segments of different stability or transcriptional events within one annotated gene. In addition to the classic decay constant/half-life analysis, 'rifi' detects processing sites, transcription pausing sites, internal transcription start sites in operons, sites of partial transcription termination in operons, identifies areas of likely transcriptional interference by the collision mechanism and gives an estimate of the transcription velocity. All data are integrated to give an estimate of continous transcriptional units, i.e. operons. Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
+  
+<br/>
+
+<p align="center">
+  <img src="https://github.com/CyanolabFreiburg/rifi/blob/main/vignettes/genome_fragments_plot.png"/>
+</p>
+
+
+<sub>  
+<b>Figure 1:</b> Example visualization of an Rifampicin microarray experiment from <i>Synechocystis</i> PCC6803. A segment of the forward strand with its GenBank annotation is shown. 
+The first track shows the delay of the onset of the decay for the individual probes. The delay should be linearily increasing for contionous transcripts, which are clustered by dynamic programming and indicated by matching colors and a trendline. A sudden delay increase between two segments indicates a transcription polymerase pausing site (PS), while a sudden decrease indicates a new (internal) transcriptional start site (iTSS). The slope of the delay segment allows to estimate the speed of the RNA Polymerase. Changes in the velocity are indicated by a "V". 
+The second track shows the fitted half-life of the probes and the clustered half-life segments. If two segments within the same transcriptional unit have different half-life (HL) a preocessing/stabilization site for one or the other segment can be assumed.
+The third track shows the intensity and the intensity segments at timepoint 0 (before Rifampicin addition). If two segments within the same transcriptional unit have different intensities this (FC) this could be either due to a partial termination (Ter) or a new transcriptional start site (NS). 
+Significant events are assigned with an '*'. 
+</sub>
+
 
 # Installation 
 
@@ -80,10 +96,9 @@ In a first step, general data preprocessing e.g., filtering, segmentation based 
   <img src="https://github.com/CyanolabFreiburg/rifi/blob/main/vignettes/principle.png"/>
 </p>
 
-<p align="center">
-Figure 1: The general workflow of rifi. Blue boxes are data structures, green boxes are visual outputs, orange boxes are function. Incoming arrows represent the required input, outgoing arrows represent the output produced by the function. The orange frames state the main tasks of the function they refer to with dotted arrows
-</p>
-
+<sub>
+<b>Figure 2:</b> The general workflow of rifi. Blue boxes are data structures, green boxes are visual outputs, orange boxes are function. Incoming arrows represent the required input, outgoing arrows represent the output produced by the function. The orange frames state the main tasks of the function they refer to with dotted arrows
+</sub>
 
 ## Positional Arguments
 
@@ -106,7 +121,7 @@ t<sub>0</sub> | ... | t<sub>n</sub> | ID   | position   | strand |
   250.645 | ... | 50.460   | 300  | 4500       | -      |
   200.541 | ... | 56.460   | 300  | 4500       | -      |
 
-Table 1. Rifi input data table. The first n columns contain the relative intensity measurements, with the first column referring to timepoint zero, at or before the addition of rifampicin. The third to last column contains the unique ID that is identical for each replicate. The second to last column contains the position information and the last column hold the information for the strand (“+”,”-“).
+<sub>Table 1. Rifi input data table. The first n columns contain the relative intensity measurements, with the first column referring to timepoint zero, at or before the addition of rifampicin. The third to last column contains the unique ID that is identical for each replicate. The second to last column contains the position information and the last column hold the information for the strand (“+”,”-“).</sub>
 
 ## Parameters
 
@@ -140,7 +155,7 @@ ID    | gene  | ...  | strand| TU     | half-life |...    |p_value_TI|
 12    | gene2 | ...  | -     | TU_502 | 1.55      | ...   | NA       |  
 
 
-Table 2: The segment data frame output. All data given is the value averaged over the given fragment. Additional columns represented by the dots are additional information.
+<sub>Table 2: The segment data frame output. All data given is the value averaged over the given fragment. Additional columns represented by the dots are additional information.</sub>
 
 ID    | gene  | ...  | strand| event  | p_value  |
 :---: | :--:  | :---:| :--:  | :---:  | :---:    |   
@@ -151,15 +166,8 @@ ID    | gene  | ...  | strand| event  | p_value  |
 8     | NA    | ...  | -     | iTSS   | 0.007    |
 12    | gene2 | ...  | -     | iTSS   | 0.007    |
 
-Table 3: The event data frame output. All data given is the value averaged over the given fragment. Additional columns represented by the dots are additional information.
+<sub>Table 3: The event data frame output. All data given is the value averaged over the given fragment. Additional columns represented by the dots are additional information.</sub>
 
-<p align="center">
-  <img src="https://github.com/CyanolabFreiburg/rifi/blob/main/vignettes/genome_fragments_plot.png"/>
-</p>
-
-<p align="center">
-Figure 2: fragments and events plot. The plot shows 4 sections, annotation, delay, half-life (HL) and intensity. The annotation contains transcription units from rifi (TUs) and features of genome annotation. The fragments with different color are correspondingly plotted upon delay, HL and intensity. The events are indicated by different color (see help more detail). Significant events are assigned with an '*'. 
-</p>
 
 ## Testing
 
