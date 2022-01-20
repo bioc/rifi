@@ -158,7 +158,7 @@ Table 3: The event data frame output. All data given is the value averaged over 
 </p>
 
 <p align="center">
-Figure 2: The general workflow of rifi. Blue boxes are data structures, green boxes are visual outputs, orange boxes are function. Incoming arrows represent the required input, outgoing arrows represent the output produced by the function. The orange frames state the main tasks of the function they refer to with dotted arrows
+Figure 2: Figure 2: fragments and events plot. The plot shows 4 sections, annotation, delay, half-life (HL) and intensity. The annotation contains transcription units from rifi (TUs) and features of genome annotation. The fragments with different color are correspondingly plotted upon delay, HL and intensity. The events are indicated by different color (see help more detail). Significant events are assigned with an '*'. 
 </p>
 
 ## Testing
