@@ -40,11 +40,13 @@ utils::globalVariables(
                 "p_value_int" ,
                 "p_value_event" ,
                 "p_value_hl" ,
-                "event_duration" ,
-                "HL_threshold" ,
-                "vel_threshold" ,
-                "HL_threshold_color" ,
-                "vel_threshold_color" ,
+                "event_duration",
+                "HL_threshold_1",
+                "HL_threshold_2",
+                "vel_threshold",
+                "HL_threshold_color_1",
+                "HL_threshold_color_2",
+                "vel_threshold_color",
                 "ps_color" ,
                 "iTSS_I_color"
         )

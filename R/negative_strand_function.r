@@ -23,20 +23,23 @@ negative_strand_function <- function(data_n,
                                      axis_title_y_size = axis_title_y_size,
                                      TI_threshold = TI_threshold,
                                      p_value_TI = p_value_TI,
-                                     p_value_manova = p_value_manova,
                                      termination_threshold =
                                          termination_threshold,
                                      iTSS_threshold = iTSS_threshold,
                                      p_value_int = p_value_int,
                                      p_value_event = p_value_event,
                                      p_value_hl = p_value_hl,
-                                     event_duration_ps =
+                                     event_duration_ps = 
                                          event_duration_ps,
-                                     event_duration_itss =
+                                     event_duration_itss = 
                                          event_duration_itss,
-                                     HL_threshold = HL_threshold,
+                                     HL_threshold_1 = HL_threshold_1,
+                                     HL_threshold_2 = HL_threshold_2,
                                      vel_threshold = vel_threshold,
-                                     HL_threshold_color = HL_threshold_color,
+                                     HL_threshold_color_2 = 
+                                         HL_threshold_color_2,
+                                     HL_threshold_color_1 = 
+                                         HL_threshold_color_1,
                                      vel_threshold_color = vel_threshold_color,
                                      ps_color = ps_color,
                                      iTSS_I_color = iTSS_I_color) {
@@ -589,62 +592,6 @@ negative_strand_function <- function(data_n,
             df2_syR_T <-
                 df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
             forggtitle_ter <- nrow(df2_syR_T)
-            if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
-                df2_syR_T.m <-
-                    df2_syR_T %>%
-                    filter(get('p_value_Manova') < p_value_manova)
-                p5 <-
-                    my_segment_T(
-                        p5,
-                        data = df2_syR_T.m,
-                        "Ter*",
-                        y = 0,
-                        yend = 2.5,
-                        dis = 50,
-                        ytext = 2.7,
-                        color = 2,
-                        linetype = "dotted",
-                        df = "termination",
-                        fontface = fontface
-                    )
-            }
-            if (length(which(df2_syR_T$p_value_Manova > p_value_manova)) != 0) {
-                df2_syR_T.t <-
-                    df2_syR_T %>%
-                    filter(get('p_value_Manova') > p_value_manova)
-                p5 <-
-                    my_segment_T(
-                        p5,
-                        data = df2_syR_T.t,
-                        "Ter",
-                        y = 0,
-                        yend = 2.5,
-                        dis = 50,
-                        ytext = 2.7,
-                        color = 2,
-                        linetype = "dotted",
-                        df = "termination",
-                        fontface = fontface
-                    )
-            }
-            if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
-                df2_syR_T.t <- df2_syR_T %>%
-                    filter(is.na(get('p_value_Manova')))
-                p5 <-
-                    my_segment_T(
-                        p5,
-                        data = df2_syR_T.t,
-                        "Ter",
-                        y = 0,
-                        yend = 2.5,
-                        dis = 50,
-                        ytext = 2.7,
-                        color = 2,
-                        linetype = "dotted",
-                        df = "termination",
-                        fontface = fontface
-                    )
-            }
         }
         df2_syR_T <- NA
         #plot New_start event from synthesis_ratio_event column
@@ -660,59 +607,6 @@ negative_strand_function <- function(data_n,
             df2_syR_T <-
                 df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
             forggtitle_NS <- nrow(df2_syR_T)
-            if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
-                df2_syR_T.m <-
-                    df2_syR_T %>%
-                    filter(get('p_value_Manova') < p_value_manova)
-                p5 <-
-                    my_segment_NS(
-                        p5,
-                        data = df2_syR_T.m,
-                        "NS*",
-                        y = 0,
-                        yend = 2.5,
-                        dis = 10,
-                        ytext = 2.7,
-                        color = "#00FFFF",
-                        linetype = "dashed",
-                        fontface = fontface
-                    )
-            }
-            if (length(which(df2_syR_T$p_value_Manova > p_value_manova)) != 0) {
-                df2_syR_T.t <-
-                    df2_syR_T %>%
-                    filter(get('p_value_Manova') > p_value_manova)
-                p5 <-
-                    my_segment_NS(
-                        p5,
-                        data = df2_syR_T.t,
-                        "NS",
-                        y = 0,
-                        yend = 2.5,
-                        dis = 10,
-                        ytext = 2.7,
-                        color = "#00FFFF",
-                        linetype = "dashed",
-                        fontface = fontface
-                    )
-            }
-            if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
-                df2_syR_T.t <- df2_syR_T %>%
-                    filter(is.na(get('p_value_Manova')))
-                p5 <-
-                    my_segment_NS(
-                        p5,
-                        data = df2_syR_T.t,
-                        "NS",
-                        y = 0,
-                        yend = 2.5,
-                        dis = 10,
-                        ytext = 2.7,
-                        color = "#00FFFF",
-                        linetype = "dashed",
-                        fontface = fontface
-                    )
-            }
         }
     }
     ####################pausing site reverse strand##############
@@ -724,7 +618,7 @@ negative_strand_function <- function(data_n,
         #select pausing site duration
         df2_ps <-
             df2_ps %>%
-            filter(na.omit(get('event_duration')) <= event_duration_ps)
+            filter(na.omit(get('event_duration')) >= event_duration_ps)
         #For those event with significant statistical test, are displayed
         #with a legend
         if (nrow(df2_ps %>%
@@ -804,7 +698,7 @@ negative_strand_function <- function(data_n,
         #select iTSS duration
         df2_itss <-
             df2_itss %>%
-            filter(na.omit(get('event_duration')) >= event_duration_itss)
+            filter(na.omit(get('event_duration')) <= event_duration_itss)
         if (nrow(df2_itss %>%
                  filter(get('event_ps_itss_p_value_Ttest')
                         < p_value_event)) != 0) {
@@ -913,80 +807,103 @@ negative_strand_function <- function(data_n,
                 )
         }
     }
-    #add FC for HL ratio lower than HL_threshold upon p_value significance
+    #add FC for HL ratio higher than HL_threshold upon p_value significance
     data_n <- indice_function(data_n, "HL_fragment")
     df2_hl <- data_n[which(data_n$indice == 1), ]
     df2_hl <- df2_hl[!duplicated(df2_hl$FC_HL), ]
-    df2_wo_pvalue <-
-        df2_hl[which(df2_hl$FC_HL < HL_threshold), ]
-    if (nrow(df2_wo_pvalue) != 0) {
-        df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL <= p_value_hl), ]
-        if (nrow(df2_p_val_hl) != 0) {
+    df2_p_val_hl <-
+        df2_hl[which(df2_hl$FC_HL >= HL_threshold_1), ]
+    if (nrow(df2_p_val_hl) != 0) {
+        df2_p_val_hl_p1 <-
+            df2_p_val_hl[which(df2_p_val_hl$p_value_HL <= p_value_hl), ]
+        if (nrow(df2_p_val_hl_p1) != 0) {
             p5 <- my_segment_NS(
                 p5,
-                data = df2_p_val_hl,
+                data = df2_p_val_hl_p1,
                 "HL*",
                 y = 0,
                 yend = 3,
                 dis = 10,
                 ytext = 3.4,
-                color = "grey52",
+                color = HL_threshold_color_1,
                 linetype = "dashed",
                 fontface = fontface
             )
         }
-        df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl), ]
-        if (nrow(df2_p_val_hl) != 0) {
+        df2_p_val_hl_p2 <-
+            df2_p_val_hl[which(df2_p_val_hl$p_value_HL > p_value_hl), ]
+        if (nrow(df2_p_val_hl_p2) != 0) {
             p5 <- my_segment_NS(
                 p5,
-                data = df2_p_val_hl,
+                data = df2_p_val_hl_p2,
                 "HL",
                 y = 0,
                 yend = 3,
                 dis = 10,
                 ytext = 3.4,
-                color = "grey52",
+                color = HL_threshold_color_1,
                 linetype = "dashed",
                 fontface = fontface
             )
         }
     }
-    #add FC for HL ratio higher than HL_threshold upon p_value significance
-    df2_wo_pvalue <-
-        df2_hl[which(df2_hl$FC_HL >= HL_threshold), ]
-    if (nrow(df2_wo_pvalue) != 0) {
-        df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL < p_value_hl), ]
-        if (nrow(df2_p_val_hl) != 0) {
+    #add FC for HL ratio lower than HL_threshold upon p_value significance
+    df2_p_val_hl <-
+        df2_hl[which(df2_hl$FC_HL <= HL_threshold_2), ]
+    if (nrow(df2_p_val_hl) != 0) {
+        df2_p_val_hl_p1 <-
+            df2_p_val_hl[which(df2_p_val_hl$p_value_HL <= p_value_hl), ]
+        if (nrow(df2_p_val_hl_p1) != 0) {
             p5 <- 
                 my_segment_NS(
                     p5,
-                    data = df2_p_val_hl,
+                    data = df2_p_val_hl_p1,
                     "HL*",
                     y = 0,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = "green",
+                    color = HL_threshold_color_2,
                     linetype = "dashed",
                     fontface = fontface
                 )
         }
-        df2_p_val_hl <-
-            df2_wo_pvalue[which(df2_wo_pvalue$p_value_HL > p_value_hl), ]
-        if (nrow(df2_p_val_hl) != 0) {
+        df2_p_val_hl_p2 <-
+            df2_p_val_hl[which(df2_p_val_hl$p_value_HL > p_value_hl), ]
+        if (nrow(df2_p_val_hl_p2) != 0) {
             p5 <- 
                 my_segment_NS(
                     p5,
-                    data = df2_p_val_hl,
+                    data = df2_p_val_hl_p2,
                     "HL",
                     y = 0,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = "green",
+                    color = HL_threshold_color_2,
+                    linetype = "dashed",
+                    fontface = fontface
+                )
+        }
+    }
+    #if FC_HL is between both threshold and has a significant p_value
+    df2_p_val_hl <-
+        df2_hl[which(df2_hl$FC_HL > HL_threshold_2 & 
+                         df2_hl$FC_HL < HL_threshold_1),]
+    if (nrow(df2_p_val_hl) != 0) {
+        df2_p_val_hl_p1 <-
+            df2_p_val_hl[which(df2_p_val_hl$p_value_HL <= p_value_hl), ]
+        if (nrow(df2_p_val_hl_p1) != 0) {
+            p5 <- 
+                my_segment_NS(
+                    p5,
+                    data = df2_p_val_hl_p1,
+                    "HL*",
+                    y = 0,
+                    yend = 3,
+                    dis = 10,
+                    ytext = 3.4,
+                    color = HL_threshold_color_2,
                     linetype = "dashed",
                     fontface = fontface
                 )
@@ -1006,7 +923,7 @@ negative_strand_function <- function(data_n,
                 yend = 3,
                 dis = 10,
                 ytext = 3.4,
-                color = "grey52",
+                color = vel_threshold_color,
                 linetype = "dashed",
                 fontface = fontface
             )

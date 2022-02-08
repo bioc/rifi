@@ -58,7 +58,7 @@ plot_nls2_function <-
           xlab = "Time [min]",
           ylab = "Intensity [A.U.]",
           main = paste0("ID: ", tmp$ID[1], " ", tmp$strand[1]),
-          ylim = c(min(Data_fit$inty), 1),
+          ylim = c(0, 1),
           xaxt = "n"
         )
         #plot the replicate in different colors

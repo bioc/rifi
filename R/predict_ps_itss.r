@@ -116,8 +116,8 @@ predict_ps_itss <- function(data, maxDis = 300) {
         if (dis > maxDis) {
           next()
         } else {
-          y.dif <- y1 - y2
-          if (y.dif <= 0) {
+          y.dif <- y2 - y1
+          if (y.dif >= 0) {
             if (unique(tu$strand) == "+") {
               data[which(data$ID %in% last(del.1$ID)), "pausing_site"] <- "+"
               data[which(data$ID %in% last(del.1$ID)), "event_duration"] <- 
@@ -140,7 +140,7 @@ predict_ps_itss <- function(data, maxDis = 300) {
                   del.1$delay_fragment[2]
                 )
             }
-          } else if (y.dif > 0) {
+          } else if (y.dif < 0) {
             if (unique(tu$strand) == "+") {
               data[which(data$ID %in% last(del.1$ID)), "iTSS_I"] <- "+"
               data[which(data$ID %in% last(del.1$ID)), "event_duration"] <- 

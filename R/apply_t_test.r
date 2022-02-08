@@ -55,12 +55,6 @@
 #' @export
 
 apply_t_test <- function(data, threshold = 300) {
-  data$FC_HL <- NA
-  data$FC_fragment_HL <- NA
-  data$p_value_HL <- NA
-  data$FC_intensity <- NA
-  data$FC_fragment_intensity <- NA
-  data$p_value_intensity <- NA
   uniqueTU <- unique(data$TU)
   uniqueTU <- uniqueTU[grep("_NA|_T", uniqueTU, invert = TRUE)]
   for (i in seq_along(uniqueTU)) {

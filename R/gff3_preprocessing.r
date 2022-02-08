@@ -59,8 +59,9 @@ gff3_preprocess <- function(path) {
   gene <- str_extract(tmp$annotation, "\\gene=\\w+")
   gene <- gsub("gene=", "", gene)
   #grep lines with locus_tag annotation
-  locus_tag <- str_extract(tmp$annotation, "\\locus_tag=\\w+")
+  locus_tag <- str_extract(tmp$annotation, "\\locus_tag=.*;")
   locus_tag <- gsub("locus_tag=", "", locus_tag)
+  locus_tag <- gsub(";", "", locus_tag)
   tmp <- cbind.data.frame(tmp[, -5], gene, locus_tag)
   tmp[, -c(2:3)] <- apply(tmp[, -c(2:3)], 2, as.character)
   tmp[, c(2:3)] <- apply(tmp[, c(2:3)], 2, as.numeric)

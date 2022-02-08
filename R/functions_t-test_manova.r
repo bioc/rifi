@@ -37,7 +37,7 @@ t_test_function <-
           t_h <- t_h[[3]]
           #Fold change of the neighboring fragments, the mean of the
           #fragment2/the mean of the fragment1
-          quot.hl <- mean(frg.2.h) / mean(frg.1.h)
+          quot.hl <- log2(mean(frg.2.h)/mean(frg.1.h))
           #assign the fragments name on the corresponding column
           data[which(data[, frag] == seg[j]), paste0("FC_fragment_", o)] <-
             rep(frag_hl, times = length(which(data[, frag] == seg[j])))

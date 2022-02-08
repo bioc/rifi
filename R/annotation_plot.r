@@ -1,12 +1,13 @@
 ##########################annotation section#########################
 annotation_plot <-
-  function(data_p,
-           data_n,
-           annot,
-           tmp.1,
-           tmp.2,
-           frag,
-           i,
+  function(data_p = df1,
+           data_n = df2,
+           annot = annot,
+           condition = condition,
+           tmp.1 = tmp.1,
+           tmp.2 = tmp.2,
+           frag = frag,
+           i = i,
            an = an,
            region = region,
            color_region = color_region,
@@ -14,10 +15,19 @@ annotation_plot <-
            color_text.1 = color_text.1,
            color_text.2 = color_text.2,
            color_TU = color_TU,
+           scaling_TU = scaling_TU,
            Alpha = Alpha,
            size_tu = size_tu,
            size_locusTag = size_locusTag,
-           size_gene = size_gene) {
+           termination_threshold =
+             termination_threshold,
+           iTSS_threshold =
+             iTSS_threshold,
+           p_value_manova =
+             p_value_manova,
+           size_gene = size_gene,
+           pos.1 = pos.1,
+           pos.2 = pos.2) {
     an.p <- an %>% filter(an$strand == "+")
     an.p <- as.character(unique(an.p$region))
     an.m <- an %>% filter(an$strand == "-")
@@ -28,7 +38,7 @@ annotation_plot <-
     segment_data_g.1 <- data.frame()
     segment_data_g.2 <- data.frame()
     segment_data_g.p1 <- data.frame()
-    segment_data_g.p2 <- data.frame()
+    segment_data_g.p7 <- data.frame()
     #TU_annotation and gene_annot_function functions are used to annotate
     #TUs and genes on the positive strand.
     tryCatch({
@@ -65,8 +75,8 @@ annotation_plot <-
       for (k in seq_along(an.p)) {
         segment_data_g.1 <-
           gene_annot_function(
-            pos.1 = frag[i],
-            pos.2 = frag[i + 1],
+            pos.1 = pos.1,
+            pos.2 = pos.2,
             yint = 11.8,
             yend = 15.8,
             annot = an,
@@ -76,8 +86,8 @@ annotation_plot <-
           )
         segment_data_g.2 <-
           gene_annot_function(
-            pos.1 = frag[i],
-            pos.2 = frag[i + 1],
+            pos.1 = pos.1,
+            pos.2 = pos.2,
             yint = 7.4,
             yend = 11.4,
             annot = an,
@@ -87,8 +97,8 @@ annotation_plot <-
           )
         segment_data_g.p1 <-
           rbind(segment_data_g.p1, segment_data_g.1)
-        segment_data_g.p2 <-
-          rbind(segment_data_g.p2, segment_data_g.2)
+        segment_data_g.p7 <-
+          rbind(segment_data_g.p7, segment_data_g.2)
       }
       }
     }, warning = function(war) {
@@ -129,8 +139,8 @@ annotation_plot <-
         for (k in seq_along(an.m)) {
         segment_data_g.1 <-
           gene_annot_function(
-            pos.1 = frag[i],
-            pos.2 = frag[i + 1],
+            pos.1 = pos.1,
+            pos.2 = pos.2,
             yint = -11.8,
             yend = -15.8,
             annot = an,
@@ -140,8 +150,8 @@ annotation_plot <-
           )
         segment_data_g.2 <-
           gene_annot_function(
-            pos.1 = frag[i],
-            pos.2 = frag[i + 1],
+            pos.1 = pos.1,
+            pos.2 = pos.2,
             yint = -7.4,
             yend = -11.4,
             annot = an,
@@ -166,7 +176,7 @@ annotation_plot <-
         segment_data_t.1,
         segment_data_t.2,
         segment_data_g.p1,
-        segment_data_g.p2,
+        segment_data_g.p7,
         segment_data_g.m1,
         segment_data_g.m2
       )
@@ -291,6 +301,171 @@ annotation_plot <-
             size = .2,
             arrow = my_arrow(.4, "open")
           )
+        df1_syR_T <- NA
+        if (length(which(!is.na(data_p$synthesis_ratio))) != 0) {
+          df1_syR <- data_p[which(!is.na(data_p$synthesis_ratio)),]
+          #in case last position matches with an event which needs to be
+          #on the next page of the plot.
+          if (last(df1_syR$position) == frag[c(i + 1)]) {
+            fc_seg <-
+              df1_syR[which(df1_syR$position ==
+                              frag[c(i + 1)]), "FC_HL_intensity_fragment"]
+            df1_syR[which(df1_syR$FC_HL_intensity_fragment == fc_seg),
+                    c("synthesis_ratio_event",
+                      "p_value_Manova")] <- NA
+          }
+          if (length(which(
+            df1_syR$synthesis_ratio < termination_threshold &
+            !is.na(df1_syR$FC_HL_intensity_fragment)
+          )) != 0) {
+            df1_syR_T <-
+              df1_syR[which(
+                df1_syR$synthesis_ratio < termination_threshold &
+                  !is.na(df1_syR$FC_HL_intensity_fragment)
+              ),]
+            df1_syR_T <-
+              arrange_byGroup(df1_syR_T, "FC_HL_intensity_fragment")
+            if (length(which(
+              df1_syR_T$p_value_Manova < p_value_manova
+            )) != 0) {
+              df1_syR_T.m <-
+                df1_syR_T %>%
+                filter(get('p_value_Manova') < p_value_manova)
+              p7 <-
+                my_segment_T(
+                  p7,
+                  data = df1_syR_T.m,
+                  "Ter*",
+                  y = 2.5,
+                  yend = 5.6,
+                  dis = 50,
+                  ytext = 2.1,
+                  color = 2,
+                  linetype = "solid",
+                  df = "termination",
+                  fontface = fontface
+                )
+            }
+            if (length(which(
+              df1_syR_T$p_value_Manova > p_value_manova
+            )) != 0) {
+              df1_syR_T.t <-
+                df1_syR_T %>%
+                filter(get('p_value_Manova') > p_value_manova)
+              p7 <-
+                my_segment_T(
+                  p7,
+                  data = df1_syR_T.t,
+                  "Ter",
+                  y = 2.5,
+                  yend = 5.6,
+                  dis = 50,
+                  ytext = 2.1,
+                  color = 2,
+                  linetype = "solid",
+                  df = "termination",
+                  fontface = fontface
+                )
+            }
+            if (length(which(is.na(
+              df1_syR_T$p_value_Manova
+            ))) != 0) {
+              df1_syR_T.t <- df1_syR_T %>%
+                filter(is.na(get(
+                  'p_value_Manova'
+                )))
+              p7 <-
+                my_segment_T(
+                  p7,
+                  data = df1_syR_T.t,
+                  "Ter",
+                  y = 2.5,
+                  yend = 5.6,
+                  dis = 50,
+                  ytext = 2.1,
+                  color = 2,
+                  linetype = "solid",
+                  df = "termination",
+                  fontface = fontface
+                )
+            }
+          }
+          df1_syR_T <- NA
+          #plot New_start event from synthesis_ratio_event
+          if (length(which(
+            df1_syR$synthesis_ratio > iTSS_threshold &
+            !is.na(df1_syR$FC_HL_intensity_fragment)
+          )) != 0) {
+            df1_syR_T <-
+              df1_syR[which(
+                df1_syR$synthesis_ratio > iTSS_threshold &
+                  !is.na(df1_syR$FC_HL_intensity_fragment)
+              ),]
+            df1_syR_T <-
+              arrange_byGroup(df1_syR_T, "FC_HL_intensity_fragment")
+            if (length(which(
+              df1_syR_T$p_value_Manova < p_value_manova
+            )) != 0) {
+              df1_syR_T.m <-
+                df1_syR_T %>%
+                filter(get('p_value_Manova') < p_value_manova)
+              p7 <-
+                my_segment_NS(
+                  p7,
+                  data = df1_syR_T.m,
+                  "NS*",
+                  y = 2.5,
+                  yend = 5.6,
+                  dis = 10,
+                  ytext = 2.1,
+                  color = "#00FFFF",
+                  linetype = "solid",
+                  fontface = fontface
+                )
+            }
+            if (length(which(
+              df1_syR_T$p_value_Manova > p_value_manova
+            )) != 0) {
+              df1_syR_T.t <-
+                df1_syR_T %>%
+                filter(get('p_value_Manova') > p_value_manova)
+              p7 <-
+                my_segment_NS(
+                  p7,
+                  data = df1_syR_T.t,
+                  "NS",
+                  y = 2.5,
+                  yend = 5.6,
+                  dis = 10,
+                  ytext = 2.1,
+                  color = "#00FFFF",
+                  linetype = "solid",
+                  fontface = fontface
+                )
+            }
+            if (length(which(is.na(
+              df1_syR_T$p_value_Manova
+            ))) != 0) {
+              df1_syR_T.t <- df1_syR_T %>%
+                filter(is.na(get(
+                  'p_value_Manova'
+                )))
+              p7 <-
+                my_segment_NS(
+                  p7,
+                  data = df1_syR_T.t,
+                  "NS",
+                  y = 2.5,
+                  yend = 5.6,
+                  dis = 10,
+                  ytext = 2.1,
+                  color = "#00FFFF",
+                  linetype = "solid",
+                  fontface = fontface
+                )
+            }
+          }
+        }
       }
       if (nrow(segment_data_t.2) != 0) {
         p7 <- p7 +
@@ -311,6 +486,145 @@ annotation_plot <-
             size = .2,
             arrow = my_arrow(.4, "open")
           )
+        df2_syR_T <- NA
+        if (length(which(!is.na(data_n$synthesis_ratio))) != 0) {
+          df2_syR <- data_n[which(!is.na(data_n$synthesis_ratio)), ]
+          if (length(which(
+            df2_syR$synthesis_ratio < termination_threshold &
+            !is.na(df2_syR$FC_HL_intensity_fragment)
+          )) != 0) {
+            df2_syR_T <-
+              df2_syR[which(
+                df2_syR$synthesis_ratio < termination_threshold &
+                  !is.na(df2_syR$FC_HL_intensity_fragment)
+              ), ]
+            df2_syR_T <-
+              df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
+            if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
+              df2_syR_T.m <-
+                df2_syR_T %>%
+                filter(get('p_value_Manova') < p_value_manova)
+              p7 <-
+                my_segment_T(
+                  p7,
+                  data = df2_syR_T.m,
+                  "Ter*",
+                  y = -2.5,
+                  yend = -5.6,
+                  dis = 50,
+                  ytext = -2.1,
+                  color = 2,
+                  linetype = "solid",
+                  df = "termination",
+                  fontface = fontface
+                )
+            }
+            if (length(which(df2_syR_T$p_value_Manova > p_value_manova)) != 0) {
+              df2_syR_T.t <-
+                df2_syR_T %>%
+                filter(get('p_value_Manova') > p_value_manova)
+              p7 <-
+                my_segment_T(
+                  p7,
+                  data = df2_syR_T.t,
+                  "Ter",
+                  y = -2.5,
+                  yend = -5.6,
+                  dis = 50,
+                  ytext = -2.1,
+                  color = 2,
+                  linetype = "solid",
+                  df = "termination",
+                  fontface = fontface
+                )
+            }
+            if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
+              df2_syR_T.t <- df2_syR_T %>%
+                filter(is.na(get('p_value_Manova')))
+              p7 <-
+                my_segment_T(
+                  p7,
+                  data = df2_syR_T.t,
+                  "Ter",
+                  y = -2.5,
+                  yend = -5.6,
+                  dis = 50,
+                  ytext = -2.1,
+                  color = 2,
+                  linetype = "solid",
+                  df = "termination",
+                  fontface = fontface
+                )
+            }
+          }
+          df2_syR_T <- NA
+          #plot New_start event from synthesis_ratio_event column
+          if (length(which(
+            df2_syR$synthesis_ratio > iTSS_threshold &
+            !is.na(df2_syR$FC_HL_intensity_fragment)
+          )) != 0) {
+            df2_syR_T <-
+              df2_syR[which(
+                df2_syR$synthesis_ratio > iTSS_threshold &
+                  !is.na(df2_syR$FC_HL_intensity_fragment)
+              ), ]
+            df2_syR_T <-
+              df2_syR_T[!duplicated(df2_syR_T$FC_fragment_intensity), ]
+            if (length(which(df2_syR_T$p_value_Manova < p_value_manova)) != 0) {
+              df2_syR_T.m <-
+                df2_syR_T %>%
+                filter(get('p_value_Manova') < p_value_manova)
+              p7 <-
+                my_segment_NS(
+                  p7,
+                  data = df2_syR_T.m,
+                  "NS*",
+                  y = -2.5,
+                  yend = -5.6,
+                  dis = 10,
+                  ytext = -2.1,
+                  color = "#00FFFF",
+                  linetype = "solid",
+                  fontface = fontface
+                )
+            }
+            if (length(which(df2_syR_T$p_value_Manova > p_value_manova)) != 0) {
+              df2_syR_T.t <-
+                df2_syR_T %>%
+                filter(get('p_value_Manova') > p_value_manova)
+              p7 <-
+                my_segment_NS(
+                  p7,
+                  data = df2_syR_T.t,
+                  "NS",
+                  y = -2.5,
+                  yend = -5.6,
+                  dis = 10,
+                  ytext = -2.1,
+                  color = "#00FFFF",
+                  linetype = "solid",
+                  fontface = fontface
+                )
+            }
+            if (length(which(is.na(df2_syR_T$p_value_Manova))) != 0) {
+              df2_syR_T.t <- df2_syR_T %>%
+                filter(is.na(get('p_value_Manova')))
+              p7 <-
+                my_segment_NS(
+                  p7,
+                  data = df2_syR_T.t,
+                  "NS",
+                  y = -2.5,
+                  yend = -5.6,
+                  dis = 10,
+                  ytext = -2.1,
+                  color = "#00FFFF",
+                  linetype = "solid",
+                  fontface = fontface
+                )
+            }
+          }
+        }
       }
     }
       if(nrow(data_p) == 0){

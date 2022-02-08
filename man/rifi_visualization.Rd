@@ -106,18 +106,20 @@ rifi_visualization(
   axis_text_y_size = 3,
   axis_title_y_size = 6,
   TI_threshold = 1.1,
-  p_value_TI = 0.05,
-  p_value_manova = 0.05,
   termination_threshold = 0.8,
   iTSS_threshold = 1.2,
   p_value_int = 0.05,
   p_value_event = 0.05,
   p_value_hl = 0.05,
-  event_duration_ps = -2,
-  event_duration_itss = 2,
-  HL_threshold = 1,
+  p_value_TI = 0.05,
+  p_value_manova = 0.05,
+  event_duration_ps = 1,
+  event_duration_itss = -1,
+  HL_threshold_1 = log2(1.5),
+  HL_threshold_2 = -log2(1.5),
   vel_threshold = 200,
-  HL_threshold_color = "green4",
+  HL_threshold_color_1 = "black",
+  HL_threshold_color_2 = "green",
   vel_threshold_color = "grey52",
   ps_color = "orange",
   iTSS_I_color = "blue"
@@ -191,12 +193,6 @@ function.}
 the TI termination factor drops from the first segment to the second,
 default 1.1.}
 
-\item{p_value_TI}{integer: p_value of TI fragments selected to be plotted,
-default 0.05.}
-
-\item{p_value_manova}{integer: p_value of manova test fragments to plot,
-default 0.05.}
-
 \item{termination_threshold}{integer: threshold for termination to plot,
 default .8.}
 
@@ -212,26 +208,40 @@ iTSS_I events to plot, default 0.05.}
 \item{p_value_hl}{integer: p_value of half_life fragments fold-change to
 plot, default 0.05.}
 
+\item{p_value_TI}{integer: p_value of TI fragments selected to be plotted,
+default 0.05.}
+
+\item{p_value_manova}{integer: p_value of manova test fragments to plot,
+default 0.05.}
+
 \item{event_duration_ps}{integer: threshold for pausing sites selected to
 plot, default -2.}
 
 \item{event_duration_itss}{integer: threshold for iTSS_I selected to
 plot, default 2.}
 
-\item{HL_threshold}{integer: threshold for HL fold change selected to plot,
-default 1. Grey color shows HL fold less than 1 and green color indicates
-the opposite.}
+\item{HL_threshold_1}{integer: threshold for log2FC(HL) selected to plot,
+default log2(1.5). log2FC(HL) >= log2(1.5) are indicated by black color.
+If p_value <= p_value_hl (default 0.05), log2FC(HL) is indicated by HL*
+otherwise HL.}
+
+\item{HL_threshold_2}{integer: threshold for log2FC(HL) selected to plot,
+default -log2(1.5). log2FC(HL) <= -log2(1.5) are indicated by green color.
+If p_value <= p_value_hl (default 0.05), log2FC(HL) is indicated by HL*
+otherwise HL.
+In case of p_value is significant and the log2FC(HL) is between -log2FC(1.5)
+and log2FC(1.5), FC is assigned by green color and HL*.}
 
 \item{vel_threshold}{integer: threshold for velocity ratio selected to plot,
 default 200.}
 
-\item{HL_threshold_color}{string: color for HL fold change plot}
+\item{HL_threshold_color_1}{string: color for HL fold change plot.}
 
-\item{vel_threshold_color}{string: color for velocity ratio plot}
+\item{vel_threshold_color}{string: color for velocity ratio plot.}
 
-\item{ps_color}{string: color for pausing site plot}
+\item{ps_color}{string: color for pausing site plot.}
 
-\item{iTSS_I_color}{string: color for iTSS_I plot}
+\item{iTSS_I_color}{string: color for iTSS_I plot.}
 }
 \value{
 The visualization.
@@ -326,7 +336,7 @@ axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
 p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
 iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
 p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2,
-HL_threshold=20, vel_threshold = 200, HL_threshold_color="green4",
+HL_threshold=20, vel_threshold = 200, HL_threshold_color_1="black",
 vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 
 }

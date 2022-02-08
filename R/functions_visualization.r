@@ -121,12 +121,10 @@ gene_annot_function <-
     }
     segment_data[which(is.na(segment_data$gene)), "gene"] <-
       segment_data[which(is.na(segment_data$gene)), "annotation"]
-    if (last(segment_data$xend) > pos.2) {
-      segment_data$xend[nrow(segment_data)] <- pos.2
-    }
-    if (segment_data$xstart[1] < pos.1) {
-      segment_data$xstart[1] <- pos.1
-    }
+    segment_data$xend <- ifelse(segment_data$xend > pos.2 - 2000, 
+                                pos.2 - 2000, segment_data$xend)
+    segment_data$xstart <- ifelse(segment_data$xstart < pos.1 + 1999, 
+                                pos.1 + 2000, segment_data$xstart)
     return(segment_data)
   }
 
@@ -158,23 +156,6 @@ secondaryAxis <-  function(data, parameter, ind) {
     data[which(data[, parameter] > 20), parameter] <- 20
   }
   return(data)
-}
-
-add_genomeBorders <- function(data, frag, i) {
-  firstValue <- data$start[1]
-  lastValue <- last(data$end)
-  dif <- lastValue - frag[i + 1]
-  data[nrow(data), "end"] <- frag[i + 1]
-  an.newLine <-
-    data.frame(
-      region = last(data$region),
-      start = frag[c(i + 1)],
-      end = frag[c(i + 1)] + dif,
-      strand = last(data$strand),
-      gene = last(data$gene),
-      locus_tag = last(data$locus_tag)
-    )
-  return(an.newLine)
 }
 
 arrange_byGroup <- function(input, parameter) {
@@ -318,7 +299,7 @@ my_segment_T <-
         xend = unique(data$position),
         y = y,
         yend = yend,
-        size = .2,
+        size = .4,
         color = color,
         linetype = linetype
       ) +
@@ -338,7 +319,7 @@ my_segment_T <-
         label = label,
         fontface = fontface,
         color = color,
-        size = 1
+        size = 1.2
       )
     if (df == "pausing") {
       p <- p +
@@ -388,7 +369,7 @@ my_segment_NS <-
             unique(data$position) - dis,
           y = y,
           yend = yend,
-          size = .2,
+          size = .4,
           color = color,
           linetype = linetype
         ) +

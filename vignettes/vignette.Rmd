@@ -427,7 +427,7 @@ suppressWarnings(fit_minimal <- rifi_fit(
   TI_delay = seq(0, 2, by = 0.5),
   TI_rest_delay = seq(0, 2, by = 0.5)
 ))
-fit_minimal
+head(fit_minimal)
 ```
 <br/>
 
@@ -908,7 +908,7 @@ The function wrapped are:
 ``` {r rifi_stats}
 data(fragmentation_minimal)
 stats_minimal <- rifi_stats(probe = fragmentation_minimal, dista = 300)
-stats_minimal
+head(stats_minimal)
 ```
 <br/>
 
@@ -1109,7 +1109,7 @@ data(stats_minimal)
 data(annot_g_minimal)
 summary_minimal <- rifi_summary(stats_minimal, data_annotation =
                                   annot_g_minimal[[1]])
-summary_minimal
+head(summary_minimal)
 ```
 <br/><br/>
 
@@ -1425,18 +1425,20 @@ rifi_visualization(
   axis_text_y_size = 3,
   axis_title_y_size = 6,
   TI_threshold = 1.1,
-  p_value_TI = 0.05,
-  p_value_manova = 0.05,
   termination_threshold = 0.8,
   iTSS_threshold = 1.2,
   p_value_int = 0.05,
   p_value_event = 0.05,
   p_value_hl = 0.05,
+  p_value_TI = 0.05,
+  p_value_manova = 0.05,
   event_duration_ps = -2,
   event_duration_itss = 2,
-  HL_threshold = 1,
+  HL_threshold_1 = log2(1.5),
+  HL_threshold_2 = -log2(1.5),
   vel_threshold = 200,
-  HL_threshold_color = "green4",
+  HL_threshold_color_1 = "black",
+  HL_threshold_color_2 = "green4",
   vel_threshold_color = "grey52",
   ps_color = "orange",
   iTSS_I_color = "blue"
@@ -1530,7 +1532,7 @@ wrapper_minimal <-
     bg = 4000,
     restr = 0.1
   )
-wrapper_minimal
+head(wrapper_minimal)
 }
 ```
 <br/>

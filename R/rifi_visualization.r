@@ -115,23 +115,30 @@
 #' plot, default 0.05.
 #' @param p_value_event integer: p_value of t-test from pausing site and
 #' iTSS_I events to plot, default 0.05.
-#' @param termination_threshold integer: threshold for termination to plot,
-#' default .8.
-#' @param HL_threshold integer: threshold for HL fold change selected to plot,
-#' default 1. Grey color shows HL fold less than 1 and green color indicates 
-#' the opposite.
+#' @param HL_threshold_1 integer: threshold for log2FC(HL) selected to plot, 
+#' default log2(1.5). log2FC(HL) >= log2(1.5) are indicated by black color.
+#' If p_value <= p_value_hl (default 0.05), log2FC(HL) is indicated by HL* 
+#' otherwise HL.
+#' @param HL_threshold_2 integer: threshold for log2FC(HL) selected to plot, 
+#' default -log2(1.5). log2FC(HL) <= -log2(1.5) are indicated by green color.
+#' If p_value <= p_value_hl (default 0.05), log2FC(HL) is indicated by HL* 
+#' otherwise HL. 
+#' In case of p_value is significant and the log2FC(HL) is between -log2FC(1.5) 
+#' and log2FC(1.5), FC is assigned by green color and HL*. 
+#' @param HL_threshold_color_1 string: color for HL fold change plot.
 #' @param vel_threshold integer: threshold for velocity ratio selected to plot,
 #' default 200.
+#' @param termination_threshold integer: threshold for termination to plot,
+#' default .8.
+#' @param vel_threshold_color string: color for velocity ratio plot.
 #' @param iTSS_threshold integer: threshold for iTSS_II selected to plot,
 #' default 1.2.
 #' @param event_duration_ps integer: threshold for pausing sites selected to 
 #' plot, default -2.
 #' @param event_duration_itss integer: threshold for iTSS_I selected to 
 #' plot, default 2.
-#' @param HL_threshold_color string: color for HL fold change plot
-#' @param vel_threshold_color string: color for velocity ratio plot
-#' @param ps_color string: color for pausing site plot
-#' @param iTSS_I_color string: color for iTSS_I plot
+#' @param ps_color string: color for pausing site plot.
+#' @param iTSS_I_color string: color for iTSS_I plot.
 #'
 #' @return The visualization.
 #'
@@ -154,7 +161,7 @@
 #' p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
 #' iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
 #' p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2,
-#' HL_threshold=20, vel_threshold = 200, HL_threshold_color="green4",
+#' HL_threshold=20, vel_threshold = 200, HL_threshold_color_1="black",
 #' vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
 #'
 #' @export
@@ -203,18 +210,20 @@ rifi_visualization <-
            axis_text_y_size = 3,
            axis_title_y_size = 6,
            TI_threshold = 1.1,
-           p_value_TI = 0.05,
-           p_value_manova = 0.05,
            termination_threshold = 0.8,
            iTSS_threshold = 1.2,
            p_value_int = 0.05,
            p_value_event = 0.05,
            p_value_hl = 0.05,
-           event_duration_ps = -2,
-           event_duration_itss = 2,
-           HL_threshold = 1,
+           p_value_TI = 0.05,
+           p_value_manova = 0.05,
+           event_duration_ps = 1,
+           event_duration_itss = -1,
+           HL_threshold_1 = log2(1.5),
+           HL_threshold_2 = -log2(1.5),
            vel_threshold = 200,
-           HL_threshold_color = "green4",
+           HL_threshold_color_1 = "black",
+           HL_threshold_color_2 = "green",
            vel_threshold_color = "grey52",
            ps_color = "orange",
            iTSS_I_color = "blue") {
@@ -262,6 +271,9 @@ rifi_visualization <-
         #frag vector.
         frag[i + 1] <- frag[i] + 10000
       }
+      #adjust position for genes split on two pages
+      pos.1 <- frag[i] - 2000
+      pos.2 <- frag[c(i + 1)] + 2000
       ###########################data adjustment###########################
       #define the main dataframe with segments positive strand df1, negative
       #strand df2
@@ -277,24 +289,12 @@ rifi_visualization <-
       ##########################annotation section#########################
       #an is the annotation dataframe upon the position on the plot, its used
       # to loop into exactly the number of region contained in the gff3
-      an.newLine <- data.frame()
-      an <- annot[between(annot$start, frag[i], frag[c(i + 1)]),]
+      an.1 <- annot[between(annot$start, frag[i], frag[c(i + 1)]),]
+      an <- annot[between(annot$start, pos.1, pos.2),]
       an <- an[!duplicated(an),]
       #in case of no data nor annotation are available
-      if (nrow(an) == 0 & nrow(df1) == 0 & nrow(df2) == 0) {
+      if (nrow(an.1) == 0 & nrow(df1) == 0 & nrow(df2) == 0) {
         next ()
-      }
-      if (nrow(an.newLine) != 0) {
-        an <- add_row(an.newLine, an)
-      }
-      if (nrow(an) != 0 & last(an$end) > frag[i + 1]) {
-        an.newLine <- add_genomeBorders(data = an,
-                                        frag = frag,
-                                        i = i)
-        firstValue <- an$start[1]
-        lastValue <- last(an$end)
-        dif <- lastValue - frag[i + 1]
-        an[nrow(an), "end"] <- frag[i + 1]
       }
       p7 <-
         annotation_plot(
@@ -315,7 +315,15 @@ rifi_visualization <-
           Alpha = Alpha,
           size_tu = size_tu,
           size_locusTag = size_locusTag,
-          size_gene = size_gene)
+          termination_threshold = 
+            termination_threshold,
+          iTSS_threshold =
+            iTSS_threshold,
+          p_value_manova = 
+            p_value_manova,
+          size_gene = size_gene,
+          pos.1 = pos.1,
+          pos.2 = pos.2)
       #########################empty data positive strand###################
       if (nrow(df1) == 0) {
         p_positive <- empty_data_positive(data_p = df1, data_n = df2,
@@ -337,8 +345,7 @@ rifi_visualization <-
                                                col_outiler = col_outiler,
                                                col_coverage = col_coverage,
                                                shape_outlier = shape_outlier,
-                                               limit_intensity = 
-                                                 limit_intensity,
+                                               limit_intensity = limit_intensity,
                                                face = face,
                                                tick_length = tick_length,
                                                arrow.color = arrow.color,
@@ -354,8 +361,7 @@ rifi_visualization <-
                                                  axis_title_y_size,
                                                TI_threshold = TI_threshold,
                                                p_value_TI = p_value_TI,
-                                               p_value_manova = p_value_manova,
-                                               termination_threshold = 
+                                               termination_threshold =
                                                  termination_threshold,
                                                iTSS_threshold = iTSS_threshold,
                                                p_value_int = p_value_int,
@@ -365,10 +371,13 @@ rifi_visualization <-
                                                  event_duration_ps,
                                                event_duration_itss = 
                                                  event_duration_itss,
-                                               HL_threshold = HL_threshold,
+                                               HL_threshold_1 = HL_threshold_1,
+                                               HL_threshold_2 = HL_threshold_2,
                                                vel_threshold = vel_threshold,
-                                               HL_threshold_color = 
-                                                 HL_threshold_color,
+                                               HL_threshold_color_2 = 
+                                                 HL_threshold_color_2,
+                                               HL_threshold_color_1 = 
+                                                 HL_threshold_color_1,
                                                vel_threshold_color = 
                                                  vel_threshold_color,
                                                ps_color = ps_color,
@@ -413,8 +422,7 @@ rifi_visualization <-
                                                  axis_title_y_size,
                                                TI_threshold = TI_threshold,
                                                p_value_TI = p_value_TI,
-                                               p_value_manova = p_value_manova,
-                                               termination_threshold = 
+                                               termination_threshold =
                                                  termination_threshold,
                                                iTSS_threshold = iTSS_threshold,
                                                p_value_int = p_value_int,
@@ -424,10 +432,13 @@ rifi_visualization <-
                                                  event_duration_ps,
                                                event_duration_itss = 
                                                  event_duration_itss,
-                                               HL_threshold = HL_threshold,
+                                               HL_threshold_1 = HL_threshold_1,
+                                               HL_threshold_2 = HL_threshold_2,
                                                vel_threshold = vel_threshold,
-                                               HL_threshold_color = 
-                                                 HL_threshold_color,
+                                               HL_threshold_color_2 = 
+                                                 HL_threshold_color_2,
+                                               HL_threshold_color_1 = 
+                                                 HL_threshold_color_1,
                                                vel_threshold_color = 
                                                  vel_threshold_color,
                                                ps_color = ps_color,
