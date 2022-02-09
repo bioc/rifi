@@ -19,6 +19,7 @@
 #' @importFrom tibble add_row
 #' @importFrom utils write.table read.delim2 capture.output
 #' @importFrom nnet which.is.max
+#' @importFrom rtracklayer
 #' @noRd
 
 # mutate_if left_join full_join last %>% group_by arrange n filter mutate

@@ -32,45 +32,22 @@
 #'
 #' @export
 
-
 gff3_preprocess <- function(path) {
-  inp <- readLines(path)
   #grep the line containing the genome length
-  ge_size <- inp[grep("##sequence-region", inp)]
-  #replace "\t" in the end of the line
-  ge_size <- gsub("\t", "", ge_size)
-  #extract the genome size
-  ge_size <- as.numeric(last(unlist(strsplit(ge_size, "\\s+"))))
+  ge_size <- genomeSize(path)
   #select columns region, start, end, strand and annotation
-  inp <-
-    read.delim2(path,
-                header = FALSE,
-                sep = "\t",
-                comment.char = "#")
-  tmp <- inp[, c(3:5, 7, 9)]
-  tmp <- na.omit(tmp)
+  inp <- readGFF(path)
+  tmp <- inp[, c("type", "start", "end", "strand", "gene", "locus_tag")]
   tmp <-
     tmp[grep("^CDS$|UTR|asRNA|antisense_RNA|ncRNA|^tRNA$",
-             tmp$V3,
+             tmp$type,
              invert = FALSE), ]
-  colnames(tmp) <-
-    c("region", "start", "end", "strand", "annotation")
-  #grep lines with gene annotation
-  gene <- str_extract(tmp$annotation, "\\gene=\\w+")
-  gene <- gsub("gene=", "", gene)
-  #grep lines with locus_tag annotation
-  locus_tag <- str_extract(tmp$annotation, "\\locus_tag=.*;")
-  locus_tag <- gsub("locus_tag=", "", locus_tag)
-  locus_tag <- gsub(";", "", locus_tag)
-  tmp <- cbind.data.frame(tmp[, -5], gene, locus_tag)
-  tmp[, -c(2:3)] <- apply(tmp[, -c(2:3)], 2, as.character)
-  tmp[, c(2:3)] <- apply(tmp[, c(2:3)], 2, as.numeric)
-  #replace gene with NA with locus_tag in case NA is not recognized as NA
+  colnames(tmp)[1] <- "region"
+   #replace gene with NA with locus_tag in case NA is not recognized as NA
   tmp[which(tmp$gene == "NA"), "gene"] <-
     tmp[which(tmp$gene == "NA"), "locus_tag"]
   #replace gene with NA with locus_tag
   tmp[is.na(tmp$gene), "gene"] <- tmp[is.na(tmp$gene), "locus_tag"]
-  tmp <- tmp[!duplicated(tmp), ]
   if (length(which(tmp$region %in% "antisense_RNA")) != 0) {
     tmp[which(tmp$region == "antisense_RNA"), "region"] <- "asRNA"
   }

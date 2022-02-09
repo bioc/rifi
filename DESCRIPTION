@@ -47,6 +47,8 @@ Imports:
 	stats,
 	stringr,
 	tibble,
+	rtracklayer,
+	SummarizedExperiment,
 	utils	
 Suggests:
 	DescTools,
