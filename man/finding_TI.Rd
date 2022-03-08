@@ -6,13 +6,13 @@
 'finding_TI' uses 'score_fun_ave' to make groups by the mean of "probe_TI".
 "TI" is added to the "flag" column.
 TI is characterized by relative intensities at time points later than "0".
-The data frame needs to contain at least "ID", "probe_TI" and
+The rowRanges need to contain at least "ID", "probe_TI" and
 "position_segment"!}
 \usage{
-finding_TI(probe, cores, pen = 10, thrsh = 0.5, add = 1000)
+finding_TI(inp, cores, pen = 10, thrsh = 0.5, add = 1000)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input.}
 
 \item{cores}{integer: the number of assigned cores for the task}
 
@@ -30,29 +30,20 @@ Default is 0.5.}
 event wherein IDs are fitted with the TI fit.}
 }
 \value{
-the probe based data frame with the modified flag:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{postion_segment:}{The position based segment}
-}
+the SummarizedExperiment object: with "\emph{TI}" added to the flag
+column.
 }
 \description{
 finding_TI: flags potential candidates for transcription interference.
 'finding_TI' uses 'score_fun_ave' to make groups by the mean of "probe_TI".
 "TI" is added to the "flag" column.
 TI is characterized by relative intensities at time points later than "0".
-The data frame needs to contain at least "ID", "probe_TI" and
+The rowRanges need to contain at least "ID", "probe_TI" and
 "position_segment"!
 }
 \examples{
-data(preprocess_e_coli)
-finding_TI(probe = preprocess_e_coli$probe_df, cores = 2, pen = 10,
-thrsh = 0.5, add = 1000)
+data(preprocess_minimal)
+finding_TI(inp = preprocess_minimal, cores = 2, pen = 10, thrsh = 0.5,
+add = 1000)
 
 }

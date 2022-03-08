@@ -2,7 +2,7 @@
 #'
 #' wraps the functions: make_pen and viz_pen_obj.
 #'
-#' @param probe data frame: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param details logical: whether to return the penalty objects or just the
 #' logbook.
 #' @param viz logical: whether to visualize the output or not. Default is FALSE
@@ -23,48 +23,9 @@
 #' @param rez_pen_out numeric: the number of outlier penalties iterated within
 #' the outlier penalty range. Default is 7.
 #' 
-#' @return If details is set to TRUE a list with 5 items otherwise a vector of
-#' length 8:
-#' \describe{
-#'   \item{logbook:}{The logbook vector containing all penalty information}
-#'   \item{pen_obj_delay:}{A list with 4 items:
-#'     \describe{
-#'       \item{logbook:}{The logbook vector containing all penalty information}
-#'       \item{delay_penalties:}{a vetor with the delay penalty and delay
-#'       outlier penalty}
-#'       \item{correct:}{a matrix of the correct splits}
-#'       \item{wrong:}{a matrix of the incorrect splits}
-#'     }
-#'   }
-#'   \item{pen_obj_HL:}{A list with 4 items:
-#'     \describe{
-#'       \item{logbook:}{The logbook vector containing all penalty information}
-#'       \item{HL_penalties:}{a vetor with the half-life penalty and half-life
-#'       outlier penalty}
-#'       \item{correct:}{a matrix of the correct splits}
-#'       \item{wrong:}{a matrix of the incorrect splits}
-#'     }
-#'   }
-#'   \item{pen_obj_inty:}{A list with 4 items:
-#'     \describe{
-#'       \item{logbook:}{The logbook vector containing all penalty information}
-#'       \item{inty_penalties:}{a vetor with the intensity penalty and intensity
-#'       outlier penalty}
-#'       \item{correct:}{a matrix of the correct splits}
-#'       \item{wrong:}{a matrix of the incorrect splits}
-#'     }
-#'   }
-#'   \item{pen_obj_TI:}{A list with 4 items:
-#'     \describe{
-#'       \item{logbook:}{The logbook vector containing all penalty information}
-#'       \item{TI_penalties:}{a vetor with the TI penalty and TI outlier
-#'       penalty}
-#'       \item{correct:}{a matrix of the correct splits}
-#'       \item{wrong:}{a matrix of the incorrect splits}
-#'     }
-#'   }
-#' }
-#' 
+#' @return the SummarizedExperiment object: with the penalties in the
+#' logbook added to the metadata. Also adds logbook_details if details is TRUE,
+#' and plots the penalties if viz is TRUE.
 #'
 #' @seealso `make_pen`
 #' @seealso `viz_pen_obj`
@@ -72,7 +33,7 @@
 #' @examples
 #' data(fit_minimal)
 #' rifi_penalties(
-#'   probe = fit_minimal, details = FALSE, viz = FALSE,
+#'   inp = fit_minimal, details = FALSE, viz = FALSE,
 #'   top_i = 25, cores = 2, dpt = 1, smpl_min = 10, smpl_max = 100,
 #'   sta_pen = 0.5,
 #'   end_pen = 4.5, rez_pen = 9, sta_pen_out = 0.5, end_pen_out = 4.5,
@@ -81,7 +42,7 @@
 #' 
 #' @export
 
-rifi_penalties <- function(probe,
+rifi_penalties <- function(inp,
                            details = FALSE,
                            viz = FALSE,
                            top_i = 25,
@@ -95,72 +56,7 @@ rifi_penalties <- function(probe,
                            sta_pen_out = 0.5,
                            end_pen_out = 4.5,
                            rez_pen_out = 9) {
-  num_args <-
-    list(
-      top_i,
-      cores,
-      dpt,
-      smpl_min,
-      smpl_max,
-      sta_pen,
-      end_pen,
-      rez_pen,
-      sta_pen_out,
-      end_pen_out,
-      rez_pen_out
-    )
-  names(num_args) <-
-    c(
-      "top_i",
-      "cores",
-      "dpt",
-      "smpl_min",
-      "smpl_max",
-      "sta_pen",
-      "end_pen",
-      "rez_pen",
-      "sta_pen_out",
-      "end_pen_out",
-      "rez_pen_out"
-    )
-  assert(
-    all(unlist(lapply(
-      num_args,
-      FUN = function(x) {
-        (is.numeric(x) &
-          length(x) == 1)
-      }
-    ))),
-    paste0("'", names(which(
-      unlist(lapply(
-        num_args,
-        FUN = function(x) {
-          (is.numeric(x) &
-            length(x) == 1)
-        }
-      )) == FALSE
-    ))[1], "' must be numeric of length one")
-  )
-  assert(cores > 0, "'cores' must be a positive integer")
-  assert(is.logical(details), "'details' must be a logical")
-  assert(is.logical(viz), "'viz' must be a logical")
-  req_cols_probe <-
-    c(
-      "ID",
-      "position",
-      "strand",
-      "intensity",
-      "position_segment",
-      "delay",
-      "half_life",
-      "TI_termination_factor"
-    )
-  assert(
-    all(req_cols_probe %in% colnames(probe)),
-    paste0("'", req_cols_probe[which(!req_cols_probe %in% colnames(probe))],
-           "' must be a column in 'probe'!")
-  )
-
+  
   logbook <- as.numeric(rep(NA, 8))
 
   names(logbook) <- c(
@@ -177,7 +73,7 @@ rifi_penalties <- function(probe,
   message("running make_pen on delay...")
   pen_obj_delay <-
     make_pen(
-      probe = probe,
+      inp = inp,
       FUN = fragment_delay_pen,
       cores = cores,
       logs = logbook,
@@ -196,7 +92,7 @@ rifi_penalties <- function(probe,
   message("running make_pen on half-life...")
   pen_obj_HL <-
     make_pen(
-      probe = probe,
+      inp = inp,
       FUN = fragment_HL_pen,
       cores = cores,
       logs = logbook,
@@ -215,7 +111,7 @@ rifi_penalties <- function(probe,
   message("running make_pen on intensity...")
   pen_obj_inty <-
     make_pen(
-      probe = probe,
+      inp = inp,
       FUN = fragment_inty_pen,
       cores = cores,
       logs = logbook,
@@ -234,7 +130,7 @@ rifi_penalties <- function(probe,
   message("running make_pen on TI...")
   pen_obj_TI <-
     make_pen(
-      probe = probe,
+      inp = inp,
       FUN = fragment_TI_pen,
       cores = cores,
       logs = logbook,
@@ -257,19 +153,11 @@ rifi_penalties <- function(probe,
     viz_pen_obj(obj = pen_obj_inty, top_i = top_i)
     viz_pen_obj(obj = pen_obj_TI, top_i = top_i)
   }
-
-  tmp_df <-
-    data.frame(
-      ID = probe$ID,
-      delay = probe$delay,
-      half_life = probe$half_life,
-      intensity = probe$intensity,
-      TI = probe$TI_termination_factor,
-      seg = probe$position_segment,
-      flag = probe$flag
-    )
-
-  spltd <- split(tmp_df, tmp_df$seg)
+  
+  tmp_df <- inp_df(inp, "ID", "delay", "half_life", "intensity",
+                   "TI_termination_factor", "position_segment", "flag")
+  
+  spltd <- split(tmp_df, tmp_df$position_segment)
 
   A <- lapply(spltd, function(x) {
     x <- na.omit(x$delay)
@@ -324,8 +212,6 @@ rifi_penalties <- function(probe,
     logbook[c("TI_penalty", "TI_outlier_penalty")] <- c(1.5, 1)
   }
 
-  res <- logbook
-
   if (details == TRUE) {
     res <-
       list(
@@ -343,7 +229,10 @@ rifi_penalties <- function(probe,
         "pen_obj_inty",
         "pen_obj_TI"
       )
+    metadata(inp)$logbook_details <- res
   }
-
-  res
+  
+  metadata(inp)$logbook <- logbook
+  
+  inp
 }

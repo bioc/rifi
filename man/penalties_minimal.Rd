@@ -6,10 +6,7 @@
 \title{The result of rifi_penalties for artificial example data
 A vector containing the output from rifi_penalties, the logbook.}
 \format{
-A numeric vector of length 8:
-\describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-}
+An object of class \code{RangedSummarizedExperiment} with 24 rows and 33 columns.
 }
 \source{
 \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}

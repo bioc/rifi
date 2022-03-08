@@ -5,10 +5,10 @@
 #' '_PDD_' is added to the 'flag' column.
 #' Post transcription decay is characterized by a strong decrease of intensity
 #' by position.
-#' The data frame needs to contain at least 'ID', 'intensity', 'position' and
+#' The rowRanges need to contain at least 'ID', 'intensity', 'position' and
 #' 'position_segment'!
-#' @param probe data frame: the probe based data frame.
-#' @param cores interger: the number of assigned cores for the task
+#' @param inp SummarizedExperiment: the input.
+#' @param cores integer: the number of assigned cores for the task
 #' @param pen numeric: an internal parameter for the dynamic programming.
 #' Higher values result in fewer fragments. Advised to be kept at 2.
 #' Default is 2.
@@ -19,21 +19,12 @@
 #' steeper than the thrsh to be flagged with '_PDD_'. Higher values result in
 #' fewer candidates. Advised to be kept at 0.001. Default is 0.001.
 #' 
-#' @return the probe based data frame with the modified flag:
-#'  \describe{
-#'     \item{ID:}{The bin/probe specific ID}
-#'     \item{position:}{The bin/probe specific position}
-#'     \item{strand:}{The bin/probe specific strand}
-#'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{probe_TI:}{An internal value to determine which fitting model is
-#'     applied}
-#'     \item{flag:}{Information on which fitting model is applied}
-#'     \item{postion_segment:}{The position based segment}
-#'       }
+#' @return the SummarizedExperiment object: with "_PDD_" added to the flag
+#' column.
 #'       
 #' @examples
 #' data(preprocess_minimal)
-#' finding_PDD(probe = preprocess_minimal$probe_df,  cores = 2, pen = 2,
+#' finding_PDD(inp = preprocess_minimal, cores = 2, pen = 2,
 #' pen_out = 1, thrsh = 0.001)
 #' 
 #' @export
@@ -41,55 +32,38 @@
 
 # finding_PDD uses score_fun_linear_PDD to make groups by the difference to the
 # slope. Then the slope is checked for steepness to decide for PDD. We are
-# looking for steep decreasing slopes. The only input is the probe based df.
+# looking for steep decreasing slopes. The only input is the inp based df.
 # pen is the penalty for the dp, pen_out is the outlier penalty, thrsh is the
 # threshold for the slope. stranded should be TRUE if strand is not (all) NA.
-finding_PDD <- function(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
+finding_PDD <- function(inp, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
     stranded <- 1
-    num_args <- list(cores, pen, pen_out, thrsh)
-    names(num_args) <- c("cores", "pen", "pen_out", "thrsh")
-    assert(all(unlist(lapply(num_args, FUN = function(x)
-      (is.numeric(x) & length(x) ==
-        1)))), paste0("'", names(which(unlist(lapply(num_args,
-                                                     FUN = function(x)
-                                                       (is.numeric(x) &
-        length(x) == 1))) == FALSE))[1], "' must be numeric of length one"))
-    assert(cores > 0, "'cores' must be a positive integer")
-    req_cols_probe <- c("ID", "intensity", "position",
-                        "position_segment", "strand")
-    assert(all(req_cols_probe %in% colnames(probe)),
-           paste0("'", req_cols_probe[which(!req_cols_probe %in%
-           colnames(probe))], "' must be a column in 'probe'!"))
+    num_args <- c(pen, pen_out, thrsh)
+    names(num_args) <- c("pen", "pen_out", "thrsh")
+    assert(all(is.numeric(num_args)),
+           paste0("one of the following arguments is not numeric: ",
+                  paste0(names(num_args),collapse = ", ")))
     registerDoMC(cores)  #cores for DoMC
-    tmp_pen <- pen  #penalty is cached
-    tmp_pen_out <- pen_out  #pen out is cached
-    # a temporary df with ID, value (intensity), position and strand
-    tmp_df <- data.frame(ID = probe$ID, val = probe$intensity,
-                         position = probe$position,
-                         seg = probe$position_segment)
-    if (stranded == TRUE) {
-        tmp_df$strand <- probe$strand
-        # the positions are inverted for the '+' strand so that the slope is
-        # seen as increasing by the scoring function.
-        tmp_df[tmp_df$strand == "+", "position"] <-
-          ((tmp_df[tmp_df$strand == "+",
-            "position"]) - (tmp_df[tmp_df$strand == "+", ]
-                            [nrow(tmp_df[tmp_df$strand == "+", ]),
-                              "position"])) * -1
-    }
-    tmp_df <- na.omit(tmp_df)
-    tmp_df$val <- tmp_df$val / mean(tmp_df$val)
+    #order the input
+    inp <- inp_order(inp)
+    #make the tmp_df
+    tmp_df <- inp_df(inp, "ID", "position", "intensity", "position_segment")
+    #revert the order in plus
+    tmp_df <- tmp_df_rev(tmp_df, "+")
+    #penalty is cached
+    tmp_pen <- pen  
+    tmp_pen_out <- pen_out
+    tmp_df$intensity <- tmp_df$intensity / mean(tmp_df$intensity)
     # makes a vector of all position segments (S_1,S_2,...)
-    unique_seg <- unlist(unique(tmp_df$seg))
+    unique_seg <- unlist(unique(tmp_df$position_segment))
     # the foreach loop iterates over each unique segment
     frags <- foreach(k = seq_along(unique_seg)) %dopar% {
         # only the part of the tmp_df that responds to the respective segment
         # is picked
-        corr_IDs <- tmp_df[tmp_df$seg == unique_seg[k], "ID"]
+        corr_IDs <- tmp_df[tmp_df$position_segment == unique_seg[k], "ID"]
         section <- tmp_df[match(corr_IDs, tmp_df$ID), ]
         # the penalties are dynamically adjusted to the mean of the intensity
-        pen <- tmp_pen * mean(section$val)
-        pen_out <- tmp_pen_out * mean(section$val)
+        pen <- tmp_pen * mean(section$intensity)
+        pen_out <- tmp_pen_out * mean(section$intensity)
         # best_frags collects all scores that the dp is referring to
         best_frags <- c()
         # best names collects the names, and its last element is returned as
@@ -102,8 +76,8 @@ finding_PDD <- function(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
                 # the loop iterates over each value in the segment this part
                 # always goes from position 1 to the referred position
                 # 1:3,1:4...
-                tmp_score <- score_fun_linear_PDD(section[seq_len(i), "val"],
-                                                  section[seq_len(i),
+                tmp_score <- score_fun_linear_PDD(section[seq_len(i),
+                  "intensity"], section[seq_len(i),
                   "position"], section[seq_len(i), "ID"], pen_out, stranded)
                 tmp_name <- names(tmp_score)
                 # in this loop all smaller parts are scored eg (i = 6)
@@ -112,12 +86,12 @@ finding_PDD <- function(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
                 # accepted as three is the smallest possible fragment size
                 if (i > 5) {
                   for (j in (i - 2):4) {
-                    tmp_val <- section[j:i, "val"]
+                    tmp_intensity <- section[j:i, "intensity"]
                     tmp_position <- section[j:i, "position"]
                     tmp_ID <- section[j:i, "ID"]
                     # penalty for a new fragment and former scores are added
-                    tmp <- score_fun_linear_PDD(tmp_val, tmp_position, tmp_ID,
-                            pen_out, stranded) + pen + best_frags[j - 3]
+                    tmp <- score_fun_linear_PDD(tmp_intensity, tmp_position,
+                            tmp_ID, pen_out, stranded) + pen + best_frags[j - 3]
                     tmp_score <- c(tmp_score, tmp)  #the score is cached
                     # the new fragment is pasted to its corresponding former
                     # fragment
@@ -138,7 +112,7 @@ finding_PDD <- function(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
         } else {
             # *...all segments with less than three values are grouped
             # automatically
-            tmp_score <- score_fun_linear_PDD(section[, "val"],
+            tmp_score <- score_fun_linear_PDD(section[, "intensity"],
                                               section[, "position"],
                 section[, "ID"], pen_out, stranded)
             tmp_name <- names(tmp_score)
@@ -147,7 +121,7 @@ finding_PDD <- function(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
         # the final result put into a list called frags
         best_names[length(best_names)]
     }
-    probe[, "flag"] <- gsub("_PDD", "", probe[, "flag"])
+    rowRanges(inp)$flag <- gsub("_PDD", "", rowRanges(inp)$flag)
     # this loop iterates over the segments
     for (k in seq_along(frags)) {
         # the single fragments are split by |
@@ -156,17 +130,18 @@ finding_PDD <- function(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
         for (i in seq_along(na)) {
             tmp_trgt <- strsplit(na[i], "_")[[1]][1]  #gives IDs
             trgt <- strsplit(tmp_trgt, ",")[[1]]  #wants to be numeric
-            rows <- match(trgt, probe[, "ID"])  #matches the row in the probe df
+            rows <- match(trgt, rowRanges(inp)$ID)  #matches the row in the inp
             score <- as.numeric(strsplit(na[i], "_")[[1]][2])  #gives the slope
             if (score > thrsh) {
                 # this threshold can be chosen in the function and is set to
                 # 0.001 by default, meaning the slope needs to be lower than
                 # -0.001
-                probe[rows, "flag"] <- paste0(probe[rows, "flag"], "PDD_")
+                rowRanges(inp)$flag[rows] <- 
+                  paste0(rowRanges(inp)$flag[rows], "PDD_")
                 #all PDD candidates are flagged with 'PDD'
             }
         }
     }
-    # the probe based df is returned as result
-    probe
+    # the inp based df is returned as result
+    inp
 }

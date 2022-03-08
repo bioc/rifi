@@ -10,7 +10,7 @@ fit. Different filters could be applied prior fitting to the model.
 To apply nls2_fit function, prior filtration could applied.
 \enumerate{
 \item generic_filter_BG: filter probes with intensities below background using
-threshold. Those probes are flagged with "\emph{FLT}".
+threshold. Those probes are filtered.
 \item filtration_below_backg: additional functions exclusive to microarrays
 could be applied. Its very strict to the background (not recommended in
 usual case).
@@ -21,26 +21,19 @@ Those transcripts are usually related to a specific function in bacteria.
 This filter selects all probes with the same ID,
 the mean is applied, the last time point is selected and compared to the
 threshold.
-The function used is:
-relativity function: normalizes intensities of all time points to 1.
 }}
 \usage{
 nls2_fit(
   inp,
-  probe,
-  cores,
+  cores = 1,
   decay = seq(0.08, 0.11, by = 0.02),
   delay = seq(0, 10, by = 0.1),
   k = seq(0.1, 1, 0.2),
-  intyf = 0.2
+  bg = 0.2
 )
 }
 \arguments{
-\item{inp}{data frame: the input data frame with correct format.}
-
-\item{probe}{data frame: the input dataframe containing the relative
-intensities for each timepoint as well as information about ID, position,
-strand, probe_TI and flag.}
+\item{inp}{SummarizedExperiment: the input with correct format.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
@@ -53,36 +46,11 @@ Default is seq(0,10, by=.1)}
 \item{k}{numeric vector: A sequence of starting values for the synthesis
 rate. Default is seq(0.1,1,0.2)}
 
-\item{intyf}{numeric vector: A sequence of starting values. Default is 0.2.}
+\item{bg}{numeric vector: A sequence of starting values. Default is 0.2.}
 }
 \value{
-A list of 3 data frames :
-\describe{
-\item{probe_df:}{the probe data frame with the columns delay and half_life
-added:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model
-is applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{postion_segment:}{The position based segment}
-\item{delay:}{The delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-}
-}
-\item{fit_obj_STD:}{the fit object for the standard fit:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{delay:}{The delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{inty_S0:}{The relative intensity at time point 0}
-\item{intyf:}{The background value of the fit}
-}
-}
-}
+the SummarizedExperiment object: with delay and decay added to the
+rowRanges. The full fit data is saved in the metadata as "fit_STD".
 }
 \description{
 the model used estimates the delay, decay, intensity of the first time
@@ -91,16 +59,11 @@ The coefficients are gathered in vectors with the corresponding IDs.
 Absence of the fit or a very bad fit are assigned with NA.
 In case of probes with very high intensities and above the background,
 the model used makes abstinence of background coefficient.
-The output of all coefficients is saved as object list with dataframe an
-the corresponding coefficients.
+The output of all coefficients is saved in the metadata.
 The fits are plotted using the function_plot_fit.r through rifi_fit.
 }
 \examples{
 data(preprocess_minimal)
-nls2_fit(
-  inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
-  cores = 2, decay = seq(.08, 0.11, by = .02), delay = seq(0, 10, by = .1),
-  k = seq(0.1, 1, 0.2), intyf = 0.2
-)
+nls2_fit(inp = preprocess_minimal, cores = 2)
 
 }

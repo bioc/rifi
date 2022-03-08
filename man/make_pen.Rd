@@ -28,7 +28,7 @@ Returns a penalty object (list of 4 objects) the first being the logbook.
 }}
 \usage{
 make_pen(
-  probe,
+  inp,
   FUN,
   cores = 1,
   logs,
@@ -44,7 +44,7 @@ make_pen(
 )
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{FUN}{function: one of the four bottom level functions (see details)}
 
@@ -114,7 +114,7 @@ Returns a penalty object (list of 4 objects) the first being the logbook.
 \examples{
 data(fit_minimal)
 make_pen(
-  probe = fit_minimal, FUN = rifi:::fragment_HL_pen, cores = 2,
+  inp = fit_minimal, FUN = rifi:::fragment_HL_pen, cores = 2,
   logs = as.numeric(rep(NA, 8)), dpt = 1, smpl_min = 10, smpl_max = 50,
   sta_pen = 0.5, end_pen = 4.5, rez_pen = 9, sta_pen_out = 0.5,
   end_pen_out = 3.5, rez_pen_out = 7

@@ -2,12 +2,10 @@
 % Please edit documentation in R/make_df.r
 \name{make_df}
 \alias{make_df}
-\title{make_df: converts the input data frame to the template probe based dataframe.
-'make_df' creates the probe based data frame with the columns: "ID",
-"position","strand","intensity","probe_TI" and "flag" from the input
-dataframe.
+\title{make_df: adds important columns to the SummarizedExperiment object.
+'make_df' adds to the SummarizedExperiment object with the columns:
+"intensity", "probe_TI" and "flag".
 The replicates are collapsed into their respective means.
-"ID", "position" and "strand" are taken over as is.
 "intensity" is the mean intensity from time point 0.
 "probe_TI" is a value needed for the distribution for the different fitting
 models.
@@ -20,12 +18,13 @@ parameter.
 The default for bg = 0, resulting in all probes to be above background
 (0 is advised for RNAseq data).
 Probes where all replicates were filtered in the optional filtration step
-can be fully removed by rm_FLT = TRUE!}
+can be fully removed by rm_FLT = TRUE! If you wish to keep all information
+in the assay set to FALSE!}
 \usage{
-make_df(inp, cores = 1, bg = 0, rm_FLT = FALSE)
+make_df(inp, cores = 1, bg = 0, rm_FLT = TRUE)
 }
 \arguments{
-\item{inp}{data frame: the (checked) input data frame.}
+\item{inp}{SummarizedExperiment: the (checked) input.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
@@ -36,24 +35,14 @@ with the above background mode.}
 filtered. Default is FALSE.}
 }
 \value{
-the probe based data frame:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-}
+the SummarizedExperiment object: with intensity, probe_TI and
+flag added to the rowRanges.
 }
 \description{
-make_df: converts the input data frame to the template probe based dataframe.
-'make_df' creates the probe based data frame with the columns: "ID",
-"position","strand","intensity","probe_TI" and "flag" from the input
-dataframe.
+make_df: adds important columns to the SummarizedExperiment object.
+'make_df' adds to the SummarizedExperiment object with the columns:
+"intensity", "probe_TI" and "flag".
 The replicates are collapsed into their respective means.
-"ID", "position" and "strand" are taken over as is.
 "intensity" is the mean intensity from time point 0.
 "probe_TI" is a value needed for the distribution for the different fitting
 models.
@@ -66,11 +55,11 @@ parameter.
 The default for bg = 0, resulting in all probes to be above background
 (0 is advised for RNAseq data).
 Probes where all replicates were filtered in the optional filtration step
-can be fully removed by rm_FLT = TRUE!
+can be fully removed by rm_FLT = TRUE! If you wish to keep all information
+in the assay set to FALSE!
 }
 \examples{
 data(preprocess_minimal)
-make_df(inp = preprocess_minimal$input_df, cores = 2, bg = 0,
-rm_FLT = FALSE)
+make_df(inp = preprocess_minimal, cores = 2, bg = 0, rm_FLT = TRUE)
 
 }

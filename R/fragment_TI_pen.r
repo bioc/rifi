@@ -1,19 +1,15 @@
-fragment_TI_pen <- function(probe, pen, pen_out, from, to, cores) {
+fragment_TI_pen <- function(inp, pen, pen_out, from, to, cores) {
   # I.Preparations: the dataframe is configured and some other variables are
   # assigned
 
   registerDoMC(cores)
 
-  probe <- probe[with(probe, order(-xtfrm(probe$strand), probe$position)), ]
-  probe[probe$strand == "-", ] <-  probe[probe$strand == "-", ][
-      order(probe[probe$strand == "-", ]$position, decreasing = TRUE), ]
-  tmp_df <-
-    data.frame(
-      ID = probe$ID,
-      val = probe$TI_termination_factor,
-      seg = probe$position_segment,
-      flag = probe$flag
-    )
+  inp <- inp_order(inp)
+  
+  tmp_df <- inp_df(inp, "ID", "TI_termination_factor",
+                   "position_segment", "flag")
+  
+  tmp_df <- tmp_df_rev(tmp_df, "-")
 
   # this is the same way of selecting the IDs as the selection for the TI_fit
   corr_IDs <- tmp_df$ID[grep("TI", tmp_df$flag)]
@@ -21,11 +17,11 @@ fragment_TI_pen <- function(probe, pen, pen_out, from, to, cores) {
   tmp_df <- na.omit(tmp_df)
 
   # only the TUs that are flagged with TI at any position are considered
-  unique_seg <- unlist(unique(tmp_df$seg))
+  unique_seg <- unlist(unique(tmp_df$position_segment))
 
   # II. Dynamic Programming: the scoring function is interpreted
   frags <- foreach(k = seq_along(unique_seg)) %dopar% {
-    section <- tmp_df[which(tmp_df$seg == unique_seg[k]), ]
+    section <- tmp_df[which(tmp_df$position_segment == unique_seg[k]), ]
 
     best_frags <- c()
     best_names <- c()
@@ -35,12 +31,12 @@ fragment_TI_pen <- function(probe, pen, pen_out, from, to, cores) {
       # the sampling is between 10 an 200
       for (i in seq_len(nrow(section))) {
         tmp_score <-
-          score_fun_ave(section[seq_len(i), "val"],
+          score_fun_ave(section[seq_len(i), "TI_termination_factor"],
                         section[seq_len(i), "ID"], pen_out)
         tmp_name <- names(tmp_score)
         if (i > 3) {
           for (j in (i - 1):3) {
-            tmp_val <- section[j:i, "val"]
+            tmp_val <- section[j:i, "TI_termination_factor"]
             tmp_ID <- section[j:i, "ID"]
             tmp <-
               score_fun_ave(tmp_val, tmp_ID, pen_out) + pen + best_frags[j - 2]
@@ -82,8 +78,8 @@ fragment_TI_pen <- function(probe, pen, pen_out, from, to, cores) {
         outl <- strsplit(tmp_outl, ",")[[1]]
         trgt <- trgt[-which(trgt %in% outl)]
       }
-      rows <- match(trgt, probe[, "ID"])
-      parts[[i]] <- probe[rows, "TI_termination_factor"]
+      rows <- match(trgt, rowRanges(inp)$ID)
+      parts[[i]] <- rowRanges(inp)$TI_termination_factor[rows]
     }
     parts
   }

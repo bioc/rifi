@@ -4,10 +4,10 @@
 \alias{TUgether}
 \title{TUgether: combines delay fragments into TUs.}
 \usage{
-TUgether(probe, cores = 1, pen = -0.75)
+TUgether(inp, cores = 1, pen = -0.75)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{cores}{cores: integer: the number of assigned cores for the task.}
 
@@ -15,11 +15,11 @@ TUgether(probe, cores = 1, pen = -0.75)
 Higher values result in fewer fragments. Default -0.75.}
 }
 \value{
-the probe data frame with the columns regarding the TU:
+the inp data frame with the columns regarding the TU:
 \describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
+\item{ID:}{The bin/inp specific ID}
+\item{position:}{The bin/inp specific position}
+\item{strand:}{The bin/inp specific strand}
 \item{position_segment:}{The position based segment}
 \item{delay_fragment:}{The delay fragment the bin belongs to}
 \item{intercept:}{The vintercept of fit through the respective delay
@@ -37,13 +37,12 @@ TUgether combines delay fragments into TUs. It uses score fun_increasing
 on the start and end points of delay_fragments.
 The function used is:
 .score_fun_increasing
-The input is the probe, a dataframe with ID, velocity_fragment, intercept,
-position, strand, position_segment, and delay_fragment.
+The input is the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming. Since high
-scores are aimed, Pen is negative.
+scores are aimed, pen is negative.
 }
 \examples{
 data(fragmentation_minimal)
-TUgether(probe = fragmentation_minimal, cores = 2, pen = -0.75)
+TUgether(inp = fragmentation_minimal, cores = 2, pen = -0.75)
 
 }

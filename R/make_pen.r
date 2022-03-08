@@ -21,7 +21,7 @@
 #' run time.
 #' Returns a penalty object (list of 4 objects) the first being the logbook.
 #'
-#' @param probe data frame: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param FUN function: one of the four bottom level functions (see details)
 #' @param cores integer: the number of assigned cores for the task
 #' @param logs numeric vector: the logbook vector.
@@ -52,7 +52,7 @@
 #' @examples
 #' data(fit_minimal)
 #' make_pen(
-#'   probe = fit_minimal, FUN = rifi:::fragment_HL_pen, cores = 2,
+#'   inp = fit_minimal, FUN = rifi:::fragment_HL_pen, cores = 2,
 #'   logs = as.numeric(rep(NA, 8)), dpt = 1, smpl_min = 10, smpl_max = 50,
 #'   sta_pen = 0.5, end_pen = 4.5, rez_pen = 9, sta_pen_out = 0.5,
 #'   end_pen_out = 3.5, rez_pen_out = 7
@@ -60,7 +60,7 @@
 #' 
 #' @export
 
-make_pen <- function(probe,
+make_pen <- function(inp,
                      FUN,
                      cores = 1,
                      logs,
@@ -73,67 +73,6 @@ make_pen <- function(probe,
                      sta_pen_out = 0.5,
                      end_pen_out = 3.5,
                      rez_pen_out = 7) {
-  num_args <-
-    list(
-      cores,
-      dpt,
-      smpl_min,
-      smpl_max,
-      sta_pen,
-      end_pen,
-      rez_pen,
-      sta_pen_out,
-      end_pen_out,
-      rez_pen_out
-    )
-  names(num_args) <-
-    c(
-      "cores",
-      "dpt",
-      "smpl_min",
-      "smpl_max",
-      "sta_pen",
-      "end_pen",
-      "rez_pen",
-      "sta_pen_out",
-      "end_pen_out",
-      "rez_pen_out"
-    )
-  assert(all(unlist(lapply(
-    num_args,
-    FUN = function(x) {
-      (is.numeric(x) &
-         length(x) == 1)
-    }
-  ))),
-  paste0("'", names(which(
-    unlist(lapply(
-      num_args,
-      FUN = function(x) {
-        (is.numeric(x) &
-           length(x) == 1)
-      }
-    )) == FALSE
-  ))[1], "' must be numeric of length one"))
-  assert(cores > 0, "'cores' must be a positive integer")
-  assert(
-    is.numeric(logs) &
-      is.vector(logs) &
-      length(logs) == 8,
-    "'logs' must be a numeric vector of length 8"
-  )
-  req_cols_probe <-
-    c("ID", "position", "strand", "position_segment")
-  assert(
-    all(req_cols_probe %in% colnames(probe)),
-    paste0("'", req_cols_probe[which(!req_cols_probe %in% colnames(probe))],
-           "' must be a column in 'probe'!")
-  )
-  assert(
-    is.function(FUN),
-    "'FUN' must be a function from fragment_delay_pen, fragment_HL_pen,
-    fragment_inty_pen, or fragment_TI_pen"
-  )
   res2 <- vector("list", dpt)
   res3 <- vector("list", dpt)
   step_pen <- (end_pen - sta_pen) / (rez_pen - 1)
@@ -151,7 +90,7 @@ make_pen <- function(probe,
       tmp_pen_out <- pen_out[pen_out >= 0.4 * pen[j]]
       for (k in seq_along(tmp_pen_out)) {
         tmp <-
-          FUN(probe, pen[j], tmp_pen_out[k], smpl_min, smpl_max, cores = cores)
+          FUN(inp, pen[j], tmp_pen_out[k], smpl_min, smpl_max, cores = cores)
         correct[j, as.character(tmp_pen_out[k])] <- tmp[[1]]
         wrong[j, as.character(tmp_pen_out[k])] <- tmp[[2]]
       }

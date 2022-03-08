@@ -5,7 +5,7 @@
 \title{rifi_penalties: conveniently wraps all penalty steps}
 \usage{
 rifi_penalties(
-  probe,
+  inp,
   details = FALSE,
   viz = FALSE,
   top_i = 25,
@@ -22,7 +22,7 @@ rifi_penalties(
 )
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{details}{logical: whether to return the penalty objects or just the
 logbook.}
@@ -57,47 +57,9 @@ range. Default is 9.}
 the outlier penalty range. Default is 7.}
 }
 \value{
-If details is set to TRUE a list with 5 items otherwise a vector of
-length 8:
-\describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-\item{pen_obj_delay:}{A list with 4 items:
-\describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-\item{delay_penalties:}{a vetor with the delay penalty and delay
-outlier penalty}
-\item{correct:}{a matrix of the correct splits}
-\item{wrong:}{a matrix of the incorrect splits}
-}
-}
-\item{pen_obj_HL:}{A list with 4 items:
-\describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-\item{HL_penalties:}{a vetor with the half-life penalty and half-life
-outlier penalty}
-\item{correct:}{a matrix of the correct splits}
-\item{wrong:}{a matrix of the incorrect splits}
-}
-}
-\item{pen_obj_inty:}{A list with 4 items:
-\describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-\item{inty_penalties:}{a vetor with the intensity penalty and intensity
-outlier penalty}
-\item{correct:}{a matrix of the correct splits}
-\item{wrong:}{a matrix of the incorrect splits}
-}
-}
-\item{pen_obj_TI:}{A list with 4 items:
-\describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-\item{TI_penalties:}{a vetor with the TI penalty and TI outlier
-penalty}
-\item{correct:}{a matrix of the correct splits}
-\item{wrong:}{a matrix of the incorrect splits}
-}
-}
-}
+the SummarizedExperiment object: with the penalties in the
+logbook added to the metadata. Also adds logbook_details if details is TRUE,
+and plots the penalties if viz is TRUE.
 }
 \description{
 wraps the functions: make_pen and viz_pen_obj.
@@ -105,7 +67,7 @@ wraps the functions: make_pen and viz_pen_obj.
 \examples{
 data(fit_minimal)
 rifi_penalties(
-  probe = fit_minimal, details = FALSE, viz = FALSE,
+  inp = fit_minimal, details = FALSE, viz = FALSE,
   top_i = 25, cores = 2, dpt = 1, smpl_min = 10, smpl_max = 100,
   sta_pen = 0.5,
   end_pen = 4.5, rez_pen = 9, sta_pen_out = 0.5, end_pen_out = 4.5,

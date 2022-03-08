@@ -4,19 +4,19 @@
 \alias{fragment_HL}
 \title{fragment_HL: performs the half_life fragmentation
 fragment_HL makes HL_fragments based on delay_fragments and assigns all
-gathered information to the probe based data frame.
+gathered information to the SummarizedExperiment object.
 The columns "HL_fragment" and "HL_mean_fragment" are added.
 fragment_HL makes half-life_fragments and assigns the mean of each fragment.
 The function used is:
 .score_fun_ave.
-The input is the probe, a dataframe with ID, half_life and delay_fragment.
+The input the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming, pen_out is
 the outlier penalty.}
 \usage{
-fragment_HL(probe, cores = 1, pen, pen_out)
+fragment_HL(inp, cores = 1, pen, pen_out)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
@@ -28,38 +28,23 @@ Higher values result in fewer allowed outliers. Default is the auto
 generated value.}
 }
 \value{
-the probe data frame with the columns regarding the half_life:
-HL_fragment and HL_mean_fragment:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{half_life:}{The half-life of the bin/probe}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
-\item{HL_mean_fragment:}{The mean half-life value of the respective
-half-life fragment}
-}
+the SummarizedExperiment object: with HL_fragment and
+HL_mean_fragment added to the rowRanges.
 }
 \description{
 fragment_HL: performs the half_life fragmentation
 fragment_HL makes HL_fragments based on delay_fragments and assigns all
-gathered information to the probe based data frame.
+gathered information to the SummarizedExperiment object.
 The columns "HL_fragment" and "HL_mean_fragment" are added.
 fragment_HL makes half-life_fragments and assigns the mean of each fragment.
 The function used is:
 .score_fun_ave.
-The input is the probe, a dataframe with ID, half_life and delay_fragment.
+The input the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming, pen_out is
 the outlier penalty.
 }
 \examples{
 data(fragmentation_minimal)
-data(penalties_minimal)
-fragment_HL(
-  probe = fragmentation_minimal, cores = 2,
-  pen = penalties_minimal["half_life_penalty"],
-  pen_out = penalties_minimal["half_life_outlier_penalty"]
-)
+fragment_HL(inp = fragmentation_minimal, cores = 2, pen = 2, pen_out = 1)
 
 }

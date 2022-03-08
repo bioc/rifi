@@ -4,19 +4,19 @@
 \alias{fragment_TI}
 \title{fragment_TI: performs the TI fragmentation.
 fragment_TI makes TI_fragments based on TUs and assigns all gathered
-information to the probe based data frame.
+information to the SummarizedExperiment object.
 The columns "TI_termination_fragment" and the TI_mean_termination_factor
 are added.
 The function used is:
 .score_fun_ave.
-The input is the probe, a dataframe with ID, TI_termination_factor and TU.
+The input is the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming, pen_out is
 the outlier penalty.}
 \usage{
-fragment_TI(probe, cores = 1, pen, pen_out)
+fragment_TI(inp, cores = 1, pen, pen_out)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{cores}{cores: integer: the number of assigned cores for the task.}
 
@@ -28,39 +28,23 @@ Higher values result in fewer allowed outliers. Default is the auto generated
 value.}
 }
 \value{
-the probe data frame with the columns regarding the TI:
-TI_termination_fragment and TI_mean_termination_fragment:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{flag:}{Information on which fitting model is applied}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-\item{TU:}{The overarching transcription unit}
-\item{TI_termination_fragment:}{The TI fragment the bin belongs to}
-\item{TI_mean_termination_factor:}{The mean termination factor of the
-respective TI fragment}
-}
+the SummarizedExperiment object: with TI_termination_fragment and
+TI_termination_mean_fragment added to the rowRanges.
 }
 \description{
 fragment_TI: performs the TI fragmentation.
 fragment_TI makes TI_fragments based on TUs and assigns all gathered
-information to the probe based data frame.
+information to the SummarizedExperiment object.
 The columns "TI_termination_fragment" and the TI_mean_termination_factor
 are added.
 The function used is:
 .score_fun_ave.
-The input is the probe, a dataframe with ID, TI_termination_factor and TU.
+The input is the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming, pen_out is
 the outlier penalty.
 }
 \examples{
 data(fragmentation_minimal)
-data(penalties_minimal)
-fragment_TI(
-  probe = fragmentation_minimal, cores = 2,
-  pen = penalties_minimal["TI_penalty"],
-  pen_out = penalties_minimal["TI_outlier_penalty"]
-)
+fragment_TI(inp = fragmentation_minimal, cores = 2, pen = 2, pen_out = 1)
 
 }

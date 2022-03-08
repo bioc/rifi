@@ -7,23 +7,7 @@
 A data set containing information about the intensities at all time points,
 as well as position, strand and ID information.}
 \format{
-A data frame with 12 rows and 14 variables:
-\describe{
-\item{0:}{relative intensities at 0 min}
-\item{1:}{relative intensities at 1 min}
-\item{2:}{relative intensities at 2 min}
-\item{3:}{relative intensities at 3 min}
-\item{4:}{relative intensities at 4 min}
-\item{5:}{relative intensities at 5 min}
-\item{6:}{relative intensities at 6 min}
-\item{8:}{relative intensities at 8 min}
-\item{10:}{relative intensities at 10 min}
-\item{15:}{relative intensities at 15 min}
-\item{20:}{relative intensities at 20 min}
-\item{ID:}{unique IDs}
-\item{position:}{genome positions}
-\item{strand:}{strand information}
-}
+An object of class \code{RangedSummarizedExperiment} with 4 rows and 33 columns.
 }
 \source{
 \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}

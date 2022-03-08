@@ -6,32 +6,25 @@
 \usage{
 rifi_fit(
   inp,
-  probe,
   cores = 1,
-  details = FALSE,
   viz = FALSE,
   restr = 0.2,
   decay = seq(0.08, 0.11, by = 0.02),
   delay = seq(0, 10, by = 0.1),
   k = seq(0.1, 1, 0.2),
-  intyf = 0.2,
+  bg = 0.2,
   TI_k = seq(0, 1, by = 0.5),
   TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
   TI = seq(0, 1, by = 0.5),
   TI_delay = seq(0, 2, by = 0.5),
   TI_rest_delay = seq(0, 2, by = 0.5),
-  color = c("blue", "green", "yellow", "grey", "orange", "cyan", "pink", "grey64",
-    "grey90", "black", "grey45")
+  TI_bg = 0
 )
 }
 \arguments{
-\item{inp}{data frame: the input data frame with correct format.}
-
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input with correct format.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
-
-\item{details}{logical: whether to return the fit objects or just the probe.}
 
 \item{viz}{logical: whether to visualize the output.}
 
@@ -47,7 +40,7 @@ Default is seq(0,10, by=.1)}
 \item{k}{numeric vector: A sequence of starting values for the synthesis
 rate.Default is seq(0.1,1,0.2)}
 
-\item{intyf}{numeric vector: A sequence of starting values. Default is 0.2.}
+\item{bg}{numeric vector: A sequence of starting values. Default is 0.2.}
 
 \item{TI_k}{numeric vector: A sequence of starting values for the synthesis
 rate. Default is seq(0, 1, by = 0.5).}
@@ -64,50 +57,12 @@ Default is seq(0, 2, by = 0.5).}
 \item{TI_rest_delay}{numeric vector: A sequence of starting values. Default
 is seq(0, 2, by = 0.5).}
 
-\item{color}{string vector: A sequence of color for plot.}
+\item{TI_bg}{numeric vector: A sequence of starting values. Default is 0.}
 }
 \value{
-A list of 3 data frames :
-\describe{
-\item{probe_df:}{the probe data frame with the columns delay, half_life
-and TI_termination_factor added:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{postion_segment:}{The position based segment}
-\item{delay:}{The delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-}
-}
-\item{fit_obj_STD:}{the fit object for the standard fit:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{delay:}{The delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{inty_S0:}{The relative intensity at time point 0}
-\item{intyf:}{The background value of the fit}
-}
-}
-\item{fit_obj_TI:}{the fit object for the TI fit:
-\describe{
-\item{delay:}{The delay value of the bin/probe}
-\item{ti_delay:}{The ti-delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{ti_value:}{The ti-value of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-\item{synthesis_rate:}{The synthesis rate of the bin/probe}
-\item{TI_background:}{The background value of the fit}
-\item{position:}{The bin/probe specific position}
-\item{ID:}{The bin/probe specific ID}
-}
-}
-}
+the SummarizedExperiment object: with delay, decay  and
+TI_termination_factor added to the rowRanges. The full fit data is saved in
+the metadata as "fit_STD" and "fit_TI". A plot is given if viz = TRUE.
 }
 \description{
 Wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
@@ -116,13 +71,13 @@ plot_singleProbe_function.
 \examples{
 data(preprocess_minimal)
 rifi_fit(
-  inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
-  cores = 1, viz = FALSE, details = FALSE, restr = 0.2,
+  inp = preprocess_minimal,
+  cores = 1, viz = FALSE, restr = 0.1,
   decay = seq(.08, 0.11, by = .02),
-  delay = seq(0, 10, by = .1), k = seq(0.1, 1, 0.2), intyf = 0.2,
+  delay = seq(0, 10, by = .1), k = seq(0.1, 1, 0.2), bg = 0.2,
   TI_k = seq(0, 1, by = 0.5), TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
   TI = seq(0, 1, by = 0.5), TI_delay = seq(0, 2, by = 0.5),
-  TI_rest_delay = seq(0, 2, by = 0.5)
+  TI_rest_delay = seq(0, 2, by = 0.5), TI_bg = 0,
 )
 
 }

@@ -43,12 +43,13 @@ Imports:
 	nls2,
 	nnet,
 	rlang,
+	S4Vectors,
 	scales,
 	stats,
 	stringr,
+	SummarizedExperiment,
 	tibble,
 	rtracklayer,
-	SummarizedExperiment,
 	utils	
 Suggests:
 	DescTools,

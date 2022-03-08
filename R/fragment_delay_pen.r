@@ -1,4 +1,4 @@
-fragment_delay_pen <- function(probe, pen, pen_out, from, to, cores) {
+fragment_delay_pen <- function(inp, pen, pen_out, from, to, cores) {
   stranded <- 1
 
   # I. Preparations: the dataframe is configured and some other variables are
@@ -7,43 +7,23 @@ fragment_delay_pen <- function(probe, pen, pen_out, from, to, cores) {
   registerDoMC(cores) # cores for DoMC
 
   # the dataframe is sorted by strand and position.
-  probe <- probe[with(probe, order(-xtfrm(probe$strand), probe$position)), ]
-
-  probe[probe$strand == "-", ] <-
-    probe[probe$strand == "-", ][order(
-      probe[probe$strand == "-", ]$position, decreasing = TRUE), ]
-
-  # tmp_df takes all relevant variables from probe
-  tmp_df <-
-    data.frame(
-      ID = probe$ID,
-      val = probe$delay,
-      position = probe$position,
-      seg = probe$position_segment
-    )
-
-  # if strand information is given and stranded is TRUE, all "-" are inverted
-  # and strand is added to tmp_df.
-  if (stranded == TRUE) {
-    tmp_df$strand <- probe$strand
-    # the positions are inverted for the "-" strand
-    # so that the slope is seen as increasing by the scoring function.
-    tmp_df[tmp_df$strand == "-", "position"] <-
-      ((tmp_df[tmp_df$strand == "-", "position"]) -
-      (tmp_df[tmp_df$strand == "-", ][1, "position"])) * -1
-  }
+  inp <- inp_order(inp)
+  
+  tmp_df <- inp_df(inp, "ID", "delay", "position_segment")
+  
+  tmp_df <- tmp_df_rev(tmp_df, "-")
 
   # All lines with any NA are ignored at this point and are taken care of later
   # in the function.
   tmp_df <- na.omit(tmp_df)
   # makes a vector of all position segments (S_1,S_2,...)
-  unique_seg <- unlist(unique(tmp_df$seg))
+  unique_seg <- unlist(unique(tmp_df$position_segment))
   # II. Dynamic Programming: the scoring function is interpreted
   # the foreach loop iterates over each unique segment
   frags <- foreach(k = seq_along(unique_seg)) %dopar% {
     # only the part of the tmp_df that responds to the respective segment is
     # picked
-    section <- tmp_df[which(tmp_df$seg == unique_seg[k]), ]
+    section <- tmp_df[which(tmp_df$position_segment == unique_seg[k]), ]
 
     # best_frags collects all scores that the dp is referring to
     best_frags <- c()
@@ -59,7 +39,7 @@ fragment_delay_pen <- function(probe, pen, pen_out, from, to, cores) {
         # this part always goes from position 1 to the referred position
         # 1:3,1:4...
         tmp_score <-
-          score_fun_linear(section[seq_len(i), "val"],
+          score_fun_linear(section[seq_len(i), "delay"],
                            section[seq_len(i), "position"],
                            section[seq_len(i), "ID"], pen_out, stranded)
         tmp_name <- names(tmp_score)
@@ -70,7 +50,7 @@ fragment_delay_pen <- function(probe, pen, pen_out, from, to, cores) {
           # only parts bigger than 6 are accepted as three is the smallest
           # possible fragment size
           for (j in (i - 2):4) {
-            tmp_val <- section[j:i, "val"]
+            tmp_val <- section[j:i, "delay"]
             tmp_position <- section[j:i, "position"]
             tmp_ID <- section[j:i, "ID"]
             # penalty for a new fragment and former scores are added
@@ -130,26 +110,26 @@ fragment_delay_pen <- function(probe, pen, pen_out, from, to, cores) {
           outl <- strsplit(tmp_outl, ",")[[1]]
           trgt <- trgt[-which(trgt %in% outl)]
         }
-        rows <- match(trgt, probe[, "ID"])
+        rows <- match(trgt, rowRanges(inp)$ID)
         tmp_group <- rep(as.character(i), length(rows))
-        tmp_position <- probe[rows, "position"]
-        stra <- unique(probe[rows, "strand"])
+        tmp_position <- rowRanges(inp)$position[rows]
+        stra <- unique(decode(strand(inp))[rows])
         if (stranded == TRUE & stra == "-") {
           tmp_position <- (tmp_position - (tmp_df[tmp_df$strand == "-", ][
               nrow(tmp_df[tmp_df$strand == "-", ]), "position"])) * -1
         }
         tmp_position <- tmp_position - min(tmp_position, na.rm = TRUE)
-        tmp_delay <- probe[rows, "delay"] - A + B
+        tmp_delay <- rowRanges(inp)$delay[rows] - A + B
         sta_point <-
           as.numeric(strsplit(na[i], "_")[[1]][2]) *
-          probe[rows[1], "position"] + as.numeric(strsplit(na[i], "_")[[1]][3])
+          rowRanges(inp)$position[rows[1]] + as.numeric(strsplit(na[i], "_")[[1]][3])
         end_point <-
           as.numeric(strsplit(na[i], "_")[[1]][2]) *
-          probe[rows[length(rows)], "position"] +
+          rowRanges(inp)$position[rows[length(rows)]] +
           as.numeric(strsplit(na[i], "_")[[1]][3])
         new_point <-
           as.numeric(strsplit(na[i + 1], "_")[[1]][2]) *
-          probe[rows[length(rows)], "position"] +
+          rowRanges(inp)$position[rows[length(rows)]] +
           as.numeric(strsplit(na[i + 1], "_")[[1]][3])
         A <- sum(A, (new_point - sta_point))
         B <- sum(B, (new_point - end_point))
@@ -166,17 +146,17 @@ fragment_delay_pen <- function(probe, pen, pen_out, from, to, cores) {
       outl <- strsplit(tmp_outl, ",")[[1]]
       trgt <- trgt[-which(trgt %in% outl)]
     }
-    rows <- match(trgt, probe[, "ID"])
+    rows <- match(trgt, rowRanges(inp)$ID)
     tmp_group <- rep(as.character(length(na)), length(rows))
-    tmp_position <- probe[rows, "position"]
-    stra <- unique(probe[rows, "strand"])
+    tmp_position <- rowRanges(inp)$position[rows]
+    stra <- unique(decode(strand(inp))[rows])
     if (stranded == TRUE & stra == "-") {
       tmp_position <- (tmp_position -
         (tmp_df[tmp_df$strand == "-", ][
           nrow(tmp_df[tmp_df$strand == "-", ]), "position"])) * -1
     }
     tmp_position <- tmp_position - min(tmp_position, na.rm = TRUE)
-    tmp_delay <- probe[rows, "delay"] - A + B
+    tmp_delay <- rowRanges(inp)$delay[rows] - A + B
     group <- c(group, tmp_group)
     position <- c(position, tmp_position)
     delay <- c(delay, tmp_delay)

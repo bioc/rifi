@@ -4,20 +4,20 @@
 \alias{fragment_inty}
 \title{fragment_inty: performs the intensity fragmentation
 fragment_inty makes intensity_fragments based on HL_fragments and assigns
-all gathered information to the probe based data frame.
+all gathered information to the SummarizedExperiment object.
 The columns "intensity_fragment" and "intensity_mean_fragment" are added.
 fragment_inty makes intensity_fragments and assigns the mean of each
 fragment.
 The function used is:
 .score_fun_ave.
-The input is the probe, a dataframe with ID, intensity and HL_fragment.
+The input is the the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming, pen_out
 is the outlier penalty.}
 \usage{
-fragment_inty(probe, cores = 1, pen, pen_out)
+fragment_inty(inp, cores = 1, pen, pen_out)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{cores}{cores: integer: the number of assigned cores for the task.}
 
@@ -29,39 +29,24 @@ Higher values result in fewer allowed outliers. Default is the auto generated
 value.}
 }
 \value{
-the probe data frame with the columns regarding the intensity:
-intensity_fragment and intensity_mean_fragment:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
-\item{intensity_fragment:}{The intensity fragment the bin belongs to}
-\item{intensity_mean_fragment:}{The mean intensity value of the respective
-intensity fragment}
-}
+the SummarizedExperiment object: with intensity_fragment and
+intensity_mean_fragment added to the rowRanges.
 }
 \description{
 fragment_inty: performs the intensity fragmentation
 fragment_inty makes intensity_fragments based on HL_fragments and assigns
-all gathered information to the probe based data frame.
+all gathered information to the SummarizedExperiment object.
 The columns "intensity_fragment" and "intensity_mean_fragment" are added.
 fragment_inty makes intensity_fragments and assigns the mean of each
 fragment.
 The function used is:
 .score_fun_ave.
-The input is the probe, a dataframe with ID, intensity and HL_fragment.
+The input is the the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming, pen_out
 is the outlier penalty.
 }
 \examples{
 data(fragmentation_minimal)
-data(penalties_minimal)
-fragment_inty(
-  probe = fragmentation_minimal, cores = 2,
-  pen = penalties_minimal["intensity_penalty"],
-  pen_out = penalties_minimal["intensity_outlier_penalty"]
-)
+fragment_inty(inp = fragmentation_minimal, cores = 2, pen = 2, pen_out = 1)
 
 }

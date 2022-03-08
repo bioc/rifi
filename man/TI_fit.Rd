@@ -4,13 +4,13 @@
 \alias{TI_fit}
 \title{TI_fit: estimates transcription interference and termination factor using
 nls function for probe or bin flagged as "TI".
-TI_fit uses nls function to fit the flagged probes or bins with "TI" found
+TI_fit uses nls2 function to fit the flagged probes or bins with "TI" found
 using finding_TI.r.
 It estimates the transcription interference level (referred later to TI) as
 well as the transcription factor fitting the probes/bins with nls function
 looping into several starting values.
 To determine TI and termination factor, TI_fit function is applied to the
-flagged probes and to the probes localized 200 nucleotides upstream.
+flagged probes and to the probes localized 1000 nucleotides upstream.
 Before applying TI_fit function, some probes/bins are filtered out if they
 are below the background using generic_filter_BG.
 The model loops into a dataframe containing sequences of starting values and
@@ -18,32 +18,29 @@ the coefficients are extracted from the fit with the lowest
 residuals. When many residuals are equal to 0, the lowest residual can not
 be determined and the coefficients extracted could be wrong.
 Therefore, a second filter was developed. First we loop into all starting
-values, we collect nls objects in tmp_v vector and the corresponding
-residuals in tmp_r vector. They are sorted and residuals non equal to 0
-are collected in a vector. If the first residuals are not equal to 0,
-20 \% of the best residuals are collected in tmp_r_min vector and the
-minimum termination factor is selected. In case the first residuals are
-equal to 0 then values between 0 to 20\% of the values collected in tmp_r_min
-vector are gathered. The minimum termination factor coefficient is
-determined and saved. The coefficients are gathered in res vector and saved
-as an object.}
+values, we collect nls objects and the corresponding residuals. They are
+sorted and residuals non equal to 0 are collected in a vector. If the first
+residuals are not equal to 0, 20 \% of the best residuals are collected in
+tmp_r_min vector and the minimum termination factor is selected. In case the
+first residuals are equal to 0 then values between 0 to 20\% of the values
+collected in tmp_r_min vector are gathered. The minimum termination factor
+coefficient is determined and saved. The coefficients are gathered in res
+vector and saved as an object.}
 \usage{
 TI_fit(
   inp,
-  probe,
   cores = 1,
   restr = 0.2,
   k = seq(0, 1, by = 0.5),
   decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
   ti = seq(0, 1, by = 0.5),
   ti_delay = seq(0, 2, by = 0.5),
-  rest_delay = seq(0, 2, by = 0.5)
+  rest_delay = seq(0, 2, by = 0.5),
+  bg = 0
 )
 }
 \arguments{
-\item{inp}{data frame: the input data frame with correct format.}
-
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input with correct format.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
@@ -65,51 +62,24 @@ Default is seq(0, 2, by = 0.5).}
 
 \item{rest_delay}{numeric vector: A sequence of starting values. Default
 is seq(0, 2, by = 0.5).}
+
+\item{bg}{numeric vector: A sequence of starting values. Default is 0.}
 }
 \value{
-A list of 2 data frames :
-\describe{
-\item{probe_df:}{the probe data frame with the columns delay, half_life
-and TI_termination_factor added:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{postion_segment:}{The position based segment}
-\item{delay:}{The delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-}
-}
-\item{fit_obj_TI:}{the fit object for the TI fit:
-\describe{
-\item{delay:}{The delay value of the bin/probe}
-\item{ti_delay:}{The ti-delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{ti_value:}{The ti-value of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-\item{synthesis_rate:}{The synthesis rate of the bin/probe}
-\item{TI_background:}{The background value of the fit}
-\item{position:}{The bin/probe specific position}
-\item{ID:}{The bin/probe specific ID}
-}
-}
-}
+the SummarizedExperiment object: with delay, decay  and
+TI_termination_factor added to the rowRanges. The full fit data is saved in
+the metadata as "fit_TI".
 }
 \description{
 TI_fit: estimates transcription interference and termination factor using
 nls function for probe or bin flagged as "TI".
-TI_fit uses nls function to fit the flagged probes or bins with "TI" found
+TI_fit uses nls2 function to fit the flagged probes or bins with "TI" found
 using finding_TI.r.
 It estimates the transcription interference level (referred later to TI) as
 well as the transcription factor fitting the probes/bins with nls function
 looping into several starting values.
 To determine TI and termination factor, TI_fit function is applied to the
-flagged probes and to the probes localized 200 nucleotides upstream.
+flagged probes and to the probes localized 1000 nucleotides upstream.
 Before applying TI_fit function, some probes/bins are filtered out if they
 are below the background using generic_filter_BG.
 The model loops into a dataframe containing sequences of starting values and
@@ -117,19 +87,17 @@ the coefficients are extracted from the fit with the lowest
 residuals. When many residuals are equal to 0, the lowest residual can not
 be determined and the coefficients extracted could be wrong.
 Therefore, a second filter was developed. First we loop into all starting
-values, we collect nls objects in tmp_v vector and the corresponding
-residuals in tmp_r vector. They are sorted and residuals non equal to 0
-are collected in a vector. If the first residuals are not equal to 0,
-20 \% of the best residuals are collected in tmp_r_min vector and the
-minimum termination factor is selected. In case the first residuals are
-equal to 0 then values between 0 to 20\% of the values collected in tmp_r_min
-vector are gathered. The minimum termination factor coefficient is
-determined and saved. The coefficients are gathered in res vector and saved
-as an object.
+values, we collect nls objects and the corresponding residuals. They are
+sorted and residuals non equal to 0 are collected in a vector. If the first
+residuals are not equal to 0, 20 \% of the best residuals are collected in
+tmp_r_min vector and the minimum termination factor is selected. In case the
+first residuals are equal to 0 then values between 0 to 20\% of the values
+collected in tmp_r_min vector are gathered. The minimum termination factor
+coefficient is determined and saved. The coefficients are gathered in res
+vector and saved as an object.
 }
 \examples{
 data(preprocess_minimal)
-TI_fit(inp = preprocess_minimal$input_df, probe = preprocess_minimal$probe_df,
- cores=2, restr=0.01)
+TI_fit(inp = preprocess_minimal, cores=2, restr=0.01)
 
 }

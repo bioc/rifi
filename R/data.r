@@ -103,23 +103,6 @@
 #' An artificial example input data frame.
 #' A data set containing information about the intensities at all time points,
 #' as well as position, strand and ID information.
-#' @format A data frame with 12 rows and 14 variables:
-#' \describe{
-#'   \item{0:}{relative intensities at 0 min}
-#'   \item{1:}{relative intensities at 1 min}
-#'   \item{2:}{relative intensities at 2 min}
-#'   \item{3:}{relative intensities at 3 min}
-#'   \item{4:}{relative intensities at 4 min}
-#'   \item{5:}{relative intensities at 5 min}
-#'   \item{6:}{relative intensities at 6 min}
-#'   \item{8:}{relative intensities at 8 min}
-#'   \item{10:}{relative intensities at 10 min}
-#'   \item{15:}{relative intensities at 15 min}
-#'   \item{20:}{relative intensities at 20 min}
-#'   \item{ID:}{unique IDs}
-#'   \item{position:}{genome positions}
-#'   \item{strand:}{strand information}
-#' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
 #'
@@ -205,20 +188,6 @@
 
 #' The artificial result of rifi_fit for artificial example data
 #' A data frame containing the output from rifi_fit.
-#' @format A data frame with 24 rows and 10 variables:
-#'   \describe{
-#'     \item{ID:}{The bin/probe specific ID}
-#'     \item{position:}{The bin/probe specific position}
-#'     \item{strand:}{The bin/probe specific strand}
-#'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{probe_TI:}{An internal value to determine which fitting model
-#'     is applied}
-#'     \item{flag:}{Information on which fitting model is applied}
-#'     \item{position_segment:}{The position based segment}
-#'     \item{delay:}{The delay value of the bin/probe}
-#'     \item{half_life:}{The half-life of the bin/probe}
-#'     \item{TI_termination_factor:}{The termination factor of the bin/probe}
-#'     }
 #' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
 #'
 #' @usage data(fit_minimal)
@@ -317,38 +286,7 @@
 
 #' The result of rifi_fragmentation for artificial example data
 #' A data frame containing the output from rifi_fragmentation, the probe_df
-#' @format A data frame with 24 rows and 22 variables:
-#' \describe{
-#'   \item{ID:}{The bin/probe specific ID}
-#'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
-#'   \item{intensity:}{The relative intensity at time point 0}
-#'   \item{probe_TI:}{An internal value to determine which fitting model is
-#'   applied}
-#'   \item{flag:}{Information on which fitting model is applied}
-#'   \item{position_segment:}{The position based segment}
-#'   \item{delay:}{The delay value of the bin/probe}
-#'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{TI_termination_factor:}{The termination factor of the bin/probe}
-#'   \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'   \item{velocity_fragment:}{The velocity value of the respective delay
-#'   fragment}
-#'   \item{intercept:}{The vintercept of fit through the respective delay
-#'   fragment}
-#'   \item{slope:}{The slope of the fit through the respective delay fragment}
-#'   \item{HL_fragment:}{The half-life fragment the bin belongs to}
-#'   \item{HL_mean_fragment:}{The mean half-life value of the respective
-#'   half-life fragment}
-#'   \item{intensity_fragment:}{The intensity fragment the bin belongs to}
-#'   \item{intensity_mean_fragment:}{The mean intensity value of the respective
-#'   intensity fragment}
-#'   \item{TU:}{The overarching transcription unit}
-#'   \item{TI_termination_fragment:}{The TI fragment the bin belongs to}
-#'   \item{TI_mean_termination_factor:}{The mean termination factor of the
-#'   respective TI fragment}
-#'   \item{seg_ID:}{The combined ID of the fragment}
-#' }
-#' 
+#'
 #' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
 #'
 #' @usage data(fragmentation_minimal)
@@ -447,10 +385,7 @@
 
 #' The result of rifi_penalties for artificial example data
 #' A vector containing the output from rifi_penalties, the logbook.
-#' @format A numeric vector of length 8:
-#' \describe{
-#'   \item{logbook:}{The logbook vector containing all penalty information}
-#' }
+#'
 #' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
 #'
 #' @usage data(penalties_minimal)
@@ -555,41 +490,6 @@
 #' The result of rifi_preprocess for artificial example data
 #' A list containing the output from rifi_preprocess, including the probe_df
 #' and the modified input_df
-#' @format A list of 2 data frames with 4 rows and 7 variables, and 12 rows
-#' and 15 variables:
-#' \describe{
-#'   \item{probe_df:}{the probe dataframe:
-#'   \describe{
-#'     \item{ID:}{The bin/probe specific ID}
-#'     \item{position:}{The bin/probe specific position}
-#'     \item{strand:}{The bin/probe specific strand}
-#'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{probe_TI:}{An internal value to determine which fitting model
-#'     is applied}
-#'     \item{flag:}{Information on which fitting model is applied}
-#'     \item{postion_segment:}{The position based segment}
-#'       }
-#'     }
-#'   \item{fit_obj_TI:}{the fit object for the TI fit:
-#'     \describe{
-#'     \item{0:}{relative intensities at 0 min}
-#'     \item{1:}{relative intensities at 1 min}
-#'     \item{2:}{relative intensities at 2 min}
-#'     \item{3:}{relative intensities at 3 min}
-#'     \item{4:}{relative intensities at 4 min}
-#'     \item{5:}{relative intensities at 5 min}
-#'     \item{6:}{relative intensities at 6 min}
-#'     \item{8:}{relative intensities at 8 min}
-#'     \item{10:}{relative intensities at 10 min}
-#'     \item{15:}{relative intensities at 15 min}
-#'     \item{20:}{relative intensities at 20 min}
-#'     \item{ID:}{unique IDs}
-#'     \item{position:}{genome positions}
-#'     \item{strand:}{strand information}
-#'     \item{filtration:}{indicator wether the replicate is filtered or not}
-#'     }
-#'   }
-#' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
 #'

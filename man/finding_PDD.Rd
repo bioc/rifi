@@ -9,15 +9,15 @@ Then the slope is checked for steepness to decide for PDD.
 '\emph{PDD}' is added to the 'flag' column.
 Post transcription decay is characterized by a strong decrease of intensity
 by position.
-The data frame needs to contain at least 'ID', 'intensity', 'position' and
+The rowRanges need to contain at least 'ID', 'intensity', 'position' and
 'position_segment'!}
 \usage{
-finding_PDD(probe, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001)
+finding_PDD(inp, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input.}
 
-\item{cores}{interger: the number of assigned cores for the task}
+\item{cores}{integer: the number of assigned cores for the task}
 
 \item{pen}{numeric: an internal parameter for the dynamic programming.
 Higher values result in fewer fragments. Advised to be kept at 2.
@@ -32,17 +32,8 @@ steeper than the thrsh to be flagged with '\emph{PDD}'. Higher values result in
 fewer candidates. Advised to be kept at 0.001. Default is 0.001.}
 }
 \value{
-the probe based data frame with the modified flag:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{postion_segment:}{The position based segment}
-}
+the SummarizedExperiment object: with "\emph{PDD}" added to the flag
+column.
 }
 \description{
 finding_PDD: flags potential candidates for post transcription decay.
@@ -52,12 +43,12 @@ Then the slope is checked for steepness to decide for PDD.
 '\emph{PDD}' is added to the 'flag' column.
 Post transcription decay is characterized by a strong decrease of intensity
 by position.
-The data frame needs to contain at least 'ID', 'intensity', 'position' and
+The rowRanges need to contain at least 'ID', 'intensity', 'position' and
 'position_segment'!
 }
 \examples{
 data(preprocess_minimal)
-finding_PDD(probe = preprocess_minimal$probe_df,  cores = 2, pen = 2,
+finding_PDD(inp = preprocess_minimal, cores = 2, pen = 2,
 pen_out = 1, thrsh = 0.001)
 
 }

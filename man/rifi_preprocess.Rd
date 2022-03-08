@@ -11,22 +11,16 @@ Wraps the functions:
 \item finding_PDD
 \item finding_TI
 Allows for the optional integration of filter functions.
-Filter functions mark replicates with "FLT". Those are then not considered
+Filter functions mark replicates with TRUE. Those are then not considered
 in the fit!
-Three different filter functions can be applied. The first (FUN_filter_BG)
-is a general filter usually to exclude probes with low expression or "bad"
-patterns.
-The second (FUN_filter_STD) only filters IDs that will be fitted with the
-standard fit. The third (FUN_filter_TI) only filters IDs that will be fitted
-with the TI fit
+FUN_filter is a general filter usually to exclude probes with low
+expression or "bad" patterns.
 }}
 \usage{
 rifi_preprocess(
   inp,
   cores,
-  FUN_filter_BG = function(x) {     "_" },
-  FUN_filter_STD = function(x) {     "_" },
-  FUN_filter_TI = function(x) {     "_" },
+  FUN_filter = function(x) {     FALSE },
   bg = 0,
   rm_FLT = FALSE,
   thrsh_check = 0,
@@ -41,21 +35,13 @@ rifi_preprocess(
 )
 }
 \arguments{
-\item{inp}{data frame: the input data frame with correct format.}
+\item{inp}{SummarizedExperiment: the input.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
-\item{FUN_filter_BG}{function: A function of x, returning a character
-string containing "FLT" (e.g ("FLT_BG_3_7")). x is the numeric vector of the
-intensity from all time points.}
-
-\item{FUN_filter_STD}{function: A function of x, returning a character string
-containing "FLT" (e.g ("FLT_STD_alpha")). x is the numeric vector of the
-intensity from all time points.}
-
-\item{FUN_filter_TI}{function:A function of x, returning a character string
-containing "FLT" (e.g ("FLT_TI_Z")). x is the numeric vector of the intensity
-from all time points.}
+\item{FUN_filter}{function: A function of x, returning a logical.
+x is the numeric vector of the intensity from all time points for a specific
+replicate.}
 
 \item{bg}{numeric: threshold over which the last time point has to be to be
 fitted with the above background mode.}
@@ -97,30 +83,9 @@ is 0.5.}
 in IDs are fitted with the TI fit.}
 }
 \value{
-A list of 2 data frames:
-\describe{
-\item{probe_df:}{the probe dataframe:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{postion_segment:}{The position based segment}
-}
-}
-\item{fit_obj_TI:}{the fit object for the TI fit:
-\describe{
-\item{...}{all timepoints}
-\item{ID:}{unique IDs}
-\item{position:}{genome positions}
-\item{strand:}{strand information}
-\item{filtration:}{indicator wether the replicate is filtered or not}
-}
-}
-}
+the SummarizedExperiment object: checked, and with position, ID,
+intensity, probe_TI, position_segment, flag and filtration added to the
+rowRanges.
 }
 \description{
 rifi_preprocess: conveniently wraps all pre-processing steps.
@@ -132,20 +97,16 @@ Wraps the functions:
 \item finding_PDD
 \item finding_TI
 Allows for the optional integration of filter functions.
-Filter functions mark replicates with "FLT". Those are then not considered
+Filter functions mark replicates with TRUE. Those are then not considered
 in the fit!
-Three different filter functions can be applied. The first (FUN_filter_BG)
-is a general filter usually to exclude probes with low expression or "bad"
-patterns.
-The second (FUN_filter_STD) only filters IDs that will be fitted with the
-standard fit. The third (FUN_filter_TI) only filters IDs that will be fitted
-with the TI fit
+FUN_filter is a general filter usually to exclude probes with low
+expression or "bad" patterns.
 }
 }
 \examples{
 data(example_input_minimal)
 rifi_preprocess(
-  inp = example_input_minimal, cores = 2, bg = 0, rm_FLT = FALSE,
+  inp = example_input_minimal, cores = 2, bg = 100, rm_FLT = FALSE,
   thrsh_check = 0, dista = 300, run_PDD = FALSE
   )
   
