@@ -7,24 +7,21 @@
 rifi_fragmentation(
   inp,
   cores = 1,
-  logbook,
-  pen_delay = logbook["delay_penalty"],
-  pen_out_delay = logbook["delay_outlier_penalty"],
-  pen_HL = logbook["half_life_penalty"],
-  pen_out_HL = logbook["half_life_outlier_penalty"],
-  pen_inty = logbook["intensity_penalty"],
-  pen_out_inty = logbook["intensity_outlier_penalty"],
-  pen_TU = -0.75,
-  pen_TI = logbook["TI_penalty"],
-  pen_out_TI = logbook["TI_outlier_penalty"]
+  pen_delay = NULL,
+  pen_out_delay = NULL,
+  pen_HL = NULL,
+  pen_out_HL = NULL,
+  pen_inty = NULL,
+  pen_out_inty = NULL,
+  pen_TU = NULL,
+  pen_TI = NULL,
+  pen_out_TI = NULL
 )
 }
 \arguments{
 \item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
-
-\item{logbook}{numeric vector: the logbook vector, if it exists.}
 
 \item{pen_delay}{numeric: an internal parameter for the dynamic programming.
 Higher values result in fewer fragments. Default is the auto generated value.}
@@ -74,8 +71,7 @@ rifi_fragmentation wraps the following functions:
 }
 \examples{
 data(penalties_minimal)
-rifi_fragmentation(inp = penalties_minimal, cores = 2,
-logbook = metadata(penalties_minimal)$logbook)
+rifi_fragmentation(inp = penalties_minimal, cores = 2)
 
 }
 \seealso{

@@ -55,9 +55,9 @@ make_df <- function(inp,
       tmp
     }
   if (rm_FLT == TRUE) {
-    remv <- which(is.na(tmp_df)[,1])
-    tmp_df <- tmp_df[-remv, ]
-    inp <- inp[-remv, ]
+    remv <- is.na(tmp_df)[,1]
+    tmp_df <- tmp_df[!remv, ]
+    inp <- inp[!remv, ]
     if (nrow(tmp_df) == 0) {
       stop("All probes have been removed because of rm_FLT == TRUE")
     }

@@ -77,7 +77,7 @@ rifi_fit(
   delay = seq(0, 10, by = .1), k = seq(0.1, 1, 0.2), bg = 0.2,
   TI_k = seq(0, 1, by = 0.5), TI_decay = c(0.05, 0.1, 0.2, 0.5, 0.6),
   TI = seq(0, 1, by = 0.5), TI_delay = seq(0, 2, by = 0.5),
-  TI_rest_delay = seq(0, 2, by = 0.5), TI_bg = 0,
+  TI_rest_delay = seq(0, 2, by = 0.5), TI_bg = 0
 )
 
 }

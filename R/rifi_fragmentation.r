@@ -9,7 +9,6 @@
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param cores integer: the number of assigned cores for the task.
-#' @param logbook numeric vector: the logbook vector, if it exists.
 #' @param pen_delay numeric: an internal parameter for the dynamic programming.
 #' Higher values result in fewer fragments. Default is the auto generated value.
 #' @param pen_out_delay numeric: an internal parameter for the dynamic
@@ -45,8 +44,7 @@
 #' 
 #' @examples
 #' data(penalties_minimal)
-#' rifi_fragmentation(inp = penalties_minimal, cores = 2,
-#' logbook = metadata(penalties_minimal)$logbook)
+#' rifi_fragmentation(inp = penalties_minimal, cores = 2)
 #' 
 #' @export
 
@@ -54,17 +52,45 @@
 rifi_fragmentation <-
   function(inp,
            cores = 1,
-           logbook,
-           pen_delay = logbook["delay_penalty"],
-           pen_out_delay = logbook["delay_outlier_penalty"],
-           pen_HL = logbook["half_life_penalty"],
-           pen_out_HL = logbook["half_life_outlier_penalty"],
-           pen_inty = logbook["intensity_penalty"],
-           pen_out_inty = logbook["intensity_outlier_penalty"],
-           pen_TU = -0.75,
-           pen_TI = logbook["TI_penalty"],
-           pen_out_TI = logbook["TI_outlier_penalty"]) {
-    
+           pen_delay = NULL,
+           pen_out_delay = NULL,
+           pen_HL = NULL,
+           pen_out_HL = NULL,
+           pen_inty = NULL,
+           pen_out_inty = NULL,
+           pen_TU = NULL,
+           pen_TI = NULL,
+           pen_out_TI = NULL) {
+		
+    lo <- metadata(inp)$logbook
+    if(is.null(pen_delay)){
+      pen_delay <- lo["delay_penalty"]
+    }
+    if(is.null(pen_out_delay)){
+      pen_out_delay <- lo["delay_outlier_penalty"]
+    }
+    if(is.null(pen_HL)){
+      pen_HL <- lo["half_life_penalty"]
+    }
+    if(is.null(pen_out_HL)){
+      pen_out_HL <- lo["half_life_outlier_penalty"]
+    }
+    if(is.null(pen_inty)){
+      pen_inty <- lo["intensity_penalty"]
+    }
+    if(is.null(pen_out_inty)){
+      pen_delay <- lo["intensity_outlier_penalty"]
+    }
+    if(is.null(pen_TU)){
+      pen_TU <- -0.75
+    }
+    if(is.null(pen_TI)){
+      pen_TI <- lo["TI_penalty"]
+    }
+    if(is.null(pen_out_TI)){
+      pen_out_TI <- lo["TI_outlier_penalty"]
+    }
+	
     message("running fragment_delay...")
     inp <-
       fragment_delay(
