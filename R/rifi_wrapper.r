@@ -34,7 +34,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
     cores = cores
   )
   probe_fra <-
-    rifi_fragmentation(probe, cores = cores, logbook = pen)
+    rifi_fragmentation(probe, cores = cores)
   annot <- gff3_preprocess(gff)
   probe_sta <- rifi_stats(probe_fra)
   probe_summary <-
