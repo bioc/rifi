@@ -40,46 +40,53 @@
 #' 
 #' @examples
 #' data(stats_minimal)
-#' apply_ancova(data = stats_minimal)
+#' apply_ancova(inp = stats_minimal)
 #' 
 #' @export
 
-apply_ancova <- function(data) {
+apply_ancova <- function(inp) {
     # exclude TUs with 'T', 'NA' or 'O'
-    data_1 <- data[grep("_T|_O|_NA", data$TU, invert = TRUE), ]
-    data_1 <-
-    data_1[grep("_T|_O|_NA", data_1$delay_fragment, invert = TRUE), ]
+    data <- inp[grep("_T|_O|_NA", rowRanges(inp)$TU, invert = TRUE), ]
+    data <-
+    data[grep("_T|_O|_NA", rowRanges(data)$delay_fragment, invert = TRUE), ]
     # select unique TU
-    uniqueTU <- unique(data_1$TU)
-    data[, "p_value_slope"] <- NA
-    data[, "delay_frg_slope"] <- NA
-    data[, "velocity_ratio"] <- NA
+    uniqueTU <- unique(rowRanges(data)$TU)
+    rowRanges(inp)$p_value_slope <- NA
+    rowRanges(inp)$delay_frg_slope <- NA
+    rowRanges(inp)$velocity_ratio <- NA
+    
     for (i in seq_along(uniqueTU)) {
       df <- data.frame()
-      del_1 <-
-        data_1[which(data_1$TU == uniqueTU[i]), "delay_fragment"]
-      del_1 <- unique(del_1)
+      del_1 <- rowRanges(data)[
+        which(rowRanges(data)$TU %in% uniqueTU[i]),"delay_fragment"]
+      del_1 <- unique(del_1$delay_fragment)
       if (length(del_1) < 2) {
          next ()
       } else {
         for (j in seq_len(length(del_1) - 1)) {
-          seg_1_d <- data[which(data$delay_fragment %in% del_1[j]), "delay"]
-          seg_2_d <- data[which(data$delay_fragment %in% del_1[j + 1]), "delay"]
-          seg_1_p <- data[which(data$delay_fragment %in% del_1[j]), "position"]
-          seg_2_p <- data[which(data$delay_fragment %in%
-                                  del_1[j + 1]), "position"]
-          if (unique(data[which(data$delay_fragment %in%
-                                del_1[1]), "strand"]) == "-") {
+          seg_1_d <- rowRanges(data)[
+            which(rowRanges(data)$delay_fragment %in% del_1[j]), "delay"]
+          seg_2_d <- rowRanges(data)[
+            which(rowRanges(data)$delay_fragment %in% del_1[j + 1]), "delay"]
+          seg_1_p <- rowRanges(data)[
+            which(rowRanges(data)$delay_fragment %in% del_1[j]), "position"]
+          seg_2_p <- rowRanges(data)[
+            which(rowRanges(data)$delay_fragment %in% del_1[j + 1]), "position"]
+          
+          #if negative strand, data is reversed
+          if (unique(strand(data)[which(rowRanges(data)$delay_fragment %in%
+                                del_1[1])]) == "-") {
             seg_1_d <- seg_1_d[rev(seq_len(length(seg_1_d)))]
             seg_2_d <- seg_2_d[rev(seq_len(length(seg_2_d)))]
           }
+          
           if (length(seg_1_d) == 1 | length(seg_2_d) == 1) {
-            (next)()
+              next()
           } else {
-            df_1 <- cbind.data.frame(seg_1_d, seg_1_p)
-            df_2 <- cbind.data.frame(seg_2_d, seg_2_p)
-            colnames(df_1) <- c("delay", "position")
-            colnames(df_2) <- c("delay", "position")
+            df_1 <- cbind.data.frame(seg_1_d, seg_1_p$position)
+            df_2 <- cbind.data.frame(seg_2_d, seg_2_p$position)
+            colnames(df_1)[7] <- "position"
+            colnames(df_2)[7] <- "position"
             # linear model for both segments separately
             model1 <- lm(delay ~ position, data = df_1)
             model2 <- lm(delay ~ position, data = df_2)
@@ -112,22 +119,22 @@ apply_ancova <- function(data) {
                 rep("seg.1", times = length(seg_1_d)),
                 rep("seg.2", times = length(seg_2_d))
               ))
-            colnames(df) <- c("delay", "position", "seg")
+            colnames(df)[8] <- "seg"
             model1 <-
               lm(delay ~ position + seg + position:seg, data = df)
             tryCatch({
               p_value_slope <- Anova(model1, type = "II")$"Pr(>F)"[3]
-              data[which(data$delay_fragment %in%
-                           del_1[j]), "delay_frg_slope"] <-
+              rowRanges(inp)$delay_frg_slope[
+                which(rowRanges(inp)$delay_fragment %in% del_1[j])] <-
                 paste0(del_1[j], ":", del_1[j + 1])
-              data[which(data$delay_fragment %in%
-                           del_1[j]), "velocity_ratio"] <-
-                data[which(data$delay_fragment %in% del_1[j + 1])[1],
-                     "velocity_fragment"] /
-                data[which(data$delay_fragment %in%
-                             del_1[j])[1], "velocity_fragment"]
-              data[which(data$delay_fragment %in%
-                           del_1[j]), "p_value_slope"] <-
+              rowRanges(inp)$velocity_ratio[
+                which(rowRanges(inp)$delay_fragment %in% del_1[j])] <-
+              rowRanges(inp)$velocity_fragment[which(rowRanges(inp)$delay_fragment %in% 
+                                                       del_1[j + 1])[1]] /
+              rowRanges(inp)$velocity_fragment[which(rowRanges(inp)$delay_fragment %in%
+                             del_1[j])[1]]
+              rowRanges(inp)$p_value_slope[which(rowRanges(inp)$delay_fragment %in%
+                           del_1[j])] <-
                 p_value_slope
             }, error = function(e) {
             })
@@ -135,5 +142,5 @@ apply_ancova <- function(data) {
         }
       }
     }
-    return(data)
+    return(inp)
   }

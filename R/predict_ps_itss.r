@@ -64,7 +64,6 @@ predict_ps_itss <- function(inp, maxDis = 300) {
   uniqueTU <- na.omit(uniqueTU)
 
   for (i in seq_along(uniqueTU)) {
-    print(i)
     # select ID, position, delay, delay fragments, coordinates of the slope
     # and TU
     tu <- rowRanges(inp)[
@@ -91,7 +90,6 @@ predict_ps_itss <- function(inp, maxDis = 300) {
 
     if (length(del_segs) > 1) {
       for (j in seq_len(length(del_segs) - 1)) {
-        print(j)
         if (unique(strand(tu)) == "+") {
           del.1 <- tu[which(tu$delay_fragment == del_segs[j]), ]
           y1 <- last(del.1$position) * unique(del.1$slope) +
