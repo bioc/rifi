@@ -26,7 +26,7 @@
 #' threshold, ps is assigned otherwise, and if the difference is higher than
 #' the positive threshold, ITSS is assigned.
 #'
-#' @param data dataframe: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param maxDis integer: the maximal distance allowed between two successive
 #' fragments.
 #' 
@@ -48,31 +48,30 @@
 #' }
 #' 
 #' @examples
-#' data(fit_minimal)
-#' predict_ps_itss(data = fit_minimal, maxDis = 300)
-#' 
+#' data(fragmentation_minimal)
+#' predict_ps_itss(inp = fragmentation_minimal, maxDis = 300) 
 #' @export
 
-predict_ps_itss <- function(data, maxDis = 300) {
-  data$pausing_site <- "-"
-  data$iTSS_I <- "-"
-  data$ps_ts_fragment <- NA
-  data[, "event_duration"] <- NA
+predict_ps_itss <- function(inp, maxDis = 300) {
+  rowRanges(inp)$pausing_site <- "-"
+  rowRanges(inp)$iTSS_I <- "-"
+  rowRanges(inp)$ps_ts_fragment <- NA
+  rowRanges(inp)$event_duration <- NA
 
   # select unique TUs
-  uniqueTU <- unique(data$TU)
+  uniqueTU <- unique(rowRanges(inp)$TU)
   uniqueTU <- uniqueTU[grep("_NA|_T", uniqueTU, invert = TRUE)]
   uniqueTU <- na.omit(uniqueTU)
 
   for (i in seq_along(uniqueTU)) {
+    print(i)
     # select ID, position, delay, delay fragments, coordinates of the slope
     # and TU
-    tu <- data[
-      which(data$TU %in% uniqueTU[i]),
+    tu <- rowRanges(inp)[
+      which(rowRanges(inp)$TU %in% uniqueTU[i]),
       c(
         "ID",
         "position",
-        "strand",
         "delay",
         "delay_fragment",
         "slope",
@@ -80,18 +79,20 @@ predict_ps_itss <- function(data, maxDis = 300) {
         "TU"
       )
     ]
-    if (unique(tu$strand) == "-") {
-      tu <- tu[order(tu$position, decreasing = FALSE), ]
+    
+    if (unique(strand(tu)) == "-") {
+      rows_tu <- order(tu[strand(tu) == "-",]$position,
+                    decreasing = FALSE)
+      tu[strand(tu) == "-",] <- tu[strand(tu) == "-",][rows_tu,]
     }
-
     # select delay segments from TU
     del_segs <-
-      unique(tu[grep(paste0("\\D_\\d+", "$"), tu$delay_fragment),
-                "delay_fragment"])
+      unique(tu[grep(paste0("\\D_\\d+", "$"), tu$delay_fragment)]$delay_fragment)
 
     if (length(del_segs) > 1) {
       for (j in seq_len(length(del_segs) - 1)) {
-        if (unique(tu$strand) == "+") {
+        print(j)
+        if (unique(strand(tu)) == "+") {
           del.1 <- tu[which(tu$delay_fragment == del_segs[j]), ]
           y1 <- last(del.1$position) * unique(del.1$slope) +
             unique(del.1$intercept)
@@ -100,13 +101,15 @@ predict_ps_itss <- function(data, maxDis = 300) {
             unique(del.2$intercept)
         } else {
           del.1 <- tu[which(tu$delay_fragment == del_segs[j + 1]), ]
-          del.1 <- del.1[nrow(del.1):1, ]
+          rows <- length(del.1):1
+          del.1 <- del.1[rows,]
           del.2 <- tu[which(tu$delay_fragment == del_segs[j]), ]
-          del.2 <- del.2[nrow(del.2):1, ]
-          del <- rbind(del.1, del.2)
+          rows <- length(del.2):1
+          del.2 <- del.2[rows,]
+          del <- c(del.1, del.2)
           del$position <- abs(del$position - max(del$position)) + 1
-          del.1 <- del[seq_len(nrow(del.1)), ]
-          del.2 <- del[nrow(del.1) + seq_len(nrow(del.2)), ]
+          del.1 <- del[seq_along(del.1), ]
+          del.2 <- del[length(del.1) + seq_along(del.2), ]
           coef.del.1 <- coef(lm(del.1$delay ~ del.1$position))
           y1 <- last(del.1$position) * coef.del.1[2] + coef.del.1[1]
           coef.del.2 <- coef(lm(del.2$delay ~ del.2$position))
@@ -118,22 +121,23 @@ predict_ps_itss <- function(data, maxDis = 300) {
         } else {
           y.dif <- y2 - y1
           if (y.dif >= 0) {
-            if (unique(tu$strand) == "+") {
-              data[which(data$ID %in% last(del.1$ID)), "pausing_site"] <- "+"
-              data[which(data$ID %in% last(del.1$ID)), "event_duration"] <- 
-                y.dif
-              data[which(data$delay_fragment %in% del.1$delay_fragment[1]),
-                   "ps_ts_fragment"] <-
+            if (unique(strand(tu)) == "+") {
+              rows <- match(last(del.1$ID), rowRanges(inp)$ID)
+              rowRanges(inp)$pausing_site[rows] <- "+"
+              rowRanges(inp)$event_duration[rows] <- y.dif
+              rows <- match(del.1$delay_fragment[1], rowRanges(inp)$delay_fragment)
+              rowRanges(inp)$ps_ts_fragment <-
                 paste0(
                   del.1$delay_fragment[1],
                   ":",
                   del.2$delay_fragment[2]
                 )
             } else {
-              data[which(data$ID %in% del.2$ID[1]), "pausing_site"] <- "+"
-              data[which(data$ID %in% del.2$ID[1]), "event_duration"] <- y.dif
-              data[which(data$delay_fragment %in% del.2$delay_fragment[1]),
-                   "ps_ts_fragment"] <-
+              rows <- match(last(del.2$ID), rowRanges(inp)$ID)
+              rowRanges(inp)$pausing_site[rows] <- "+"
+              rowRanges(inp)$event_duration[rows] <- y.dif
+              rows <- match(del.2$delay_fragment[1], rowRanges(inp)$delay_fragment)
+              rowRanges(inp)$ps_ts_fragment <-
                 paste0(
                   del.2$delay_fragment[1],
                   ":",
@@ -141,22 +145,23 @@ predict_ps_itss <- function(data, maxDis = 300) {
                 )
             }
           } else if (y.dif < 0) {
-            if (unique(tu$strand) == "+") {
-              data[which(data$ID %in% last(del.1$ID)), "iTSS_I"] <- "+"
-              data[which(data$ID %in% last(del.1$ID)), "event_duration"] <- 
-                y.dif
-              data[which(data$delay_fragment %in% del.1$delay_fragment[1]),
-                   "ps_ts_fragment"] <-
+            if (unique(strand(tu)) == "+") {
+              rows <- match(last(del.1$ID), rowRanges(inp)$ID)
+              rowRanges(inp)$iTSS_I[rows] <- "+"
+              rowRanges(inp)$event_duration[rows] <- y.dif
+              rows <- match(del.1$delay_fragment[1], rowRanges(inp)$delay_fragment)
+              rowRanges(inp)$ps_ts_fragment <-
                 paste0(
                   del.1$delay_fragment[1],
                   ":",
                   del.2$delay_fragment[2]
                 )
             } else {
-              data[which(data$ID %in% del.2$ID[1]), "iTSS_I"] <- "+"
-              data[which(data$ID %in% del.2$ID[1]), "event_duration"] <- y.dif
-              data[which(data$delay_fragment %in% del.2$delay_fragment[1]),
-                   "ps_ts_fragment"] <-
+              rows <- match(last(del.2$ID), rowRanges(inp)$ID)
+              rowRanges(inp)$iTSS_I[rows] <- "+"
+              rowRanges(inp)$event_duration[rows] <- y.dif
+              rows <- match(del.2$delay_fragment[1], rowRanges(inp)$delay_fragment)
+              rowRanges(inp)$ps_ts_fragment <-
                 paste0(
                   del.2$delay_fragment[1],
                   ":",
@@ -168,5 +173,5 @@ predict_ps_itss <- function(data, maxDis = 300) {
       }
     }
   }
-  return(data)
+  return(inp)
 }
