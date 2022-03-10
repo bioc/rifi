@@ -24,7 +24,7 @@
 #' 14. position_2 : the last position of TI fragment, if 2 fragments, last
 #' position is from the second fragment.
 #'
-#' @param inp SummarizedExperiment: the input data frame with correct format.
+#' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param input dataframe: the probe based data frame with events and gene
 #' annotation.
 #' 
@@ -39,10 +39,10 @@
 #' 
 #' @export
 
-dataframe_summary_TI <- function(inp, input) {
+dataframe_summary_TI <- function(data, input) {
   tmp <-
     as.data.frame(
-    rowRanges(inp)[, c(
+    rowRanges(data)[, c(
       "ID",
       "position",
       "position_segment",

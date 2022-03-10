@@ -28,7 +28,7 @@
 #' between the last position of the first fragment and the first position of
 #' the second fragment.
 #' 14. features: number of segment involved on the event.
-#' @param inp SummarizedExperiment: the input data frame with correct format.
+#' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: the probe based with genome annotation.
 #' 
 #' @return WIP
@@ -42,10 +42,10 @@
 #' @export
 
 dataframe_summary_events_ps_itss <-
-  function(inp, data_annotation) {
+  function(data, data_annotation) {
     tmp_merged <-
       as.data.frame(
-      rowRanges(inp)[, c(
+      rowRanges(data)[, c(
         "ID",
         "position",
         "position_segment",

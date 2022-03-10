@@ -2,7 +2,7 @@
 #' Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
 #' apply_event_position, apply_t_test, fold_change, apply_manova and 
 #' apply_t_test_ti.
-#' @param probe data frame: the probe based data frame.
+#' @param probe SummarizedExperiment: the input data frame with correct format.
 #' @param dista integer: the maximal distance allowed between two successive
 #' fragments. Default is the auto generated value.
 #' 
@@ -77,22 +77,6 @@
 #' @export
 
 rifi_stats <- function(probe, dista = 300) {
-  num_args <- list(dista)
-  names(num_args) <- c("dista")
-  assert(all(unlist(lapply(num_args, FUN =
-                             function(x)(is.numeric(x) & length(x) == 1)))),
-         paste0("'", names(which(unlist(lapply(num_args, FUN = function(x)
-           (is.numeric(x) & length(x) == 1))) == FALSE))[1],
-           "' must be numeric of length one"))
-  req_cols_probe <- c("ID", "position", "strand", "intensity",
-                      "position_segment", "delay", "half_life",
-                      "TI_termination_factor", "delay_fragment",
-                      "HL_fragment", "intensity_fragment",
-                      "TI_termination_fragment")
-  assert(all(req_cols_probe %in% colnames(probe)),
-         paste0("'", req_cols_probe[which(!req_cols_probe %in%
-                                            colnames(probe))],
-                "' must be a column in 'probe'!"))
   message("running predict_ps_itss...")
   probe <- predict_ps_itss(inp = probe, maxDis = dista)
   message("running apply_Ttest_delay...")

@@ -11,7 +11,7 @@ dataframe_summary_TI.}
 rifi_summary(probe, data_annotation)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{probe}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{data_annotation}{dataframe: the coordinates are extracted from gff3.}
 }

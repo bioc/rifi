@@ -6,7 +6,7 @@
 #' 
 #' @return WIP
 #' 
-#' @param probe data frame: the probe based data frame.
+#' @param probe SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: the coordinates are extracted from gff3.
 #'
 #' @seealso `event_dataframe`

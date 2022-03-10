@@ -11,7 +11,7 @@
 #' Strand is indicated in case of stranded data to select the corresponding
 #' positions.
 #' 
-#' @param inp SummarizedExperiment: the input data frame with correct format.
+#' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param input dataframe: the probe based data frame with events and
 #' gene annotation.
 #' 
@@ -22,13 +22,13 @@
 #' data(annot_g_minimal)
 #' input <- event_dataframe(data = as.data.frame(rowRanges(stats_minimal)),
 #' data_annotation = annot_g_minimal[[1]])
-#' dataframe_summary(inp = stats_minimal, input = input)
+#' dataframe_summary(data = stats_minimal, input = input)
 #' @export
 #' 
-dataframe_summary <- function(inp, input) {
+dataframe_summary <- function(data, input) {
   tmp <-
     as.data.frame(
-      rowRanges(inp)[, c(
+      rowRanges(data)[, c(
       "ID",
       "position",
       "TU",

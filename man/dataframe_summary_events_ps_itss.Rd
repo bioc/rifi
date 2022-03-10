@@ -35,10 +35,10 @@ the second fragment.
 \item features: number of segment involved on the event.
 }}
 \usage{
-dataframe_summary_events_ps_itss(inp, data_annotation)
+dataframe_summary_events_ps_itss(data, data_annotation)
 }
 \arguments{
-\item{inp}{SummarizedExperiment: the input data frame with correct format.}
+\item{data}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{data_annotation}{dataframe: the probe based with genome annotation.}
 }

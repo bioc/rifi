@@ -10,7 +10,7 @@ apply_t_test_ti.}
 rifi_stats(probe, dista = 300)
 }
 \arguments{
-\item{probe}{data frame: the probe based data frame.}
+\item{probe}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{dista}{integer: the maximal distance allowed between two successive
 fragments. Default is the auto generated value.}

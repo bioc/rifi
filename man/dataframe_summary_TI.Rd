@@ -30,10 +30,10 @@ position is from the first fragment.
 position is from the second fragment.
 }}
 \usage{
-dataframe_summary_TI(inp, input)
+dataframe_summary_TI(data, input)
 }
 \arguments{
-\item{inp}{SummarizedExperiment: the input data frame with correct format.}
+\item{data}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{input}{dataframe: the probe based data frame with events and gene
 annotation.}

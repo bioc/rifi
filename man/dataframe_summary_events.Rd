@@ -40,10 +40,10 @@ of the second fragment.
 \item features: number of segment involved on the event.
 }}
 \usage{
-dataframe_summary_events(inp, data_annotation)
+dataframe_summary_events(data, data_annotation)
 }
 \arguments{
-\item{inp}{SummarizedExperiment: the input data frame with correct format.}
+\item{data}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{data_annotation}{dataframe: the probe based with genome annotation.}
 }
@@ -92,7 +92,7 @@ of the second fragment.
 \examples{
 data(stats_minimal)
 data(annot_g_minimal)
-dataframe_summary_events(inp = stats_minimal, data_annotation =
+dataframe_summary_events(data = stats_minimal, data_annotation =
 annot_g_minimal[[1]])
 
 }

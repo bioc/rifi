@@ -26,6 +26,8 @@
 #' @export
 #' 
 event_dataframe <- function(data, data_annotation) {
+  data <- as.data.frame(rowRanges(data))
+  data <- data[,-c(1:4)]
   events_df <-
     data[, c(
       "ID",
@@ -56,7 +58,7 @@ event_dataframe <- function(data, data_annotation) {
       "delay_frg_slope",
       "p_value_slope"
     )]
-  # generate the first datafarme
+  # generate the first dataframe
   events_df1 <-
     events_df[, c(
       "ID",

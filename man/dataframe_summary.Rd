@@ -15,10 +15,10 @@ start and end position are indicated separately.
 Strand is indicated in case of stranded data to select the corresponding
 positions.}
 \usage{
-dataframe_summary(inp, input)
+dataframe_summary(data, input)
 }
 \arguments{
-\item{inp}{SummarizedExperiment: the input data frame with correct format.}
+\item{data}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{input}{dataframe: the probe based data frame with events and
 gene annotation.}
@@ -45,5 +45,5 @@ data(stats_minimal)
 data(annot_g_minimal)
 input <- event_dataframe(data = as.data.frame(rowRanges(stats_minimal)),
 data_annotation = annot_g_minimal[[1]])
-dataframe_summary(inp = stats_minimal, input = input)
+dataframe_summary(data = stats_minimal, input = input)
 }
