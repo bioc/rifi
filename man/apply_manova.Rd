@@ -12,7 +12,7 @@ first fragments borders and uses manova_function.
 Manova checks the variance between 2 segments (independent variables) and two
 dependents variables (HL and intensity).}
 \usage{
-apply_manova(data)
+apply_manova(inp)
 }
 \arguments{
 \item{data}{dataframe: the probe based data frame.}
@@ -72,6 +72,6 @@ half_life  intensity  segment
 }
 \examples{
 data(stats_minimal)
-apply_manova(data = stats_minimal)
+apply_manova(inp = stats_minimal)
 
 }

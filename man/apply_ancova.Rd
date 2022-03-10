@@ -22,7 +22,7 @@ S2
 S2
 S2}
 \usage{
-apply_ancova(data)
+apply_ancova(inp)
 }
 \arguments{
 \item{data}{dataframe: the probe based data frame.}
@@ -70,6 +70,6 @@ S2
 }
 \examples{
 data(stats_minimal)
-apply_ancova(data = stats_minimal)
+apply_ancova(inp = stats_minimal)
 
 }

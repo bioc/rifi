@@ -63,16 +63,16 @@
 #' 
 #' @examples
 #' data(stats_minimal)
-#' apply_manova(data = stats_minimal)
+#' apply_manova(inp = stats_minimal)
 #' 
 #' @export
 
 # II. Manova statistical test
-apply_manova <- function(data) {
-  data$p_value_Manova <- NA
+apply_manova <- function(inp) {
+  rowRanges(inp)$p_value_Manova <- NA
   # select unique patterns subjected to ratio of fold change half-life...
   # ...and fold change intensity
-  unique_Int_HL <- unique(na.omit(data$FC_HL_intensity_fragment))
+  unique_Int_HL <- unique(na.omit(rowRanges(inp)$FC_HL_intensity_fragment))
   for (i in seq_along(unique_Int_HL)) {
     intHL <- data[which(data$FC_HL_intensity_fragment %in%
                           unique_Int_HL[i]), ]

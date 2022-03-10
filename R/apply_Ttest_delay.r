@@ -21,27 +21,27 @@
 #'
 #' @examples
 #' data(stats_minimal)
-#' apply_Ttest_delay(data = stats_minimal)
+#' apply_Ttest_delay(inp = stats_minimal)
 #' 
 #' @export
 #' 
-apply_Ttest_delay <- function(data) {
-  event_1 <- which(data[, "pausing_site"] == "+")
-  event_2 <- which(data[, "iTSS_I"] == "+")
+apply_Ttest_delay <- function(inp) {
+  event_1 <- which(rowRanges(inp)$pausing_site == "+")
+  event_2 <- which(rowRanges(inp)$iTSS_I == "+")
   event <- c(event_1, event_2)
-  data[, "event_ps_itss_p_value_Ttest"] <- NA
+  rowRanges(inp)$event_ps_itss_p_value_Ttest <- NA
   for (i in seq_len(length(event) - 1)) {
-    ps <- unlist(str_split(data[event[i], "ps_ts_fragment"], ":"))
+    ps <- unlist(str_split(rowRanges(inp)$ps_ts_fragment[event[i]], ":"))
     seg_1_d <-
-      data[which(data$delay_fragment %in% ps[1]), "delay"]
+      rowRanges(inp)$delay[which(rowRanges(inp)$delay_fragment %in% ps[1])]
     seg_2_d <-
-      data[which(data$delay_fragment %in% ps[2]), "delay"]
+      rowRanges(inp)$delay[which(rowRanges(inp)$delay_fragment %in% ps[2])]
     seg_1_p <-
-      data[which(data$delay_fragment %in% ps[1]), "position"]
+      rowRanges(inp)$position[which(rowRanges(inp)$delay_fragment %in% ps[1])]
     seg_2_p <-
-      data[which(data$delay_fragment %in% ps[2]), "position"]
+      rowRanges(inp)$position[which(rowRanges(inp)$delay_fragment %in% ps[2])]
     # in case of negative strand, positions are shifted
-    if (unique(data[which(data$delay_fragment %in% ps[1]), "strand"]) == "-") {
+    if (unique(strand(inp)[which(rowRanges(inp)$delay_fragment %in% ps[1])]) == "-") {
       seg_1_d <- seg_1_d[rev(seq_len(length(seg_1_d)))]
       seg_2_d <- seg_2_d[rev(seq_len(length(seg_2_d)))]
     }
@@ -74,11 +74,11 @@ apply_Ttest_delay <- function(data) {
                  var.equal = FALSE)
         # extract the p_value from t-test
         p_value_Ttest <- t_h[[3]]
-        data[event[i], "event_ps_itss_p_value_Ttest"] <-
+        rowRanges(inp)$event_ps_itss_p_value_Ttest[event[i]] <-
           p_value_Ttest
       }, error = function(e) {
       })
     }
   }
-  return(data)
+  return(inp)
 }

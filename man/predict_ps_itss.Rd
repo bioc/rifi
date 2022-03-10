@@ -32,10 +32,10 @@ threshold, ps is assigned otherwise, and if the difference is higher than
 the positive threshold, ITSS is assigned.
 }}
 \usage{
-predict_ps_itss(data, maxDis = 300)
+predict_ps_itss(inp, maxDis = 300)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{maxDis}{integer: the maximal distance allowed between two successive
 fragments.}
@@ -90,7 +90,6 @@ the positive threshold, ITSS is assigned.
 }
 }
 \examples{
-data(fit_minimal)
-predict_ps_itss(data = fit_minimal, maxDis = 300)
-
+data(fragmentation_minimal)
+predict_ps_itss(inp = fragmentation_minimal, maxDis = 300) 
 }

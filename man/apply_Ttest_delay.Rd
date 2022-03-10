@@ -9,7 +9,7 @@ apply_Ttest_delay uses t-test. The last point from the first segment
 and the first point from the second segment are selected and added
 to the residuals of each model. The sum is subjected to t-test.}
 \usage{
-apply_Ttest_delay(data)
+apply_Ttest_delay(inp)
 }
 \arguments{
 \item{data}{dataframe: the probe based dataframe.}
@@ -38,6 +38,6 @@ to the residuals of each model. The sum is subjected to t-test.
 }
 \examples{
 data(stats_minimal)
-apply_Ttest_delay(data = stats_minimal)
+apply_Ttest_delay(inp = stats_minimal)
 
 }
