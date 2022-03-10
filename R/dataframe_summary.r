@@ -11,8 +11,7 @@
 #' Strand is indicated in case of stranded data to select the corresponding
 #' positions.
 #' 
-#' @param data dataframe: the probe based data frame with fragments
-#' and features.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param input dataframe: the probe based data frame with events and
 #' gene annotation.
 #' 
@@ -21,17 +20,17 @@
 #' @examples
 #' data(stats_minimal)
 #' data(annot_g_minimal)
-#' input<-event_dataframe(data = stats_minimal, data_annotation =
-#' annot_g_minimal[[1]])
-#' dataframe_summary(data = stats_minimal, input = input)
+#' input <- event_dataframe(data = as.data.frame(rowRanges(stats_minimal)),
+#' data_annotation = annot_g_minimal[[1]])
+#' dataframe_summary(inp = stats_minimal, input = input)
 #' @export
 #' 
-dataframe_summary <- function(data, input) {
+dataframe_summary <- function(inp, input) {
   tmp <-
-    data[, c(
+    as.data.frame(
+      rowRanges(inp)[, c(
       "ID",
       "position",
-      "strand",
       "TU",
       "position_segment",
       "delay",
@@ -45,7 +44,8 @@ dataframe_summary <- function(data, input) {
       "flag",
       "TI_termination_factor",
       "velocity_fragment"
-    )]
+    )])
+  tmp <- tmp[,-c(1:4)]
   tmp_event <- input[, c("region", "gene", "locus_tag")]
   tmp_merged <- cbind(tmp, tmp_event)
   tmp_merged <-

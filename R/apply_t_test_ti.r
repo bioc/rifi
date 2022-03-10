@@ -107,5 +107,5 @@ apply_t_test_ti <- function(inp) {
       }
     }
   }
-  return(data)
+  return(inp)
 }

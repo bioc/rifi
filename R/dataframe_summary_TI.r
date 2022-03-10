@@ -24,8 +24,7 @@
 #' 14. position_2 : the last position of TI fragment, if 2 fragments, last
 #' position is from the second fragment.
 #'
-#' @param data dataframe: the probe based data frame with fragments and
-#' features.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param input dataframe: the probe based data frame with events and gene
 #' annotation.
 #' 
@@ -34,20 +33,20 @@
 #' @examples
 #' data(stats_minimal)
 #' data(annot_g_minimal)
-#' input <- event_dataframe(data = stats_minimal,
+#' input <- event_dataframe(data = as.data.frame(rowRanges(stats_minimal)),
 #' data_annotation = annot_g_minimal[[1]])
 #' dataframe_summary_TI(data = stats_minimal, input = input)
 #' 
 #' @export
 
-dataframe_summary_TI <- function(data, input) {
+dataframe_summary_TI <- function(inp, input) {
   tmp <-
-    data[, c(
+    as.data.frame(
+    rowRanges(inp)[, c(
       "ID",
       "position",
       "position_segment",
       "flag",
-      "strand",
       "TU",
       "delay_fragment",
       "HL_fragment",
@@ -61,6 +60,8 @@ dataframe_summary_TI <- function(data, input) {
       "p_value_TI",
       "TI_fragments_p_value"
     )]
+    )
+  tmp <- tmp[,-c(1:4)] 
   tmp_event <-
     input[, c(
       "region",

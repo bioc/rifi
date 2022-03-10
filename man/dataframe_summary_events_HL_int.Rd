@@ -40,11 +40,10 @@ the second fragment.
 \item features: number of segment involved on the event.
 }}
 \usage{
-dataframe_summary_events_HL_int(data, data_annotation)
+dataframe_summary_events_HL_int(inp, data_annotation)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame with fragments and
-features.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{data_annotation}{dataframe: the probe based with genome annotation.}
 }

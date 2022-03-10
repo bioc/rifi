@@ -33,8 +33,7 @@
 #' between the last position of the first fragment and the first position
 #' of the second fragment.
 #' 17. features: number of segment involved on the event.
-#' @param data dataframe: the probe based data frame with fragments and
-#' features.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: the probe based with genome annotation.
 #' 
 #' @return WIP
@@ -42,18 +41,18 @@
 #' @examples
 #' data(stats_minimal)
 #' data(annot_g_minimal)
-#' dataframe_summary_events(data = stats_minimal, data_annotation =
+#' dataframe_summary_events(inp = stats_minimal, data_annotation =
 #' annot_g_minimal[[1]])
 #' 
 #' @export
 
-dataframe_summary_events <- function(data, data_annotation) {
+dataframe_summary_events <- function(inp, data_annotation) {
   tmp_merged <-
-    data[, c(
+    as.data.frame(
+      rowRanges(inp)[, c(
       "ID",
       "position",
       "position_segment",
-      "strand",
       "TU",
       "delay_fragment",
       "HL_fragment",
@@ -78,6 +77,8 @@ dataframe_summary_events <- function(data, data_annotation) {
       "delay_frg_slope",
       "p_value_slope"
     )]
+    )
+  tmp_merged <- tmp_merged[,-c(1:4)]
   tmp_merged <-
     tmp_merged[grep("\\TU_\\d+$", tmp_merged$TU), ]
   df <- data.frame()

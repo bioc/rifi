@@ -17,7 +17,7 @@
 #'                         S2
 #'                         S2
 #'                         S2
-#' @param data dataframe: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{

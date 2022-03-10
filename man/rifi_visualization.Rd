@@ -126,7 +126,7 @@ rifi_visualization(
 )
 }
 \arguments{
-\item{data}{dataframe: the probe based dataframe.}
+\item{data}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{genomeLength}{integer: genome length output of gff3_preprocess
 function.}
@@ -320,7 +320,8 @@ plot the coverage of RNA_seq in exponential phase growth
 \examples{
 data(stats_minimal)
 data(annot_g_minimal)
-rifi_visualization(data = stats_minimal, genomeLength = annot_g_minimal[[2]],
+rifi_visualization(data = as.data.frame(rowRanges(stats_minimal)), 
+genomeLength = annot_g_minimal[[2]],
 annot = annot_g_minimal[[1]], coverage = 0, chr_fwd = NA, chr_rev = NA,
 region = c("CDS","asRNA","5'UTR","ncRNA","3'UTR","tRNA"),
 color_region = c("grey0", "red", "blue", "orange", "yellow", "green",

@@ -30,11 +30,10 @@ position is from the first fragment.
 position is from the second fragment.
 }}
 \usage{
-dataframe_summary_TI(data, input)
+dataframe_summary_TI(inp, input)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame with fragments and
-features.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{input}{dataframe: the probe based data frame with events and gene
 annotation.}
@@ -74,7 +73,7 @@ position is from the second fragment.
 \examples{
 data(stats_minimal)
 data(annot_g_minimal)
-input <- event_dataframe(data = stats_minimal,
+input <- event_dataframe(data = as.data.frame(rowRanges(stats_minimal)),
 data_annotation = annot_g_minimal[[1]])
 dataframe_summary_TI(data = stats_minimal, input = input)
 

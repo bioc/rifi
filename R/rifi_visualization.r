@@ -68,7 +68,7 @@
 #' velo_function: replaces infinite velocity with NA.
 #' plot the coverage of RNA_seq in exponential phase growth
 #'
-#' @param data dataframe: the probe based dataframe.
+#' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param genomeLength integer: genome length output of gff3_preprocess
 #' function.
 #' @param annot dataframe: the annotation file.
@@ -145,7 +145,8 @@
 #' @examples
 #' data(stats_minimal)
 #' data(annot_g_minimal)
-#' rifi_visualization(data = stats_minimal, genomeLength = annot_g_minimal[[2]],
+#' rifi_visualization(data = as.data.frame(rowRanges(stats_minimal)), 
+#' genomeLength = annot_g_minimal[[2]],
 #' annot = annot_g_minimal[[1]], coverage = 0, chr_fwd = NA, chr_rev = NA,
 #' region = c("CDS","asRNA","5'UTR","ncRNA","3'UTR","tRNA"),
 #' color_region = c("grey0", "red", "blue", "orange", "yellow", "green",
@@ -229,6 +230,7 @@ rifi_visualization <-
            iTSS_I_color = "blue") {
     ##########################data preparation##################################
     #I. add coverage if its available from RNA-seq
+    data <- as.data.frame(rowRanges(data))
     tmp <-
       coverage_function(coverage = coverage,
                         chr_fwd = chr_fwd,
