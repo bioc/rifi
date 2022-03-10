@@ -1,19 +1,3 @@
-position_function <- function(x, input, argument, column) {
-  for (i in seq_len(nrow(input))) {
-    if (input[i, x] == "+") {
-      spl <- unlist(str_split(input[i, "ps_ts_fragment"], ":"))
-      spl.1 <-
-        last(input[which(input$delay_fragment == spl[1]), argument])
-      spl.2 <-
-        input[which(input$delay_fragment == spl[2]), argument][1]
-      spl.position <- round(sum(spl.1, spl.2) / 2)
-      input[i, column] <- spl.position
-    }
-  }
-  input
-}
-
-
 annotation_function_event <-
   function(x, input, strand, input_annotation) {
     input_annotation[, "region"]  <-
@@ -40,3 +24,21 @@ annotation_function_event <-
     }
     input[, x]
   }
+
+position_function <- function(x, input, argument, column) {
+  for (i in seq_len(nrow(input))) {
+    if (input[i, x] == "+") {
+      spl <- unlist(str_split(input[i, "ps_ts_fragment"], ":"))
+      spl.1 <-
+        last(input[which(input$delay_fragment == spl[1]), argument])
+      spl.2 <-
+        input[which(input$delay_fragment == spl[2]), argument][1]
+      spl.position <- round(sum(spl.1, spl.2) / 2)
+      input[i, column] <- spl.position
+    }
+  }
+  input
+}
+
+
+
