@@ -12,10 +12,10 @@ change ratio between the neighboring fragments of HL and those from intensity
 (intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
 fragments are from the same TU excluding outliers.}
 \usage{
-fold_change(data)
+fold_change(inp)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
 the probe data frame with the columns regarding statistics:
@@ -65,6 +65,6 @@ synthesis ratio < 1 -> Termination
 }
 \examples{
 data(stats_minimal)
-fold_change(data = stats_minimal)
+fold_change(inp = stats_minimal)
 
 }

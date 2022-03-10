@@ -2,8 +2,9 @@
 #' within the same TU.
 #' apply_t_test_ti: this function uses the statistical t_test to check
 #' if two neighboring TI fragments are significant.
-#' @param data dataframe: the probe based data frame.
-#' 
+#'
+#' @param inp SummarizedExperiment: the input data frame with correct format.
+#'
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
@@ -40,22 +41,22 @@
 #'   \item{p_value_TI:}{}
 #'   \item{TI_fragments_p_value:}{}
 #' }
-#' 
+#'
 #' @examples
 #' data(stats_minimal)
-#' apply_t_test_ti(data = stats_minimal)
-#' 
+#' apply_t_test_ti(inp = stats_minimal)
+#'
 #' @export
-#' 
-apply_t_test_ti <- function(data) {
+#'
+apply_t_test_ti <- function(inp) {
   #new column is added
-  data$p_value_TI <- NA
-  data$TI_fragments_p_value <- NA
-  #excluding outliers
+  rowRanges(inp)$p_value_TI <- NA
+  rowRanges(inp)$TI_fragments_p_value <- NA
+  #grep TI fragments excluding outliers
   data_1 <-
-    data[!grepl("_T|_O|_NA", data$TI_termination_fragment), ]
+    rowRanges(inp)[!grepl("_T|_O|_NA", rowRanges(inp)$TI_termination_fragment),]
   #select unique TUs
-  unique_TU <- unique(data$TU)
+  unique_TU <- unique(rowRanges(inp)$TU)
   #exclude TU terminales, outliers and NAs
   unique_TU <- na.omit(unique_TU[!grepl("_T|_O|_NA", unique_TU)])
   for (i in seq_along(unique_TU)) {
@@ -69,10 +70,10 @@ apply_t_test_ti <- function(data) {
                    "TI_termination_factor",
                    "intensity"
                  )]
-    tu <- tu[!is.na(tu$TI_termination_fragment), ]
-    ti <- tu[grep("_TI_", tu$flag), ]
+    tu <- tu[!is.na(tu$TI_termination_fragment),]
+    ti <- tu[grep("_TI_", tu$flag),]
     #adjust the fragments for t-test
-    if (nrow(ti) == 0) {
+    if (length(na.omit(ti$TI_termination_fragment)) == 0) {
       next ()
     } else {
       ti_frag <- unique(tu$TI_termination_fragment)
@@ -88,17 +89,18 @@ apply_t_test_ti <- function(data) {
           }
           tryCatch({
             #t-test
-            ti_test <- t.test(seg1,
-                              seg2,
+            ti_test <- t.test(seg1$TI_termination_factor,
+                              seg2$TI_termination_factor,
                               alternative = "two.sided",
                               var.equal = FALSE)
             #add 2 columns, fragments column and p_value from t-test
             p_value_tiTest <- ti_test[[3]]
-            data[which(ti_frag[k] == data$TI_termination_fragment),
-                 "TI_fragments_p_value"] <-
+            rowRanges(inp)$TI_fragments_p_value[
+              which(ti_frag[k] == rowRanges(inp)$TI_termination_fragment)] <-
               paste0(ti_frag[k], ":", ti_frag[k + 1])
-            data[which(ti_frag[k] == data$TI_termination_fragment),
-                 "p_value_TI"] <- p_value_tiTest
+            rowRanges(inp)$p_value_TI[
+              which(ti_frag[k] == rowRanges(inp)$TI_termination_fragment)] <-
+              p_value_tiTest
           }, error = function(e) {
           })
         }

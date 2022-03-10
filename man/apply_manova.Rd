@@ -15,7 +15,7 @@ dependents variables (HL and intensity).}
 apply_manova(inp)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
 the probe data frame with the columns regarding statsistics:

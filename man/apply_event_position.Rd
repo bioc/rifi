@@ -5,10 +5,10 @@
 \title{apply_event_position: is a short version of apply_Ttest_delay function
 to extract event time duration as pausing site or iTSS happens.}
 \usage{
-apply_event_position(data)
+apply_event_position(inp)
 }
 \arguments{
-\item{data}{dataframe: the probe based dataframe.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
 the probe data frame with the columns regarding statistics:
@@ -32,6 +32,6 @@ apply_event_position adds a new column with the duration.
 }
 \examples{
 data(stats_minimal)
-apply_event_position(data = stats_minimal)
+apply_event_position(inp = stats_minimal)
 
 }

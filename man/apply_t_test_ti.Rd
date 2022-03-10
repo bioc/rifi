@@ -7,10 +7,10 @@ within the same TU.
 apply_t_test_ti: this function uses the statistical t_test to check
 if two neighboring TI fragments are significant.}
 \usage{
-apply_t_test_ti(data)
+apply_t_test_ti(inp)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
 the probe data frame with the columns regarding statistics:
@@ -58,6 +58,6 @@ if two neighboring TI fragments are significant.
 }
 \examples{
 data(stats_minimal)
-apply_t_test_ti(data = stats_minimal)
+apply_t_test_ti(inp = stats_minimal)
 
 }

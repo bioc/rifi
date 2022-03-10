@@ -14,7 +14,7 @@
 #' makes fold-change and apply t-test, assign fragments names
 #' and ratio, add columns with the corresponding p_values.
 #'
-#' @param data dataframe: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param threshold integer: threshold.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
@@ -50,18 +50,24 @@
 #'
 #' @examples
 #' data(stats_minimal)
-#' apply_t_test(data = stats_minimal, threshold = 300)
+#' apply_t_test(inp = stats_minimal, threshold = 300)
 #' 
 #' @export
 
-apply_t_test <- function(data, threshold = 300) {
-  uniqueTU <- unique(data$TU)
+apply_t_test <- function(inp, threshold = 300) {
+  rowRanges(inp)$FC_fragment_HL <- NA
+  rowRanges(inp)$FC_HL <- NA 
+  rowRanges(inp)$p_value_HL <- NA
+  rowRanges(inp)$FC_fragment_intensity <- NA
+  rowRanges(inp)$FC_intensity <- NA 
+  rowRanges(inp)$p_value_intensity <- NA
+  uniqueTU <- unique(rowRanges(inp)$TU)
   uniqueTU <- uniqueTU[grep("_NA|_T", uniqueTU, invert = TRUE)]
   for (i in seq_along(uniqueTU)) {
     # select ID, position, HL, HL fragments, intensity and intensity
     # fragments for the corresponding TU
     tu <-
-      data[which(data$TU %in% uniqueTU[i]), c(
+      as.data.frame(rowRanges(inp)[which(rowRanges(inp)$TU %in% uniqueTU[i]), c(
         "ID",
         "position",
         "half_life",
@@ -71,35 +77,34 @@ apply_t_test <- function(data, threshold = 300) {
         "intensity_fragment",
         "HL_mean_fragment",
         "intensity_mean_fragment"
-      )]
+      )])
     # HL and intensity segments in the TU
     hl_segs <-
-      tu[grep(paste0("\\Dc_\\d+", "$"), tu$HL_fragment), "HL_fragment"]
+      tu[grep(paste0("\\Dc_\\d+", "$"), 
+                                     tu$HL_fragment), "HL_fragment"]
     int_segs <- tu[grep(paste0("\\I_\\d+", "$"),
                         tu$intensity_fragment), "intensity_fragment"]
     hl_segs <- fragment_function(hl_segs)
     int_segs <- fragment_function(int_segs)
     # loop into all HL segments and apply t_test between consecutive segments
-    data <-
+    inp <-
       t_test_function(
-        data = data,
+        data = inp,
         seg = hl_segs,
-        frag = "HL_fragment",
         param = "half_life",
         o = "HL",
         tu = tu,
         threshold = threshold
       )
-    data <-
+    inp <-
       t_test_function(
-        data = data,
+        data = inp,
         seg = int_segs,
-        frag = "intensity_fragment",
         param = "intensity",
         o = "intensity",
         tu = tu,
         threshold = threshold
       )
   }
-  return(data)
+  return(inp)
 }

@@ -18,7 +18,7 @@
 #' synthesis ratio > 1 -> New start
 #' synthesis ratio < 1 -> Termination
 #'
-#' @param data dataframe: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
@@ -56,25 +56,25 @@
 #' 
 #' @examples
 #' data(stats_minimal)
-#' fold_change(data = stats_minimal)
+#' fold_change(inp = stats_minimal)
 #' 
 #' @export
 
-fold_change <- function(data) {
-  data$FC_HL_intensity <- NA
-  data$FC_HL_intensity_fragment <- NA
-  data$FC_HL_adapted <- NA
-  data$synthesis_ratio <- NA
-  data$synthesis_ratio_event <- NA
+fold_change <- function(inp) {
+  rowRanges(inp)$FC_HL_intensity <- NA
+  rowRanges(inp)$FC_HL_intensity_fragment <- NA
+  rowRanges(inp)$FC_HL_adapted <- NA
+  rowRanges(inp)$synthesis_ratio <- NA
+  rowRanges(inp)$synthesis_ratio_event <- NA
   #select unique TUs excluding outliers and terminals probes/bins
-  uniqueTU <- unique(data$TU)
+  uniqueTU <- unique(rowRanges(inp)$TU)
   uniqueTU <- uniqueTU[grep("_NA|_T", uniqueTU, invert = TRUE)]
   for (i in seq_along(uniqueTU)) {
-    tu <- data[which(data$TU %in% uniqueTU[i]), ]
+    tu <- rowRanges(inp)[which(rowRanges(inp)$TU %in% uniqueTU[i]), ]
     tu <- tu[order(tu$position, decreasing = FALSE), ]
     frag.hl <-
-      grep(paste0("\\Dc_", "\\d+", "$"), tu[, "HL_fragment"])
-    frag.hl <- tu[frag.hl, "HL_fragment"]
+      grep(paste0("\\Dc_", "\\d+", "$"), tu$HL_fragment)
+    frag.hl <- tu$HL_fragment[frag.hl]
     frag.hl <- frag.hl[!duplicated(frag.hl)]
     for (j in seq_along(frag.hl)) {
       #select unique fragments of half-life
@@ -86,9 +86,8 @@ fold_change <- function(data) {
           "FC_fragment_HL",
           "FC_intensity",
           "FC_fragment_intensity",
-          "position",
-          "strand"
-        )])
+          "position"
+          )])
       #select the corresponding fragment/s of intensity
       I <- unique(na.omit(Dc.1$FC_fragment_intensity))
       if (length(I) == 0) {
@@ -104,15 +103,15 @@ fold_change <- function(data) {
         #and extract the coordinates as position, intensity/HL, strand and the
         #individual fragment
         I.1.1 <-
-          data[which(data$intensity_fragment %in% frag[1]),
+          rowRanges(inp)[which(rowRanges(inp)$intensity_fragment %in% frag[1]),
                c("intensity_fragment",
                  "intensity",
-                 "position",
-                 "strand")]
+                 "position"
+                 )]
         hl.1 <-
-          data[which(data$position %in% I.1.1$position &
-                       data$intensity_fragment %in% frag[1]),
-               c("HL_fragment", "half_life", "position", "strand")]
+          rowRanges(inp)[which(rowRanges(inp)$position %in% I.1.1$position &
+                                 rowRanges(inp)$intensity_fragment %in% frag[1]),
+               c("HL_fragment", "half_life", "position")]
         #omit outliers
         hl.1 <-
           hl.1[grep(paste0("\\Dc_", "\\d+", "$"), hl.1$HL_fragment), ]
@@ -121,20 +120,21 @@ fold_change <- function(data) {
           I.1.1[which(hl.1$position %in% I.1.1$position), ]
         #the same steps are applied for the neighboring intensity fragment
         I.2.1 <-
-          data[which(data$intensity_fragment %in% frag[2]),
+          rowRanges(inp)[which(rowRanges(inp)$intensity_fragment %in% frag[2]),
                c("intensity_fragment",
                  "intensity",
-                 "position",
-                 "strand")]
+                 "position"
+                 )]
         hl.2 <-
-          data[which(data$position %in% I.2.1$position &
-                       data$intensity_fragment %in% frag[2]),
-               c("HL_fragment", "half_life", "position", "strand")]
+          rowRanges(inp)[which(rowRanges(inp)$position %in% I.2.1$position &
+                                 rowRanges(inp)$intensity_fragment %in% frag[2]),
+               c("HL_fragment", "half_life", "position"
+                 )]
         hl.2 <-
           hl.2[grep(paste0("\\Dc_", "\\d+", "$"), hl.2$HL_fragment), ]
         #eliminate all segments adjusted with less than 3 probes
-        if (nrow(I.1.1) < 2 | nrow(I.2.1) < 2 | nrow(hl.1) < 2 |
-            nrow(hl.2) < 2) {
+        if (length(I.1.1) < 2 | length(I.2.1) < 2 | length(hl.1) < 2 |
+            length(hl.2) < 2) {
           next ()
         }
         #the mean and ratio of HL and intensity is calculated after
@@ -142,19 +142,24 @@ fold_change <- function(data) {
         FC_HL_adapted <- mean(hl.2$half_life) / mean(hl.1$half_life)
         FC_int_adapted <- mean(I.2.1$intensity) / mean(I.1.1$intensity)
         #plugging the output to the corresponding columns
-        data[which(data$FC_fragment_intensity %in% int_list[k]),
-             "synthesis_ratio"] <- FC_int_adapted / FC_HL_adapted
-        data[which(data$FC_fragment_intensity %in% int_list[k]),
-             "FC_HL_adapted"] <- FC_HL_adapted
-        data[which(data$FC_fragment_intensity %in% int_list[k]),
-             "FC_HL_intensity_fragment"] <-
+        rowRanges(inp)$synthesis_ratio[
+          which(rowRanges(inp)$FC_fragment_intensity %in% int_list[k])] <- 
+          FC_int_adapted / FC_HL_adapted
+        rowRanges(inp)$FC_HL_adapted[
+          which(rowRanges(inp)$FC_fragment_intensity %in% int_list[k])] <- 
+          FC_HL_adapted
+        rowRanges(inp)$FC_HL_intensity_fragment[
+          which(rowRanges(inp)$FC_fragment_intensity %in% int_list[k])] <-
           paste0(unique(na.omit(hl.1$HL_fragment)), ":",
                  unique(na.omit(hl.2$HL_fragment)), ";", int_list[k])
       }
     }
   }
   # add FC synthesis_ratio events between half-life and intensity
-  data$FC_HL_intensity <- data$FC_intensity / data$FC_HL
-  data <- synthesis_r_Function("synthesis_ratio", data)
-  return(data)
+  rowRanges(inp)$FC_HL_intensity <- rowRanges(inp)$FC_intensity / 
+    rowRanges(inp)$FC_HL
+  inp <- synthesis_r_Function("synthesis_ratio", inp)
+  return(inp)
 }
+
+

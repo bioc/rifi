@@ -3,7 +3,7 @@
 #'
 #' apply_event_position adds a new column with the duration.
 #'
-#' @param data dataframe: the probe based dataframe.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
@@ -23,33 +23,33 @@
 #'
 #' @examples
 #' data(stats_minimal)
-#' apply_event_position(data = stats_minimal)
+#' apply_event_position(inp = stats_minimal)
 #' 
 #' @export
 #'
 
-apply_event_position <- function(data) {
-  event_1 <- which(data[, "pausing_site"] == "+")
-  event_2 <- which(data[, "iTSS_I"] == "+")
+apply_event_position <- function(inp) {
+  event_1 <- which(rowRanges(inp)$pausing_site == "+")
+  event_2 <- which(rowRanges(inp)$iTSS_I == "+") 
   event <- c(event_1, event_2)
-  data[, "event_position"] <- NA
+  rowRanges(inp)$event_position <- NA
   
   for (i in seq_along(event)) {
-    ps <- data[event[i], "ps_ts_fragment"]
+    ps <- rowRanges(inp)$ps_ts_fragment[event[i]]
     ps_1 <- unlist(str_split(ps, ":"))
     ps_2 <- ps_1[2]
     ps_1 <- ps_1[1]
     seg_1_d <-
-      data[which(data$delay_fragment %in% ps_1), "delay"]
+      rowRanges(inp)$delay[which(rowRanges(inp)$delay_fragment %in% ps_1)]
     seg_2_d <-
-      data[which(data$delay_fragment %in% ps_2), "delay"]
+      rowRanges(inp)$delay[which(rowRanges(inp)$delay_fragment %in% ps_2)]
     seg_1_p <-
-      data[which(data$delay_fragment %in% ps_1), "position"]
+      rowRanges(inp)$position[which(rowRanges(inp)$delay_fragment %in% ps_1)]
     seg_2_p <-
-      data[which(data$delay_fragment %in% ps_2), "position"]
+      rowRanges(inp)$position[which(rowRanges(inp)$delay_fragment %in% ps_2)]
     # in case of negative strand, the positions are shifted
-    if (unique(data[which(data$delay_fragment %in%
-                          ps_1), "strand"]) == "-") {
+    if (unique(strand(inp)[which(rowRanges(inp)$delay_fragment %in%
+                          ps_1)]) == "-") {
       seg_1_d <- seg_1_d[rev(seq_len(length(seg_1_d)))]
       seg_2_d <- seg_2_d[rev(seq_len(length(seg_2_d)))]
     }
@@ -66,12 +66,11 @@ apply_event_position <- function(data) {
       # ...point from the second fragment
       del_p1 <- last(df_1$delay)
       del_p2 <- df_2$delay[1]
-      data[which(data$ps_ts_fragment %in% ps),
-           "event_position"] <-
-        (data[last(which(data$delay_fragment ==
-                           ps_1)), "position"] +
-           data[which(data$delay_fragment == ps_2), "position"][1]) / 2
+      rowRanges(inp)$event_position[which(rowRanges(inp)$ps_ts_fragment %in% ps)] <-
+        (rowRanges(inp)$position[last(which(rowRanges(inp)$delay_fragment ==
+                           ps_1))] +
+           rowRanges(inp)$position[which(rowRanges(inp)$delay_fragment == ps_2)][1]) / 2
     }
   }
-  return(data)
+  return(inp)
 }

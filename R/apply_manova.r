@@ -22,7 +22,7 @@
 #' 0.61911329  1749.105      S2
 #' 0.51840661  1122.775      S2
 #'
-#' @param data dataframe: the probe based data frame.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
 #' @return the probe data frame with the columns regarding statsistics:
 #' \describe{
@@ -60,11 +60,11 @@
 #'   \item{synthesis_ratio_event:}{}
 #'   \item{p_value_Manova:}{}
 #' }
-#' 
+#'
 #' @examples
 #' data(stats_minimal)
 #' apply_manova(inp = stats_minimal)
-#' 
+#'
 #' @export
 
 # II. Manova statistical test
@@ -72,10 +72,12 @@ apply_manova <- function(inp) {
   rowRanges(inp)$p_value_Manova <- NA
   # select unique patterns subjected to ratio of fold change half-life...
   # ...and fold change intensity
-  unique_Int_HL <- unique(na.omit(rowRanges(inp)$FC_HL_intensity_fragment))
+  unique_Int_HL <-
+    unique(na.omit(rowRanges(inp)$FC_HL_intensity_fragment))
   for (i in seq_along(unique_Int_HL)) {
-    intHL <- data[which(data$FC_HL_intensity_fragment %in%
-                          unique_Int_HL[i]), ]
+    intHL <-
+      rowRanges(inp)[which(rowRanges(inp)$FC_HL_intensity_fragment %in%
+                             unique_Int_HL[i]),]
     # select half-life and intensity fragments
     frag_hl <- unique(intHL$FC_HL_intensity_fragment)
     frag_hl <- unlist(strsplit(frag_hl, ";"))
@@ -83,37 +85,49 @@ apply_manova <- function(inp) {
     # select the corresponding intensity fragments to the unique...
     # ...half-life fragment
     I_1 <-
-      data[which(data$intensity_fragment %in% frag_hl[length(frag_hl) - 1]),
-           c("intensity_fragment", "intensity", "position")]
-    hl_1 <- data[which(
-      data$position %in%
+      rowRanges(inp)[which(rowRanges(inp)$intensity_fragment %in%
+                             frag_hl[length(frag_hl) - 1]),
+                     c("intensity_fragment", "intensity", "position")]
+    hl_1 <- rowRanges(inp)[which(
+      rowRanges(inp)$position %in%
         I_1$position &
-        data$intensity_fragment %in%
+        rowRanges(inp)$intensity_fragment %in%
         I_1$intensity_fragment
     ), c("HL_fragment", "half_life", "position")]
+    
     hl_1 <-
-      hl_1[grep(paste0("\\Dc_", "\\d+", "$"), hl_1$HL_fragment), ]
-    I_1 <- I_1[which(hl_1$position %in% I_1$position), ]
-    I_2 <- data[which(data$intensity_fragment %in%
-                        frag_hl[length(frag_hl)]),
-                c("intensity_fragment", "intensity", "position")]
-    hl_2 <- data[which(
-      data$position %in%
+      hl_1[grep(paste0("\\Dc_", "\\d+", "$"), hl_1$HL_fragment),]
+    
+    I_1 <- I_1[which(hl_1$position %in% I_1$position),]
+    
+    I_2 <-
+      rowRanges(inp)[which(rowRanges(inp)$intensity_fragment %in%
+                             frag_hl[length(frag_hl)]),
+                     c("intensity_fragment", "intensity", "position")]
+    
+    hl_2 <- rowRanges(inp)[which(
+      rowRanges(inp)$position %in%
         I_2$position &
-        data$intensity_fragment %in%
+        rowRanges(inp)$intensity_fragment %in%
         I_2$intensity_fragment
     ), c("HL_fragment", "half_life", "position")]
+    
     hl_2 <-
-      hl_2[grep(paste0("\\Dc_", "\\d+", "$"), hl_2$HL_fragment), ]
-    I_2 <- I_2[which(hl_2$position %in% I_2$position), ]
+      hl_2[grep(paste0("\\Dc_", "\\d+", "$"), hl_2$HL_fragment),]
+    
+    I_2 <- I_2[which(hl_2$position %in% I_2$position),]
+    
     I_1$segment <- "S1"
     I_2$segment <- "S2"
-    if (nrow(I_1) < 2 |
-        nrow(I_2) < 2 | nrow(hl_1) < 2 | nrow(hl_2) < 2) {
+    if (length(I_1$segment) < 2 |
+        length(I_2$segment) < 2 | 
+        length(hl_1$segment) < 2 |
+        length(hl_2$segment) < 2)
+      {
       next ()
     }
     df <- cbind.data.frame(c(hl_1$half_life, hl_2$half_life),
-                           rbind.data.frame(I_1[, c("intensity", "segment")],
+                           c(I_1[, c("intensity", "segment")],
                                             I_2[, c("intensity", "segment")]))
     colnames(df)[1] <- "half_life"
     tryCatch({
@@ -124,10 +138,11 @@ apply_manova <- function(inp) {
           z = df$segment,
           data = df
         )
-      data[which(data$FC_HL_intensity_fragment %in%
-                   unique_Int_HL[i]), "p_value_Manova"] <- p_value_Manova
+      rowRanges(inp)$p_value_Manova[which(
+        rowRanges(inp)$FC_HL_intensity_fragment %in% unique_Int_HL[i])] <-
+        p_value_Manova
     }, error = function(e) {
     })
   }
-  return(data)
+  return(inp)
 }

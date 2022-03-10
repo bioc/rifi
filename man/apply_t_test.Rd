@@ -6,10 +6,10 @@
 fold-change of half-life (HL) fragments and the fold-change
 intensity fragments respectively are significant.}
 \usage{
-apply_t_test(data, threshold = 300)
+apply_t_test(inp, threshold = 300)
 }
 \arguments{
-\item{data}{dataframe: the probe based data frame.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{threshold}{integer: threshold.}
 }
@@ -63,6 +63,6 @@ and ratio, add columns with the corresponding p_values.
 }
 \examples{
 data(stats_minimal)
-apply_t_test(data = stats_minimal, threshold = 300)
+apply_t_test(inp = stats_minimal, threshold = 300)
 
 }
