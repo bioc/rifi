@@ -107,21 +107,22 @@ Rifi provides different functional arguments (subcalls) for individual procedure
 
 ## Input 
 
-The input data consists of a data frame containing the RNA-seq or microarray time series data from
-rifampicin treated microorganisms, including all potential replicates, column wise as relative
-intensities, e.g, Table 1 shows an example input.
+The input data consists of a summarizedExperiment data containing the RNA-seq or microarray time series data from rifampicin treated microorganisms, including all potential replicates, column wise as relative intensities as Assay section, e.g, Table 1 shows an example input.
 
-t<sub>0</sub> | ... | t<sub>n</sub> | ID   | position   | strand |
-  :---:   | :--:| :---:    | :--: | :---:      | :---:  |
-  8.673   | ... | 3.460    | 1    | 50         | +      |
-  8.974   | ... | 3.060    | 1    | 50         | +      |
-  18.612  | ... | 7.650    | 2    | 50         | +      |
-  15.476  | ... | 7.022    | 2    | 50         | +      |
-  100.674 | ... | 100.460  | 300  | 4500       | -      |
-  250.645 | ... | 50.460   | 300  | 4500       | -      |
-  200.541 | ... | 56.460   | 300  | 4500       | -      |
 
-<sub>Table 1. Rifi input data table. The first n columns contain the relative intensity measurements, with the first column referring to timepoint zero, at or before the addition of rifampicin. The third to last column contains the unique ID that is identical for each replicate. The second to last column contains the position information and the last column hold the information for the strand (“+”,”-“).</sub>
+  0       | ... | 20       | 0      | 1   |    |
+  :---:   |:--: | :---:    | :--:   |:---:|:--:|
+  8.673   | ... | 3.460    |53.855  | NA  | ...|
+  8.974   | ... | 3.060    |188.61  | NA  | ...|
+  18.612  | ... | 7.650    |163.83  | NA  | ...|
+  15.476  | ... | 7.022    |243.12  | NA  | ...|
+  100.674 | ... | 100.460  |198.52  | NA  | ...|
+  250.645 | ... | 50.460   |165.122 | NA  | ...|
+  200.541 | ... | 56.460   |87.235  | NA  | ...|
+
+
+<sub>Table 1. Rifi input data table (assay). The columns contain the relative intensity measurements, with the first column referring to timepoint zero, at or before the addition of rifampicin.
+</sub>
 
 ## Parameters
 
@@ -143,7 +144,7 @@ Rifi runs in R and the command line for the workflow are:
 
 ## Results
 
-The results of the analysis are stored in two convenient data frames, one for segments (Table .2) and one for the events (Table. 3).
+The results of the analysis are stored as metaData with several data frames, some for segments e.g.(Table .2) and others for the events e.g. (Table. 3).
 
 ID    | gene  | ...  | strand| TU     | half-life |...    |p_value_TI|
 :---: | :--:  | :---:| :--:  | :---:  | :---:     | :---: | :---:    |   
@@ -166,8 +167,27 @@ ID    | gene  | ...  | strand| event  | p_value  |
 8     | NA    | ...  | -     | iTSS   | 0.007    |
 12    | gene2 | ...  | -     | iTSS   | 0.007    |
 
-<sub>Table 3: The event data frame output. All data given is the value averaged over the given fragment. Additional columns represented by the dots are additional information.</sub>
 
+<sub>Table 3: The event data frame output. All data given is the value averaged over the given fragment. Columns represented by the dots are additional information.</sub>
+
+## Quick start
+
+to run the example, you would need to download from rifi/data:
+
+#### annotation file
+annot_g_minimal.RData 
+
+#### The summarizedExperiment input data
+example_input_e_coli.RData
+
+```
+rifi_output <- rifi_wrapper(inp = Data, cores=2, annot=annot_g[[1]],
+genomeLength=annot_g[[2]], bg = 0, restr = 0.01)
+```
+#### check the result
+rifi_output and a plot are generated in your directory.
+rifi_output is a summarizedExperiment output containing assay, rowRanges, 
+metaData. More details are on vignette.
 
 ## Testing
 

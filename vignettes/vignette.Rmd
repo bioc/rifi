@@ -107,9 +107,10 @@ jump to section. 9 `rifi_preprocess`.
 
 ### 1. The Input Data Frame
 
-**input_df** is the input data frame processed by rifi. The data frame mainly
-contains information about the relative intensities at all time points, but also
-the time points themselves, probe identifier, and probe position and strand.  
+**input_df** is the SummarizedExperiment (SE) input format. SE structure as known 
+includes the colData (description of each sample), assay (probes/bins intensity 
+measurements), rowRanges(coordinates of probes/bin including probe
+identifier and positions).
 Rifi package includes two example data frames: <em>*E.coli*</em> data from
 RNAseq (data with replicates, input_df) and <em>*Synechocystis PCC 6803*</em>
 data from microarrays (data with averaged replicates, see. "input_df").
@@ -126,28 +127,18 @@ data(example_input_synechocystis_6803)
 head(example_input_synechocystis_6803)
 ```
 <br/>
-All columns in Rifi input data table except the last three contain the relative
-intensity measurements, with the first column referring to timepoint zero, at or
-before the addition of rifampicin. The last three columns contain the unique ID
-that is identical for each replicate, the position on the genome and strand
-information (“+”,”-“).
 
-The input data frame needs to comply to the following rules:
+The SE needs to comply to the following rules:
 
-1.  The columns with relative intensities need to be numeric.
-2.  The first column is called "0" and refers to the first time point (before
-    rifampicin addition).
-3.  The three columns after time columns are "ID", "position" and "strand" in
-    this order.
-4.  The column "strand" needs to contain only NA, when no strand information is
-    given or "+" and/or "-", when strand information is given (input_df for
-    <em> *E.coli*</em> and "input_df" for <em>*Synechocystis PCC 6803*</em>).
-5.  Each ID in the column "ID" refers to the same, unique strand/position
-    combination. Thus, each replicate has to share the same ID.
-6.  IDs could be either numeric (advised) or character strings that do not
-    contains "|","_" or ",".
-7.  All intensities columns could contain 0 or NA except the column "0". The
-    intensities are normalized to column "0"
+1.  colData contains 2 columns, timepoint and replicates.
+2.  Assay contains the relative intensities need to be numeric. The first column
+is called "0" and refers to the first time point (before  rifampicin addition).
+The intensities could contain 0 or NA except the column "0". The intensities are
+normalized to column "0"
+3.  rowRanges includes two columns, "ID" and "position". Each ID in the column
+"ID" refers to the same, unique strand/position combination. Thus, each 
+replicate has to share the same ID. IDs could be either numeric (advised) or
+character strings that do not contains "|","_" or ",".
 <br/><br/>
 
 ### 2. `check_input`
@@ -201,10 +192,9 @@ obj <- check_input(inp = input_df_7[241:247, ])
 </p>
 </details>
 <br>
-As our standard input contains
-probes that are not expressed and thus have a relative intensity of 0 at time
-point 0, in our example check_input gives a warning on which IDs have been
-removed, but the output can be safely used.  
+As our standard input contains probes that are not expressed and thus have a
+relative intensity of 0 at time point 0, in our example check_input gives a
+warning on which IDs have been removed, but the output can be safely used.  
 The result contains the processed input data frame.  
 <br/><br/>
 ``` {r check_input}
@@ -243,12 +233,11 @@ head(result$input_df[,9:15])
 
 ### 4. `make_df`
 
-`make_df` converts the input data frame to the template probe based data frame.
-The means of all replicates, excluding the filtered replicates, are calculated.
-Optionally, probes or bins, where all replicates are filtered can be removed,
-when rm_FLT is set to TRUE (default is FALSE).  
-The column **probe_TI** is added for a later step, in which it is decided which
-probes are fitted with the TI model (see 7. finding_TI).  
+`make_df` calculates the means of all replicates, excluding the filtered
+replicates. Optionally, probes or bins, where all replicates are filtered can
+be removed, when rm_FLT is set to TRUE (default is FALSE).
+The column **probe_TI** is added to rowRanges for a later step, in which it is
+decided which probes are fitted with the TI model (see 7. finding_TI).  
 For microarray data, the probes with intensity of the latest time point does not
 fall below the background are considered stables mRNA. Those probes are marked
 in the **flag** column with the tag '_ABG_'("above background"). 'bg' is the
@@ -256,10 +245,10 @@ relative intensity threshold of the background. For RNAseq data the 'ABG'
 sub-model is used and bg is set to 0, so that all probes are flagged as
 '_ABG_'. The flag column is used to distribute different probes to the
 different fitting models (see 7. finding_TI) The output of 'make_df' is the
-probe based dataframe **probe_df**. At this stage, it contains the columns
-**ID**, **position**, **strand** and **intensity** (of time point 0) as mean of
-all replicates from the input dataframe and the columns **probe_TI** and
-**flag**. For our tutorial bg is set to 0, because its RNAseq data, and rm_FLT
+probe based SE **probe_df**. At this stage, The rowRanges contains the columns
+**ID**, **position**, and **intensity** (of time point 0) as mean of
+all replicates from assay and the columns **probe_TI** and **flag**. 
+For our tutorial bg is set to 0, because its RNAseq data, and rm_FLT
 is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 <br/><br/>
 ``` {r make_df}
@@ -281,7 +270,7 @@ sequencing depth, `segment_pos` is called. This step is needed to enhance
 performance of the program, since large position segments increase the
 runtime.  
 The size of the regions without significant sequencing depth (aka positions not
-present in the dataframe) or absence of probes is determined by the argument
+present in the rowRanges) or absence of probes is determined by the argument
 **dist** (default is 300). Lower numbers create more, but smaller position
 segments. Position segments are strand specific.
 <br/><br/>
@@ -296,7 +285,7 @@ probe_df[132:142,]
 Post transcription decay model is characterized by a strong decrease of
 intensity by position. `finding_PDD` flags potential candidates for post
 transcription decay with "_PDD_". `finding_PDD` uses 'score_fun_linear'
-function to make groups by the difference to the slope. The input data contains
+function to make groups by the difference to the slope. The rowRanges contains
 **ID**, **intensity**, **position** and **position_segment** columns.
 `finding_PDD` needs additional parameters as **pen**, **pen_out** and **thrsh**
 <br/><br/>
@@ -320,8 +309,8 @@ probe_df <-
 identified regions and a defined number of probes before the potential TI event
 are flagged with '_TI_'. The identification is based on the probe_TI column,
 which is a report for each probe, whether a later time point is higher in
-relative intensity than the first time point. The input data contains **ID**,
-**intensity**, **position** and **position_segment** columns. `finding_TI`
+relative intensity than the first time point. The rowRanges needs the columns
+**ID**, **intensity**, **position** and **position_segment**. `finding_TI`
 needs additional parameters as **pen**, **thrsh** and **add**.
 <br/><br/>
 ``` {r finding_TI, eval=FALSE}
@@ -436,8 +425,7 @@ head(fit_minimal)
 `nls2_fit` function uses **nls2** function to fit a probe or bin using
 intensities from different time point. **nls2** is able to use different
 starting values using expand grid and select the best fit. The input data are
-two data frame, a data frame containing **intensity** of all timeserie, **ID**,
-**position** and **strand** ("input_df") and a data frame containing **ID**,
+assay containing **intensity** of all timeserie and rowRanges containing **ID**,
 **intensity**, **position**, **probe_TI**, **flag** and **position_segment**
 columns (see below Table_2). `nls2_fit` function has two different models, one
 includes the background as parameter and estimates decay subtracting it. The
@@ -770,7 +758,8 @@ head(fragmentation_minimal)
 `fragment_delay` makes delay_fragments based on position_segments and assigns
 all gathered information to the probe based data frame. The columns
 "delay_fragment", "velocity_fragment", "intercept" and "slope" are added.
-`fragment_delay` makes delay_fragments, assigns slopes, velocity (1/slope) and intercepts for the TU calculation.
+`fragment_delay` makes delay_fragments, assigns slopes, velocity (1/slope) and
+intercepts for the TU calculation.
 <br/><br/>
 The function used are:
 
@@ -794,8 +783,8 @@ head(probe_df)
 
 `fragment_HL` performs the half_life fragmentation based on delay_fragments
 and assigns all gathered information to the probe based data frame. The columns
-"HL_fragment" and "HL_mean_fragment" are added. `fragment_HL` makes
-half-life_fragments and assigns the mean of each fragment.
+"HL_fragment" and "HL_mean_fragment" are added to rowRanges(SE). `fragment_HL`
+makes half-life_fragments and assigns the mean of each fragment.
 <br/><br/>
 The function used are:
 
@@ -820,8 +809,8 @@ head(probe_df)
 
 `fragment_inty` performs the intensity fragmentation based on HL_fragments and
 assigns all gathered information to the probe based data frame. The columns
-"intensity_fragment" and "intensity_mean_fragment" are added. `fragment_inty`
-makes intensity_fragments and assigns the mean of each fragment.
+"intensity_fragment" and "intensity_mean_fragment" are added rowRanges(SE). 
+`fragment_inty` makes intensity_fragments and assigns the mean of each fragment.
 <br/><br/>
 The function used are:
 
@@ -844,7 +833,8 @@ head(probe_df)
 
 ### 4. `TUgether`
 
-`TUgether` combines delay fragments into TUs and adds a new column "TU".
+`TUgether` combines delay fragments into TUs and adds a new column "TU" to 
+rowRanges(SE).
 
 The function used is:
 
@@ -862,9 +852,10 @@ head(probe_df)
 ### 5. `fragment_TI`
 
 `fragment_TI` performs the TI fragmentation based on TUs and assigns all
-gathered information to the probe based data frame. The columns
-"TI_termination_fragment" and "TI_mean_termination_factor" are added.
-`fragment_TI` makes TI_fragments and assigns the mean of each fragment.
+gathered information to the probe based SE. The columns
+"TI_termination_fragment" and "TI_mean_termination_factor" are added to
+rowRanges(SE). `fragment_TI` makes TI_fragments and assigns the mean of each
+fragment.
 
 The function used are:
 
@@ -1091,7 +1082,7 @@ apply_t_test_ti(data = stats_minimal)
 
 `rifi_summary` wraps and summarizes all rifi outputs into different tables in a
 compact form. The tables connect rifi output and genes annotation. Four tables
-are generated and 5 functions are used.
+are generated and gathered as metadata into SE.
 
 The functions used are:
 
@@ -1148,14 +1139,7 @@ gff3_preprocess(path = gzfile(
 
 `event_dataframe` creates a data frame only with events for segments and genes.
 `event_dataframe` selects columns with statistical features in addition to "ID",
-"position", "strand" and "TU" columns. One table is generated, the first one
-gathers statistical tests as t-tests and Manova and the second one gathers
-**ps** and **iTSS_I** with the corresponding features. The first dataframe
-selects unique intensity fragments as they are the lowest on the hierarchy
-and adds a new column "synthesis_ratio_event". "synthesis_ratio_event"
-corresponds to the event related to Fold-change-HL/Fold-change-intensity ratio.
-The second data frame adds a new column to indicate the position of **ps** and
-**iTSS_I** event. The output data frame contains the following columns:
+"position" and "TU" columns. The data frame combines fragments, events and statistical test and the corresponding genes. The column are:
 
    **region**: feature of the genome e.g. CD, ncRNA, 5'UTR ect....
 
@@ -1241,8 +1225,7 @@ events.
 
 #### 2. `annotation_function_event`
 
-`annotation_function_event` adds the events to the annotated genes. The strand
-is indicated in case of stranded data.
+`annotation_function_event` adds the events to the annotated genes. 
 
 #### 3. `strand_function`
 
@@ -1254,40 +1237,43 @@ stranded data.
 `dataframe_summary` creates two tables summary of segments relating gene
 annotation to fragments. `dataframe_summary` creates two tables summary of
 segments and their half-lives. The first output is bin/probe features and the
-second one is intensity fragment based.
+second one is intensity fragment based. Both tables are added as metaData.
 <br/><br/>
 
 ### 3. `dataframe_summary_events`
 
 `dataframe_summary_events` creates one table relating gene annotation to all
-events. The events are assigned on the first column.
+events. The events are assigned on the first column. The table is added as
+metaData.
 <br/><br/> 
  
 ### 4. `dataframe_summary_events_HL_int`
 
 `dataframe_summary_events_HL_int` creates one table relating gene annotation to
 all termination and new starting sites detected from half_life and intensity
-ratios. The events are assigned on the first column.
+ratios. The events are assigned on the first column. The table is added as
+metaData.
 <br/><br/>
 
 ### 5. `dataframe_summary_events_ps_itss` 
 
 `dataframe_summary_events_ps_itss`  creates one table relating gene annotation
 with pausing sites and internal starting sites events detected from delay
-fragments. The events are assigned on the first column.
+fragments. The events are assigned on the first column. The table is added as
+metaData.
 <br/><br/>
 
 ### 6. `dataframe_summary_events_velocity`
 
 `dataframe_summary_events_velocity`  creates one table relating gene annotation
 with velocity ration detected from delay fragments. The events are assigned
-on the first column.
+on the first column. The table is added as metaData.
 <br/><br/>
 
 ### 7. `dataframe_summary_TI`
 
 `dataframe_summary_TI` creates one table relating gene annotation to
-transcription interference.
+transcription interference. The table is added as metaData.
 <br/><br/>
 
 ## VI. `rifi_visualization`
@@ -1500,7 +1486,7 @@ The plot shows 4 sections: annotation, delay, half-life and intensity/coverage.
 ## VII. `rifi_wrapper`
 
 `rifi_wrapper` conveniently wraps all functions included on rifi. The
-function allows the user in just one click to run the whole workflow.
+function allows the user in one click to run the whole workflow.
 
 The function used are:
 

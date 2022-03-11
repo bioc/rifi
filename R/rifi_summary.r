@@ -28,15 +28,20 @@
 rifi_summary <- function(probe, data_annotation) {
   res1 <- event_dataframe(data = probe, data_annotation = data_annotation)
   res2 <- dataframe_summary(data = probe, input = res1)
+  metadata(probe)$res2 <- res2
   res3 <- dataframe_summary_events(data = probe, data_annotation =
                                      data_annotation)
+  metadata(probe)$res3 <- res3
   res4 <- dataframe_summary_events_HL_int(data = probe, data_annotation =
                                             data_annotation)
+  metadata(probe)$res4 <- res4
   res5 <- dataframe_summary_events_ps_itss(data = probe, data_annotation =
                                              data_annotation)
+  metadata(probe)$res5 <- res5
   res6 <- dataframe_summary_events_velocity(data = probe, data_annotation =
                                               data_annotation)
+  metadata(probe)$res6 <- res6
   res7 <- dataframe_summary_TI(data = probe, input = res1)
-  res <- list(res2[[1]], res2[[2]], res3, res4, res5, res6, res7)
-  res
+  metadata(probe)$res7 <- res7
+  probe
 }

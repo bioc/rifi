@@ -49,7 +49,7 @@
 #' @export
 #'
 apply_t_test_ti <- function(inp) {
-  #new column is added
+  #new columns are added
   rowRanges(inp)$p_value_TI <- NA
   rowRanges(inp)$TI_fragments_p_value <- NA
   #grep TI fragments excluding outliers
