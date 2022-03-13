@@ -107,7 +107,7 @@ Rifi provides different functional arguments (subcalls) for individual procedure
 
 ## Input 
 
-The input data consists of a summarizedExperiment data containing the RNA-seq or microarray time series data from rifampicin treated microorganisms, including all potential replicates, column wise as relative intensities as Assay section, e.g, Table 1 shows an example input.
+The input is a summarizedExperiment data containing the RNA-seq or microarray time series data from rifampicin treated microorganisms, including all potential replicates, column wise as relative intensities (assay), e.g, Table 1 shows an example input.
 
 
   0       | ... | 20       | 0      | 1   |    |
@@ -121,7 +121,7 @@ The input data consists of a summarizedExperiment data containing the RNA-seq or
   200.541 | ... | 56.460   |87.235  | NA  | ...|
 
 
-<sub>Table 1. Rifi input data table (assay). The columns contain the relative intensity measurements, with the first column referring to timepoint zero, at or before the addition of rifampicin.
+<sub>Table 1. Rifi input data table (assay). The columns contain the relative intensity measurements of all replicates, with the first column referring to timepoint zero, at or before the addition of rifampicin.
 </sub>
 
 ## Parameters
@@ -144,7 +144,7 @@ Rifi runs in R and the command line for the workflow are:
 
 ## Results
 
-The results of the analysis are stored as metaData with several data frames, some for segments e.g.(Table .2) and others for the events e.g. (Table. 3).
+The results of the analysis are stored on rowRanges and metaData. rowRanges contain fragments, events and statistical tests. MetaData combines rowRanges content and genome annotation as data frame format e.g.(Table .2 and Table. 3).
 
 ID    | gene  | ...  | strand| TU     | half-life |...    |p_value_TI|
 :---: | :--:  | :---:| :--:  | :---:  | :---:     | :---: | :---:    |   
@@ -172,12 +172,12 @@ ID    | gene  | ...  | strand| event  | p_value  |
 
 ## Quick start
 
-to run the example, you would need to download from rifi/data:
+To run the example, you would need to download from rifi/data and run the script in R:
 
-#### annotation file
+#### 1. Annotation file
 annot_g_minimal.RData 
 
-#### The summarizedExperiment input data
+#### 2. SummarizedExperiment input data
 example_input_e_coli.RData
 
 ```
@@ -186,8 +186,8 @@ genomeLength=annot_g[[2]], bg = 0, restr = 0.01)
 ```
 #### check the result
 rifi_output and a plot are generated in your directory.
-rifi_output is a summarizedExperiment output containing assay, rowRanges, 
-metaData. More details are on vignette.
+rifi_output is a summarizedExperiment format containing assay, rowRanges, colData and
+metaData. More details could be found on vignette.
 
 ## Testing
 
