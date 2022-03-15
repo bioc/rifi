@@ -183,8 +183,8 @@ annot_g_minimal.RData
 example_input_e_coli.RData
 
 ```
-rifi_output <- rifi_wrapper(inp = Data, cores=2, annot=annot_g[[1]],
-genomeLength=annot_g[[2]], bg = 0, restr = 0.01)
+wrapper <- rifi_wrapper(inp=example_input_e_coli, cores=60, gff = annot_g[[1]],
+                                        bg = 0, restr = 0.01)
 ```
 #### check the result
 rifi_output and a plot are generated in your directory.
