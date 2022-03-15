@@ -61,7 +61,7 @@
 #'   inp = example_input_minimal, cores = 2, bg = 100, rm_FLT = FALSE,
 #'   thrsh_check = 0, dista = 300, run_PDD = FALSE
 #'   )
-#'   
+#'      
 #' @export
 
 rifi_preprocess <-

@@ -19,29 +19,46 @@
 
 
 rifi_wrapper <- function(inp, cores, gff, bg, restr) {
-  prepro <- rifi_preprocess(inp = inp, cores = cores, bg = bg)
-  probe <-
-    rifi_fit(prepro[[2]],
-             prepro[[1]],
-             cores = cores,
-             viz = FALSE,
-             restr = restr)
-  pen <- rifi_penalties(
-    probe,
-    details = FALSE,
-    viz = FALSE,
-    top_i = 0,
-    cores = cores
+  #run preprocess step
+  prepro <- rifi_preprocess(
+    inp = int,
+    cores = cores,
+    bg = bg,
+    rm_FLT = T,
+    thrsh_check = 10,
+    dista = 300,
+    run_PDD = T
   )
-  probe_fra <-
-    rifi_fragmentation(probe, cores = cores)
+  #fit the data
+  probe <- rifi_fit(
+    inp = prepro,
+    cores = 30,
+    viz = T,
+    restr = restr
+  )
+  #estimate penalties
+  pen <- rifi_penalties(
+    inp = probe,
+    details = T,
+    viz = T,
+    top_i = 25,
+    cores = cores,
+    dpt = 1,
+    smpl_min = 10,
+    smpl_max = 100
+  )
+  
+  # run fragmentation
+  probe_fra <- rifi_fragmentation(inp = probe, 
+                                  cores = cores)
   annot <- gff3_preprocess(gff)
-  probe_sta <- rifi_stats(probe_fra)
+  probe_sta <- rifi_stats(probe_fra, dista = 300)
   probe_summary <-
     rifi_summary(probe_sta, data_annotation = annot[[1]])
   rifi_visualization(data = probe_sta,
                      genomeLength = annot[[2]],
                      annot = annot[[1]])
-  res <- list(prepro, probe, pen, probe_fra, probe_sta, probe_summary)
+  res <-
+    list(prepro, probe, pen, probe_fra, probe_sta, probe_summary)
   return(res)
 }

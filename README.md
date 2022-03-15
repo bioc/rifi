@@ -1,7 +1,7 @@
 # Rifi framework
 
 ## About
-Rifi is an open source R package, attempted to estimate decay by probe or by bin, based on high resolution microarray or RNA-seq data. The decay is fitted based on Rifampicin   time serie intensity data with consideration of the typical delay of decay onset when using Rifampicin. Subsequently, probes/bins of equal properties, i.e halflife, intensity or polymerase velocity,	are combined into segments by dynamic programming, independent of an existing genome annotation. This allows to detect transcript segments of different stability or transcriptional events within one annotated gene. In addition to the classic decay constant/half-life analysis, 'rifi' detects processing sites, transcription pausing sites, internal transcription start sites in operons, sites of partial transcription termination in operons, identifies areas of likely transcriptional interference by the collision mechanism and gives an estimate of the transcription velocity. All data are integrated to give an estimate of continous transcriptional units, i.e. operons. Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
+Rifi is an open source R package, attempted to estimate decay by probe or by bin, based on high resolution microarray or RNA-seq data. The decay is fitted based on Rifampicin time serie intensity data with consideration of the typical delay of decay onset when using Rifampicin. Subsequently, probes/bins of equal properties, i.e halflife, intensity or polymerase velocity, are combined into segments by dynamic programming, independent of an existing genome annotation. This allows to detect transcript segments of different stability or transcriptional events within one annotated gene. In addition to the classic decay constant/half-life analysis, 'rifi' detects processing sites, transcription pausing sites, internal transcription start sites in operons, sites of partial transcription termination in operons, identifies areas of likely transcriptional interference by the collision mechanism and gives an estimate of the transcription velocity. All data are integrated to give an estimate of continous transcriptional units, i.e. operons. Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
   
 <br/>
 
@@ -12,8 +12,8 @@ Rifi is an open source R package, attempted to estimate decay by probe or by bin
 
 <sub>  
 <b>Figure 1:</b> Example visualization of an Rifampicin microarray experiment from <i>Synechocystis</i> PCC6803. A segment of the forward strand with its GenBank annotation is shown. 
-The first track shows the delay of the onset of the decay for the individual probes. The delay should be linearily increasing for contionous transcripts, which are clustered by dynamic programming and indicated by matching colors and a trendline. A sudden delay increase between two segments indicates a transcription polymerase pausing site (PS), while a sudden decrease indicates a new (internal) transcriptional start site (iTSS). The slope of the delay segment allows to estimate the speed of the RNA Polymerase. Changes in the velocity are indicated by a "V". 
-The second track shows the fitted half-life of the probes and the clustered half-life segments. If two segments within the same transcriptional unit have different half-life (HL) a preocessing/stabilization site for one or the other segment can be assumed.
+The first track shows the delay of the onset of the decay for the individual probes. The delay should be linearly increasing for continuous transcripts, which are clustered by dynamic programming and indicated by matching colors and a trendline. A sudden delay increase between two segments indicates a transcription polymerase pausing site (PS), while a sudden decrease indicates a new (internal) transcriptional start site (iTSS). The slope of the delay segment allows to estimate the speed of the RNA Polymerase. Changes in the velocity are indicated by a "V". 
+The second track shows the fitted half-life of the probes and the clustered half-life segments. If two segments within the same transcriptional unit have different half-life (HL) a processing/stabilization site for one or the other segment can be assumed.
 The third track shows the intensity and the intensity segments at timepoint 0 (before Rifampicin addition). If two segments within the same transcriptional unit have different intensities this (FC) this could be either due to a partial termination (Ter) or a new transcriptional start site (NS). 
 Significant events are assigned with an '*'. 
 </sub>
@@ -28,6 +28,8 @@ Rifi framework has the following dependencies, whereas the brackets indicate the
   [devtools](https://www.rdocumentation.org/packages/devtools/versions/1.13.6) (>= 1.13.6)
   
   [roxygen2](https://cran.r-project.org/web/packages/roxygen2/index.html) (>= 7.1.12)
+  
+  [SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html)(>= 1.24.0)
 
   [car](https://www.rdocumentation.org/packages/car/versions/3.0-11) (>= 3.0-11)
   
@@ -107,7 +109,7 @@ Rifi provides different functional arguments (subcalls) for individual procedure
 
 ## Input 
 
-The input is a summarizedExperiment data containing the RNA-seq or microarray time series data from rifampicin treated microorganisms, including all potential replicates, column wise as relative intensities (assay), e.g, Table 1 shows an example input.
+The input is a summarizedExperiment data format containing the RNA-seq or microarray time series data from rifampicin treated microorganisms, including all potential replicates, column wise as relative intensities (assay), e.g, Table 1 shows an example input.
 
 
   0       | ... | 20       | 0      | 1   |    |
