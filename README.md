@@ -183,7 +183,7 @@ annot_g_minimal.RData
 example_input_e_coli.RData
 
 ```
-wrapper <- rifi_wrapper(inp=example_input_e_coli, cores=60, gff = annot_g[[1]],
+wrapper <- rifi_wrapper(inp=example_input_e_coli, cores=2, gff = annot_g[[1]],
                                         bg = 0, restr = 0.01)
 ```
 #### check the result
