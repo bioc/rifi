@@ -194,7 +194,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_intensity), ]
   tmp <- tmp[!is.na(tmp$FC_fragment_intensity), ]
   for (i in seq_len(nrow(tmp))) {
-    print(paste0("int_frgs_", i))
     d <- tmp[i, ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     ev_fragments <-
@@ -278,7 +277,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_HL), ]
   tmp <- tmp[!is.na(tmp$FC_fragment_HL), ]
   for (i in seq_len(nrow(tmp))) {
-    print(paste0("HL_frags_", i))
     d <- tmp[i, ]
     ev_fragments <- unlist(strsplit(d$FC_fragment_HL, split = ":"))
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA

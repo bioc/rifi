@@ -7,13 +7,13 @@ Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
 apply_event_position, apply_t_test, fold_change, apply_manova and
 apply_t_test_ti.}
 \usage{
-rifi_stats(probe, dista = 300)
+rifi_stats(inp, dista = 300)
 }
 \arguments{
-\item{probe}{SummarizedExperiment: the input data frame with correct format.}
-
 \item{dista}{integer: the maximal distance allowed between two successive
 fragments. Default is the auto generated value.}
+
+\item{probe}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
 the probe data frame with the columns regarding statistics:
@@ -79,7 +79,7 @@ apply_t_test_ti.
 }
 \examples{
 data(fragmentation_minimal)
-rifi_stats(probe = fragmentation_minimal, dista = 300)
+rifi_stats(inp = fragmentation_minimal, dista = 300)
 
 }
 \seealso{

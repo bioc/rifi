@@ -119,6 +119,7 @@ data from microarrays (data with averaged replicates, see. "input_df").
 
 ``` {r}
 #example of E.coli data from RNAseq
+load("example_input_minimal.RData")
 load("example_input_e_coli.RData")
 #columns with intensities measurements from all time point and replicates
 assay(example_input_e_coli)
@@ -224,7 +225,7 @@ warning on which IDs have been removed, but the output can be safely used.
 The result contains the processed input data frame.  
 <br/><br/>
 ``` {r check_input}
-result <- check_input(inp = example_input_e_coli, thrsh = 0)
+result <- check_input(inp = example_input_minimal, thrsh = 0)
 ```
 <br/><br/>
 
@@ -271,13 +272,14 @@ is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 
 <br/><br/>
 ``` {r make_df}
-probe_df <-
+probe_df_min <-
   make_df(
     inp = result,
     cores = 2,
     bg = 0,
     rm_FLT = TRUE
   )
+load("make_df.rda")
 head(rowRanges(probe_df))
 ```
 <br/><br/>
@@ -294,7 +296,8 @@ present in the rowRanges) or absence of probes is determined by the argument
 segments. Position segments are strand specific.
 <br/><br/>
 ``` {r segment_pos}
-probe_df <- segment_pos(probe = probe_df, dista = 300)
+probe_df <- segment_pos(inp = probe_df_min, dista = 300)
+load("segment_pos.rda")
 head(rowRanges(probe_df))
 ```
 <br/><br/>
@@ -312,12 +315,18 @@ function to make groups by the difference to the slope. The rowRanges contains
 #Due to increased run time, this example is not evaluated in the vignette
 probe_df <-
   finding_PDD(
-    probe = probe_df,
+    inp = probe_df_min,
     cores = 2,
     pen = 2,
     pen_out = 2,
     thrsh = 0.001
   )
+``` 
+<br/><br/>
+``` {r finding_PDD}
+#The output
+load("finding_PDD.rda")
+head(rowRanges(probe_df))
 ```
 <br/>
 
@@ -336,12 +345,16 @@ relative intensity than the first time point. The rowRanges needs the columns
 #Due to increased run time, this example is not evaluated in the vignette
 probe_df <-
   finding_TI(
-    probe = probe_df,
+    inp = probe_df_min,
     cores = 2,
     pen = 10,
-    pen_out = 1, 
     thrsh = 0.001
   )
+``` 
+<br/><br/>
+``` {r finding_TI}
+#The output
+load("finding_TI.rda")
 head(rowRanges(probe_df))
 ```
 <br/>
@@ -363,13 +376,14 @@ contain the character string **FLT**.
 
 All preprocessing steps can be run with `rifi_preprocess` at once. This section
 will focus on all possible arguments that can be passed to the function.
+
 <br/><br/>
 ``` {r rifi_preprocess}
 #From here on the examples are shown on minimal examples.
 #Two bigger data sets can be used to run the example as well.
 preprocess_minimal <-
   rifi_preprocess(
-    inp = probe_df,
+    inp = probe_df_min,
     cores = 2,
     bg = 0,
     rm_FLT = TRUE,
@@ -377,9 +391,14 @@ preprocess_minimal <-
     dista = 300,
     run_PDD = TRUE
   )
-head(rowRanges(preprocess_minimal))
 ```
-<br/>
+<br/><br/>
+``` {r preprocess_minimal}
+#The output
+load("rifi_preprocess.rda")
+head(rowRanges(preprocess_min))
+```
+
 
 ## III. `rifi_fit`
 
@@ -415,9 +434,15 @@ suppressWarnings(fit_minimal <- rifi_fit(
   TI_rest_delay = seq(0, 2, by = 0.5),
   TI_bg = 0
 ))
-head(rowRanges(fit_minimal))
 ```
-<br/>
+
+<br/><br/>
+``` {r rifi_fit}
+#Output
+load("rifi_fit.rda")
+head(rowRanges(fit_min))
+```
+
 
 ### 1. `nls2_fit`
 
@@ -558,7 +583,7 @@ penalties to increase run time. ALso, outlier penalties cannot be smaller
 than 40% of the respective penalty. `make_pen` returns a penalty object (list
 of 4 objects) the first being the logbook.
 <br/><br/>
-``` {r make_pen}
+``` {r make_pen, eval = FALSE}
 fit_minimal
 pen_delay <-
   make_pen(
@@ -690,7 +715,7 @@ window (bottom) numbers above the dots represent the outlier-penalty.
 fit_minimal
 penalties_minimal <-
   rifi_penalties(
-    probe = fit_minimal,
+    inp = fit_minimal,
     details = TRUE,
     viz = FALSE,
     top_i = 25,
@@ -707,7 +732,12 @@ penalties_minimal <-
   )
 ```
 <br/><br/>
-
+``` {r rifi_penalties}
+#The output
+load("rifi_penalties.rda")
+head(rowRanges(penalties_min))
+```
+<br/><br/>
 
 ## IV. `rifi fragmentation`
 
@@ -728,13 +758,14 @@ fit_minimal
 penalties_minimal
 fragmentation_minimal <-
   rifi_fragmentation(
-    probe = penalties_minimal,
+    inp = penalties_minimal,
     cores = 2
   )
 ```
 <br/><br/>
 ``` {r echo = TRUE}
-head(rowRanges(fragmentation_minimal))
+load("rifi_fragmentation.rda")
+head(rowRanges(fragmentation_min))
 ```
 <br/><br/>
 
@@ -753,14 +784,14 @@ The function used are:
 `score_fun_linear` is the score function used by dynamic programming for delay
 fragmentation, for more details, see below.
 <br/><br/>
-``` {r fragment_delay}
+``` {r fragment_delay, eval = FALSE}
 probe_df <- fragment_delay(
-  probe = penalties_minimal,
+  inp = fragmentation_minimal,
   cores = 2,
   pen = penalties_minimal["delay_penalty"],
   pen_out = penalties_minimal["delay_outlier_penalty"]
 )
-head(probe_df)
+head(rowRanges(probe_df))
 ```
 <br/><br/>
 
@@ -778,14 +809,14 @@ The function used are:
 `score_fun_ave` is the score function used by dynamic programming for half-life
 fragmentation, for more details, see below.
 <br/><br/>
-``` {r fragment_HL}
+``` {r fragment_HL, eval = FALSE}
 probe_df <- fragment_HL(
-  probe = penalties_minimal,
+  probe = fragmentation_minimal,
   cores = 2,
   pen = penalties_minimal["half_life_penalty"],
   pen_out = penalties_minimal["half_life_outlier_penalty"]
 )
-head(probe_df)
+head(rowRanges(probe_df))
 ```
 
 <br/><br/>
@@ -804,15 +835,15 @@ The function used are:
 `score_fun_ave` is the score function used by dynamic programming for intensity
 fragmentation, for more details, see below.
 <br/><br/>
-``` {r fragment_inty}
+``` {r fragment_inty, eval = FALSE}
 probe_df <- fragment_inty(
-  probe = penalties_minimal, 
+  inp = fragmentation_minimal, 
   cores = 2,
   pen = penalties_minimal["intensity_penalty"],
   pen_out =
     penalties_minimal["intensity_outlier_penalty"]
 )
-head(probe_df)
+head(rowRanges(probe_df))
 ```
 <br/><br/>
 
@@ -828,9 +859,9 @@ The function used is:
 `score_fun_increasing` is the score function used by dynamic programming for
 `TUgether`, for more details, see below.
 <br/><br/>
-``` {r TUgether}
-probe_df <- TUgether(probe = penalties_minimal, cores = 2, pen = -0.75)
-head(probe_df)
+``` {r TUgether, eval = FALSE}
+probe_df <- TUgether(inp = fragmentation_minimal, cores = 2, pen = -0.75)
+head(rowRanges(probe_df))
 ```
 <br/><br/>
 
@@ -849,14 +880,14 @@ The function used are:
 `score_fun_ave` is the score function used by dynamic programming for TI
 fragmentation, for more details, see below.
 <br/><br/>
-``` {r fragment_TI}
+``` {r fragment_TI, eval = FALSE}
 probe_df <- fragment_TI(
-  probe = penalties_minimal,
+  inp = fragmentation_minimal,
   cores = 2,
   pen = penalties_minimal["TI_penalty"],
   pen_out = penalties_minimal["TI_outlier_penalty"]
 )
-head(probe_df)
+head(rowRanges(probe_df))
 ```
 <br/><br/>
 
@@ -879,7 +910,8 @@ The function wrapped are:
 <br/><br/>
 ``` {r rifi_stats}
 fragmentation_minimal
-stats_minimal <- rifi_stats(probe = fragmentation_minimal, dista = 300)
+stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300)
+load("rifi_stats.rda")
 head(rowRanges(stats_minimal))
 ```
 <br/>
@@ -908,7 +940,7 @@ additionally added.
 <br/><br/>
 ``` {r predict_ps_itss, eval=FALSE}
 fragmentation_minimal
-probe <- predict_ps_itss(data = fragmentation_minimal, maxDis = 300)
+probe <- predict_ps_itss(inp = fragmentation_minimal, maxDis = 300)
 head(rowRanges(probe))
 ```
 
@@ -923,8 +955,8 @@ between 2 segments showing pausing site **ps** and internal starting site
 point from the second segment and added them to the residuals of each model,
 the sum is subjected to `t-test`.
 <br/><br/>
-``` {r apply_Ttest_delay, eval=F}
-probe <- apply_Ttest_delay(data = probe)
+``` {r apply_Ttest_delay, eval = FALSE}
+probe <- apply_Ttest_delay(inp = probe)
 head(rowRanges(probe))
 ```
 
@@ -939,7 +971,7 @@ test.
 <br/><br/>
 ``` {r apply_ancova, eval=F}
 probe
-probe <- apply_ancova(data = probe)
+probe <- apply_ancova(inp = probe)
 head(rowRanges(probe))
 ```
 
@@ -952,7 +984,7 @@ or iTSS_I event.
 <br/><br/>
 ``` {r apply_event_position, eval=F}
 probe
-probe <- apply_event_position(data = probe)
+probe <- apply_event_position(inp = probe)
 head(rowRanges(probe))
 ```
 <br/>
@@ -982,7 +1014,7 @@ ratio, add columns with the corresponding p_values.
 <br/><br/>
 ``` {r apply_t_test, eval=F}
 probe
-probe <- apply_t_test(data = probe, threshold = 300)
+probe <- apply_t_test(inp = probe, threshold = 300)
 head(rowRanges(probe))
 ```
 
@@ -1020,7 +1052,7 @@ c. synthesis ratio = 1 -> No change in synthesis rate
 <br/><br/>
 ``` {r fold_change, eval=F}
 probe
-probe <- fold_change(data = probe)
+probe <- fold_change(inp = probe)
 head(rowRanges(probe))
 ```
 <br/>
@@ -1044,7 +1076,7 @@ depicted below. The lm fit is applied and p_value is extracted.
 <br/><br/>
 ``` {r apply_manova, eval=F}
 probe
-apply_manova(data = probe)
+apply_manova(inp = probe)
 head(rowRanges(probe))
 ```
 <br/>
@@ -1060,7 +1092,7 @@ p_value.
 <br/><br/>
 ``` {r apply_t_test_ti, eval=F}
 probe
-probe <- apply_t_test_ti(data = probe)
+probe <- apply_t_test_ti(inp = probe)
 head(rowRanges(probe))
 ```
 <br/>
@@ -1082,13 +1114,15 @@ The functions used are:
 6. `dataframe_summary_events_ps_itss`
 7. `dataframe_summary_events_velocity`
 8. `dataframe_summary_TI`
+
 <br/><br/>
 ``` {r rifi_summary}
 stats_minimal
 data(annot_g_minimal)
 summary_minimal <- rifi_summary(stats_minimal, data_annotation =
-                                  annot_g_minimal[[1]])
-head(summary_minimal)
+                                  annot_g[[1]])
+load("summary_minimal.rda")
+metadata(summary_minimal)
 ```
 <br/><br/>
 
@@ -1109,6 +1143,7 @@ d. *strand*: +/-
 e. *gene*: gene annotation if available otherwise locus_tag annotation replaces
 it
 f. *locus_tag*: locus_tag annotation
+
 <br/><br/>
 ``` {r gff3_preprocess}
 gff3_preprocess(path = gzfile(system.file(
@@ -1187,6 +1222,7 @@ gff3_preprocess(path = gzfile(
    **half_life**: half-life coefficient extracted from the fit
 
    **intensity**: intensity coefficient extracted from the fit
+   
 <br/><br/>
 ``` {r event_dataframe, eval=F}
 stats_minimal
@@ -1194,6 +1230,7 @@ data(annot_g_minimal)
 event_dataframe(data = stats_minimal, data_annotation = annot_g_minimal[[1]])
 ```
 <br/>
+
    **probe** data frame: the probe based data frame
    
    **data_annotation** data frame: the coordinates extracted from gff3 file
@@ -1353,70 +1390,14 @@ The functions used are:
    `TI_frag_threshold`: splits the TI fragments on the same TI event
    
 <br/><br/>
+
 ``` {r rifi_visualization}
 data(stats_minimal)
 data(annot_g_minimal)
 rifi_visualization(
   data = stats_minimal,
-  genomeLength = annot_g_minimal[[2]],
-  annot = annot_g_minimal[[1]],
-  coverage = 0,
-  chr_fwd = NA,
-  chr_rev = NA,
-  region = c("CDS", "asRNA", "5'UTR", "ncRNA", "3'UTR", "tRNA"),
-  color_region = c(
-    "grey0",
-    "red",
-    "blue",
-    "orange",
-    "yellow",
-    "green",
-    "white",
-    "darkseagreen1",
-    "grey50",
-    "black"
-  ),
-  color_text.1 = "grey0",
-  color_text.2 = "black",
-  color_TU = "blue",
-  Alpha = 0.5,
-  size_tu = 1.6,
-  size_locusTag = 1.6,
-  size_gene = 1.6,
-  Limit = 10,
-  shape = 22,
-  col_outiler = "grey50",
-  col_coverage = "grey",
-  shape_outlier = 13,
-  limit_intensity = NA,
-  face = "bold",
-  tick_length = .3,
-  arrow.color = "darkseagreen1",
-  minVelocity = 3000,
-  medianVelocity = 6000,
-  col_above20 = "#00FFFF",
-  fontface = "plain",
-  shape_above20 = 14,
-  axis_text_y_size = 3,
-  axis_title_y_size = 6,
-  TI_threshold = 1.1,
-  termination_threshold = 0.8,
-  iTSS_threshold = 1.2,
-  p_value_int = 0.05,
-  p_value_event = 0.05,
-  p_value_hl = 0.05,
-  p_value_TI = 0.05,
-  p_value_manova = 0.05,
-  event_duration_ps = -2,
-  event_duration_itss = 2,
-  HL_threshold_1 = log2(1.5),
-  HL_threshold_2 = -log2(1.5),
-  vel_threshold = 200,
-  HL_threshold_color_1 = "black",
-  HL_threshold_color_2 = "green4",
-  vel_threshold_color = "grey52",
-  ps_color = "orange",
-  iTSS_I_color = "blue"
+  genomeLength = annot_g[[2]],
+  annot = annot_g[[1]]
 )
 ```
 <br/><br/>
@@ -1430,7 +1411,8 @@ rifi_visualization(
  knitr::include_graphics("genome_plot_2.png")
 ```
 <br/>
-The plot shows 4 sections: annotation, delay, half-life and intensity/coverage.
+The plot is located on vignette "genome_fragments.pdf" and shows shows 4 sections: annotation, delay, half-life and intensity/coverage.
+
 
 ### 1. Annotation
 
@@ -1545,6 +1527,7 @@ high residuals, they are stored but excluded from the next fit. The output of
 the function is a vector of IDs separated by ",", a vector of velocity (1/slope)
 separated by "*", a vector of intercept separated by "*" and a vector of
 outliers.
+
 <br/><br/>
 ``` {r score_fun_linear, eval=F}
 score_fun_linear(y, x, z = x, pen, stran, n_out = min(10,

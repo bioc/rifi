@@ -72,11 +72,11 @@
 #' 
 #' @examples
 #' data(fragmentation_minimal)
-#' rifi_stats(probe = fragmentation_minimal, dista = 300)
+#' rifi_stats(inp = fragmentation_minimal, dista = 300)
 #' 
 #' @export
 
-rifi_stats <- function(probe, dista = 300) {
+rifi_stats <- function(inp, dista = 300) {
   message("running predict_ps_itss...")
   probe <- predict_ps_itss(inp = probe, maxDis = dista)
   message("running apply_Ttest_delay...")

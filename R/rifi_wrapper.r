@@ -21,7 +21,7 @@
 rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   #run preprocess step
   prepro <- rifi_preprocess(
-    inp = int,
+    inp = inp,
     cores = cores,
     bg = bg,
     rm_FLT = T,
@@ -49,12 +49,27 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   )
   
   # run fragmentation
-  probe_fra <- rifi_fragmentation(inp = probe, 
-                                  cores = cores)
+  probe_fra <- rifi_fragmentation(
+    inp = probe,
+    cores = cores
+    )
+  
+  #extract the annotation from ggf file
   annot <- gff3_preprocess(gff)
-  probe_sta <- rifi_stats(probe_fra, dista = 300)
+  
+  #run statistics
+  probe_sta <- rifi_stats(
+    inp = probe_fra, 
+    dista = 300)
+  
+  #run summary
   probe_summary <-
-    rifi_summary(probe_sta, data_annotation = annot[[1]])
+    rifi_summary(
+      inp = probe_sta,
+      data_annotation = annot[[1]]
+      )
+  
+  #run visualization
   rifi_visualization(data = probe_sta,
                      genomeLength = annot[[2]],
                      annot = annot[[1]])
