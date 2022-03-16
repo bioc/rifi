@@ -30,7 +30,8 @@ apply_Ttest_delay <- function(inp) {
   event_2 <- which(rowRanges(inp)$iTSS_I == "+")
   event <- c(event_1, event_2)
   rowRanges(inp)$event_ps_itss_p_value_Ttest <- NA
-  for (i in seq_len(length(event) - 1)) {
+  if(length(event) != 0){
+    for (i in seq_len(length(event) - 1)) {
     ps <- unlist(str_split(rowRanges(inp)$ps_ts_fragment[event[i]], ":"))
     seg_1_d <-
       rowRanges(inp)$delay[which(rowRanges(inp)$delay_fragment %in% ps[1])]
@@ -79,6 +80,7 @@ apply_Ttest_delay <- function(inp) {
       }, error = function(e) {
       })
     }
+  }
   }
   return(inp)
 }

@@ -95,7 +95,7 @@ on the distance between the starts and ends of the delay fragments.
 Finally, within TUs, TI fragments are formed.
 </p>
 
-## II. `rifi_preprocess`
+## II. rifi_preprocess
 
 The first step in the analysis of rifampicin time series data with rifi is
 preprocessing. The three major steps are filtration, fitting the data to the
@@ -122,23 +122,28 @@ data from microarrays (data with averaged replicates, see. "input_df").
 #example of E.coli data from RNAseq
 load("example_input_minimal.RData")
 load("example_input_e_coli.RData")
+load("annot_g_minimal.RData")
+require("SummarizedExperiment")
 #columns with intensities measurements from all time point and replicates
-assay(example_input_e_coli)
+print("assay")
+assay(head(example_input_e_coli))
 #rowRanges of the data
-rowRanges(example_input_e_coli)
+print("rowRanges")
+rowRanges(head(example_input_e_coli))
 # time points and replicates name
+print("colData")
 colData(example_input_e_coli)
 ```
 <br/><br/>
 ``` {r}
 #example of Synechocystis data from microarrays
-example_input_synechocystis_6803
+#example_input_synechocystis_6803
 #columns with intensities measurements from all time point
-assay(example_input_synechocystis_6803)
+#assay(example_input_synechocystis_6803)
 #rowRanges of the data
-rowRanges(example_input_synechocystis_6803)
+#rowRanges(example_input_synechocystis_6803)
 # time points
-colData(example_input_synechocystis_6803)
+#colData(example_input_synechocystis_6803)
 ```
 <br/>
 
@@ -325,7 +330,7 @@ probe_df <-
   )
 ``` 
 <br/><br/>
-``` {r finding_PDD}
+``` {r output_PDD}
 #The output
 load("finding_PDD.rda")
 head(rowRanges(probe_df))
@@ -354,7 +359,7 @@ probe_df <-
   )
 ``` 
 <br/><br/>
-``` {r finding_TI}
+``` {r output_TI}
 #The output
 load("finding_TI.rda")
 head(rowRanges(probe_df))
@@ -402,7 +407,7 @@ head(rowRanges(preprocess_min))
 ```
 
 
-## III. `rifi_fit`
+## III. rifi_fit
 
 `rifi_fit` wraps all fitting steps. The fitting functions fit the intensities
 against the time series data. The first uses `nls2_fit` function to estimate
@@ -439,7 +444,7 @@ suppressWarnings(fit_minimal <- rifi_fit(
 ```
 
 <br/><br/>
-``` {r rifi_fit}
+``` {r output_fit}
 #Output
 load("rifi_fit.rda")
 head(rowRanges(fit_min))
@@ -553,7 +558,7 @@ knitr::include_graphics("TIPlot.png")
 ```
 <br/><br/>
 
-## III. `rifi penalties`
+## IV. `rifi penalties`
 
 `rifi_penalties` wraps all penalty steps, wraps the functions: `make_pen` and
 `viz_pen_obj.` For use of this wrapper jump to 3. `rifi_penalties`
@@ -736,14 +741,14 @@ penalties_minimal <-
   )
 ```
 <br/><br/>
-``` {r rifi_penalties}
+``` {r output_penalties}
 #The output
 load("rifi_penalties.rda")
 head(rowRanges(penalties_min))
 ```
 <br/><br/>
 
-## IV. `rifi fragmentation`
+## V. rifi fragmentation
 
 `rifi_fragmentation` conveniently wraps all fragmentation steps, wraps the
 functions: `fragment_delay`, `fragment_HL`, `fragment_inty`, `TUgether` and
@@ -895,7 +900,7 @@ head(rowRanges(probe_df))
 ```
 <br/><br/>
 
-## IV. `rifi_stats`
+## VI. rifi_stats
 
 `rifi_stats` wraps all statistical prediction steps.
 
@@ -1101,7 +1106,7 @@ head(rowRanges(probe))
 <br/>
 
 
-## V. `rifi_summary`
+## VII. rifi_summary
 
 `rifi_summary` wraps and summarizes all rifi outputs into different tables in a
 compact form. The tables connect rifi output and genes annotation. Four tables
@@ -1149,13 +1154,8 @@ f. *locus_tag*: locus_tag annotation
 
 <br/><br/>
 ``` {r gff3_preprocess}
-gff3_preprocess(path = gzfile(system.file(
-  "extdata", "gff_e_coli.gff3.gz", package = "rifi"
-)))
-gff3_preprocess(path = gzfile(
-  system.file("extdata", "gff_synechocystis_6803.gff.gz",
-              package = "rifi")
-))
+gff3_preprocess(path = "e_coli.gff3")
+#gff3_preprocess(path = "")
 ```
 <br/>
 
@@ -1305,7 +1305,7 @@ on the first column. The table is added as metaData.
 transcription interference. The table is added as metaData.
 <br/><br/>
 
-## VI. `rifi_visualization`
+## VIII. `rifi_visualization`
 
 `rifi_visualization` plots the whole genome with genes, transcription units
 (TUs), delay, half-life (HL), intensity fragments features, events, velocity,
@@ -1458,7 +1458,7 @@ The plot is located on vignette "genome_fragments.pdf" and shows shows 4 section
    
 <br/><br/>
 
-## VII. `rifi_wrapper`
+## IX. rifi_wrapper
 
 `rifi_wrapper` conveniently wraps all functions included on rifi. The function allows the user in one click to run the whole workflow.
 
@@ -1481,9 +1481,7 @@ The function used are:
   `rifi_visualization`: see above
 
 <br/><br/>
-``` {r rifi_wrapper, eval=F}
-data(example_input_e_coli)
-data(example_input_synechocystis_6803)
+``` {r rifi_wrapper, eval = FALSE}
 wrapper_minimal <-
   rifi_wrapper(
     inp = example_input_e_coli,
@@ -1497,7 +1495,7 @@ head(wrapper_minimal)
 ```
 <br/>
 
-## VIII. Additional functions
+## X. Additional functions
 
 1.  `score_fun_linear`
 
@@ -1551,8 +1549,9 @@ previously. Outliers are those values with high difference from the mean, they
 are stored but excluded from the next calculation. The output of the function is
 a vector of IDs separated by ",", a vector of mean separated by "_" and a
 vector of outliers separated by ",".
+
 <br/><br/>
-``` {r score_fun_ave, eval=F}
+``` {r score_fun_ave, eval = FALSE}
 score_fun_ave(y, z, pen, n_out = min(10, max(1, 0.4*length(z))))
 ```
 <br/>
@@ -1564,11 +1563,13 @@ score_fun_ave(y, z, pen, n_out = min(10, max(1, 0.4*length(z))))
 comparing to their position, **x**. The sum of differences is stored and a new
 value **y** is added. The difference is newly calculated and the sum is stored.
 After several rounds, the maximum score is selected and TU is assigned.
+
 <br/><br/>
 ``` {r score_fun_increasing, eval=F}
 score_fun_increasing(x, y)
 ```
 <br/><br/>
+
 ``` {r}
 sessionInfo()
 ```

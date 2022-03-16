@@ -78,6 +78,7 @@ dataframe_summary_events <- function(data, data_annotation) {
       "p_value_slope"
     )]
     )
+  if(nrow(tmp_merged) != 0){
   tmp_merged <- tmp_merged[,-c(1:4)]
   tmp_merged <-
     tmp_merged[grep("\\TU_\\d+$", tmp_merged$TU), ]
@@ -421,7 +422,7 @@ dataframe_summary_events <- function(data, data_annotation) {
   #ratio velocity
   uniqDelay <- unique(na.omit(tmp_merged$delay_frg_slope))
   tmp <- tmp_merged[!duplicated(tmp_merged$delay_frg_slope), ]
-for (i in seq_along(uniqDelay)) {
+  for (i in seq_along(uniqDelay)) {
     ev_fragments <- unlist(strsplit(uniqDelay[i], split = ":"))
     d <- tmp[which(tmp$delay_frg_slope == uniqDelay[i]), ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
@@ -519,5 +520,6 @@ for (i in seq_along(uniqDelay)) {
     tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                        .after = 2)
   colnames(df)[3] <- "p_adjusted"
+  }
   return(df)
 }
