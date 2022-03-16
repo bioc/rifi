@@ -78,7 +78,8 @@ half-life into **half_life_fragments**, on which the bins finally are grouped
 into **intensity_fragments** by similar intensity. From the fragmentation, many
 events can be extracted; **iTSS** (internal transcription start sites) type I
 and type II, **pausing_sites**, **velocity_changes**,**processing_sites** and
-**terminations**, as well as **TI** (transcription interference).<br/><br/>
+**terminations**, as well as **TI** (transcription interference).
+
 <br/><br/>
 ``` {r hirarchy3, echo = FALSE, fig.cap = "**Fragments Hirarchy**", out.width = '100%'}
 knitr::include_graphics("hirarchy3.png")
@@ -310,6 +311,7 @@ transcription decay with "_PDD_". `finding_PDD` uses 'score_fun_linear'
 function to make groups by the difference to the slope. The rowRanges contains
 **ID**, **intensity**, **position** and **position_segment** columns.
 `finding_PDD` needs additional parameters as **pen**, **pen_out** and **thrsh**
+
 <br/><br/>
 ``` {r finding_PDD, eval = FALSE}
 #Due to increased run time, this example is not evaluated in the vignette
@@ -582,6 +584,7 @@ segments with length within the sample size range are considered for the
 penalties to increase run time. ALso, outlier penalties cannot be smaller
 than 40% of the respective penalty. `make_pen` returns a penalty object (list
 of 4 objects) the first being the logbook.
+
 <br/><br/>
 ``` {r make_pen, eval = FALSE}
 fit_minimal
@@ -691,6 +694,7 @@ make_pen and can be customized to show only the n = top_i top results. Results
 are ranked from worst to best for correct-wrong ratio, and color coded by
 penalty, while the outlier-penalty is given as a number for each point. Red and
 green dots represent the wrong and correct splits respectively.
+
 <br/><br/>
 ``` {r viz_pen_obj, eval = FALSE}
 viz_pen_obj(obj = pen_delay, top_i = 10)
@@ -840,8 +844,7 @@ probe_df <- fragment_inty(
   inp = fragmentation_minimal, 
   cores = 2,
   pen = penalties_minimal["intensity_penalty"],
-  pen_out =
-    penalties_minimal["intensity_outlier_penalty"]
+  pen_out = penalties_minimal["intensity_outlier_penalty"]
 )
 head(rowRanges(probe_df))
 ```
@@ -879,6 +882,7 @@ The function used are:
 
 `score_fun_ave` is the score function used by dynamic programming for TI
 fragmentation, for more details, see below.
+
 <br/><br/>
 ``` {r fragment_TI, eval = FALSE}
 probe_df <- fragment_TI(
@@ -890,7 +894,6 @@ probe_df <- fragment_TI(
 head(rowRanges(probe_df))
 ```
 <br/><br/>
-
 
 ## IV. `rifi_stats`
 
@@ -1392,7 +1395,7 @@ The functions used are:
 <br/><br/>
 
 ``` {r rifi_visualization}
-data(stats_minimal)
+stats_minimal
 data(annot_g_minimal)
 rifi_visualization(
   data = stats_minimal,
@@ -1432,8 +1435,8 @@ The plot is located on vignette "genome_fragments.pdf" and shows shows 4 section
 ### 3. Half-life
 
    **Half-life**: HL fragments, fragments annotation, events like termination
-   and iTTS_II are indicated by "Ter" or "NS"; "*" indicates
-   significant statistical test for HL fold change
+   and iTTS_II are indicated by "Ter" or "NS"; "*" indicates significant
+   statistical test for HL fold change
 
 ### 4. Intensity/coverage
 
@@ -1452,12 +1455,12 @@ The plot is located on vignette "genome_fragments.pdf" and shows shows 4 section
    **outliers**: are indicated by square shape an grey color
     
    **high values**: are indicated by square shape an cyan color
+   
 <br/><br/>
 
 ## VII. `rifi_wrapper`
 
-`rifi_wrapper` conveniently wraps all functions included on rifi. The
-function allows the user in one click to run the whole workflow.
+`rifi_wrapper` conveniently wraps all functions included on rifi. The function allows the user in one click to run the whole workflow.
 
 The function used are:
 
@@ -1485,9 +1488,9 @@ wrapper_minimal <-
   rifi_wrapper(
     inp = example_input_e_coli,
     cores = 2,
-    gff = annot_g_minimal[[1]],
-    bg = 4000,
-    restr = 0.1
+    gff = "e_coli.gff3",
+    bg = 0,
+    restr = 0.01
   )
 head(wrapper_minimal)
 }
@@ -1527,9 +1530,8 @@ high residuals, they are stored but excluded from the next fit. The output of
 the function is a vector of IDs separated by ",", a vector of velocity (1/slope)
 separated by "*", a vector of intercept separated by "*" and a vector of
 outliers.
-
 <br/><br/>
-``` {r score_fun_linear, eval=F}
+``` {r score_fun_linear, eval = FALSE}
 score_fun_linear(y, x, z = x, pen, stran, n_out = min(10,
                                                       max(1, 0.4 * length(x))))
 ```

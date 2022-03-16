@@ -19,6 +19,7 @@
 
 
 rifi_wrapper <- function(inp, cores, gff, bg, restr) {
+  
   #run preprocess step
   prepro <- rifi_preprocess(
     inp = inp,
@@ -29,6 +30,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
     dista = 300,
     run_PDD = T
   )
+  
   #fit the data
   probe <- rifi_fit(
     inp = prepro,
@@ -36,7 +38,8 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
     viz = T,
     restr = restr
   )
-  #estimate penalties
+  
+  #calculate penalties
   pen <- rifi_penalties(
     inp = probe,
     details = T,
@@ -73,7 +76,9 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   rifi_visualization(data = probe_sta,
                      genomeLength = annot[[2]],
                      annot = annot[[1]])
+  
   res <-
     list(prepro, probe, pen, probe_fra, probe_sta, probe_summary)
+  
   return(res)
 }

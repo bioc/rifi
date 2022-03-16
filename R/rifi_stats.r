@@ -78,20 +78,20 @@
 
 rifi_stats <- function(inp, dista = 300) {
   message("running predict_ps_itss...")
-  probe <- predict_ps_itss(inp = probe, maxDis = dista)
+  probe <- predict_ps_itss(inp = inp, maxDis = dista)
   message("running apply_Ttest_delay...")
-  probe <- apply_Ttest_delay(inp = probe)
+  probe <- apply_Ttest_delay(inp = inp)
   message("running apply_ancova...")
-  probe <- apply_ancova(inp = probe)
+  probe <- apply_ancova(inp = inp)
   message("running apply_event_position...")
-  probe <- apply_event_position(inp = probe)
+  probe <- apply_event_position(inp = inp)
   message("running apply_t_test...")
-  probe <- apply_t_test(inp = probe)
+  probe <- apply_t_test(inp = inp)
   message("running fold_change...")
-  probe <- fold_change(inp = probe)
+  probe <- fold_change(inp = inp)
   message("running apply_manova...")
-  probe <- apply_manova(inp = probe)
+  probe <- apply_manova(inp = inp)
   message("running apply_t_test_ti...")
-  probe <- apply_t_test_ti(inp = probe)
+  probe <- apply_t_test_ti(inp = inp)
   probe
 }
