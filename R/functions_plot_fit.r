@@ -11,6 +11,13 @@ plot_nls2_function <-
     for (i in seq_len(nrow(inp))) {
       tmp_inp <- inp[i,]
       ID <- rowRanges(tmp_inp)$ID
+      f<-data.frame(bg = 0)
+      if(ID %in% fit_STD$ID){
+        f <- fit_STD[fit_STD$ID == ID,]
+      }
+      if(ID %in% fit_TI$ID){
+        f <- fit_TI[fit_TI$ID == ID,]
+      }
       if(!all(is.na(assay(tmp_inp)))){
         plot(time, assay(tmp_inp), pch = 16, xlab = "Time [min]",
              ylab = "Intensity [A.U.]",
@@ -18,7 +25,7 @@ plot_nls2_function <-
                            " position: ", rowRanges(tmp_inp)$position,
                            " ", decode(strand(tmp_inp))
              ),
-             ylim = c(0, max(max(assay(tmp_inp), na.rm = TRUE),0)),
+             ylim = c(0.9*f$bg, max(max(assay(tmp_inp), na.rm = TRUE),0)),
              col = colData(inp)$replicate + 1
         )
         mean_r <- tapply(as.numeric(assay(tmp_inp)), colData(inp)$timepoint,
