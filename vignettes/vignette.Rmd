@@ -17,6 +17,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
   
+```{r, include=FALSE}
+devtools::load_all(".")
+```
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = TRUE,
@@ -127,24 +130,28 @@ data(example_input_e_coli)
 data(annot_g_minimal)
 #require("SummarizedExperiment")
 #columns with intensities measurements from all time point and replicates
-print("assay")
+print("assay e.coli")
 assay(head(example_input_e_coli))
 #rowRanges of the data
-print("rowRanges")
+print("rowRanges e.coli")
 rowRanges(head(example_input_e_coli))
 # time points and replicates name
-print("colData")
+print("colData e.coli")
 colData(example_input_e_coli)
 ```
 <br/><br/>
 ``` {r echo = FALSE}
 #example of Synechocystis data from microarrays
+print("example of Synechocystis data from microarrays")
 data(example_input_synechocystis_6803_SE)
 #columns with intensities measurements from all time point
+print("assay synechocystis") 
 assay(head(example_input_synechocystis_6803_SE))
 #rowRanges of the data
+print("rowRanges synechocystis")
 rowRanges(head(example_input_synechocystis_6803_SE))
 #time points
+print("colData synechocystis")
 colData(example_input_synechocystis_6803_SE)
 ```
 <br/>
@@ -231,14 +238,14 @@ As our standard input contains probes that are not expressed and thus have a
 relative intensity of 0 at time point 0, in our example check_input gives a
 warning on which IDs have been removed, but the output can be safely used.  
 The result contains the processed input data frame.  
-<br/><br/>
+<br/>
 ``` {r check_input, echo = FALSE}
 result <- check_input(inp = example_input_minimal, thrsh = 0)
 ```
 <br/><br/>
 
 ### 3. `Filtration_Below_Background`
-
+<br/>
 At this point, a custom filtration function can be applied to remove replicates
 that are below the background.
 
@@ -259,7 +266,7 @@ NA, "_", "_passed_")
 <br/><br/>
 
 ### 4. `make_df`
-
+<br/>
 `make_df` calculates the means of all replicates, excluding the filtered
 replicates. Optionally, probes or bins, where all replicates are filtered can
 be removed, when rm_FLT is set to TRUE (default is FALSE).
@@ -278,7 +285,7 @@ all replicates from assay and the columns **probe_TI** and **flag**.
 For our tutorial bg is set to 0, because its RNAseq data, and rm_FLT
 is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 
-<br/><br/>
+<br/>
 ``` {r make_df, echo = FALSE}
 probe_df_min <-
   make_df(
@@ -289,10 +296,10 @@ probe_df_min <-
   )
 
 ```
-<br/><br/>
+<br/>
 ``` {r echo = TRUE}
-#data(make_df)
-head(make_df)
+data(make_df)
+head(rowRanges(probe_df))
 ```
 <br/><br/>
 
@@ -310,10 +317,10 @@ segments. Position segments are strand specific.
 ``` {r segment_pos}
 probe_df <- segment_pos(inp = probe_df_min, dista = 300)
 ``` 
-<br/><br/>
+<br/>
 ```{r echo = TRUE} 
 data(segment_pos)
-head(segment_pos)
+head(rowRanges(probe_df))
 ```
 <br/><br/>
 
@@ -338,11 +345,11 @@ probe_df <-
     thrsh = 0.001
   )
 ``` 
-<br/><br/>
+<br/>
 ``` {r output_PDD}
 #The output
 data(finding_PDD)
-head(finding_PDD)
+head(rowRanges(probe_df))
 ```
 <br/>
 
@@ -367,11 +374,11 @@ probe_df <-
     thrsh = 0.001
   )
 ``` 
-<br/><br/>
+<br/>
 ``` {r output_TI}
 #The output
 data(finding_TI)
-head(finding_TI)
+head(rowRanges(probe_df))
 ```
 <br/>
 
@@ -408,11 +415,11 @@ preprocess_minimal <-
     run_PDD = TRUE
   )
 ```
-<br/><br/>
+<br/>
 ``` {r preprocess_minimal}
 #The output
-data(rifi_preprocess)
-head(rifi_preprocess)
+data(e_coli_prepro)
+head(e_coli_prepro)
 ```
 
 
@@ -453,11 +460,11 @@ suppressWarnings(fit_minimal <- rifi_fit(
 ))
 ```
 
-<br/><br/>
+<br/>
 ``` {r output_fit}
 #Output
-data(rifi_fit)
-head(rifi_fit)
+data(e_coli_fit)
+head(rowRanges(e_coli_fit))
 ```
 
 
@@ -754,8 +761,8 @@ penalties_minimal <-
 <br/><br/>
 ``` {r output_penalties}
 #The output
-data(rifi_penalties)
-head(rifi_penalties)
+data(e_coli_penalties)
+head(rowRanges(e_coli_penalties))
 ```
 <br/><br/>
 
@@ -784,8 +791,8 @@ fragmentation_minimal <-
 ```
 <br/><br/>
 ``` {r echo = TRUE}
-data(rifi_fragmentation)
-head(rifi_fragmentation)
+data(e_coli_fragmentation)
+head(rowRanges(e_coli_fragmentation))
 ```
 <br/><br/>
 
@@ -930,8 +937,7 @@ The function wrapped are:
 ``` {r rifi_stats}
 fragmentation_minimal
 stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300)
-data(rifi_stats)
-head(rifi_stats)
+head(rowRanges(stats_minimal))
 ```
 <br/>
 
@@ -1137,12 +1143,12 @@ The functions used are:
 stats_minimal
 data(annot_g_minimal)
 summary_minimal <- rifi_summary(stats_minimal, data_annotation =
-                                  annot_g_minimal[[1]])
+                                  annot_g[[1]])
 ```
 <br/><br/>
 ```{r}
 data(summary_minimal)
-head(summary_minimal[[7]])
+head(metadata(summary_minimal)[7])
 ```
 <br/><br/>
 
@@ -1241,7 +1247,7 @@ gff3_preprocess(path = "e_coli.gff3")
 ``` {r event_dataframe, eval=F}
 stats_minimal
 data(annot_g_minimal)
-event_dataframe(data = stats_minimal, data_annotation = annot_g_minimal[[1]])
+event_dataframe(data = stats_minimal, data_annotation = annot_g[[1]])
 ```
 <br/>
 

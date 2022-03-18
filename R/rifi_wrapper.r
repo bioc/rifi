@@ -69,7 +69,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   probe_summary <-
     rifi_summary(
       inp = probe_sta,
-      data_annotation = annot[[1]]
+      data_annotation = annot_g[[1]]
       )
   
   #run visualization
