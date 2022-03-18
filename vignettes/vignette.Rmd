@@ -139,13 +139,13 @@ colData(example_input_e_coli)
 <br/><br/>
 ``` {r echo = FALSE}
 #example of Synechocystis data from microarrays
-#data(example_input_synechocystis_6803_SE)
+data(example_input_synechocystis_6803_SE)
 #columns with intensities measurements from all time point
-#assay(head(example_input_synechocystis_6803_SE))
+assay(head(example_input_synechocystis_6803_SE))
 #rowRanges of the data
-#rowRanges(head(example_input_synechocystis_6803_SE))
+rowRanges(head(example_input_synechocystis_6803_SE))
 #time points
-#colData(example_input_synechocystis_6803_SE)
+colData(example_input_synechocystis_6803_SE)
 ```
 <br/>
 
