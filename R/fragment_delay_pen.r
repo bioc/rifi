@@ -38,6 +38,7 @@ fragment_delay_pen <- function(inp, pen, pen_out, from, to, cores) {
         # the loop iterates over each value in the segment
         # this part always goes from position 1 to the referred position
         # 1:3,1:4...
+        # score_fun_linear <-
         tmp_score <-
           score_fun_linear(section[seq_len(i), "delay"],
                            section[seq_len(i), "position"],

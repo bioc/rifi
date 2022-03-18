@@ -12,7 +12,7 @@ output:
     includes:
       before_body: header.html
 vignette: >
-  %\VignetteIndexEntry{Rifi}
+  %\VignetteIndexEntry{Rifi for decay estimation, based on high resolution microarray or RNA-seq data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -26,7 +26,9 @@ knitr::opts_chunk$set(echo = TRUE,
 
 ``` {r, echo = FALSE, message = FALSE}
 require(rifi)
+suppressPackageStartupMessages(library(SummarizedExperiment))
 ```
+
 
 ## 0. Installation
 ``` {r, eval = FALSE}
@@ -118,12 +120,12 @@ data from microarrays (data with averaged replicates, see. "input_df").
 <em>*E.coli*</em> is the input for this tutorial.
 <br/><br/>
 
-``` {r}
+``` {r echo = FALSE}
 #example of E.coli data from RNAseq
-load("example_input_minimal.RData")
-load("example_input_e_coli.RData")
-load("annot_g_minimal.RData")
-require("SummarizedExperiment")
+data(example_input_minimal)
+data(example_input_e_coli)
+data(annot_g_minimal)
+#require("SummarizedExperiment")
 #columns with intensities measurements from all time point and replicates
 print("assay")
 assay(head(example_input_e_coli))
@@ -135,15 +137,15 @@ print("colData")
 colData(example_input_e_coli)
 ```
 <br/><br/>
-``` {r}
+``` {r echo = FALSE}
 #example of Synechocystis data from microarrays
-#example_input_synechocystis_6803
+#data(example_input_synechocystis_6803_SE)
 #columns with intensities measurements from all time point
-#assay(example_input_synechocystis_6803)
+#assay(head(example_input_synechocystis_6803_SE))
 #rowRanges of the data
-#rowRanges(example_input_synechocystis_6803)
-# time points
-#colData(example_input_synechocystis_6803)
+#rowRanges(head(example_input_synechocystis_6803_SE))
+#time points
+#colData(example_input_synechocystis_6803_SE)
 ```
 <br/>
 
@@ -230,7 +232,7 @@ relative intensity of 0 at time point 0, in our example check_input gives a
 warning on which IDs have been removed, but the output can be safely used.  
 The result contains the processed input data frame.  
 <br/><br/>
-``` {r check_input}
+``` {r check_input, echo = FALSE}
 result <- check_input(inp = example_input_minimal, thrsh = 0)
 ```
 <br/><br/>
@@ -277,7 +279,7 @@ For our tutorial bg is set to 0, because its RNAseq data, and rm_FLT
 is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 
 <br/><br/>
-``` {r make_df}
+``` {r make_df, echo = FALSE}
 probe_df_min <-
   make_df(
     inp = result,
@@ -285,8 +287,12 @@ probe_df_min <-
     bg = 0,
     rm_FLT = TRUE
   )
-load("make_df.rda")
-head(rowRanges(probe_df))
+
+```
+<br/><br/>
+``` {r echo = TRUE}
+#data(make_df)
+head(make_df)
 ```
 <br/><br/>
 
@@ -303,8 +309,11 @@ segments. Position segments are strand specific.
 <br/><br/>
 ``` {r segment_pos}
 probe_df <- segment_pos(inp = probe_df_min, dista = 300)
-load("segment_pos.rda")
-head(rowRanges(probe_df))
+``` 
+<br/><br/>
+```{r echo = TRUE} 
+data(segment_pos)
+head(segment_pos)
 ```
 <br/><br/>
 
@@ -332,8 +341,8 @@ probe_df <-
 <br/><br/>
 ``` {r output_PDD}
 #The output
-load("finding_PDD.rda")
-head(rowRanges(probe_df))
+data(finding_PDD)
+head(finding_PDD)
 ```
 <br/>
 
@@ -361,8 +370,8 @@ probe_df <-
 <br/><br/>
 ``` {r output_TI}
 #The output
-load("finding_TI.rda")
-head(rowRanges(probe_df))
+data(finding_TI)
+head(finding_TI)
 ```
 <br/>
 
@@ -385,7 +394,7 @@ All preprocessing steps can be run with `rifi_preprocess` at once. This section
 will focus on all possible arguments that can be passed to the function.
 
 <br/><br/>
-``` {r rifi_preprocess}
+``` {r rifi_preprocess, echo = FALSE}
 #From here on the examples are shown on minimal examples.
 #Two bigger data sets can be used to run the example as well.
 preprocess_minimal <-
@@ -402,8 +411,8 @@ preprocess_minimal <-
 <br/><br/>
 ``` {r preprocess_minimal}
 #The output
-load("rifi_preprocess.rda")
-head(rowRanges(preprocess_min))
+data(rifi_preprocess)
+head(rifi_preprocess)
 ```
 
 
@@ -422,7 +431,8 @@ The function used are:
   3.  `plot_nls2`
   4.  `plot_singleProbe_function`
 <br/><br/>
-``` {r rifi_fit}
+
+``` {r rifi_fit, echo = FALSE}
 #Two bigger data sets can be used to run the example as well.
 preprocess_minimal
 suppressWarnings(fit_minimal <- rifi_fit(
@@ -446,8 +456,8 @@ suppressWarnings(fit_minimal <- rifi_fit(
 <br/><br/>
 ``` {r output_fit}
 #Output
-load("rifi_fit.rda")
-head(rowRanges(fit_min))
+data(rifi_fit)
+head(rifi_fit)
 ```
 
 
@@ -460,8 +470,9 @@ starting values using expand grid and select the best fit. The SE assays contain
 background. Finally probes flagged with ***TI*** are fitted with TI model. The
 output data is an extension of SE metaData, **delay** and **half-life**
 coefficients are added (see below "head(probe)").
+
 <br/><br/>
-``` {r echo = TRUE,  eval=F}
+``` {r echo = TRUE,  eval = FALSE}
 nls2_fit(inp = preprocess_minimal,
          cores = 1,
          decay = seq(.08, 0.11, by = .02),
@@ -508,7 +519,7 @@ res vector and saved as an object. The output data are additional columns in
 SE rowRanges named **delay**, **half-life** and **TI_termination_factor** 
 (see. "head(probe)").
 <br/><br/>
-``` {r TI_fit, eval=F}
+``` {r TI_fit, eval = FALSE}
 TI_fit(inp = preprocess_minimal,
        cores = 1,
        restr = 0.2,
@@ -553,7 +564,7 @@ on TIPlot figure.
 plot_singleProbe_function(inp = probe_df)
 ```
 <br/><br/>
-``` {r TIPlot, echo=FALSE, fig.cap="**TI model fit**", out.width = '100%'}
+``` {r TIPlot, echo = FALSE, fig.cap="**TI model fit**", out.width = '100%'}
 knitr::include_graphics("TIPlot.png")
 ```
 <br/><br/>
@@ -720,7 +731,7 @@ window (bottom) numbers above the dots represent the outlier-penalty.
 
 ### 3. `rifi_penalties`
 <br/><br/>
-``` {r rifi_penalties}
+``` {r rifi_penalties, echo=F}
 fit_minimal
 penalties_minimal <-
   rifi_penalties(
@@ -743,8 +754,8 @@ penalties_minimal <-
 <br/><br/>
 ``` {r output_penalties}
 #The output
-load("rifi_penalties.rda")
-head(rowRanges(penalties_min))
+data(rifi_penalties)
+head(rifi_penalties)
 ```
 <br/><br/>
 
@@ -762,7 +773,7 @@ The functions called are:
 4.  `fragment_TI`
 5.  `TUgether`
 <br/><br/>
-``` {r rifi_fragmentation}
+``` {r rifi_fragmentation, echo=F}
 fit_minimal
 penalties_minimal
 fragmentation_minimal <-
@@ -773,8 +784,8 @@ fragmentation_minimal <-
 ```
 <br/><br/>
 ``` {r echo = TRUE}
-load("rifi_fragmentation.rda")
-head(rowRanges(fragmentation_min))
+data(rifi_fragmentation)
+head(rifi_fragmentation)
 ```
 <br/><br/>
 
@@ -919,8 +930,8 @@ The function wrapped are:
 ``` {r rifi_stats}
 fragmentation_minimal
 stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300)
-load("rifi_stats.rda")
-head(rowRanges(stats_minimal))
+data(rifi_stats)
+head(rifi_stats)
 ```
 <br/>
 
@@ -1070,9 +1081,7 @@ head(rowRanges(probe))
 `apply_manova` checks if the ratio of HL ratio and intensity ratio is
 statistically significant. `apply_manova` compares the variance between two
 fold-changes, Half-life and intensity within the same TU ((half-life frgB / 
-half-life frgA) / (intensity frgB/intensity frgA)). One half-life fragment could
-cover two intensity fragments therefore the fragments borders should be set
-first.
+half-life frgA) / (intensity frgB/intensity frgA)). One half-life fragment could cover two intensity fragments therefore the fragments borders should be set first.
 
 the function used is:
 
@@ -1124,13 +1133,16 @@ The functions used are:
 8. `dataframe_summary_TI`
 
 <br/><br/>
-``` {r rifi_summary}
+``` {r rifi_summary, eval=F}
 stats_minimal
 data(annot_g_minimal)
 summary_minimal <- rifi_summary(stats_minimal, data_annotation =
-                                  annot_g[[1]])
-load("summary_minimal.rda")
-metadata(summary_minimal)
+                                  annot_g_minimal[[1]])
+```
+<br/><br/>
+```{r}
+data(summary_minimal)
+head(summary_minimal[[7]])
 ```
 <br/><br/>
 
@@ -1155,7 +1167,6 @@ f. *locus_tag*: locus_tag annotation
 <br/><br/>
 ``` {r gff3_preprocess}
 gff3_preprocess(path = "e_coli.gff3")
-#gff3_preprocess(path = "")
 ```
 <br/>
 
@@ -1394,7 +1405,7 @@ The functions used are:
    
 <br/><br/>
 
-``` {r rifi_visualization}
+``` {r rifi_visualization, eval = FALSE}
 stats_minimal
 data(annot_g_minimal)
 rifi_visualization(
@@ -1414,8 +1425,8 @@ rifi_visualization(
  knitr::include_graphics("genome_plot_2.png")
 ```
 <br/>
-The plot is located on vignette "genome_fragments.pdf" and shows shows 4 sections: annotation, delay, half-life and intensity/coverage.
-
+The plot is located on vignette "genome_fragments.pdf" and shows 4 sections: 
+annotation, delay, half-life and intensity.
 
 ### 1. Annotation
 

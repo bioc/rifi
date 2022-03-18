@@ -105,7 +105,8 @@ dataframe_summary_events <- function(data, data_annotation) {
   ps_frg <- which(tmp_merged$pausing_site == "+")
   itss1_frg <- which(tmp_merged$iTSS_I == "+")
   ps_its <- c(ps_frg, itss1_frg)
-  for (i in seq_along(ps_its)) {
+  if(length(ps_its) != 0){
+    for (i in seq_along(ps_its)) {
     d <- tmp_merged[ps_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     if (d$pausing_site == "+") {
@@ -179,13 +180,15 @@ dataframe_summary_events <- function(data, data_annotation) {
                                         "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
   }
+  }
   #termination and iTSSII
   tmp <-
     tmp_merged[!duplicated(tmp_merged$FC_HL_intensity_fragment), ]
   ter_frg <- which(tmp$synthesis_ratio_event == "Termination")
   itss2_frg <- which(tmp$synthesis_ratio_event == "iTSS_II")
   ter_its <- c(ter_frg, itss2_frg)
-  for (i in seq_along(ter_its)) {
+  if(length(ter_its) != 0){
+    for (i in seq_along(ter_its)) {
     d <- tmp[ter_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     event <- c(event, d$synthesis_ratio_event)
@@ -267,10 +270,12 @@ dataframe_summary_events <- function(data, data_annotation) {
                                  ev_fragments[4]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
   }
+  }
   #FC intensity fragments
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_intensity), ]
   tmp <- tmp[!is.na(tmp$FC_fragment_intensity), ]
-  for (i in seq_len(nrow(tmp))) {
+  if(nrow(tmp) != 0){
+    for (i in seq_len(nrow(tmp))) {
     d <- tmp[i, ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     ev_fragments <-
@@ -351,10 +356,12 @@ dataframe_summary_events <- function(data, data_annotation) {
                              ev_fragments[2]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
   }
+  }
   #FC HL fragments
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_HL), ]
   tmp <- tmp[!is.na(tmp$FC_fragment_HL), ]
-  for (i in seq_len(nrow(tmp))) {
+  if(nrow(tmp) != 0){
+    for (i in seq_len(nrow(tmp))) {
     d <- tmp[i, ]
     ev_fragments <- unlist(strsplit(d$FC_fragment_HL, split = ":"))
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
@@ -419,10 +426,12 @@ dataframe_summary_events <- function(data, data_annotation) {
                                              ev_fragments[2]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
   }
+  }
   #ratio velocity
   uniqDelay <- unique(na.omit(tmp_merged$delay_frg_slope))
   tmp <- tmp_merged[!duplicated(tmp_merged$delay_frg_slope), ]
-  for (i in seq_along(uniqDelay)) {
+  if(nrow(tmp) != 0){
+    for (i in seq_along(uniqDelay)) {
     ev_fragments <- unlist(strsplit(uniqDelay[i], split = ":"))
     d <- tmp[which(tmp$delay_frg_slope == uniqDelay[i]), ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
@@ -489,6 +498,7 @@ dataframe_summary_events <- function(data, data_annotation) {
           tmp_merged[which(tmp_merged$delay_fragment ==
                              ev_fragments[2]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
+  }
   }
   df <-
     cbind.data.frame(

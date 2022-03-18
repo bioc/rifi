@@ -34,7 +34,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   #fit the data
   probe <- rifi_fit(
     inp = prepro,
-    cores = 30,
+    cores = cores,
     viz = T,
     restr = restr
   )
@@ -57,7 +57,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
     cores = cores
     )
   
-  #extract the annotation from ggf file
+  #extract the annotation from gff file
   annot <- gff3_preprocess(gff)
   
   #run statistics
@@ -68,7 +68,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   #run summary
   probe_summary <-
     rifi_summary(
-      inp = probe_sta,
+      probe = probe_sta,
       data_annotation = annot[[1]]
       )
   

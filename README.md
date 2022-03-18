@@ -174,22 +174,20 @@ ID    | gene  | ...  | strand| event  | p_value  |
 
 ## Quick start
 
-To run the example, you would need to download from rifi/data and run the script in R:
+To run the example, you would need to download the files cited below from rifi/data on the same directory of your work and run the script in R:
 
 #### 1. Annotation file
-annot_g_minimal.RData 
+e_coli.gff3
 
 #### 2. SummarizedExperiment input data
 example_input_e_coli.RData
 
 ```
-wrapper <- rifi_wrapper(inp = example_input_e_coli, cores = 2, gff = annot_g[[1]],
-                                        bg = 0, restr = 0.01)
+wrapper <- rifi_wrapper(inp = example_input_e_coli, cores = 2, gff = "./e_coli.gff3", bg = 0, restr = 0.01)
 ```
 #### check the result
 rifi_output and a plot are generated in your directory.
-rifi_output is a summarizedExperiment format containing assay, rowRanges, colData and
-metaData. More details could be found on vignette.
+rifi_output is a summarizedExperiment format containing assay, rowRanges, colData and metaData. More details could be found on vignette.
 
 ## Testing
 
