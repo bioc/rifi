@@ -114,7 +114,7 @@ finding_TI <-
           match(trgt, rowRanges(inp)$ID) # matches the row in the inp df
         pos_seg <- unique(rowRanges(inp)$position_segment[rows])
         first_pos <- rowRanges(inp)$position[rows[1]]
-        if (all(decode(strand(inp))[rowRanges(inp)$position_segment == pos_seg] == "-", na.rm = T)) {
+        if (all(decode(strand(inp))[rowRanges(inp)$position_segment == pos_seg] == "-", na.rm = TRUE)) {
           ID_before <-
             rowRanges(inp)$ID[which(rowRanges(inp)$position_segment == pos_seg)][
               na.omit(match(c((first_pos + add):(first_pos + 1)),

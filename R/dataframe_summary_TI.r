@@ -255,11 +255,13 @@ dataframe_summary_TI <- function(data, input) {
       position_1,
       position_2
     )
+  if(nrow(df) != 0){
   p_adjusted <-
       p.adjust(as.numeric(as.character(df$p_value)), method = "fdr")
   df <-
     tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                        .after = 4)
   colnames(df)[5] <- "p_adjusted"
+  }
   return(df)
 }

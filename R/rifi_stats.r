@@ -1,10 +1,12 @@
 #' rifi_stats: conveniently wraps all statistical prediction steps.
 #' Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-#' apply_event_position, apply_t_test, fold_change, apply_manova and 
-#' apply_t_test_ti.
+#' apply_event_position, apply_t_test, fold_change, apply_manova, 
+#' apply_t_test_ti and gff3_preprocess.
+#' 
 #' @param probe SummarizedExperiment: the input data frame with correct format.
 #' @param dista integer: the maximal distance allowed between two successive
 #' fragments. Default is the auto generated value.
+#' @param gff : path to the directory containing the gff3 file.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
@@ -69,14 +71,15 @@
 #' @seealso `fold_change`
 #' @seealso `apply_manova`
 #' @seealso `apply_t_test_ti`
+#' @seealso `gff3_preprocess`
 #' 
 #' @examples
 #' data(fragmentation_minimal)
-#' rifi_stats(inp = fragmentation_minimal, dista = 300)
+#' rifi_stats(inp = fragmentation_minimal, dista = 300, gff = path)
 #' 
 #' @export
 
-rifi_stats <- function(inp, dista = 300) {
+rifi_stats <- function(inp, dista = 300, gff) {
   message("running predict_ps_itss...")
   probe <- predict_ps_itss(inp = inp, maxDis = dista)
   message("running apply_Ttest_delay...")
@@ -93,5 +96,6 @@ rifi_stats <- function(inp, dista = 300) {
   probe <- apply_manova(inp = probe)
   message("running apply_t_test_ti...")
   probe <- apply_t_test_ti(inp = probe)
+  metadata(probe)$annot <- gff3_preprocess(gff)
   probe
 }

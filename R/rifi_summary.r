@@ -19,9 +19,8 @@
 #' 
 #' @examples
 #' data(stats_minimal)
-#' data(annot_g_minimal)
-#' rifi_summary(inp = stats_minimal, data_annotation =
-#' annot_g_minimal[[1]])
+#' rifi_summary(inp = stats_minimal, data_annotation = 
+#' metadata(stats_minimal)$annot[[1]])
 #' 
 #' @export
 

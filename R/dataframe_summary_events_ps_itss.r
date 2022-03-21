@@ -186,6 +186,7 @@ dataframe_summary_events_ps_itss <-
         gap_fragments,
         features
       )
+    if(nrow(df) != 0){
     df$p_value <- formatC(as.numeric(df$p_value), format = "e", digits = 2)
     df <-
       as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
@@ -195,5 +196,6 @@ dataframe_summary_events_ps_itss <-
       tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                          .after = 2)
     colnames(df)[3] <- "p_adjusted"
+    }
     return(df)
   }

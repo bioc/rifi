@@ -14,7 +14,13 @@
 #'
 #' @seealso `check_input`
 #' @seealso `rifi_preprocess`
-#'
+#' @seealso `rifi_fit`
+#' @seealso `rifi_penalties`
+#' @seealso `rifi_fragmentation`
+#' @seealso `rifi_stats`
+#' @seealso `rifi_summary`
+#' @seealso `rifi_visualization`
+#' 
 #' @export
 
 
@@ -25,25 +31,25 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
     inp = inp,
     cores = cores,
     bg = bg,
-    rm_FLT = T,
+    rm_FLT = TRUE,
     thrsh_check = 10,
     dista = 300,
-    run_PDD = T
+    run_PDD = TRUE
   )
   
   #fit the data
   probe <- rifi_fit(
     inp = prepro,
     cores = cores,
-    viz = T,
+    viz = TRUE,
     restr = restr
   )
   
   #calculate penalties
   pen <- rifi_penalties(
     inp = probe,
-    details = T,
-    viz = T,
+    details = TRUE,
+    viz = TRUE,
     top_i = 25,
     cores = cores,
     dpt = 1,
@@ -56,26 +62,25 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
     inp = probe,
     cores = cores
     )
-  
-  #extract the annotation from gff file
-  annot <- gff3_preprocess(gff)
-  
+
   #run statistics
   probe_sta <- rifi_stats(
     inp = probe_fra, 
-    dista = 300)
+    dista = 300,
+    gff = gff
+    )
   
   #run summary
   probe_summary <-
     rifi_summary(
       inp = probe_sta,
-      data_annotation = annot_g[[1]]
+      data_annotation = metadata(probe_sta)$annot[[1]]
       )
   
   #run visualization
   rifi_visualization(data = probe_sta,
-                     genomeLength = annot[[2]],
-                     annot = annot[[1]])
+                     genomeLength = metadata(probe_sta)$annot[[2]],
+                     annot = metadata(probe_sta)$annot[[1]])
   
   res <-
     list(prepro, probe, pen, probe_fra, probe_sta, probe_summary)

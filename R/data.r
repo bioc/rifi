@@ -1,7 +1,6 @@
 #' A list corresponding to a gff file for E.coli example data
 #' A list containing all necessary information from a gff file for
-#' visualization
-#' and final output.
+#' visualization and final output.
 #'
 #' @format A list with 2 items:
 #' \describe{
@@ -18,60 +17,6 @@
 #'   \item{genome length:}{a numeric vector containing the length of the genome}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
-#'
-#' @usage data(annot_g_e_coli)
-#'
-"annot_g_e_coli"
-
-#' A list corresponding to an artificial gff file for the minimal example data
-#' A list containing all necessary information from a gff file for visualization
-#' and final output.
-#' 
-#' @format A list with 2 items:
-#' \describe{
-#'   \item{data annotation:}{a data frame with 4 rows and 6 variables
-#'     \describe{
-#'       \item{region:}{the region from the gff file}
-#'       \item{start:}{the start of the annotation}
-#'       \item{end:}{the end of the annotation}
-#'       \item{strand:}{the strand of the annotation}
-#'       \item{gene:}{the annotated gene name}
-#'       \item{locus_tag:}{the annotated locus tag}
-#'     }
-#'   }
-#'   \item{genome length:}{a numeric vector containing the length of the genome}
-#' }
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
-#' @usage data(annot_g_minimal)
-#'
-"annot_g_minimal"
-
-#' A data frame corresponding to a gff file for Synechocystis 6803 example data
-#' A list containing all necessary information from a gff file for visualization
-#' and final output.
-#'
-#' @format A list with 2 items:
-#' \describe{
-#'   \item{data annotation:}{a data frame with 5853 rows and 6 variables:
-#'     \describe{
-#'       \item{region:}{the region from the gff file}
-#'       \item{start:}{the start of the annotation}
-#'       \item{end:}{the end of the annotation}
-#'       \item{strand:}{the strand of the annotation}
-#'       \item{gene:}{the annotated gene name}
-#'       \item{locus_tag:}{the annotated locus tag}
-#'     }
-#'   }
-#'   \item{genome length:}{a numeric vector containing the length of the genome}
-#' }
-#'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
-#'
-#' @usage data(annot_g_synechocystis_6803)
-#'
-"annot_g_synechocystis_6803"
-
 #' An example input data frame from E. coli.#'
 #' A data set from RNAseq data containing information about the intensities at
 #' all time points, as well as position, strand and ID information.
@@ -94,7 +39,7 @@
 #'   \item{strand:}{strand information}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(example_input_e_coli)
 #'
@@ -104,7 +49,7 @@
 #' A data set containing information about the intensities at all time points,
 #' as well as position, strand and ID information.
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(example_input_minimal)
 #'
@@ -128,7 +73,7 @@
 #'   \item{strand:}{strand information}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(example_input_synechocystis_6803)
 #'
@@ -180,7 +125,7 @@
 #'   }
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fit_e_coli)
 #'
@@ -188,7 +133,7 @@
 
 #' The artificial result of rifi_fit for artificial example data
 #' A data frame containing the output from rifi_fit.
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fit_minimal)
 #'
@@ -238,7 +183,7 @@
 #'     }
 #'   }
 #' }
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fit_synechocystis_6803)
 #'
@@ -278,7 +223,7 @@
 #'   \item{seg_ID:}{The combined ID of the fragment}
 #' }
 #' 
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fragmentation_e_coli)
 #'
@@ -287,7 +232,7 @@
 #' The result of rifi_fragmentation for artificial example data
 #' A data frame containing the output from rifi_fragmentation, the probe_df
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fragmentation_minimal)
 #'
@@ -327,7 +272,7 @@
 #'   \item{seg_ID:}{The combined ID of the fragment}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fragmentation_synechocystis_6803)
 #'
@@ -377,7 +322,7 @@
 #'   }
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(penalties_e_coli)
 #'
@@ -386,7 +331,7 @@
 #' The result of rifi_penalties for artificial example data
 #' A vector containing the output from rifi_penalties, the logbook.
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(penalties_minimal)
 #'
@@ -436,7 +381,7 @@
 #'   }
 #' }
 #' 
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(penalties_synechocystis_6803)
 #'
@@ -481,7 +426,7 @@
 #'   }
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(preprocess_e_coli)
 #'
@@ -491,7 +436,7 @@
 #' A list containing the output from rifi_preprocess, including the probe_df
 #' and the modified input_df
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(preprocess_minimal)
 #'
@@ -532,7 +477,7 @@
 #'   }
 #' }
 #' 
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(preprocess_synechocystis_6803)
 #'
@@ -595,7 +540,7 @@
 #'   \item{TI_fragments_p_value:}{}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(stats_e_coli)
 #'
@@ -658,7 +603,7 @@
 #'   \item{TI_fragments_p_value:}{}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(stats_minimal)
 #'
@@ -721,7 +666,7 @@
 #'   \item{TI_fragments_p_value:}{}
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(stats_synechocystis_6803)
 #'
@@ -806,7 +751,7 @@
 #'   }
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(summary_e_coli)
 #'
@@ -891,7 +836,7 @@
 #'   }
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(summary_minimal)
 #'
@@ -977,7 +922,7 @@
 #'   }
 #' }
 #'
-#' @source \url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(summary_synechocystis_6803)
 #'

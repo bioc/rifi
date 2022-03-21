@@ -498,7 +498,7 @@ dataframe_summary_events <- function(data, data_annotation) {
           tmp_merged[which(tmp_merged$delay_fragment ==
                              ev_fragments[2]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
-  }
+    }
   }
   df <-
     cbind.data.frame(
@@ -521,6 +521,7 @@ dataframe_summary_events <- function(data, data_annotation) {
       gap_fragments,
       features
     )
+  if(nrow(df) != 0){
   df$p_value <- formatC(as.numeric(as.character(df$p_value)), format = "e", 
                         digits = 2)
   df <-
@@ -530,6 +531,7 @@ dataframe_summary_events <- function(data, data_annotation) {
     tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
                        .after = 2)
   colnames(df)[3] <- "p_adjusted"
+    }
   }
   return(df)
 }

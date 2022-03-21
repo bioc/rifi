@@ -127,7 +127,6 @@ data from microarrays (data with averaged replicates, see. "input_df").
 #example of E.coli data from RNAseq
 data(example_input_minimal)
 data(example_input_e_coli)
-data(annot_g_minimal)
 #require("SummarizedExperiment")
 #columns with intensities measurements from all time point and replicates
 print("assay e.coli")
@@ -143,16 +142,16 @@ colData(example_input_e_coli)
 ``` {r echo = FALSE}
 #example of Synechocystis data from microarrays
 print("example of Synechocystis data from microarrays")
-data(example_input_synechocystis_6803_SE)
+data(example_input_synechocystis_6803)
 #columns with intensities measurements from all time point
 print("assay synechocystis") 
-assay(head(example_input_synechocystis_6803_SE))
+assay(head(example_input_synechocystis_6803))
 #rowRanges of the data
 print("rowRanges synechocystis")
-rowRanges(head(example_input_synechocystis_6803_SE))
+rowRanges(head(example_input_synechocystis_6803))
 #time points
 print("colData synechocystis")
-colData(example_input_synechocystis_6803_SE)
+colData(example_input_synechocystis_6803)
 ```
 <br/>
 
@@ -418,8 +417,8 @@ preprocess_minimal <-
 <br/>
 ``` {r preprocess_minimal}
 #The output
-data(e_coli_prepro)
-head(e_coli_prepro)
+data(preprocess_e_coli)
+head(preprocess_e_coli)
 ```
 
 
@@ -463,8 +462,8 @@ suppressWarnings(fit_minimal <- rifi_fit(
 <br/>
 ``` {r output_fit}
 #Output
-data(e_coli_fit)
-head(rowRanges(e_coli_fit))
+data(fit_e_coli)
+head(rowRanges(fit_e_coli))
 ```
 
 
@@ -761,8 +760,8 @@ penalties_minimal <-
 <br/><br/>
 ``` {r output_penalties}
 #The output
-data(e_coli_penalties)
-head(rowRanges(e_coli_penalties))
+data(penalties_e_coli)
+head(rowRanges(penalties_e_coli))
 ```
 <br/><br/>
 
@@ -791,8 +790,8 @@ fragmentation_minimal <-
 ```
 <br/><br/>
 ``` {r echo = TRUE}
-data(e_coli_fragmentation)
-head(rowRanges(e_coli_fragmentation))
+data(fragmentation_e_coli)
+head(rowRanges(fragmentation_e_coli))
 ```
 <br/><br/>
 
@@ -932,12 +931,12 @@ The function wrapped are:
 6.  `fold_change`
 7.  `apply_manova`
 8.  `apply_t_test_ti`
+9.  `gff3_preprocess`
 
 <br/><br/>
 ``` {r rifi_stats}
 fragmentation_minimal
-stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300)
-head(rowRanges(stats_minimal))
+stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300, gff =  "./e_coli.gff3")
 ```
 <br/>
 
@@ -1112,6 +1111,34 @@ are significant. `apply_t_test_ti` selects TI fragments within the same TU
 excluding the outliers. Two new columns are added, "ti_fragments" and
 "p_value_tiTest" referring to TI fragments subjected to t-test and their
 p_value.
+
+
+### 9. `gff3_preprocess`
+
+`gff3_preprocess` processes gff3 file from database, extracting gene names and
+locus_tag from all coding regions (CDS). Other features like UTRs, ncRNA, asRNA
+ect.. are extracted if available on one hand and the genome length on other
+hand. The output is a list of 2 elements and added to the input as metadata.
+
+The output data frame from `gff3_preprocess` function contains the following
+columns:
+
+a. *region*: CDS or any other available like UTRs, ncRNA, asRNA
+b. *start*: start position of the gene
+c. *end*: end position of the gene
+d. *strand*: +/-
+e. *gene*: gene annotation if available otherwise locus_tag annotation replaces
+it
+f. *locus_tag*: locus_tag annotation
+
+<br/><br/>
+``` {r gff3_preprocess, eval = FALSE}
+  metadata(stats_minimal)$annot <- gff3_preprocess(path = "e_coli.gff3")
+```
+<br/>
+
+**path** path: path to the directory containing the gff3 file
+
 <br/><br/>
 ``` {r apply_t_test_ti, eval=F}
 probe
@@ -1129,56 +1156,29 @@ are generated and gathered as metadata into SE.
 
 The functions used are:
 
-1. `gff3_preprocess`
-2. `event_dataframe`
-3. `dataframe_summary`
-4. `dataframe_summary_events`
-5. `dataframe_summary_events_HL_int`
-6. `dataframe_summary_events_ps_itss`
-7. `dataframe_summary_events_velocity`
-8. `dataframe_summary_TI`
+1. `event_dataframe`
+2. `dataframe_summary`
+3. `dataframe_summary_events`
+4. `dataframe_summary_events_HL_int`
+5. `dataframe_summary_events_ps_itss`
+6. `dataframe_summary_events_velocity`
+7. `dataframe_summary_TI`
 
 <br/><br/>
 ``` {r rifi_summary, eval=F}
 stats_minimal
-data(annot_g_minimal)
 summary_minimal <- rifi_summary(stats_minimal, data_annotation =
-                                  annot_g[[1]])
+                                  metadata(stats_minimal)$annot[[1]])
 ```
 <br/><br/>
-```{r}
+```{r, eval = FALSE}
 data(summary_minimal)
-head(metadata(summary_minimal)[7])
+head(metadata(summary_minimal))
 ```
 <br/><br/>
 
-### 1. `gff3_preprocess`
 
-`gff3_preprocess` processes gff3 file from database, extracting gene names and
-locus_tag from all coding regions (CDS). Other features like UTRs, ncRNA, asRNA
-ect.. are extracted if available on one hand and the genome length on other
-hand. The output is a list of 2 elements.
-
-The output data frame from `gff3_preprocess` function contains the following
-columns:
-
-a. *region*: CDS or any other available like UTRs, ncRNA, asRNA
-b. *start*: start position of the gene
-c. *end*: end position of the gene
-d. *strand*: +/-
-e. *gene*: gene annotation if available otherwise locus_tag annotation replaces
-it
-f. *locus_tag*: locus_tag annotation
-
-<br/><br/>
-``` {r gff3_preprocess}
-gff3_preprocess(path = "e_coli.gff3")
-```
-<br/>
-
-**path** path: path to the directory containing the gff3 file
-
-### 2.  `event_dataframe`
+### 1. `event_dataframe`
 
 `event_dataframe` creates a data frame only with events for segments and genes.
 `event_dataframe` selects columns with statistical features in addition to "ID",
@@ -1246,8 +1246,7 @@ gff3_preprocess(path = "e_coli.gff3")
 <br/><br/>
 ``` {r event_dataframe, eval=F}
 stats_minimal
-data(annot_g_minimal)
-event_dataframe(data = stats_minimal, data_annotation = annot_g[[1]])
+event_dataframe(data = stats_minimal, data_annotation = metadata(stats_minimal)$annot[[1]])
 ```
 <br/>
 
@@ -1334,7 +1333,7 @@ t-test between the neighboring fragment, significant t-tests are assigned with
 
 The functions used are:
 
-   `gff3_preprocess`: see `rifi_summary` section
+   `gff3_preprocess`: see `rifi_stats` section
    
    `strand_selection`: check if data is stranded and arrange by position
    
@@ -1413,11 +1412,10 @@ The functions used are:
 
 ``` {r rifi_visualization, eval = FALSE}
 stats_minimal
-data(annot_g_minimal)
 rifi_visualization(
   data = stats_minimal,
-  genomeLength = annot_g[[2]],
-  annot = annot_g[[1]]
+  genomeLength = metadata(stats_minimal)$annot[[2]],
+  annot = metadata(stats_minimal)$annot[[1]]
 )
 ```
 <br/><br/>
