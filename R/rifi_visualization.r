@@ -170,8 +170,8 @@
 
 rifi_visualization <-
   function(data,
-           genomeLength,
-           annot,
+           genomeLength = metadata(data)$annot[[2]],
+           annot = metadata(data)$annot[[1]],
            coverage = 0,
            chr_fwd = NA,
            chr_rev = NA,

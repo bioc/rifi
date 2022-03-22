@@ -125,6 +125,7 @@ data from microarrays (data with averaged replicates, see. "input_df").
 
 ``` {r echo = FALSE}
 #example of E.coli data from RNAseq
+print("example of E.coli data from RNA-seq")
 data(example_input_minimal)
 data(example_input_e_coli)
 #require("SummarizedExperiment")
@@ -158,7 +159,7 @@ colData(example_input_synechocystis_6803)
 The SE needs to comply to the following rules:
 
 1. assays contains the relative intensities need to be numeric. The first column
-is called "0" and refers to the first time point (before  rifampicin addition).
+is called "0" and refers to the first time point (before rifampicin addition).
 The intensities could contain 0 or NA except the column "0". The intensities are
 normalized to column "0"
 2. rowRanges includes two columns, "ID" and "position". Each ID in the column
@@ -1167,8 +1168,7 @@ The functions used are:
 <br/><br/>
 ``` {r rifi_summary, eval=F}
 stats_minimal
-summary_minimal <- rifi_summary(stats_minimal, data_annotation =
-                                  metadata(stats_minimal)$annot[[1]])
+summary_minimal <- rifi_summary(stats_minimal)
 ```
 <br/><br/>
 ```{r, eval = FALSE}
@@ -1413,10 +1413,8 @@ The functions used are:
 ``` {r rifi_visualization, eval = FALSE}
 stats_minimal
 rifi_visualization(
-  data = stats_minimal,
-  genomeLength = metadata(stats_minimal)$annot[[2]],
-  annot = metadata(stats_minimal)$annot[[1]]
-)
+  data = stats_minimal
+  )
 ```
 <br/><br/>
 ``` {r genome_plot_1, echo=T, fig.cap="**Fragments Plot Forward Strand**", out.width = '100%'}
@@ -1505,8 +1503,12 @@ wrapper_minimal <-
     bg = 0,
     restr = 0.01
   )
-head(wrapper_minimal)
 }
+```
+<br/><br/>
+```{r, eval = TRUE}
+data("wrapper_e_coli")
+wrapper_e_coli
 ```
 <br/>
 

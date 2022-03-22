@@ -45,34 +45,34 @@ dataframe_summary_events_ps_itss <-
   function(data, data_annotation) {
     tmp_merged <-
       as.data.frame(
-      rowRanges(data)[, c(
-        "ID",
-        "position",
-        "position_segment",
-        "TU",
-        "delay_fragment",
-        "HL_fragment",
-        "intensity_fragment",
-        "velocity_fragment",
-        "FC_fragment_HL",
-        "FC_HL",
-        "p_value_HL",
-        "FC_fragment_intensity",
-        "FC_intensity",
-        "p_value_intensity",
-        "FC_HL_adapted",
-        "FC_HL_intensity_fragment",
-        "synthesis_ratio",
-        "synthesis_ratio_event",
-        "p_value_Manova",
-        "pausing_site",
-        "iTSS_I",
-        "event_ps_itss_p_value_Ttest",
-        "ps_ts_fragment",
-        "event_duration",
-        "delay_frg_slope",
-        "p_value_slope"
-      )]
+        rowRanges(data)[, c(
+          "ID",
+          "position",
+          "position_segment",
+          "TU",
+          "delay_fragment",
+          "HL_fragment",
+          "intensity_fragment",
+          "velocity_fragment",
+          "FC_fragment_HL",
+          "FC_HL",
+          "p_value_HL",
+          "FC_fragment_intensity",
+          "FC_intensity",
+          "p_value_intensity",
+          "FC_HL_adapted",
+          "FC_HL_intensity_fragment",
+          "synthesis_ratio",
+          "synthesis_ratio_event",
+          "p_value_Manova",
+          "pausing_site",
+          "iTSS_I",
+          "event_ps_itss_p_value_Ttest",
+          "ps_ts_fragment",
+          "event_duration",
+          "delay_frg_slope",
+          "p_value_slope"
+        )]
       )
     tmp_merged <- tmp_merged[,-c(1:4)]
     tmp_merged <-
@@ -112,8 +112,8 @@ dataframe_summary_events_ps_itss <-
         c(event_position, (tmp_merged[last(
           which(tmp_merged$delay_fragment ==
                   ev_fragments[1])), "position"] + tmp_merged[
-                               which(tmp_merged$delay_fragment ==
-                                       ev_fragments[2]), "position"][1]) / 2)
+                    which(tmp_merged$delay_fragment ==
+                            ev_fragments[2]), "position"][1]) / 2)
       velocity_ratio <-
         c(velocity_ratio, tmp_merged[
           which(tmp_merged$delay_fragment ==
@@ -165,8 +165,8 @@ dataframe_summary_events_ps_itss <-
       gap_fragments <-
         c(gap_fragments, abs(tmp_merged[last(which(
           tmp_merged$delay_fragment == ev_fragments[1])), "position"] -
-                               tmp_merged[which(tmp_merged$delay_fragment ==
-                                   ev_fragments[2]), "position"][1]))
+            tmp_merged[which(tmp_merged$delay_fragment ==
+                               ev_fragments[2]), "position"][1]))
       features <- c(features, length(unique(ev_fragments)))
     }
     df <-
@@ -187,15 +187,15 @@ dataframe_summary_events_ps_itss <-
         features
       )
     if(nrow(df) != 0){
-    df$p_value <- formatC(as.numeric(df$p_value), format = "e", digits = 2)
-    df <-
-      as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
-    p_adjusted <-
-      as.numeric(p.adjust(as.numeric(df$p_value), method = "fdr"))
-    df <-
-      tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
-                         .after = 2)
-    colnames(df)[3] <- "p_adjusted"
+      df$p_value <- formatC(as.numeric(df$p_value), format = "e", digits = 2)
+      df <-
+        as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
+      p_adjusted <-
+        as.numeric(p.adjust(as.numeric(df$p_value), method = "fdr"))
+      df <-
+        tibble::add_column(df, formatC(p_adjusted, format = "e", digits = 2),
+                           .after = 2)
+      colnames(df)[3] <- "p_adjusted"
     }
     return(df)
   }
