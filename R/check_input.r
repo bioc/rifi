@@ -66,7 +66,7 @@ check_input <- function(inp, thrsh = 0) {
     warning("Probes without strand information cannot be considered.")
   }
   # checks if t0 is 0 or NA
-  zero_tmp <- rowMeans(assay(inp[,inp$timepoint == "0"]), na.rm = T)
+  zero_tmp <- rowMeans(assay(inp[,inp$timepoint == "0"]), na.rm = TRUE)
   if (any(is.na(zero_tmp) | any(zero_tmp <= thrsh))) {
     rows <- which(is.na(zero_tmp) | zero_tmp <= thrsh)
     rep <- metadata(inp)$replicate
