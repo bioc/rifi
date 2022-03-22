@@ -73,5 +73,10 @@ check_input <- function(inp, thrsh = 0) {
     inp <- encode_FLT(obj = inp, rows = rows, rep = rep)
     warning("Probes below ",thrsh," or NA at timepoint 0 connot be considered.")
   }
+  comb<-cbind(decode(strand(inp)),rowRanges(inp)$position)
+  if(any(duplicated(comb))){
+    inp <- inp[which(!duplicated(comb)),]
+    warning("Probes without unique position and strand cannot be considered.")
+  }
   inp
 }
