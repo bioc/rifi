@@ -66,12 +66,17 @@ check_input <- function(inp, thrsh = 0) {
     warning("Probes without strand information cannot be considered.")
   }
   # checks if t0 is 0 or NA
-  zero_tmp <- rowMeans(assay(inp[,inp$timepoint == "0"]), na.rm = TRUE)
+  zero_tmp <- rowMeans(assay(inp[,inp$timepoint == "0"]), na.rm = T)
   if (any(is.na(zero_tmp) | any(zero_tmp <= thrsh))) {
     rows <- which(is.na(zero_tmp) | zero_tmp <= thrsh)
     rep <- metadata(inp)$replicate
     inp <- encode_FLT(obj = inp, rows = rows, rep = rep)
     warning("Probes below ",thrsh," or NA at timepoint 0 connot be considered.")
+  }
+  comb<-cbind(decode(strand(inp)),rowRanges(inp)$position)
+  if(any(duplicated(comb))){
+    inp <- inp[which(!duplicated(comb)),]
+    warning("Probes without unique position and strand cannot be considered.")
   }
   inp
 }
