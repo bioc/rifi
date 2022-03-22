@@ -21,6 +21,7 @@ fragment_TI_pen <- function(inp, pen, pen_out, from, to, cores) {
 
   # II. Dynamic Programming: the scoring function is interpreted
   frags <- foreach(k = seq_along(unique_seg)) %dopar% {
+    
     section <- tmp_df[which(tmp_df$position_segment == unique_seg[k]), ]
 
     best_frags <- c()

@@ -295,6 +295,7 @@ rifi_visualization <-
       an.1 <- annot[between(annot$start, frag[i], frag[c(i + 1)]),]
       an <- annot[between(annot$start, pos.1, pos.2),]
       an <- an[!duplicated(an),]
+      an <- as.data.frame(an)
       #in case of no data nor annotation are available
       if (nrow(an.1) == 0 & nrow(df1) == 0 & nrow(df2) == 0) {
         next ()
