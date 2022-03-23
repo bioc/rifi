@@ -4,19 +4,16 @@
 \name{summary_e_coli}
 \alias{summary_e_coli}
 \title{The result of rifi_summary for E.coli example data
-A list containing the output from rifi_summary, including the fragment
-based data frame, bin based data frame, event data frame and the TI
-dataframe}
+A SummarizedExperiment containing the output of rifi_stats as an
+extention to rowRanges}
 \format{
-A list of 4 data frames with 290 rows and 11 variables, 36 rows
-and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
+The rowRanges of SummarizedExperiment:
 \describe{
 \item{bin_df:}{all information regarding bins:
 \describe{
 \item{feature_type:}{}
 \item{gene:}{}
 \item{locus_tag:}{}
-\item{strand:}{The bin/probe specific strand}
 \item{TU:}{The overarching transcription unit}
 \item{delay_fragment:}{The delay fragment the bin belongs to}
 \item{HL_fragment:}{The half-life fragment the bin belongs to}
@@ -63,7 +60,7 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 \item{features:}{}
 }
 }
-\item{TI_df:}{all information regarding TI:
+\item{TI_df:}{all information regarding TI are depicted below:
 \describe{
 \item{event:}{}
 \item{TI_fragment:}{}
@@ -84,15 +81,14 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(summary_e_coli)
 }
 \description{
 The result of rifi_summary for E.coli example data
-A list containing the output from rifi_summary, including the fragment
-based data frame, bin based data frame, event data frame and the TI
-dataframe
+A SummarizedExperiment containing the output of rifi_stats as an
+extention to rowRanges
 }
 \keyword{datasets}

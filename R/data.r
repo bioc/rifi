@@ -1,27 +1,9 @@
-#' A list corresponding to a gff file for E.coli example data
-#' A list containing all necessary information from a gff file for
-#' visualization and final output.
+#' An example SummarizedExperiment from E. coli 
+#' An example SummarizedExperiment from RNA-seq containing information about the
+#' intensities at all time points (assay). Seqnames, IRanges and strand columns
+#' (rowRanges)and colData with time point series and replicates. 
 #'
-#' @format A list with 2 items:
-#' \describe{
-#'   \item{data annotation:}{a data frame with 4452 rows and 6 variables
-#'     \describe{
-#'       \item{region:}{the region from the gff file}
-#'       \item{start:}{the start of the annotation}
-#'       \item{end:}{the end of the annotation}
-#'       \item{strand:}{the strand of the annotation}
-#'       \item{gene:}{the annotated gene name}
-#'       \item{locus_tag:}{the annotated locus tag}
-#'     }
-#'   }
-#'   \item{genome length:}{a numeric vector containing the length of the genome}
-#' }
-#'
-#' An example input data frame from E. coli.#'
-#' A data set from RNAseq data containing information about the intensities at
-#' all time points, as well as position, strand and ID information.
-#'
-#' @format A data frame with 1878 rows and 14 variables:
+#' @format A assay:
 #' \describe{
 #'   \item{0:}{relative intensities at 0 min}
 #'   \item{1:}{relative intensities at 1 min}
@@ -34,9 +16,6 @@
 #'   \item{5:}{relative intensities at 5 min}
 #'   \item{6:}{relative intensities at 6 min}
 #'   \item{8:}{relative intensities at 8 min}
-#'   \item{ID:}{unique IDs}
-#'   \item{position:}{genome positions}
-#'   \item{strand:}{strand information}
 #' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -45,9 +24,10 @@
 #'
 "example_input_e_coli"
 
-#' An artificial example input data frame.
-#' A data set containing information about the intensities at all time points,
-#' as well as position, strand and ID information.
+#' An artificial example SummarizedExperiment
+#' An example SummarizedExperiment containing information about the intensities
+#' at all time points (assay). Seqnames, IRanges and strand columns (rowRanges)
+#' and colData with time point series and replicates.
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
@@ -55,11 +35,12 @@
 #'
 "example_input_minimal"
 
-#' An example input data frame from Synechocystis PCC 6803.#'
-#' A data set from microarrays data containing information about the intensities
-#' at all time points, as well as position, strand and ID information.
+#' An example input data frame from Synechocystis PCC 6803
+#' A SummarizedExperiment from microarrays data containing information about the
+#' intensities at all time points (assay), Seqnames, IRanges and strand columns
+#' (rowRanges) and colData with time point series and averaged replicates.
 #' 
-#' @format A data frame with 3000 rows and 10 variables:#' 
+#' @format Assay with 3000 rows and 10 variables:
 #' \describe{
 #'   \item{0:}{relative intensities at 0 min}
 #'   \item{2:}{relative intensities at 2 min}
@@ -68,9 +49,6 @@
 #'   \item{16:}{relative intensities at 16 min}
 #'   \item{32:}{relative intensities at 32 min}
 #'   \item{64:}{relative intensities at 64 min}
-#'   \item{ID:}{unique IDs}
-#'   \item{position:}{genome positions}
-#'   \item{strand:}{strand information}
 #' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -80,17 +58,18 @@
 "example_input_synechocystis_6803"
 
 #' The result of rifi_fit for E.coli example data
-#' A list containing the output from rifi_fit, including the probe_df and both
-#' fit objects.
+#' A summarizedExperiment containing the output from rifi_fit as an extension of
+#' rowRanges and metadata.
 #' 
-#' @format A list of 3 data frames with 290 rows and 10 variables, 155 rows
-#' and 5 variables, and 135 rows and 9 variables:
+#' @format Three data frames with 290 rows and 10 variables, 155 rows
+#' and 5 variables, and 135 rows and 9 variables are generated. The columns of
+#' the first data frame are added to the rowRanges and the rest are added as
+#' metadata.
 #' \describe{
-#'   \item{probe_df:}{the probe dataframe:
+#'   \item{inp:}{The summarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
-#'     \item{strand:}{The bin/probe specific strand}
 #'     \item{intensity:}{The relative intensity at time point 0}
 #'     \item{probe_TI:}{An internal value to determine which fitting model
 #'     is applied}
@@ -132,7 +111,7 @@
 "fit_e_coli"
 
 #' The artificial result of rifi_fit for artificial example data
-#' A data frame containing the output from rifi_fit.
+#' A SummarizedExperiment containing the output from rifi_fit.
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
 #' @usage data(fit_minimal)
@@ -140,12 +119,15 @@
 "fit_minimal"
 
 #' The result of rifi_fit for Synechocystis 6803 example data
-#' A list containing the output from rifi_fit, including the probe_df and both
-#' fit objects.
-#' @format A list of 3 data frames with 3000 rows and 10 variables, 2811 rows
-#' and 5 variables, and 189 rows and 9 variables:
+#' A summarizedExperiment containing the output from rifi_fit as an extension of
+#' rowRanges and metadata.
+#' 
+#' @format Three data frames with 3000 rows and 10 variables, 2811 rows
+#' and 5 variables, and 189 rows and 9 variable are generated. The columns of
+#' the first data frame are added to the rowRanges and the rest are added as
+#' metadata.
 #' \describe{
-#'   \item{probe_df:}{the probe dataframe:
+#'   \item{inp:}{the summarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
@@ -190,12 +172,13 @@
 "fit_synechocystis_6803"
 
 #' The result of rifi_fragmentation for E.coli example data
-#' A data frame containing the output from rifi_fragmentation, the probe_df
-#' @format A data frame with 290 rows and 22 variables:
+#' A SummarizedExperiment containing the output from rifi_fragmentation as an
+#' extension of rowRanges
+#' 
+#' @format rowRanges of the SummarizedExperiment with 290 rows and 22 variables:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{intensity:}{The relative intensity at time point 0}
 #'   \item{probe_TI:}{An internal value to determine which fitting model is
 #'    applied}
@@ -230,7 +213,8 @@
 "fragmentation_e_coli"
 
 #' The result of rifi_fragmentation for artificial example data
-#' A data frame containing the output from rifi_fragmentation, the probe_df
+#' A summarizedExperiment containing the output from rifi_fragmentation as an
+#' extension of rowRanges and metadata.
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
@@ -239,12 +223,13 @@
 "fragmentation_minimal"
 
 #' The result of rifi_fragmentation for Synechocystis 6803 example data
-#' A data frame containing the output from rifi_fragmentation, the probe_df
-#' @format A data frame with 3000 rows and 22 variables:
+#' A SummarizedExperiment containing the output from rifi_fragmentation as an
+#' extention fo rowRanges
+#' 
+#' @format rowRanges of the SummarizedExperiment:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{intensity:}{The relative intensity at time point 0}
 #'   \item{probe_TI:}{An internal value to determine which fitting model is
 #'   applied}
@@ -278,9 +263,10 @@
 #'
 "fragmentation_synechocystis_6803"
 
-#' The result of rifi_penalties for E.coli example data
-#' A list containing the output from rifi_penalties, including the logbook
-#' and the four penalty objects.
+#' The result of rifi_penalties for E.coli example data.
+#' A SummarizedExperiment containing the output from rifi_penalties including
+#' the logbook and the four penalty objects as metadata.
+#' 
 #' @format A list with 5 items:
 #' \describe{
 #'   \item{logbook:}{The logbook vector containing all penalty information}
@@ -329,7 +315,8 @@
 "penalties_e_coli"
 
 #' The result of rifi_penalties for artificial example data
-#' A vector containing the output from rifi_penalties, the logbook.
+#' A SummarizedExperiment containing the output from rifi_penalties including
+#' the logbook and the four penalty objects as metadata.
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
@@ -337,9 +324,10 @@
 #'
 "penalties_minimal"
 
-#' The result of rifi_penalties for Synechocystis 6803 example data
-#' A list containing the output from rifi_penalties, including the logbook
-#' and the four penalty objects.
+#' The result of rifi_penalties for Synechocystis 6803 example data.
+#' A SummarizedExperiment containing the output from rifi_penalties including
+#' the logbook and the four penalty objects as metadata.
+#' 
 #' @format A list with 5 items:
 #' \describe{
 #'   \item{logbook:}{The logbook vector containing all penalty information}
@@ -388,16 +376,17 @@
 "penalties_synechocystis_6803"
 
 #' The result of rifi_preprocess for E.coli example data
-#' A list containing the output from rifi_preprocess, including the probe_df
+#' A SummarizedExperiment containing the output from rifi_penalties including
+#' the logbook and the four penalty objects as metadata.
+#' A list containing the output from rifi_preprocess, including the inp
 #' and the modified input_df.
-#' @format A list of 2 data frames with 290 rows and 7 variables, and 870 rows
-#' and 15 variables:
+#' 
+#' @format A SummarizedExperiment:
 #' \describe{
-#'   \item{probe_df:}{the probe dataframe:
+#'   \item{inp:}{the summarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
-#'     \item{strand:}{The bin/probe specific strand}
 #'     \item{intensity:}{The relative intensity at time point 0}
 #'     \item{probe_TI:}{An internal value to determine which fitting model is
 #'     applied}
@@ -420,7 +409,6 @@
 #'     \item{8:}{relative intensities at 8 min}
 #'     \item{ID:}{unique IDs}
 #'     \item{position:}{genome positions}
-#'     \item{strand:}{strand information}
 #'     \item{filtration:}{indicator wether the replicate is filtered or not}
 #'     }
 #'   }
@@ -433,8 +421,7 @@
 "preprocess_e_coli"
 
 #' The result of rifi_preprocess for artificial example data
-#' A list containing the output from rifi_preprocess, including the probe_df
-#' and the modified input_df
+#' A SummarizedExperiment containing the output from rifi_preprocess
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
 #'
@@ -442,13 +429,13 @@
 #'
 "preprocess_minimal"
 
-#' The result of rifi_preprocess for Synechocystis 6803 example data
-#' A list containing the output from rifi_preprocess, including the probe_df
-#' and the modified input_df.
-#' @format A list of 2 data frames with 3000 rows and 7 variables, and 3000
-#' rows and 11 variables:
+#' The result of rifi_preprocess for Synechocystis 6803 example data is a 
+#' A SummarizedExperiment containing the output of rifi_preprocess as an
+#' extention to rowRanges
+#' 
+#' @format A SummarizedExperiment:
 #' \describe{
-#'   \item{probe_df:}{the probe dataframe:
+#'   \item{inp:}{the summarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
@@ -471,7 +458,6 @@
 #'     \item{64:}{relative intensities at 64 min}
 #'     \item{ID:}{unique IDs}
 #'     \item{position:}{genome positions}
-#'     \item{strand:}{strand information}
 #'     \item{filtration:}{indicator wether the replicate is filtered or not}
 #'     }
 #'   }
@@ -484,8 +470,9 @@
 "preprocess_synechocystis_6803"
 
 #' The result of rifi_stats for E.coli example data
-#' A data frame containing the output from rifi_stats, the probe_df
-#' @format A data frame with 290 rows and 45 variables:
+#' A SummarizedExperiment containing the output from rifi_stats
+#' 
+#' @format A SummarizedExperiment:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
@@ -547,12 +534,14 @@
 "stats_e_coli"
 
 #' The result of rifi_stats for artificial example data
-#' A data frame containing the output from rifi_stats, the probe_df
-#' @format A data frame with 24 rows and 45 variables:
+#' A SummarizedExperiment containing the output of rifi_stats as an
+#' extention to rowRanges and metadata (gff file processed, see gff file
+#' documentation)
+#' 
+#' @format A rowRanges of SummarizedExperiment with 24 rows and 45 variables:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{intensity:}{The relative intensity at time point 0}
 #'   \item{probe_TI:}{An internal value to determine which fitting model is
 #'   applied}
@@ -610,12 +599,13 @@
 "stats_minimal"
 
 #' The result of rifi_stats for Synechocystis 6803 example data
-#' A data frame containing the output from rifi_stats, the probe_df
-#' @format A data frame with 3000 rows and 44 variables:
+#' A SummarizedExperiment containing the output of rifi_stats as an
+#' extention to rowRanges
+#' 
+#' @format The rowRanges of SummarizedExperiment:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{intensity:}{The relative intensity at time point 0}
 #'   \item{probe_TI:}{An internal value to determine which fitting model is
 #'   applied}
@@ -673,18 +663,16 @@
 "stats_synechocystis_6803"
 
 #' The result of rifi_summary for E.coli example data
-#' A list containing the output from rifi_summary, including the fragment
-#' based data frame, bin based data frame, event data frame and the TI
-#' dataframe
-#' @format A list of 4 data frames with 290 rows and 11 variables, 36 rows
-#' and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
+#' A SummarizedExperiment containing the output of rifi_stats as an
+#' extention to rowRanges
+#' 
+#' @format The rowRanges of SummarizedExperiment:
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
-#'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
 #'     \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
@@ -731,7 +719,7 @@
 #'     \item{features:}{}
 #'     }
 #'   }
-#'   \item{TI_df:}{all information regarding TI:
+#'   \item{TI_df:}{all information regarding TI are depicted below:
 #'   \describe{
 #'     \item{event:}{}
 #'     \item{TI_fragment:}{}
@@ -757,26 +745,31 @@
 #'
 "summary_e_coli"
 #' The result of rifi_summary for artificial example data
-#' A list containing the output from rifi_summary, including the fragment
-#' based data frame, bin based data frame, event data frame and the TI
-#' dataframe.
+#' A SummarizedExperiment with the output from rifi_summary as metadata
 #'
-#' @format A list of 4 data frames with 290 rows and 11 variables, 36 rows
+#' @format A list of 7 data frames with 290 rows and 11 variables, 36 rows
 #' and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
+#'     \item{ID:}{}
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
+#'     \item{position:}{}
 #'     \item{strand:}{The bin/probe specific strand}
+#'     \item{segment:}{The segment the bin/probe belongs to}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
+#'     \item{delay_fragment:}{The delay fragment the bin/probe belongs to}
+#'     \item{delay:}{The delay of the bin/probe}
+#'     \item{HL_fragment:}{The half-life fragment the bin/probe belongs to}
 #'     \item{half_life:}{The half-life of the bin/probe}
-#'     \item{intensity_fragment:}{The intensity fragment the bin belongs to}
+#'     \item{intensity_fragment:}{The intensity fragment the bin/probe belongs
+#'      to}
 #'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{velocity:}{The velocity value of the bin}
+#'     \item{flag:}{The flag of the bin/probe(TI, PDD)}
+#'     \item{TI_termination_factor:}{The TI_termination_factor of the bin/probe 
+#'     (in case TI is detected)}
 #'     }
 #'   }
 #'   \item{frag_df:}{all information regarding fragments:
@@ -784,25 +777,38 @@
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
+#'     \item{first_position_frg:}{The first position of the fragment on the
+#'      genome}
+#'     \item{last_position_frg:}{The last position of the fragment on the
+#'      genome}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
-#'     \item{half_life:}{The half-life of the fragment}
-#'     \item{intensity_fragment:}{The intensity fragment the bin belongs to}
+#'     \item{segment:}{The segment the fragment belongs to}
+#'     \item{delay_fragment:}{The delay fragment of the fragment}
+#'     \item{HL_fragment:}{The half-life fragment of the fragment}
+#'     \item{half_life:}{The half-life mean of the fragment}
+#'     \item{HL_SD:}{The half-life standard deviation of the fragment}
+#'     \item{HL_SE:}{The half-life standard error of the fragment}
+#'     \item{intensity_fragment:}{The intensity_fragment of the fragment}
 #'     \item{intensity:}{The relative intensity at time point 0}
+#'     \item{intensity_SD:}{The intensity standard deviation of the fragment}
+#'     \item{intensity_SE:}{The intensity standard error of the fragment}
 #'     \item{velocity:}{The velocity value of the respective delay fragment}
 #'     }
 #'   }
 #'   \item{event_df:}{all information regarding events:
 #'   \describe{
 #'     \item{event:}{}
-#'     \item{FC_HL:}{}
-#'     \item{FC_intensity:}{}
-#'     \item{FC_HL_FC_intensity:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{velocity_ratio:}{}
 #'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{FC_HL:}{Fold change of half-life}
+#'     \item{FC_intensity:}{Fold change of intensity}
+#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
@@ -810,7 +816,72 @@
 #'     \item{TU:}{The overarching transcription unit}
 #'     \item{segment_1:}{}
 #'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_HL_int_df:}{all information regarding events related to 
+#'   half-life and intensity:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{FC_HL:}{}
+#'     \item{FC_intensity:}{}
+#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
 #'     \item{event_position:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_ps_itss_df:}{all information regarding events related to 
+#'   pausing sites and iTSS_I:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{FC_HL_adapted:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_velocity_df:}{all information regarding events related to 
+#'   velocity:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
 #'     \item{event_duration:}{}
 #'     \item{gap_fragments:}{}
 #'     \item{features:}{}
@@ -852,17 +923,24 @@
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
+#'     \item{ID:}{}
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
+#'     \item{position:}{}
 #'     \item{strand:}{The bin/probe specific strand}
+#'     \item{segment:}{The segment the bin/probe belongs to}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
+#'     \item{delay_fragment:}{The delay fragment the bin/probe belongs to}
+#'     \item{delay:}{The delay of the bin/probe}
+#'     \item{HL_fragment:}{The half-life fragment the bin/probe belongs to}
 #'     \item{half_life:}{The half-life of the bin/probe}
-#'     \item{intensity_fragment:}{The intensity fragment the bin belongs to}
+#'     \item{intensity_fragment:}{The intensity fragment the bin/probe belongs
+#'      to}
 #'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{velocity:}{The velocity value of the bin}
+#'     \item{flag:}{The flag of the bin/probe(TI, PDD)}
+#'     \item{TI_termination_factor:}{The TI_termination_factor of the bin/probe 
+#'     (in case TI is detected)}
 #'     }
 #'   }
 #'   \item{frag_df:}{all information regarding fragments:
@@ -870,25 +948,38 @@
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
+#'     \item{first_position_frg:}{The first position of the fragment on the
+#'      genome}
+#'     \item{last_position_frg:}{The last position of the fragment on the
+#'      genome}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
-#'     \item{half_life:}{The half-life of the fragment}
-#'     \item{intensity_fragment:}{The intensity fragment the bin belongs to}
+#'     \item{segment:}{The segment the fragment belongs to}
+#'     \item{delay_fragment:}{The delay fragment of the fragment}
+#'     \item{HL_fragment:}{The half-life fragment of the fragment}
+#'     \item{half_life:}{The half-life mean of the fragment}
+#'     \item{HL_SD:}{The half-life standard deviation of the fragment}
+#'     \item{HL_SE:}{The half-life standard error of the fragment}
+#'     \item{intensity_fragment:}{The intensity_fragment of the fragment}
 #'     \item{intensity:}{The relative intensity at time point 0}
+#'     \item{intensity_SD:}{The intensity standard deviation of the fragment}
+#'     \item{intensity_SE:}{The intensity standard error of the fragment}
 #'     \item{velocity:}{The velocity value of the respective delay fragment}
 #'     }
 #'   }
 #'   \item{event_df:}{all information regarding events:
 #'   \describe{
 #'     \item{event:}{}
-#'     \item{FC_HL:}{}
-#'     \item{FC_intensity:}{}
-#'     \item{FC_HL_FC_intensity:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{velocity_ratio:}{}
 #'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{FC_HL:}{Fold change of half-life}
+#'     \item{FC_intensity:}{Fold change of intensity}
+#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
@@ -896,7 +987,72 @@
 #'     \item{TU:}{The overarching transcription unit}
 #'     \item{segment_1:}{}
 #'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_HL_int_df:}{all information regarding events related to 
+#'   half-life and intensity:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{FC_HL:}{}
+#'     \item{FC_intensity:}{}
+#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
 #'     \item{event_position:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_ps_itss_df:}{all information regarding events related to 
+#'   pausing sites and iTSS_I:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{FC_HL_adapted:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_velocity_df:}{all information regarding events related to 
+#'   velocity:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
 #'     \item{event_duration:}{}
 #'     \item{gap_fragments:}{}
 #'     \item{features:}{}
@@ -927,3 +1083,23 @@
 #' @usage data(summary_synechocystis_6803)
 #'
 "summary_synechocystis_6803"
+
+#' 
+#' A list corresponding to a gff file for E.coli example data
+#' A list containing all necessary information from a gff file for rifi_summary 
+#' and visualization. The list is stored as metadata in rifi_stats output.
+#'
+#' @format A list with 2 items:
+#' \describe{
+#'   \item{data annotation:}{a data frame with 4452 rows and 6 variables
+#'     \describe{
+#'       \item{region:}{the region from the gff file}
+#'       \item{start:}{the start of the annotation}
+#'       \item{end:}{the end of the annotation}
+#'       \item{strand:}{the strand of the annotation}
+#'       \item{gene:}{the annotated gene name}
+#'       \item{locus_tag:}{the annotated locus tag}
+#'     }
+#'   }
+#'   \item{genome length:}{a numeric vector containing the length of the genome}
+#' }

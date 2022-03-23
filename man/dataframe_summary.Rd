@@ -20,8 +20,7 @@ dataframe_summary(data, input)
 \arguments{
 \item{data}{SummarizedExperiment: the input data frame with correct format.}
 
-\item{input}{dataframe: the probe based data frame with events and
-gene annotation.}
+\item{input}{dataframe: dataframe from event_dataframe function.}
 }
 \value{
 WIP
@@ -42,8 +41,6 @@ positions.
 }
 \examples{
 data(stats_minimal)
-data(annot_g_minimal)
-input <- event_dataframe(data = as.data.frame(rowRanges(stats_minimal)),
-data_annotation = annot_g_minimal[[1]])
-dataframe_summary(data = stats_minimal, input = input)
+data(res)
+dataframe_summary(data = stats_minimal, input = res)
 }

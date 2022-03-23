@@ -48,6 +48,8 @@ utils::globalVariables(
                 "HL_threshold_color_2",
                 "vel_threshold_color",
                 "ps_color" ,
-                "iTSS_I_color"
+                "iTSS_I_color",
+                "df1",
+                "df2"
         )
 )

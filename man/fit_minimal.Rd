@@ -4,18 +4,18 @@
 \name{fit_minimal}
 \alias{fit_minimal}
 \title{The artificial result of rifi_fit for artificial example data
-A data frame containing the output from rifi_fit.}
+A SummarizedExperiment containing the output from rifi_fit.}
 \format{
-An object of class \code{RangedSummarizedExperiment} with 4 rows and 33 columns.
+An object of class \code{RangedSummarizedExperiment} with 290 rows and 33 columns.
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(fit_minimal)
 }
 \description{
 The artificial result of rifi_fit for artificial example data
-A data frame containing the output from rifi_fit.
+A SummarizedExperiment containing the output from rifi_fit.
 }
 \keyword{datasets}

@@ -4,11 +4,11 @@
 #' dataframe_summary_events_ps_itss, dataframe_summary_events_velocity and
 #' dataframe_summary_TI.
 #' 
+#' @param inp SummarizedExperiment: the input data frame with correct format.
+#' @param data_annotation dataframe: gff3 dataframe after processing.
+#'
 #' @return WIP
 #' 
-#' @param probe SummarizedExperiment: the input data frame with correct format.
-#' @param data_annotation dataframe: the coordinates are extracted from gff3.
-#'
 #' @seealso `event_dataframe`
 #' @seealso `dataframe_summary`
 #' @seealso `dataframe_summary_events`

@@ -4,18 +4,20 @@
 \name{fragmentation_minimal}
 \alias{fragmentation_minimal}
 \title{The result of rifi_fragmentation for artificial example data
-A data frame containing the output from rifi_fragmentation, the probe_df}
+A summarizedExperiment containing the output from rifi_fragmentation as an
+extension of rowRanges and metadata.}
 \format{
-An object of class \code{RangedSummarizedExperiment} with 24 rows and 33 columns.
+An object of class \code{RangedSummarizedExperiment} with 290 rows and 33 columns.
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(fragmentation_minimal)
 }
 \description{
 The result of rifi_fragmentation for artificial example data
-A data frame containing the output from rifi_fragmentation, the probe_df
+A summarizedExperiment containing the output from rifi_fragmentation as an
+extension of rowRanges and metadata.
 }
 \keyword{datasets}

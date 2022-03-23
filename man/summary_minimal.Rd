@@ -4,26 +4,31 @@
 \name{summary_minimal}
 \alias{summary_minimal}
 \title{The result of rifi_summary for artificial example data
-A list containing the output from rifi_summary, including the fragment
-based data frame, bin based data frame, event data frame and the TI
-dataframe.}
+A SummarizedExperiment with the output from rifi_summary as metadata}
 \format{
-A list of 4 data frames with 290 rows and 11 variables, 36 rows
+A list of 7 data frames with 290 rows and 11 variables, 36 rows
 and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 \describe{
 \item{bin_df:}{all information regarding bins:
 \describe{
+\item{ID:}{}
 \item{feature_type:}{}
 \item{gene:}{}
 \item{locus_tag:}{}
+\item{position:}{}
 \item{strand:}{The bin/probe specific strand}
+\item{segment:}{The segment the bin/probe belongs to}
 \item{TU:}{The overarching transcription unit}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
+\item{delay_fragment:}{The delay fragment the bin/probe belongs to}
+\item{delay:}{The delay of the bin/probe}
+\item{HL_fragment:}{The half-life fragment the bin/probe belongs to}
 \item{half_life:}{The half-life of the bin/probe}
-\item{intensity_fragment:}{The intensity fragment the bin belongs to}
+\item{intensity_fragment:}{The intensity fragment the bin/probe belongs
+to}
 \item{intensity:}{The relative intensity at time point 0}
-\item{velocity:}{The velocity value of the bin}
+\item{flag:}{The flag of the bin/probe(TI, PDD)}
+\item{TI_termination_factor:}{The TI_termination_factor of the bin/probe
+(in case TI is detected)}
 }
 }
 \item{frag_df:}{all information regarding fragments:
@@ -31,25 +36,38 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 \item{feature_type:}{}
 \item{gene:}{}
 \item{locus_tag:}{}
+\item{first_position_frg:}{The first position of the fragment on the
+genome}
+\item{last_position_frg:}{The last position of the fragment on the
+genome}
 \item{strand:}{The bin/probe specific strand}
 \item{TU:}{The overarching transcription unit}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
-\item{half_life:}{The half-life of the fragment}
-\item{intensity_fragment:}{The intensity fragment the bin belongs to}
+\item{segment:}{The segment the fragment belongs to}
+\item{delay_fragment:}{The delay fragment of the fragment}
+\item{HL_fragment:}{The half-life fragment of the fragment}
+\item{half_life:}{The half-life mean of the fragment}
+\item{HL_SD:}{The half-life standard deviation of the fragment}
+\item{HL_SE:}{The half-life standard error of the fragment}
+\item{intensity_fragment:}{The intensity_fragment of the fragment}
 \item{intensity:}{The relative intensity at time point 0}
+\item{intensity_SD:}{The intensity standard deviation of the fragment}
+\item{intensity_SE:}{The intensity standard error of the fragment}
 \item{velocity:}{The velocity value of the respective delay fragment}
 }
 }
 \item{event_df:}{all information regarding events:
 \describe{
 \item{event:}{}
-\item{FC_HL:}{}
-\item{FC_intensity:}{}
-\item{FC_HL_FC_intensity:}{}
-\item{p_adjusted:}{}
-\item{velocity_ratio:}{}
 \item{p_value:}{}
+\item{p_adjusted:}{}
+\item{FC_HL:}{Fold change of half-life}
+\item{FC_intensity:}{Fold change of intensity}
+\item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+position of the half-life fragment is adapted to intensity fragment}
+\item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+intensity}
+\item{event_position:}{}
+\item{velocity_ratio:}{}
 \item{feature_type:}{}
 \item{gene:}{}
 \item{locus_tag:}{}
@@ -57,7 +75,72 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 \item{TU:}{The overarching transcription unit}
 \item{segment_1:}{}
 \item{segment_2:}{}
+\item{event_duration:}{}
+\item{gap_fragments:}{}
+\item{features:}{}
+}
+}
+\item{events_HL_int_df:}{all information regarding events related to
+half-life and intensity:
+\describe{
+\item{event:}{}
+\item{p_value:}{}
+\item{p_adjusted:}{}
+\item{FC_HL:}{}
+\item{FC_intensity:}{}
+\item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+position of the half-life fragment is adapted to intensity fragment}
+\item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+intensity}
 \item{event_position:}{}
+\item{feature_type:}{}
+\item{gene:}{}
+\item{locus_tag:}{}
+\item{strand:}{The bin/probe specific strand}
+\item{TU:}{The overarching transcription unit}
+\item{segment_1:}{}
+\item{segment_2:}{}
+\item{event_duration:}{}
+\item{gap_fragments:}{}
+\item{features:}{}
+}
+}
+\item{events_ps_itss_df:}{all information regarding events related to
+pausing sites and iTSS_I:
+\describe{
+\item{event:}{}
+\item{p_value:}{}
+\item{p_adjusted:}{}
+\item{event_position:}{}
+\item{velocity_ratio:}{}
+\item{FC_HL_adapted:}{}
+\item{feature_type:}{}
+\item{gene:}{}
+\item{locus_tag:}{}
+\item{strand:}{The bin/probe specific strand}
+\item{TU:}{The overarching transcription unit}
+\item{segment_1:}{}
+\item{segment_2:}{}
+\item{event_duration:}{}
+\item{gap_fragments:}{}
+\item{features:}{}
+}
+}
+\item{events_velocity_df:}{all information regarding events related to
+velocity:
+\describe{
+\item{event:}{}
+\item{p_value:}{}
+\item{p_adjusted:}{}
+\item{event_position:}{}
+\item{velocity_ratio:}{}
+\item{feature_type:}{}
+\item{gene:}{}
+\item{locus_tag:}{}
+\item{strand:}{The bin/probe specific strand}
+\item{TU:}{The overarching transcription unit}
+\item{segment_1:}{}
+\item{segment_2:}{}
 \item{event_duration:}{}
 \item{gap_fragments:}{}
 \item{features:}{}
@@ -84,15 +167,13 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(summary_minimal)
 }
 \description{
 The result of rifi_summary for artificial example data
-A list containing the output from rifi_summary, including the fragment
-based data frame, bin based data frame, event data frame and the TI
-dataframe.
+A SummarizedExperiment with the output from rifi_summary as metadata
 }
 \keyword{datasets}

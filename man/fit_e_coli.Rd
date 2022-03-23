@@ -4,17 +4,18 @@
 \name{fit_e_coli}
 \alias{fit_e_coli}
 \title{The result of rifi_fit for E.coli example data
-A list containing the output from rifi_fit, including the probe_df and both
-fit objects.}
+A summarizedExperiment containing the output from rifi_fit as an extension of
+rowRanges and metadata.}
 \format{
-A list of 3 data frames with 290 rows and 10 variables, 155 rows
-and 5 variables, and 135 rows and 9 variables:
+Three data frames with 290 rows and 10 variables, 155 rows
+and 5 variables, and 135 rows and 9 variables are generated. The columns of
+the first data frame are added to the rowRanges and the rest are added as
+metadata.
 \describe{
-\item{probe_df:}{the probe dataframe:
+\item{inp:}{The summarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
 \item{intensity:}{The relative intensity at time point 0}
 \item{probe_TI:}{An internal value to determine which fitting model
 is applied}
@@ -50,14 +51,14 @@ is applied}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(fit_e_coli)
 }
 \description{
 The result of rifi_fit for E.coli example data
-A list containing the output from rifi_fit, including the probe_df and both
-fit objects.
+A summarizedExperiment containing the output from rifi_fit as an extension of
+rowRanges and metadata.
 }
 \keyword{datasets}

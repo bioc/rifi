@@ -3,9 +3,9 @@
 \docType{data}
 \name{penalties_e_coli}
 \alias{penalties_e_coli}
-\title{The result of rifi_penalties for E.coli example data
-A list containing the output from rifi_penalties, including the logbook
-and the four penalty objects.}
+\title{The result of rifi_penalties for E.coli example data.
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.}
 \format{
 A list with 5 items:
 \describe{
@@ -49,14 +49,14 @@ penalty}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(penalties_e_coli)
 }
 \description{
-The result of rifi_penalties for E.coli example data
-A list containing the output from rifi_penalties, including the logbook
-and the four penalty objects.
+The result of rifi_penalties for E.coli example data.
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.
 }
 \keyword{datasets}

@@ -12,12 +12,16 @@
 #' to the FC-HL/FC-intensity and assignment of an event to the synthesis ratio
 #' respectively. df adds a new column to indicate the position of the ps or
 #' ITSS event.
+#' 
 #' @param data dataframe: the probe based data frame.
 #' @param data_annotation dataframe: the coordinates are extracted from gff3
 #' 
 #' @return WIP
 #' 
 #' @examples
+#' if(!require(SummarizedExperiment)){
+#' suppressPackageStartupMessages(library(SummarizedExperiment))
+#' }
 #' data(stats_minimal)
 #' event_dataframe(data = stats_minimal,
 #' data_annotation = metadata(stats_minimal)$annot[[1]])

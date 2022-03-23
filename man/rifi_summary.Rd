@@ -8,12 +8,12 @@ dataframe_summary_events, dataframe_summary_events_HL_int,
 dataframe_summary_events_ps_itss, dataframe_summary_events_velocity and
 dataframe_summary_TI.}
 \usage{
-rifi_summary(probe, data_annotation)
+rifi_summary(inp, data_annotation = metadata(inp)$annot[[1]])
 }
 \arguments{
-\item{probe}{SummarizedExperiment: the input data frame with correct format.}
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
 
-\item{data_annotation}{dataframe: the coordinates are extracted from gff3.}
+\item{data_annotation}{dataframe: gff3 dataframe after processing.}
 }
 \value{
 WIP
@@ -27,9 +27,8 @@ dataframe_summary_TI.
 }
 \examples{
 data(stats_minimal)
-data(annot_g_minimal)
-rifi_summary(probe = stats_minimal, data_annotation =
-annot_g_minimal[[1]])
+rifi_summary(inp = stats_minimal, data_annotation = 
+metadata(inp)$annot[[1]])
 
 }
 \seealso{

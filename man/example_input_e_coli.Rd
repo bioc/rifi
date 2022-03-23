@@ -3,11 +3,12 @@
 \docType{data}
 \name{example_input_e_coli}
 \alias{example_input_e_coli}
-\title{An example input data frame from E. coli.#'
-A data set from RNAseq data containing information about the intensities at
-all time points, as well as position, strand and ID information.}
+\title{An example SummarizedExperiment from E. coli
+An example SummarizedExperiment from RNA-seq containing information about the
+intensities at all time points (assay). Seqnames, IRanges and strand columns
+(rowRanges)and colData with time point series and replicates.}
 \format{
-A data frame with 1878 rows and 14 variables:
+A assay:
 \describe{
 \item{0:}{relative intensities at 0 min}
 \item{1:}{relative intensities at 1 min}
@@ -20,20 +21,18 @@ A data frame with 1878 rows and 14 variables:
 \item{5:}{relative intensities at 5 min}
 \item{6:}{relative intensities at 6 min}
 \item{8:}{relative intensities at 8 min}
-\item{ID:}{unique IDs}
-\item{position:}{genome positions}
-\item{strand:}{strand information}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(example_input_e_coli)
 }
 \description{
-An example input data frame from E. coli.#'
-A data set from RNAseq data containing information about the intensities at
-all time points, as well as position, strand and ID information.
+An example SummarizedExperiment from E. coli
+An example SummarizedExperiment from RNA-seq containing information about the
+intensities at all time points (assay). Seqnames, IRanges and strand columns
+(rowRanges)and colData with time point series and replicates.
 }
 \keyword{datasets}

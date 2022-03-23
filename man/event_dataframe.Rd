@@ -44,9 +44,11 @@ respectively. df adds a new column to indicate the position of the ps or
 ITSS event.
 }
 \examples{
+if(!require(SummarizedExperiment)){
+suppressPackageStartupMessages(library(SummarizedExperiment))
+}
 data(stats_minimal)
-data(annot_g_minimal)
 event_dataframe(data = stats_minimal,
-data_annotation = annot_g_minimal[[1]])
+data_annotation = metadata(stats_minimal)$annot[[1]])
 
 }

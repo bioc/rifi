@@ -42,8 +42,4 @@ locus_tag.
 gff3_preprocess(
 path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
 )
-gff3_preprocess(
-path = gzfile(system.file("extdata", "gff_synechocystis_6803.gff.gz",
-package = "rifi")))
-
 }

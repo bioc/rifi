@@ -3,10 +3,10 @@
 #' apply_event_position, apply_t_test, fold_change, apply_manova, 
 #' apply_t_test_ti and gff3_preprocess.
 #' 
-#' @param probe SummarizedExperiment: the input data frame with correct format.
+#' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param dista integer: the maximal distance allowed between two successive
 #' fragments. Default is the auto generated value.
-#' @param gff : path to the directory containing the gff3 file.
+#' @param gff path: to the directory containing the gff3 file.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
@@ -96,6 +96,6 @@ rifi_stats <- function(inp, dista = 300, gff) {
   probe <- apply_manova(inp = probe)
   message("running apply_t_test_ti...")
   probe <- apply_t_test_ti(inp = probe)
-  metadata(probe)$annot <- gff3_preprocess(gff)
+  metadata(probe)$annot <- gff3_preprocess(path)
   probe
 }

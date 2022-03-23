@@ -4,7 +4,7 @@
 #' apply_Ttest_delay uses t-test. The last point from the first segment
 #' and the first point from the second segment are selected and added
 #' to the residuals of each model. The sum is subjected to t-test.
-#' @param data dataframe: the probe based dataframe.
+#' @param inp dataframe: the probe based dataframe.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{

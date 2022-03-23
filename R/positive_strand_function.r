@@ -35,8 +35,6 @@ positive_strand_function <- function(data_p, data, tmp.c1, df1_1, frag, i,
                                      HL_threshold_1 = HL_threshold_1,
                                      HL_threshold_2 = HL_threshold_2,
                                      vel_threshold = vel_threshold,
-                                     HL_threshold_color_2 = 
-                                         HL_threshold_color_2,
                                      HL_threshold_color_1 = 
                                          HL_threshold_color_1,
                                      vel_threshold_color = vel_threshold_color,

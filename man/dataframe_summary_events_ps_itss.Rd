@@ -40,7 +40,7 @@ dataframe_summary_events_ps_itss(data, data_annotation)
 \arguments{
 \item{data}{SummarizedExperiment: the input data frame with correct format.}
 
-\item{data_annotation}{dataframe: the probe based with genome annotation.}
+\item{data_annotation}{dataframe: dataframe from processed gff3 file.}
 }
 \value{
 WIP
@@ -81,8 +81,10 @@ the second fragment.
 }
 \examples{
 data(stats_minimal)
-data(annot_g_minimal)
+if(!require(SummarizedExperiment)){
+suppressPackageStartupMessages(library(SummarizedExperiment))
+}
 dataframe_summary_events_ps_itss(data = stats_minimal,
-data_annotation = annot_g_minimal[[1]])
+data_annotation = metadata(inp)$annot[[1]])
 
 }

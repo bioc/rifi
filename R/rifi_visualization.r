@@ -170,8 +170,8 @@
 
 rifi_visualization <-
   function(data,
-           genomeLength = metadata(data)$annot[[2]],
-           annot = metadata(data)$annot[[1]],
+           genomeLength,
+           annot,
            coverage = 0,
            chr_fwd = NA,
            chr_rev = NA,
@@ -225,7 +225,6 @@ rifi_visualization <-
            HL_threshold_2 = -log2(1.5),
            vel_threshold = 200,
            HL_threshold_color_1 = "black",
-           HL_threshold_color_2 = "green",
            vel_threshold_color = "grey52",
            ps_color = "orange",
            iTSS_I_color = "blue") {
@@ -378,8 +377,6 @@ rifi_visualization <-
                                                HL_threshold_1 = HL_threshold_1,
                                                HL_threshold_2 = HL_threshold_2,
                                                vel_threshold = vel_threshold,
-                                               HL_threshold_color_2 = 
-                                                 HL_threshold_color_2,
                                                HL_threshold_color_1 = 
                                                  HL_threshold_color_1,
                                                vel_threshold_color = 
@@ -439,8 +436,6 @@ rifi_visualization <-
                                                HL_threshold_1 = HL_threshold_1,
                                                HL_threshold_2 = HL_threshold_2,
                                                vel_threshold = vel_threshold,
-                                               HL_threshold_color_2 = 
-                                                 HL_threshold_color_2,
                                                HL_threshold_color_1 = 
                                                  HL_threshold_color_1,
                                                vel_threshold_color = 

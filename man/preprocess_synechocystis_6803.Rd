@@ -3,14 +3,13 @@
 \docType{data}
 \name{preprocess_synechocystis_6803}
 \alias{preprocess_synechocystis_6803}
-\title{The result of rifi_preprocess for Synechocystis 6803 example data
-A list containing the output from rifi_preprocess, including the probe_df
-and the modified input_df.}
+\title{The result of rifi_preprocess for Synechocystis 6803 example data is a
+A SummarizedExperiment containing the output of rifi_preprocess as an
+extention to rowRanges}
 \format{
-A list of 2 data frames with 3000 rows and 7 variables, and 3000
-rows and 11 variables:
+A SummarizedExperiment:
 \describe{
-\item{probe_df:}{the probe dataframe:
+\item{inp:}{the summarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
@@ -33,21 +32,20 @@ is applied}
 \item{64:}{relative intensities at 64 min}
 \item{ID:}{unique IDs}
 \item{position:}{genome positions}
-\item{strand:}{strand information}
 \item{filtration:}{indicator wether the replicate is filtered or not}
 }
 }
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(preprocess_synechocystis_6803)
 }
 \description{
-The result of rifi_preprocess for Synechocystis 6803 example data
-A list containing the output from rifi_preprocess, including the probe_df
-and the modified input_df.
+The result of rifi_preprocess for Synechocystis 6803 example data is a
+A SummarizedExperiment containing the output of rifi_preprocess as an
+extention to rowRanges
 }
 \keyword{datasets}

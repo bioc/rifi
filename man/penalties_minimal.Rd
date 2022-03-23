@@ -4,18 +4,20 @@
 \name{penalties_minimal}
 \alias{penalties_minimal}
 \title{The result of rifi_penalties for artificial example data
-A vector containing the output from rifi_penalties, the logbook.}
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.}
 \format{
 An object of class \code{RangedSummarizedExperiment} with 24 rows and 33 columns.
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(penalties_minimal)
 }
 \description{
 The result of rifi_penalties for artificial example data
-A vector containing the output from rifi_penalties, the logbook.
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.
 }
 \keyword{datasets}

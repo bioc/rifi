@@ -4,13 +4,13 @@
 \name{stats_synechocystis_6803}
 \alias{stats_synechocystis_6803}
 \title{The result of rifi_stats for Synechocystis 6803 example data
-A data frame containing the output from rifi_stats, the probe_df}
+A SummarizedExperiment containing the output of rifi_stats as an
+extention to rowRanges}
 \format{
-A data frame with 3000 rows and 44 variables:
+The rowRanges of SummarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
 \item{intensity:}{The relative intensity at time point 0}
 \item{probe_TI:}{An internal value to determine which fitting model is
 applied}
@@ -62,13 +62,14 @@ respective TI fragment}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(stats_synechocystis_6803)
 }
 \description{
 The result of rifi_stats for Synechocystis 6803 example data
-A data frame containing the output from rifi_stats, the probe_df
+A SummarizedExperiment containing the output of rifi_stats as an
+extention to rowRanges
 }
 \keyword{datasets}

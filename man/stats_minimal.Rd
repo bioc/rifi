@@ -4,13 +4,14 @@
 \name{stats_minimal}
 \alias{stats_minimal}
 \title{The result of rifi_stats for artificial example data
-A data frame containing the output from rifi_stats, the probe_df}
+A SummarizedExperiment containing the output of rifi_stats as an
+extention to rowRanges and metadata (gff file processed, see gff file
+documentation)}
 \format{
-A data frame with 24 rows and 45 variables:
+A rowRanges of SummarizedExperiment with 24 rows and 45 variables:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
 \item{intensity:}{The relative intensity at time point 0}
 \item{probe_TI:}{An internal value to determine which fitting model is
 applied}
@@ -62,13 +63,15 @@ respective TI fragment}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(stats_minimal)
 }
 \description{
 The result of rifi_stats for artificial example data
-A data frame containing the output from rifi_stats, the probe_df
+A SummarizedExperiment containing the output of rifi_stats as an
+extention to rowRanges and metadata (gff file processed, see gff file
+documentation)
 }
 \keyword{datasets}

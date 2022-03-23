@@ -3,21 +3,23 @@
 \docType{data}
 \name{example_input_minimal}
 \alias{example_input_minimal}
-\title{An artificial example input data frame.
-A data set containing information about the intensities at all time points,
-as well as position, strand and ID information.}
+\title{An artificial example SummarizedExperiment
+An example SummarizedExperiment containing information about the intensities
+at all time points (assay). Seqnames, IRanges and strand columns (rowRanges)
+and colData with time point series and replicates.}
 \format{
 An object of class \code{RangedSummarizedExperiment} with 4 rows and 33 columns.
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(example_input_minimal)
 }
 \description{
-An artificial example input data frame.
-A data set containing information about the intensities at all time points,
-as well as position, strand and ID information.
+An artificial example SummarizedExperiment
+An example SummarizedExperiment containing information about the intensities
+at all time points (assay). Seqnames, IRanges and strand columns (rowRanges)
+and colData with time point series and replicates.
 }
 \keyword{datasets}

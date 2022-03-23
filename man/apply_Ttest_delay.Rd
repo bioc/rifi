@@ -12,7 +12,7 @@ to the residuals of each model. The sum is subjected to t-test.}
 apply_Ttest_delay(inp)
 }
 \arguments{
-\item{data}{dataframe: the probe based dataframe.}
+\item{inp}{dataframe: the probe based dataframe.}
 }
 \value{
 the probe data frame with the columns regarding statistics:

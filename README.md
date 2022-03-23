@@ -146,7 +146,7 @@ Rifi runs in R and the command line for the workflow are:
 
 ## Results
 
-The results of the analysis are stored on rowRanges and metaData. rowRanges contain fragments, events and statistical tests. MetaData combines rowRanges content and genome annotation as data frame format e.g.(Table .2 and Table. 3).
+The results of the analysis are stored on rowRanges and metaData. rowRanges contain fragments, events and statistical tests. MetaData combine several output from different functions and genome annotation as data frame format e.g.(Table .2 and Table. 3).
 
 ID    | gene  | ...  | strand| TU     | half-life |...    |p_value_TI|
 :---: | :--:  | :---:| :--:  | :---:  | :---:     | :---: | :---:    |   

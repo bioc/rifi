@@ -36,8 +36,6 @@ negative_strand_function <- function(data_n,
                                      HL_threshold_1 = HL_threshold_1,
                                      HL_threshold_2 = HL_threshold_2,
                                      vel_threshold = vel_threshold,
-                                     HL_threshold_color_2 = 
-                                         HL_threshold_color_2,
                                      HL_threshold_color_1 = 
                                          HL_threshold_color_1,
                                      vel_threshold_color = vel_threshold_color,
@@ -863,7 +861,7 @@ negative_strand_function <- function(data_n,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = HL_threshold_color_2,
+                    color = HL_threshold_color_1,
                     linetype = "dashed",
                     fontface = fontface
                 )
@@ -880,7 +878,7 @@ negative_strand_function <- function(data_n,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = HL_threshold_color_2,
+                    color = HL_threshold_color_1,
                     linetype = "dashed",
                     fontface = fontface
                 )
@@ -903,7 +901,7 @@ negative_strand_function <- function(data_n,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = HL_threshold_color_2,
+                    color = HL_threshold_color_1,
                     linetype = "dashed",
                     fontface = fontface
                 )

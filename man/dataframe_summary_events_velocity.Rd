@@ -42,7 +42,7 @@ dataframe_summary_events_velocity(data, data_annotation)
 \arguments{
 \item{data}{SummarizedExperiment: the input data frame with correct format.}
 
-\item{data_annotation}{dataframe: the probe based with genome annotation.}
+\item{data_annotation}{dataframe: dataframe from processed gff3 file.}
 }
 \value{
 WIP
@@ -84,9 +84,11 @@ the second fragment.
 }
 }
 \examples{
+if(!require(SummarizedExperiment)){
+suppressPackageStartupMessages(library(SummarizedExperiment))
+}
 data(stats_minimal)
-data(annot_g_minimal)
 dataframe_summary_events_velocity(data = stats_minimal,
-data_annotation = annot_g_minimal[[1]])
+data_annotation = metadata(inp)$annot[[1]])
 
 }

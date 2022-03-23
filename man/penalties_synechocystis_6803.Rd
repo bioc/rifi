@@ -3,9 +3,9 @@
 \docType{data}
 \name{penalties_synechocystis_6803}
 \alias{penalties_synechocystis_6803}
-\title{The result of rifi_penalties for Synechocystis 6803 example data
-A list containing the output from rifi_penalties, including the logbook
-and the four penalty objects.}
+\title{The result of rifi_penalties for Synechocystis 6803 example data.
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.}
 \format{
 A list with 5 items:
 \describe{
@@ -49,14 +49,14 @@ penalty}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(penalties_synechocystis_6803)
 }
 \description{
-The result of rifi_penalties for Synechocystis 6803 example data
-A list containing the output from rifi_penalties, including the logbook
-and the four penalty objects.
+The result of rifi_penalties for Synechocystis 6803 example data.
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.
 }
 \keyword{datasets}

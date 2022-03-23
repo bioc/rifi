@@ -4,9 +4,9 @@
 \name{stats_e_coli}
 \alias{stats_e_coli}
 \title{The result of rifi_stats for E.coli example data
-A data frame containing the output from rifi_stats, the probe_df}
+A SummarizedExperiment containing the output from rifi_stats}
 \format{
-A data frame with 290 rows and 45 variables:
+A SummarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
@@ -62,13 +62,13 @@ respective TI fragment}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(stats_e_coli)
 }
 \description{
 The result of rifi_stats for E.coli example data
-A data frame containing the output from rifi_stats, the probe_df
+A SummarizedExperiment containing the output from rifi_stats
 }
 \keyword{datasets}

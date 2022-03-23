@@ -4,16 +4,18 @@
 \alias{rifi_stats}
 \title{rifi_stats: conveniently wraps all statistical prediction steps.
 Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-apply_event_position, apply_t_test, fold_change, apply_manova and
-apply_t_test_ti.}
+apply_event_position, apply_t_test, fold_change, apply_manova,
+apply_t_test_ti and gff3_preprocess.}
 \usage{
-rifi_stats(inp, dista = 300)
+rifi_stats(inp, dista = 300, gff)
 }
 \arguments{
+\item{inp}{SummarizedExperiment: the input data frame with correct format.}
+
 \item{dista}{integer: the maximal distance allowed between two successive
 fragments. Default is the auto generated value.}
 
-\item{probe}{SummarizedExperiment: the input data frame with correct format.}
+\item{gff}{path: to the directory containing the gff3 file.}
 }
 \value{
 the probe data frame with the columns regarding statistics:
@@ -74,12 +76,12 @@ respective TI fragment}
 \description{
 rifi_stats: conveniently wraps all statistical prediction steps.
 Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-apply_event_position, apply_t_test, fold_change, apply_manova and
-apply_t_test_ti.
+apply_event_position, apply_t_test, fold_change, apply_manova,
+apply_t_test_ti and gff3_preprocess.
 }
 \examples{
 data(fragmentation_minimal)
-rifi_stats(inp = fragmentation_minimal, dista = 300)
+rifi_stats(inp = fragmentation_minimal, dista = 300, gff = path)
 
 }
 \seealso{
@@ -98,4 +100,6 @@ rifi_stats(inp = fragmentation_minimal, dista = 300)
 \code{apply_manova}
 
 \code{apply_t_test_ti}
+
+\code{gff3_preprocess}
 }

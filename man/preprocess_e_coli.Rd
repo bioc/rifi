@@ -4,17 +4,17 @@
 \name{preprocess_e_coli}
 \alias{preprocess_e_coli}
 \title{The result of rifi_preprocess for E.coli example data
-A list containing the output from rifi_preprocess, including the probe_df
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.
+A list containing the output from rifi_preprocess, including the inp
 and the modified input_df.}
 \format{
-A list of 2 data frames with 290 rows and 7 variables, and 870 rows
-and 15 variables:
+A SummarizedExperiment:
 \describe{
-\item{probe_df:}{the probe dataframe:
+\item{inp:}{the summarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
 \item{intensity:}{The relative intensity at time point 0}
 \item{probe_TI:}{An internal value to determine which fitting model is
 applied}
@@ -37,21 +37,22 @@ applied}
 \item{8:}{relative intensities at 8 min}
 \item{ID:}{unique IDs}
 \item{position:}{genome positions}
-\item{strand:}{strand information}
 \item{filtration:}{indicator wether the replicate is filtered or not}
 }
 }
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(preprocess_e_coli)
 }
 \description{
 The result of rifi_preprocess for E.coli example data
-A list containing the output from rifi_preprocess, including the probe_df
+A SummarizedExperiment containing the output from rifi_penalties including
+the logbook and the four penalty objects as metadata.
+A list containing the output from rifi_preprocess, including the inp
 and the modified input_df.
 }
 \keyword{datasets}

@@ -4,20 +4,18 @@
 \name{preprocess_minimal}
 \alias{preprocess_minimal}
 \title{The result of rifi_preprocess for artificial example data
-A list containing the output from rifi_preprocess, including the probe_df
-and the modified input_df}
+A SummarizedExperiment containing the output from rifi_preprocess}
 \format{
-An object of class \code{RangedSummarizedExperiment} with 4 rows and 33 columns.
+An object of class \code{RangedSummarizedExperiment} with 290 rows and 33 columns.
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(preprocess_minimal)
 }
 \description{
 The result of rifi_preprocess for artificial example data
-A list containing the output from rifi_preprocess, including the probe_df
-and the modified input_df
+A SummarizedExperiment containing the output from rifi_preprocess
 }
 \keyword{datasets}

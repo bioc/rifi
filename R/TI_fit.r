@@ -81,7 +81,7 @@ TI_fit <-
     rowRanges(inp)$half_life[rowRanges(inp)$ID %in% tmp_df$ID] <- NA
     rowRanges(inp)$TI_termination_factor[rowRanges(inp)$ID %in% tmp_df$ID] <- NA
     #IDs
-    ids_ABG<-tmp_df$ID[grepl("ABG",tmp_df$flag)]
+    ids_ABG <- tmp_df$ID[grepl("ABG",tmp_df$flag)]
     #start values
     st_STD <- expand.grid(decay = decay, ti_delay = ti_delay, k = k,
                           rest_delay = rest_delay, ti = ti, bg = bg)

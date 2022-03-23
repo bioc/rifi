@@ -3,7 +3,7 @@
 \name{rifi_wrapper}
 \alias{rifi_wrapper}
 \title{rifi_wrapper: conveniently wraps all functions included on rifi workflow.
-Wraps the functions: check_input, rifi_preprocess, rifi_fit, rifi_penalties,
+Wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.}
 \usage{
 rifi_wrapper(inp, cores, gff, bg, restr)
@@ -13,7 +13,7 @@ rifi_wrapper(inp, cores, gff, bg, restr)
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
-\item{gff}{path: path to an annotation file in gff format}
+\item{gff}{path: path to an annotation file in gff format.}
 
 \item{bg}{numeric: threshold over which the last time point has to be to be
 fitted with the above background mode.}
@@ -26,11 +26,27 @@ All intermediate objects
 }
 \description{
 rifi_wrapper: conveniently wraps all functions included on rifi workflow.
-Wraps the functions: check_input, rifi_preprocess, rifi_fit, rifi_penalties,
+Wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.
 }
-\seealso{
-\code{check_input}
+\examples{
+data(example_input_minimal)
+rifi_wrapper(inp = example_input_minimal, cores = 20, gff = path, bg = 0,
+restr = 0.01)
 
+}
+\seealso{
 \code{rifi_preprocess}
+
+\code{rifi_fit}
+
+\code{rifi_penalties}
+
+\code{rifi_fragmentation}
+
+\code{rifi_stats}
+
+\code{rifi_summary}
+
+\code{rifi_visualization}
 }

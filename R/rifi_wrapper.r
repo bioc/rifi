@@ -1,10 +1,10 @@
 #' rifi_wrapper: conveniently wraps all functions included on rifi workflow.
-#' Wraps the functions: check_input, rifi_preprocess, rifi_fit, rifi_penalties,
+#' Wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 #' rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.
 #'
 #' @param inp data frame: the input data frame with correct format.
 #' @param cores integer: the number of assigned cores for the task.
-#' @param gff path: path to an annotation file in gff format
+#' @param gff path: path to an annotation file in gff format.
 #' @param bg numeric: threshold over which the last time point has to be to be
 #' fitted with the above background mode.
 #' @param restr numeric: a parameter that restricts the freedom of the fit to
@@ -12,7 +12,6 @@
 #'
 #' @return All intermediate objects
 #'
-#' @seealso `check_input`
 #' @seealso `rifi_preprocess`
 #' @seealso `rifi_fit`
 #' @seealso `rifi_penalties`
@@ -20,6 +19,11 @@
 #' @seealso `rifi_stats`
 #' @seealso `rifi_summary`
 #' @seealso `rifi_visualization`
+#' 
+#' @examples
+#' data(example_input_minimal)
+#' rifi_wrapper(inp = example_input_minimal, cores = 20, gff = path, bg = 0,
+#' restr = 0.01)
 #' 
 #' @export
 

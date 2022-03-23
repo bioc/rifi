@@ -45,10 +45,11 @@ dataframe_summary_events(data, data_annotation)
 \arguments{
 \item{data}{SummarizedExperiment: the input data frame with correct format.}
 
-\item{data_annotation}{dataframe: the probe based with genome annotation.}
+\item{data_annotation}{dataframe: dataframe from processed gff3 file.}
 }
 \value{
 WIP
+'
 }
 \description{
 dataframe_summary_events creates one table with all events between the
@@ -90,9 +91,11 @@ of the second fragment.
 }
 }
 \examples{
+if(!require(SummarizedExperiment)){
+suppressPackageStartupMessages(library(SummarizedExperiment))
+}
 data(stats_minimal)
-data(annot_g_minimal)
-dataframe_summary_events(data = stats_minimal, data_annotation =
-annot_g_minimal[[1]])
-
+dataframe_summary_events(data = stats_minimal, 
+data_annotation = metadata(data)$annot[[1]])
+ 
 }

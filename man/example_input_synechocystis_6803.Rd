@@ -3,11 +3,12 @@
 \docType{data}
 \name{example_input_synechocystis_6803}
 \alias{example_input_synechocystis_6803}
-\title{An example input data frame from Synechocystis PCC 6803.#'
-A data set from microarrays data containing information about the intensities
-at all time points, as well as position, strand and ID information.}
+\title{An example input data frame from Synechocystis PCC 6803
+A SummarizedExperiment from microarrays data containing information about the
+intensities at all time points (assay), Seqnames, IRanges and strand columns
+(rowRanges) and colData with time point series and averaged replicates.}
 \format{
-A data frame with 3000 rows and 10 variables:#'
+Assay with 3000 rows and 10 variables:
 \describe{
 \item{0:}{relative intensities at 0 min}
 \item{2:}{relative intensities at 2 min}
@@ -16,20 +17,18 @@ A data frame with 3000 rows and 10 variables:#'
 \item{16:}{relative intensities at 16 min}
 \item{32:}{relative intensities at 32 min}
 \item{64:}{relative intensities at 64 min}
-\item{ID:}{unique IDs}
-\item{position:}{genome positions}
-\item{strand:}{strand information}
 }
 }
 \source{
-\url{https://github.com/CyanolabFreiburg/Transcriptome_wide_decay}
+\url{https://github.com/CyanolabFreiburg/rifi}
 }
 \usage{
 data(example_input_synechocystis_6803)
 }
 \description{
-An example input data frame from Synechocystis PCC 6803.#'
-A data set from microarrays data containing information about the intensities
-at all time points, as well as position, strand and ID information.
+An example input data frame from Synechocystis PCC 6803
+A SummarizedExperiment from microarrays data containing information about the
+intensities at all time points (assay), Seqnames, IRanges and strand columns
+(rowRanges) and colData with time point series and averaged replicates.
 }
 \keyword{datasets}

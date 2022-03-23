@@ -119,7 +119,6 @@ rifi_visualization(
   HL_threshold_2 = -log2(1.5),
   vel_threshold = 200,
   HL_threshold_color_1 = "black",
-  HL_threshold_color_2 = "green",
   vel_threshold_color = "grey52",
   ps_color = "orange",
   iTSS_I_color = "blue"
@@ -129,9 +128,10 @@ rifi_visualization(
 \item{data}{SummarizedExperiment: the input data frame with correct format.}
 
 \item{genomeLength}{integer: genome length output of gff3_preprocess
-function.}
+function and element of metadata of SummarizedExperiment.}
 
-\item{annot}{dataframe: the annotation file.}
+\item{annot}{dataframe: the annotation file, output of gff3_preprocess
+function and element of metadata of SummarizedExperiment.}
 
 \item{coverage}{integer: in case the coverage is available.}
 
@@ -319,10 +319,10 @@ plot the coverage of RNA_seq in exponential phase growth
 }
 \examples{
 data(stats_minimal)
-data(annot_g_minimal)
 rifi_visualization(data = as.data.frame(rowRanges(stats_minimal)), 
-genomeLength = annot_g_minimal[[2]],
-annot = annot_g_minimal[[1]], coverage = 0, chr_fwd = NA, chr_rev = NA,
+genomeLength = metadata(stats_minimal)$annot[[2]],
+annot = metadata(stats_minimal)$annot[[1]], coverage = 0, 
+chr_fwd = NA, chr_rev = NA,
 region = c("CDS","asRNA","5'UTR","ncRNA","3'UTR","tRNA"),
 color_region = c("grey0", "red", "blue", "orange", "yellow", "green",
 "white", "darkseagreen1", "grey50", "black"),

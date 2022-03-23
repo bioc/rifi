@@ -33,16 +33,20 @@
 #' between the last position of the first fragment and the first position of
 #' the second fragment.
 #' 16. features: number of segment involved on the event.
+#' 
 #' @param data SummarizedExperiment: the input data frame with correct format.
-#' @param data_annotation dataframe: the probe based with genome annotation.
+#' @param data_annotation dataframe: dataframe from processed gff3 file.
 #' 
 #' @return WIP
 #' 
-#' @examples
+#' 
+#' @examples 
+#' if(!require(SummarizedExperiment)){
+#' suppressPackageStartupMessages(library(SummarizedExperiment))
+#' }
 #' data(stats_minimal)
-#' data(annot_g_minimal)
 #' dataframe_summary_events_HL_int(data = stats_minimal,
-#' data_annotation = annot_g_minimal[[1]])
+#' data_annotation = metadata(inp)$annot[[1]])
 #' 
 #' @export
 #' 

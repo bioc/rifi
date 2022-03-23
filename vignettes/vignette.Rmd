@@ -125,7 +125,8 @@ data from microarrays (data with averaged replicates, see. "input_df").
 
 ``` {r echo = FALSE}
 #example of E.coli data from RNAseq
-print("example of E.coli data from RNA-seq")
+paste("<font color='","red","'>","example of E.coli data from RNA-seq","</font>",sep="")
+#print("example of E.coli data from RNA-seq")
 data(example_input_minimal)
 data(example_input_e_coli)
 #require("SummarizedExperiment")
@@ -294,12 +295,11 @@ probe_df_min <-
     bg = 0,
     rm_FLT = TRUE
   )
-
 ```
 <br/>
 ``` {r echo = TRUE}
 data(make_df)
-head(rowRanges(probe_df))
+head(rowRanges(probe_df_min))
 ```
 <br/><br/>
 
@@ -1375,7 +1375,7 @@ The functions used are:
     
    `meanPosition`: assign a mean position for the plot
    
-  	`delay_mean`: adds a column in case of velocity is NA or equal to 60. The
+   `delay_mean`: adds a column in case of velocity is NA or equal to 60. The
     mean of the delay is calculated excluding terminals and outliers
 
    `my_segment_T`: plots terminals and pausing sites labels
@@ -1507,7 +1507,7 @@ wrapper_minimal <-
 ```
 <br/><br/>
 ```{r, eval = TRUE}
-data("wrapper_e_coli")
+data(wrapper_e_coli)
 wrapper_e_coli
 ```
 <br/>
