@@ -111,22 +111,28 @@ TI_fit <-
       # background coefficient,
       # otherwise the model without background coefficient is applied.
       if (tmp_df$ID[i] %in% ids_ABG) {
+        st_ABG$k <- st_ABG$k * st_ABG$decay * Data_fit$inty[1]
+        st_ABG$ti <- st_ABG$ti * st_ABG$k
         cc <- capture.output(type="message",
-                             tryCatch({
+                             halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
                                  model_ABG,
                                  data = Data_fit,
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_ABG,
-                                 lower = list(decay = 0.01, delay = 0.001),
+                                 lower = c(0,0,0,0,0,0),
                                  all = TRUE
                                )},
-                               error = function(e) {}
+                               error = function(e) {
+                                 return(list(NULL))
+                               }
                              ))
       } else {
+        st_STD$k <- st_STD$k * st_STD$decay * Data_fit$inty[1]
+        st_STD$ti <- st_STD$ti * st_STD$k
         cc <- capture.output(type="message",
-                             tryCatch({
+                             halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
                                  model_STD,
                                  data = Data_fit,
@@ -136,7 +142,9 @@ TI_fit <-
                                  lower = c(0,0,0,0,0),
                                  all = TRUE
                                )},
-                               error = function(e) {}
+                               error = function(e) {
+                                 return(list(NULL))
+                               }
                              ))
       }
       #get the one with minimum ti in range of restr
