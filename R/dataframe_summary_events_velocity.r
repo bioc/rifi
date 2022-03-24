@@ -34,7 +34,25 @@
 #' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: dataframe from processed gff3 file.
 #'
-#' @return WIP
+#' @return
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#' 
 #'
 #'
 #' @examples
@@ -43,7 +61,7 @@
 #' }
 #' data(stats_minimal)
 #' dataframe_summary_events_velocity(data = stats_minimal,
-#' data_annotation = metadata(inp)$annot[[1]])
+#' data_annotation = metadata(stats_minimal)$annot[[1]])
 #' 
 #' @export
 

@@ -71,7 +71,7 @@ position is from the second fragment.
 }
 \examples{
 data(stats_minimal)
-data(res)
-dataframe_summary_TI(data = stats_minimal, input = res)
+data(res_minimal)
+dataframe_summary_TI(data = stats_minimal, input = res_minimal)
 
 }

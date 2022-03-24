@@ -5,11 +5,10 @@
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
-#' @return the probe data frame with the columns regarding statistics:
+#' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{flag:}{Information on which fitting model is applied}
 #'   \item{position_segment:}{The position based segment}
 #'   \item{TI_termination_factor:}{The termination factor of the bin/probe}

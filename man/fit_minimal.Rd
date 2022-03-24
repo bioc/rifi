@@ -6,7 +6,7 @@
 \title{The artificial result of rifi_fit for artificial example data
 A SummarizedExperiment containing the output from rifi_fit.}
 \format{
-An object of class \code{RangedSummarizedExperiment} with 290 rows and 33 columns.
+An object of class \code{RangedSummarizedExperiment} with 4 rows and 33 columns.
 }
 \source{
 \url{https://github.com/CyanolabFreiburg/rifi}

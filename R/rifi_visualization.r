@@ -141,30 +141,16 @@
 #' @param ps_color string: color for pausing site plot.
 #' @param iTSS_I_color string: color for iTSS_I plot.
 #'
-#' @return The visualization.
+#' @return The visualization plot.
 #'
 #' @examples
 #' data(stats_minimal)
-#' rifi_visualization(data = as.data.frame(rowRanges(stats_minimal)), 
+#' if(!require(SummarizedExperiment)){
+#' suppressPackageStartupMessages(library(SummarizedExperiment))
+#' }
+#' rifi_visualization(data = stats_minimal, 
 #' genomeLength = metadata(stats_minimal)$annot[[2]],
-#' annot = metadata(stats_minimal)$annot[[1]], coverage = 0, 
-#' chr_fwd = NA, chr_rev = NA,
-#' region = c("CDS","asRNA","5'UTR","ncRNA","3'UTR","tRNA"),
-#' color_region = c("grey0", "red", "blue", "orange", "yellow", "green",
-#' "white", "darkseagreen1", "grey50", "black"),
-#' color_text.1 = "grey0", color_text.2 = "black", color_TU = "blue",
-#' size_tu = 1.6, size_locusTag = 1.6, size_gene = 1.6, Limit = 10,
-#' shape=22, col_outiler = "grey50", Alpha=0.5,
-#' col_coverage = "grey", shape_outlier = 13, limit_intensity = NA,
-#' face="bold", tick_length = .3, arrow.color = "darkseagreen1",
-#' minVelocity = 3000, medianVelocity = 6000, 
-#' col_above20 = "#00FFFF", fontface = "plain", shape_above20 = 14,
-#' axis_text_y_size = 3, axis_title_y_size = 6, TI_threshold = 1.1,
-#' p_value_TI=0.05, p_value_manova = 0.05, termination_threshold = 1,
-#' iTSS_threshold = 1.01, p_value_int = 0.05, p_value_event = 0.05,
-#' p_value_hl = 0.05, event_duration_ps = -2, event_duration_itss = 2,
-#' HL_threshold=20, vel_threshold = 200, HL_threshold_color_1="black",
-#' vel_threshold_color="grey52", ps_color="orange", iTSS_I_color="blue")
+#' annot = metadata(stats_minimal)$annot[[1]])
 #'
 #' @export
 

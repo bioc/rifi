@@ -18,11 +18,10 @@ apply_manova(inp)
 \item{inp}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
-the probe data frame with the columns regarding statsistics:
+the probe data frame with the columns regarding statistics:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
 \item{intensity:}{The relative intensity at time point 0}
 \item{half_life:}{The half-life of the bin/probe}
 \item{HL_fragment:}{The half-life fragment the bin belongs to}

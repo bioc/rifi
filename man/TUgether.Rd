@@ -19,7 +19,6 @@ the inp data frame with the columns regarding the TU:
 \describe{
 \item{ID:}{The bin/inp specific ID}
 \item{position:}{The bin/inp specific position}
-\item{strand:}{The bin/inp specific strand}
 \item{position_segment:}{The position based segment}
 \item{delay_fragment:}{The delay fragment the bin belongs to}
 \item{intercept:}{The vintercept of fit through the respective delay

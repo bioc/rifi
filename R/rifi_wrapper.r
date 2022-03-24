@@ -22,8 +22,9 @@
 #' 
 #' @examples
 #' data(example_input_minimal)
-#' rifi_wrapper(inp = example_input_minimal, cores = 20, path = path, bg = 0,
-#' restr = 0.01)
+#' rifi_wrapper(inp = example_input_minimal, cores = 2, path = 
+#' gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi")), 
+#' bg = 0, restr = 0.01)
 #' 
 #' @export
 

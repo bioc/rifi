@@ -35,9 +35,8 @@
 #' rifi_penalties(
 #'   inp = fit_minimal, details = FALSE, viz = FALSE,
 #'   top_i = 25, cores = 2, dpt = 1, smpl_min = 10, smpl_max = 100,
-#'   sta_pen = 0.5,
-#'   end_pen = 4.5, rez_pen = 9, sta_pen_out = 0.5, end_pen_out = 4.5,
-#'   rez_pen_out = 9
+#'   sta_pen = 0.5, end_pen = 4.5, rez_pen = 9, sta_pen_out = 0.5,
+#'   end_pen_out = 4.5, rez_pen_out = 9
 #' )
 #' 
 #' @export

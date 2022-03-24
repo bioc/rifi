@@ -113,9 +113,7 @@ jump to section. 9 `rifi_preprocess`.
 
 ### 1. The Input Data Frame
 
-**input_df** is a SummarizedExperiment (SE) input format. SE structure as known 
-includes the colData (description of each sample), assays (probes/bins intensity 
-measurements), rowRanges(coordinates of probes/bin including probe
+The Input Data Frame is a SummarizedExperiment (SE) input format. SE structure as known includes the colData (description of each sample), assays (probes/bins intensity measurements), rowRanges(coordinates of probes/bin including probe
 identifier and positions).
 Rifi package includes two example SE: <em>*E.coli*</em> data from
 RNAseq (data with replicates, input_df) and <em>*Synechocystis PCC 6803*</em>
@@ -193,15 +191,15 @@ print("Rule 3")
 0 %in% colData(input_df)$timepoint
 print("Rule 4")
 "Check replicates"
-if(!"replicate" %in% names(colData(input_df))){
-  colData(input_df)$replicate<-1
+if (!"replicate" %in% names(colData(input_df))) {
+  colData(input_df)$replicate <- 1
 }
 repli <- unique(colData(input_df)$replicate)
 metadata(input_df)$replicates <- repli
 message("Number of repicates: ",paste(max(repli),collapse = " "))
 print("Rule 5")
 "Create position column"
-if(!"position" %in% names(mcols(rowRanges(input_df)))){
+if (!"position" %in% names(mcols(rowRanges(input_df)))) {
   rowRanges(input_df)$position <- end(resize(input_df, width = 1, fix = "end"))
 }
 print("Rule 6")
@@ -209,14 +207,14 @@ print("Rule 6")
 time <- colData(input_df)$timepoint
 metadata(input_df)$timepoints <- time
 message("Timepoints: ",paste(unique(time),collapse = " "))
-if(!"ID" %in% names(mcols(rowRanges(input_df)))){
+if (!"ID" %in% names(mcols(rowRanges(input_df)))) {
   rowRanges(input_df)$ID<-as.character(seq(nrow(input_df)))
   message("No IDs were given in the input. Default IDs were assigned.")
 }
-if(!"FLT" %in% names(mcols(rowRanges(input_df)))){
+if (!"FLT" %in% names(mcols(rowRanges(input_df)))) {
   rowRanges(input_df)$FLT <- 0
 }
-if("*" %in% decode(strand(input_df))){
+if ("*" %in% decode(strand(input_df))) {
   rows <- which(decode(strand(input_df)) %in% "*")
   rep <- metadata(input_df)$replicate
   inp <- encode_FLT(obj = inp, rows = rows, rep = rep)
@@ -241,7 +239,7 @@ warning on which IDs have been removed, but the output can be safely used.
 The result contains the processed input data frame.  
 <br/>
 ``` {r check_input, echo = FALSE}
-result <- check_input(inp = example_input_minimal, thrsh = 0)
+probe <- check_input(inp = example_input_minimal, thrsh = 0)
 ```
 <br/><br/>
 
@@ -287,19 +285,15 @@ For our tutorial bg is set to 0, because its RNAseq data, and rm_FLT
 is T to remove ID 18558 that we tagged with "FLT","_" and "_FLT_your_text".
 
 <br/>
-``` {r make_df, echo = FALSE}
-probe_df_min <-
+``` {r make_df, echo = TRUE}
+probe <-
   make_df(
-    inp = result,
+    inp = probe,
     cores = 2,
     bg = 0,
     rm_FLT = TRUE
   )
-```
-<br/>
-``` {r echo = TRUE}
-data(make_df)
-head(rowRanges(probe_df_min))
+head(rowRanges(probe))
 ```
 <br/><br/>
 
@@ -314,14 +308,10 @@ present in the rowRanges) or absence of probes is determined by the argument
 **dist** (default is 300). Lower numbers create more, but smaller position
 segments. Position segments are strand specific.
 <br/><br/>
-``` {r segment_pos}
-probe_df <- segment_pos(inp = probe_df_min, dista = 300)
+``` {r segment_pos, echo = TRUE}
+probe <- segment_pos(inp = probe, dista = 300)
+head(rowRanges(probe))
 ``` 
-<br/>
-```{r echo = TRUE} 
-data(segment_pos)
-head(rowRanges(probe_df))
-```
 <br/><br/>
 
 ### 6. `finding_PDD`
@@ -334,24 +324,19 @@ function to make groups by the difference to the slope. The rowRanges contains
 `finding_PDD` needs additional parameters as **pen**, **pen_out** and **thrsh**
 
 <br/><br/>
-``` {r finding_PDD, eval = FALSE}
+``` {r finding_PDD, eval = TRUE}
 #Due to increased run time, this example is not evaluated in the vignette
-probe_df <-
+probe <-
   finding_PDD(
-    inp = probe_df_min,
+    inp = probe,
     cores = 2,
     pen = 2,
     pen_out = 2,
     thrsh = 0.001
   )
+head(rowRanges(probe))
 ``` 
-<br/>
-``` {r output_PDD}
-#The output
-data(finding_PDD)
-head(rowRanges(probe_df))
-```
-<br/>
+<br/><br/>
 
 ### 7. `finding_TI`
 
@@ -364,23 +349,18 @@ relative intensity than the first time point. The rowRanges needs the columns
 **ID**, **intensity**, **position** and **position_segment**. 
 `finding_TI` needs additional parameters as **pen**, **thrsh** and **add**.
 <br/><br/>
-``` {r finding_TI, eval=FALSE}
+``` {r finding_TI, eval = TRUE}
 #Due to increased run time, this example is not evaluated in the vignette
-probe_df <-
+probe <-
   finding_TI(
-    inp = probe_df_min,
+    inp = probe,
     cores = 2,
     pen = 10,
     thrsh = 0.001
   )
+head(rowRanges(probe))
 ``` 
-<br/>
-``` {r output_TI}
-#The output
-data(finding_TI)
-head(rowRanges(probe_df))
-```
-<br/>
+<br/><br/>
 
 ### 8. Fit Specific Filtrations
 
@@ -401,12 +381,12 @@ All preprocessing steps can be run with `rifi_preprocess` at once. This section
 will focus on all possible arguments that can be passed to the function.
 
 <br/><br/>
-``` {r rifi_preprocess, echo = FALSE}
+``` {r rifi_preprocess, echo = TRUE}
 #From here on the examples are shown on minimal examples.
 #Two bigger data sets can be used to run the example as well.
 preprocess_minimal <-
   rifi_preprocess(
-    inp = probe_df_min,
+    inp = probe,
     cores = 2,
     bg = 0,
     rm_FLT = TRUE,
@@ -414,13 +394,9 @@ preprocess_minimal <-
     dista = 300,
     run_PDD = TRUE
   )
+head(rowRanges(preprocess_minimal))
 ```
-<br/>
-``` {r preprocess_minimal}
-#The output
-data(preprocess_e_coli)
-head(preprocess_e_coli)
-```
+<br/><br/>
 
 
 ## III. rifi_fit
@@ -441,7 +417,7 @@ The function used are:
 
 ``` {r rifi_fit, echo = FALSE}
 #Two bigger data sets can be used to run the example as well.
-preprocess_minimal
+data(preprocess_minimal)
 suppressWarnings(fit_minimal <- rifi_fit(
   inp = preprocess_minimal,
   cores = 2,
@@ -610,7 +586,7 @@ of 4 objects) the first being the logbook.
 
 <br/><br/>
 ``` {r make_pen, eval = FALSE}
-fit_minimal
+data(fit_minimal)
 pen_delay <-
   make_pen(
     probe = fit_minimal,
@@ -739,7 +715,7 @@ window (bottom) numbers above the dots represent the outlier-penalty.
 ### 3. `rifi_penalties`
 <br/><br/>
 ``` {r rifi_penalties, echo=F}
-fit_minimal
+data(fit_minimal)
 penalties_minimal <-
   rifi_penalties(
     inp = fit_minimal,
@@ -779,10 +755,10 @@ The functions called are:
 3.  `fragment_inty`
 4.  `fragment_TI`
 5.  `TUgether`
+
 <br/><br/>
 ``` {r rifi_fragmentation, echo=F}
-fit_minimal
-penalties_minimal
+data(penalties_minimal)
 fragmentation_minimal <-
   rifi_fragmentation(
     inp = penalties_minimal,
@@ -812,6 +788,8 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_delay, eval = FALSE}
+data(fragmentation_minimal)
+data(penalties_minimal)
 probe_df <- fragment_delay(
   inp = fragmentation_minimal,
   cores = 2,
@@ -829,7 +807,7 @@ and assigns all gathered information to the probe based data frame. The columns
 "HL_fragment" and "HL_mean_fragment" are added to rowRanges(SE). `fragment_HL`
 makes half-life_fragments and assigns the mean of each fragment.
 <br/><br/>
-The function used are:
+The function used is:
 
    `score_fun_ave`
 
@@ -837,6 +815,8 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_HL, eval = FALSE}
+data(fragmentation_minimal)
+data(penalties_minimal)
 probe_df <- fragment_HL(
   probe = fragmentation_minimal,
   cores = 2,
@@ -855,7 +835,7 @@ assigns all gathered information to the probe based data frame. The columns
 "intensity_fragment" and "intensity_mean_fragment" are added rowRanges(SE). 
 `fragment_inty` makes intensity_fragments and assigns the mean of each fragment.
 <br/><br/>
-The function used are:
+The function used is:
 
    `score_fun_ave`
 
@@ -863,6 +843,8 @@ The function used are:
 fragmentation, for more details, see below.
 <br/><br/>
 ``` {r fragment_inty, eval = FALSE}
+data(fragmentation_minimal)
+data(penalties_minimal)
 probe_df <- fragment_inty(
   inp = fragmentation_minimal, 
   cores = 2,
@@ -886,6 +868,7 @@ The function used is:
 `TUgether`, for more details, see below.
 <br/><br/>
 ``` {r TUgether, eval = FALSE}
+data(fragmentation_minimal)
 probe_df <- TUgether(inp = fragmentation_minimal, cores = 2, pen = -0.75)
 head(rowRanges(probe_df))
 ```
@@ -908,6 +891,8 @@ fragmentation, for more details, see below.
 
 <br/><br/>
 ``` {r fragment_TI, eval = FALSE}
+data(fragmentation_minimal)
+data(penalties_minimal)
 probe_df <- fragment_TI(
   inp = fragmentation_minimal,
   cores = 2,
@@ -936,8 +921,11 @@ The function wrapped are:
 
 <br/><br/>
 ``` {r rifi_stats}
-fragmentation_minimal
-stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300, path =  "../inst/e_coli.gff3")
+data(fragmentation_minimal)
+Path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
+stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300, 
+                            path = Path)
+head(rowRanges(stats_minimal))
 ```
 <br/>
 
@@ -964,7 +952,7 @@ the positive threshold, **iTSS_I** is assigned. The event duration is
 additionally added.
 <br/><br/>
 ``` {r predict_ps_itss, eval=FALSE}
-fragmentation_minimal
+data(fragmentation_minimal)
 probe <- predict_ps_itss(inp = fragmentation_minimal, maxDis = 300)
 head(rowRanges(probe))
 ```
@@ -995,7 +983,6 @@ fragments showing either pausing site (ps) or internal starting site (ITSS_I).
 test.
 <br/><br/>
 ``` {r apply_ancova, eval=F}
-probe
 probe <- apply_ancova(inp = probe)
 head(rowRanges(probe))
 ```
@@ -1008,7 +995,6 @@ head(rowRanges(probe))
 or iTSS_I event.
 <br/><br/>
 ``` {r apply_event_position, eval=F}
-probe
 probe <- apply_event_position(inp = probe)
 head(rowRanges(probe))
 ```
@@ -1038,7 +1024,6 @@ are gathered for analysis.
 ratio, add columns with the corresponding p_values.
 <br/><br/>
 ``` {r apply_t_test, eval=F}
-probe
 probe <- apply_t_test(inp = probe, threshold = 300)
 head(rowRanges(probe))
 ```
@@ -1076,7 +1061,6 @@ b. synthesis ratio < 1 -> Termination
 c. synthesis ratio = 1 -> No change in synthesis rate
 <br/><br/>
 ``` {r fold_change, eval=F}
-probe
 probe <- fold_change(inp = probe)
 head(rowRanges(probe))
 ```
@@ -1098,7 +1082,6 @@ and two dependents variables (HL and intensity). The dataframe template is
 depicted below. The lm fit is applied and p_value is extracted.
 <br/><br/>
 ``` {r apply_manova, eval=F}
-probe
 apply_manova(inp = probe)
 head(rowRanges(probe))
 ```
@@ -1134,7 +1117,8 @@ f. *locus_tag*: locus_tag annotation
 
 <br/><br/>
 ``` {r gff3_preprocess, eval = FALSE}
-  metadata(stats_minimal)$annot <- gff3_preprocess(path = "e_coli.gff3")
+Path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
+  metadata(stats_minimal)$annot <- gff3_preprocess(path = Path)
 ```
 <br/>
 
@@ -1142,7 +1126,6 @@ f. *locus_tag*: locus_tag annotation
 
 <br/><br/>
 ``` {r apply_t_test_ti, eval=F}
-probe
 probe <- apply_t_test_ti(inp = probe)
 head(rowRanges(probe))
 ```
@@ -1167,7 +1150,7 @@ The functions used are:
 
 <br/><br/>
 ``` {r rifi_summary, eval=F}
-stats_minimal
+data(stats_minimal)
 summary_minimal <- rifi_summary(stats_minimal)
 ```
 <br/><br/>
@@ -1245,7 +1228,7 @@ head(metadata(summary_minimal))
    
 <br/><br/>
 ``` {r event_dataframe, eval=F}
-stats_minimal
+data(stats_minimal)
 event_dataframe(data = stats_minimal, data_annotation = metadata(stats_minimal)$annot[[1]])
 ```
 <br/>
@@ -1495,11 +1478,12 @@ The function used are:
 
 <br/><br/>
 ``` {r rifi_wrapper, eval = FALSE}
+Path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
 wrapper_minimal <-
   rifi_wrapper(
     inp = example_input_e_coli,
     cores = 2,
-    gff = "e_coli.gff3",
+    gff = Path,
     bg = 0,
     restr = 0.01
   )
@@ -1507,8 +1491,8 @@ wrapper_minimal <-
 ```
 <br/><br/>
 ```{r, eval = TRUE}
-data(wrapper_e_coli)
-wrapper_e_coli
+data(wrapper_minimal)
+wrapper_minimal
 ```
 <br/>
 

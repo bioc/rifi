@@ -4,13 +4,13 @@
 #' apply_Ttest_delay uses t-test. The last point from the first segment
 #' and the first point from the second segment are selected and added
 #' to the residuals of each model. The sum is subjected to t-test.
-#' @param inp dataframe: the probe based dataframe.
 #' 
-#' @return the probe data frame with the columns regarding statistics:
+#' @param inp SummarizedExperiment: the input data frame with correct format.
+#' 
+#' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'   \item{pausing_site:}{}

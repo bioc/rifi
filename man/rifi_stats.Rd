@@ -81,7 +81,9 @@ apply_t_test_ti and gff3_preprocess.
 }
 \examples{
 data(fragmentation_minimal)
-rifi_stats(inp = fragmentation_minimal, dista = 300, path)
+rifi_stats(inp = fragmentation_minimal, dista = 300, 
+path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz",
+package = "rifi")))
 
 }
 \seealso{

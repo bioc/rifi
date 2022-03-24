@@ -23,7 +23,35 @@ dataframe_summary(data, input)
 \item{input}{dataframe: dataframe from event_dataframe function.}
 }
 \value{
-WIP
+\item{bin_df:}{all information regarding bins:
+\describe{
+\item{feature_type:}{}
+\item{gene:}{}
+\item{locus_tag:}{}
+\item{TU:}{The overarching transcription unit}
+\item{delay_fragment:}{The delay fragment the bin belongs to}
+\item{HL_fragment:}{The half-life fragment the bin belongs to}
+\item{half_life:}{The half-life of the bin/probe}
+\item{intensity_fragment:}{The intensity fragment the bin belongs to}
+\item{intensity:}{The relative intensity at time point 0}
+\item{velocity:}{The velocity value of the bin}
+}
+}
+\item{frag_df:}{all information regarding fragments:
+\describe{
+\item{feature_type:}{}
+\item{gene:}{}
+\item{locus_tag:}{}
+\item{strand:}{The bin/probe specific strand}
+\item{TU:}{The overarching transcription unit}
+\item{delay_fragment:}{The delay fragment the bin belongs to}
+\item{HL_fragment:}{The half-life fragment the bin belongs to}
+\item{half_life:}{The half-life of the fragment}
+\item{intensity_fragment:}{The intensity fragment the bin belongs to}
+\item{intensity:}{The relative intensity at time point 0}
+\item{velocity:}{The velocity value of the respective delay fragment}
+}
+}
 }
 \description{
 dataframe_summary: creates two tables relating gene annotation to fragments.
@@ -41,6 +69,6 @@ positions.
 }
 \examples{
 data(stats_minimal)
-data(res)
-dataframe_summary(data = stats_minimal, input = res)
+data(res_minimal)
+dataframe_summary(data = stats_minimal, input = res_minimal)
 }

@@ -7,7 +7,7 @@
 A summarizedExperiment containing the output from rifi_fragmentation as an
 extension of rowRanges and metadata.}
 \format{
-An object of class \code{RangedSummarizedExperiment} with 290 rows and 33 columns.
+An object of class \code{RangedSummarizedExperiment} with 24 rows and 33 columns.
 }
 \source{
 \url{https://github.com/CyanolabFreiburg/rifi}

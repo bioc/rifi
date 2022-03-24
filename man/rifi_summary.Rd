@@ -27,8 +27,11 @@ dataframe_summary_TI.
 }
 \examples{
 data(stats_minimal)
+if(!require(SummarizedExperiment)){
+suppressPackageStartupMessages(library(SummarizedExperiment))
+}
 rifi_summary(inp = stats_minimal, data_annotation = 
-metadata(inp)$annot[[1]])
+metadata(stats_minimal)$annot[[1]])
 
 }
 \seealso{

@@ -5,11 +5,10 @@
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' 
-#' @return the probe data frame with the columns regarding statistics:
+#' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{pausing_site:}{}
 #'   \item{iTSS_I:}{}
@@ -66,10 +65,12 @@ apply_event_position <- function(inp) {
       # ...point from the second fragment
       del_p1 <- last(df_1$delay)
       del_p2 <- df_2$delay[1]
-      rowRanges(inp)$event_position[which(rowRanges(inp)$ps_ts_fragment %in% ps)] <-
+      rowRanges(inp)$event_position[
+        which(rowRanges(inp)$ps_ts_fragment %in% ps)] <-
         (rowRanges(inp)$position[last(which(rowRanges(inp)$delay_fragment ==
                            ps_1))] +
-           rowRanges(inp)$position[which(rowRanges(inp)$delay_fragment == ps_2)][1]) / 2
+           rowRanges(inp)$position[
+             which(rowRanges(inp)$delay_fragment == ps_2)][1]) / 2
     }
   }
   return(inp)

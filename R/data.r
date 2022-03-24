@@ -58,7 +58,7 @@
 "example_input_synechocystis_6803"
 
 #' The result of rifi_fit for E.coli example data
-#' A summarizedExperiment containing the output from rifi_fit as an extension of
+#' A SummarizedExperiment containing the output from rifi_fit as an extension of
 #' rowRanges and metadata.
 #' 
 #' @format Three data frames with 290 rows and 10 variables, 155 rows
@@ -66,7 +66,7 @@
 #' the first data frame are added to the rowRanges and the rest are added as
 #' metadata.
 #' \describe{
-#'   \item{inp:}{The summarizedExperiment:
+#'   \item{inp:}{The SummarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
@@ -119,7 +119,7 @@
 "fit_minimal"
 
 #' The result of rifi_fit for Synechocystis 6803 example data
-#' A summarizedExperiment containing the output from rifi_fit as an extension of
+#' A SummarizedExperiment containing the output from rifi_fit as an extension of
 #' rowRanges and metadata.
 #' 
 #' @format Three data frames with 3000 rows and 10 variables, 2811 rows
@@ -127,7 +127,7 @@
 #' the first data frame are added to the rowRanges and the rest are added as
 #' metadata.
 #' \describe{
-#'   \item{inp:}{the summarizedExperiment:
+#'   \item{inp:}{the SummarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
@@ -213,7 +213,7 @@
 "fragmentation_e_coli"
 
 #' The result of rifi_fragmentation for artificial example data
-#' A summarizedExperiment containing the output from rifi_fragmentation as an
+#' A SummarizedExperiment containing the output from rifi_fragmentation as an
 #' extension of rowRanges and metadata.
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -224,7 +224,7 @@
 
 #' The result of rifi_fragmentation for Synechocystis 6803 example data
 #' A SummarizedExperiment containing the output from rifi_fragmentation as an
-#' extention fo rowRanges
+#' extension fo rowRanges
 #' 
 #' @format rowRanges of the SummarizedExperiment:
 #' \describe{
@@ -383,7 +383,7 @@
 #' 
 #' @format A SummarizedExperiment:
 #' \describe{
-#'   \item{inp:}{the summarizedExperiment:
+#'   \item{inp:}{the SummarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
@@ -435,7 +435,7 @@
 #' 
 #' @format A SummarizedExperiment:
 #' \describe{
-#'   \item{inp:}{the summarizedExperiment:
+#'   \item{inp:}{the SummarizedExperiment:
 #'   \describe{
 #'     \item{ID:}{The bin/probe specific ID}
 #'     \item{position:}{The bin/probe specific position}
@@ -670,16 +670,24 @@
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
+#'     \item{ID:}{}
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
+#'     \item{position:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{segment:}{The segment the bin/probe belongs to}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
+#'     \item{delay_fragment:}{The delay fragment the bin/probe belongs to}
+#'     \item{delay:}{The delay of the bin/probe}
+#'     \item{HL_fragment:}{The half-life fragment the bin/probe belongs to}
 #'     \item{half_life:}{The half-life of the bin/probe}
-#'     \item{intensity_fragment:}{The intensity fragment the bin belongs to}
+#'     \item{intensity_fragment:}{The intensity fragment the bin/probe belongs
+#'      to}
 #'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{velocity:}{The velocity value of the bin}
+#'     \item{flag:}{The flag of the bin/probe(TI, PDD)}
+#'     \item{TI_termination_factor:}{The TI_termination_factor of the bin/probe 
+#'     (in case TI is detected)}
 #'     }
 #'   }
 #'   \item{frag_df:}{all information regarding fragments:
@@ -687,25 +695,38 @@
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
+#'     \item{first_position_frg:}{The first position of the fragment on the
+#'      genome}
+#'     \item{last_position_frg:}{The last position of the fragment on the
+#'      genome}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{delay_fragment:}{The delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{The half-life fragment the bin belongs to}
-#'     \item{half_life:}{The half-life of the fragment}
-#'     \item{intensity_fragment:}{The intensity fragment the bin belongs to}
+#'     \item{segment:}{The segment the fragment belongs to}
+#'     \item{delay_fragment:}{The delay fragment of the fragment}
+#'     \item{HL_fragment:}{The half-life fragment of the fragment}
+#'     \item{half_life:}{The half-life mean of the fragment}
+#'     \item{HL_SD:}{The half-life standard deviation of the fragment}
+#'     \item{HL_SE:}{The half-life standard error of the fragment}
+#'     \item{intensity_fragment:}{The intensity_fragment of the fragment}
 #'     \item{intensity:}{The relative intensity at time point 0}
+#'     \item{intensity_SD:}{The intensity standard deviation of the fragment}
+#'     \item{intensity_SE:}{The intensity standard error of the fragment}
 #'     \item{velocity:}{The velocity value of the respective delay fragment}
 #'     }
 #'   }
 #'   \item{event_df:}{all information regarding events:
 #'   \describe{
 #'     \item{event:}{}
-#'     \item{FC_HL:}{}
-#'     \item{FC_intensity:}{}
-#'     \item{FC_HL_FC_intensity:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{velocity_ratio:}{}
 #'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{FC_HL:}{Fold change of half-life}
+#'     \item{FC_intensity:}{Fold change of intensity}
+#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
 #'     \item{feature_type:}{}
 #'     \item{gene:}{}
 #'     \item{locus_tag:}{}
@@ -713,13 +734,78 @@
 #'     \item{TU:}{The overarching transcription unit}
 #'     \item{segment_1:}{}
 #'     \item{segment_2:}{}
-#'     \item{event_position:}{}
 #'     \item{event_duration:}{}
 #'     \item{gap_fragments:}{}
 #'     \item{features:}{}
 #'     }
 #'   }
-#'   \item{TI_df:}{all information regarding TI are depicted below:
+#'   \item{events_HL_int_df:}{all information regarding events related to 
+#'   half-life and intensity:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{FC_HL:}{}
+#'     \item{FC_intensity:}{}
+#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
+#'     \item{event_position:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_ps_itss_df:}{all information regarding events related to 
+#'   pausing sites and iTSS_I:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{FC_HL_adapted:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{events_velocity_df:}{all information regarding events related to 
+#'   velocity:
+#'   \describe{
+#'     \item{event:}{}
+#'     \item{p_value:}{}
+#'     \item{p_adjusted:}{}
+#'     \item{event_position:}{}
+#'     \item{velocity_ratio:}{}
+#'     \item{feature_type:}{}
+#'     \item{gene:}{}
+#'     \item{locus_tag:}{}
+#'     \item{strand:}{The bin/probe specific strand}
+#'     \item{TU:}{The overarching transcription unit}
+#'     \item{segment_1:}{}
+#'     \item{segment_2:}{}
+#'     \item{event_duration:}{}
+#'     \item{gap_fragments:}{}
+#'     \item{features:}{}
+#'     }
+#'   }
+#'   \item{TI_df:}{all information regarding TI:
 #'   \describe{
 #'     \item{event:}{}
 #'     \item{TI_fragment:}{}
@@ -744,6 +830,7 @@
 #' @usage data(summary_e_coli)
 #'
 "summary_e_coli"
+#'
 #' The result of rifi_summary for artificial example data
 #' A SummarizedExperiment with the output from rifi_summary as metadata
 #'
@@ -1083,8 +1170,91 @@
 #' @usage data(summary_synechocystis_6803)
 #'
 "summary_synechocystis_6803"
+#' 
+#' 
+#' The result of rifi_wrapper for E.coli example data 
+#' A list of SummarizedExperiment containing the output of rifi_wrapper. The 
+#' list contains 6 elements of SummarizedExperiment output of rifi_preprocess, 
+#' rifi_fit, rifi_penalties, rifi_fragmentation, rifi_stats and rifi_summary. 
+#' The plot is generated from rifi_visualization. for more detail, please refer 
+#' to each function separately. 
+#'
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
+#'
+#' @usage data(wrapper_e_coli)
+#'
+"wrapper_e_coli"
+
+#' The result of rifi_wrapper for E.coli artificial example.
+#' A list of SummarizedExperiment containing the output of rifi_wrapper. The 
+#' list contains 6 elements of SummarizedExperiment output of rifi_preprocess, 
+#' rifi_fit, rifi_penalties, rifi_fragmentation, rifi_stats and rifi_summary. 
+#' The plot is generated from rifi_visualization. for more detail, please refer 
+#' to each function separately.
+#'
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
+#'
+#' @usage data(wrapper_minimal)
+#'
+"wrapper_minimal"
 
 #' 
+#' The result of rifi_wrapper for summary_synechocystis_6803 example data 
+#' A list of SummarizedExperiment containing the output of rifi_wrapper. The 
+#' list contains 6 elements of SummarizedExperiment output of rifi_preprocess, 
+#' rifi_fit, rifi_penalties, rifi_fragmentation, rifi_stats and rifi_summary. 
+#' The plot is generated from rifi_visualization. for more detail, please refer 
+#' to each function separately. 
+#'
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
+#'
+#' @usage data(wrapper_summary_synechocystis_6803)
+#'
+"wrapper_summary_synechocystis_6803"
+
+#' The result of event_dataframe for E.coli artificial example.
+#' A data frame combining the processed genome annotation and a
+#' SummarizedExperiment data from rifi_stats. The dataframe is 
+#'
+#' @format A list with 2 items:
+#' \describe{
+#'   \item{region:}{the region from the gff file}
+#'   \item{gene:}{the annotated gene name}
+#'   \item{locus_tag:}{the annotated locus tag}
+#'   \item{strand:}{the strand of the annotation}
+#'   \item{TU:}{The overarching transcription unit}
+#'   \item{position:}{The bin/probe specific position}
+#'   \item{FC_fragment_intensity:}{}
+#'   \item{FC_intensity:}{}
+#'   \item{p_value_intensity:}{}
+#'   \item{FC_fragment_HL:}{}
+#'   \item{FC_HL:}{}
+#'   \item{p_value_HL:}{}
+#'   \item{FC_HL_intensity_fragment:}{}
+#'   \item{FC_HL_intensity:}{}
+#'   \item{FC_HL_adapted:}{}
+#'   \item{p_value_Manova:}{}
+#'   \item{synthesis_ratio:}{}
+#'   \item{synthesis_ratio_event:}{}
+#'   \item{pausing_site:}{}
+#'   \item{iTSS_I:}{}
+#'   \item{event_ps_itss_p_value_Ttest:}{}
+#'   \item{ps_ts_fragment:}{}
+#'   \item{event_position:}{}
+#'   \item{event_duration:}{}
+#'   \item{delay_frg_slope:}{}
+#'   \item{p_value_slope:}{}
+#'   \item{delay:}{}
+#'   \item{half_life:}{}
+#'   \item{intensity:}{}
+#' }
+#' 
+#' @source \url{https://github.com/CyanolabFreiburg/rifi}
+#'
+#' @usage data(res_minimal)
+#'
+"res_minimal"
+
 #' A list corresponding to a gff file for E.coli example data
 #' A list containing all necessary information from a gff file for rifi_summary 
 #' and visualization. The list is stored as metadata in rifi_stats output.

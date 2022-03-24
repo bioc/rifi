@@ -19,11 +19,10 @@
 #'                         S2
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
-#' @return the probe data frame with the columns regarding statistics:
+#' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{ID:}{The bin/probe specific ID}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{strand:}{The bin/probe specific strand}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{intercept:}{The vintercept of fit through the respective delay
 #'   fragment}
@@ -129,11 +128,14 @@ apply_ancova <- function(inp) {
                 paste0(del_1[j], ":", del_1[j + 1])
               rowRanges(inp)$velocity_ratio[
                 which(rowRanges(inp)$delay_fragment %in% del_1[j])] <-
-              rowRanges(inp)$velocity_fragment[which(rowRanges(inp)$delay_fragment %in% 
+              rowRanges(inp)$velocity_fragment[
+                which(rowRanges(inp)$delay_fragment %in% 
                                                        del_1[j + 1])[1]] /
-              rowRanges(inp)$velocity_fragment[which(rowRanges(inp)$delay_fragment %in%
+              rowRanges(inp)$velocity_fragment[
+                which(rowRanges(inp)$delay_fragment %in%
                              del_1[j])[1]]
-              rowRanges(inp)$p_value_slope[which(rowRanges(inp)$delay_fragment %in%
+              rowRanges(inp)$p_value_slope[
+                which(rowRanges(inp)$delay_fragment %in%
                            del_1[j])] <-
                 p_value_slope
             }, error = function(e) {

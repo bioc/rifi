@@ -15,7 +15,6 @@ the probe data frame with the columns regarding statistics:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
 \item{delay:}{The delay value of the bin/probe}
 \item{pausing_site:}{}
 \item{iTSS_I:}{}
