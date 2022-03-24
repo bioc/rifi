@@ -4,7 +4,7 @@
 #'
 #' @param inp data frame: the input data frame with correct format.
 #' @param cores integer: the number of assigned cores for the task.
-#' @param gff path: path to an annotation file in gff format.
+#' @param path path: path to an annotation file in gff format.
 #' @param bg numeric: threshold over which the last time point has to be to be
 #' fitted with the above background mode.
 #' @param restr numeric: a parameter that restricts the freedom of the fit to
@@ -22,13 +22,13 @@
 #' 
 #' @examples
 #' data(example_input_minimal)
-#' rifi_wrapper(inp = example_input_minimal, cores = 20, gff = path, bg = 0,
+#' rifi_wrapper(inp = example_input_minimal, cores = 20, path = path, bg = 0,
 #' restr = 0.01)
 #' 
 #' @export
 
 
-rifi_wrapper <- function(inp, cores, gff, bg, restr) {
+rifi_wrapper <- function(inp, cores, path, bg, restr) {
   
   #run preprocess step
   prepro <- rifi_preprocess(
@@ -71,7 +71,7 @@ rifi_wrapper <- function(inp, cores, gff, bg, restr) {
   probe_sta <- rifi_stats(
     inp = probe_fra, 
     dista = 300,
-    gff = gff
+    path = path
     )
   
   #run summary

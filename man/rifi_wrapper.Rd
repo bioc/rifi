@@ -6,14 +6,14 @@
 Wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.}
 \usage{
-rifi_wrapper(inp, cores, gff, bg, restr)
+rifi_wrapper(inp, cores, path, bg, restr)
 }
 \arguments{
 \item{inp}{data frame: the input data frame with correct format.}
 
 \item{cores}{integer: the number of assigned cores for the task.}
 
-\item{gff}{path: path to an annotation file in gff format.}
+\item{path}{path: path to an annotation file in gff format.}
 
 \item{bg}{numeric: threshold over which the last time point has to be to be
 fitted with the above background mode.}
@@ -31,7 +31,7 @@ rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.
 }
 \examples{
 data(example_input_minimal)
-rifi_wrapper(inp = example_input_minimal, cores = 20, gff = path, bg = 0,
+rifi_wrapper(inp = example_input_minimal, cores = 20, path = path, bg = 0,
 restr = 0.01)
 
 }
