@@ -91,8 +91,9 @@ nls2_fit <-
       # background coefficient,
       # otherwise the model without background coefficient is applied.
       if (tmp_df$ID[i] %in% ids_ABG) {
+        st_ABG$k <- st_ABG$k * st_ABG$decay * Data_fit$inty[1]
         cc <- capture.output(type="message",
-                             tryCatch({
+                             halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
                                  model_ABG,
                                  data = Data_fit,
@@ -101,11 +102,14 @@ nls2_fit <-
                                  start = st_ABG,
                                  lower = list(decay = 0.01, delay = 0.001)
                                )},
-                               error = function(e) {}
+                               error = function(e) {
+                                 return(NULL)
+                               }
                              ))
       } else {
+        st_STD$k <- st_STD$k * st_STD$decay * Data_fit$inty[1]
         cc <- capture.output(type="message",
-                             tryCatch({
+                             halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
                                  model_STD,
                                  data = Data_fit,
@@ -114,7 +118,9 @@ nls2_fit <-
                                  start = st_STD,
                                  lower = list(decay = 0.01, delay = 0.001)
                                )},
-                               error = function(e) {}
+                               error = function(e) {
+                                 return(NULL)
+                               }
                              ))
       }
       tryCatch({
