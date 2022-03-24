@@ -90,7 +90,6 @@ inp_df <- function(inp, ...){
   tmp_df$position <- rowRanges(inp)$position
   #filter the data frame
   tmp_df <- tmp_df[tmp_df$FLT != int,]
-  tmp_df <- na.omit(tmp_df)
   tmp_df
 }
 
