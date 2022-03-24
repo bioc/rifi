@@ -6,7 +6,7 @@
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param dista integer: the maximal distance allowed between two successive
 #' fragments. Default is the auto generated value.
-#' @param gff path: to the directory containing the gff3 file.
+#' @param path path: to the directory containing the gff3 file.
 #' 
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
@@ -75,7 +75,7 @@
 #' 
 #' @examples
 #' data(fragmentation_minimal)
-#' rifi_stats(inp = fragmentation_minimal, dista = 300, gff = path)
+#' rifi_stats(inp = fragmentation_minimal, dista = 300, path)
 #' 
 #' @export
 

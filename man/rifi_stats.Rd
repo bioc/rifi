@@ -15,7 +15,7 @@ rifi_stats(inp, dista = 300, gff)
 \item{dista}{integer: the maximal distance allowed between two successive
 fragments. Default is the auto generated value.}
 
-\item{gff}{path: to the directory containing the gff3 file.}
+\item{path}{path: to the directory containing the gff3 file.}
 }
 \value{
 the probe data frame with the columns regarding statistics:
@@ -81,7 +81,7 @@ apply_t_test_ti and gff3_preprocess.
 }
 \examples{
 data(fragmentation_minimal)
-rifi_stats(inp = fragmentation_minimal, dista = 300, gff = path)
+rifi_stats(inp = fragmentation_minimal, dista = 300, path)
 
 }
 \seealso{
