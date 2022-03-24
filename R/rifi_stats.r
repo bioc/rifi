@@ -79,7 +79,7 @@
 #' 
 #' @export
 
-rifi_stats <- function(inp, dista = 300, gff) {
+rifi_stats <- function(inp, dista = 300, path) {
   message("running predict_ps_itss...")
   probe <- predict_ps_itss(inp = inp, maxDis = dista)
   message("running apply_Ttest_delay...")

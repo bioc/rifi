@@ -937,7 +937,7 @@ The function wrapped are:
 <br/><br/>
 ``` {r rifi_stats}
 fragmentation_minimal
-stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300, gff =  "../inst/e_coli.gff3")
+stats_minimal <- rifi_stats(inp = fragmentation_minimal, dista = 300, path =  "../inst/e_coli.gff3")
 ```
 <br/>
 

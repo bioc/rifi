@@ -7,7 +7,7 @@ Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
 apply_event_position, apply_t_test, fold_change, apply_manova,
 apply_t_test_ti and gff3_preprocess.}
 \usage{
-rifi_stats(inp, dista = 300, gff)
+rifi_stats(inp, dista = 300, path)
 }
 \arguments{
 \item{inp}{SummarizedExperiment: the input data frame with correct format.}
