@@ -164,7 +164,7 @@ TI_fit <-
           k_v <- NA
           rest_delay_v <- NA
           ti_v <- NA
-          bg_v <- NA
+          bg_v <- 0
         } else {
           decay_v <- coef(halfLE2)[1]
           ti_delay_v <- coef(halfLE2)[2]
