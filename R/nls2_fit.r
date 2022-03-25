@@ -127,7 +127,7 @@ nls2_fit <-
         if (is.null(halfLE2)[1] | is.na(halfLE2)[1]) {
           decay_v <- NA
           delay_v <- NA
-          bg_v <- NA
+          bg_v <- 0
           k_v <- NA
         } else {
           decay_v <- coef(halfLE2)[1]
