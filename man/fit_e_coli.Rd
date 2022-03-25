@@ -4,7 +4,7 @@
 \name{fit_e_coli}
 \alias{fit_e_coli}
 \title{The result of rifi_fit for E.coli example data
-A summarizedExperiment containing the output from rifi_fit as an extension of
+A SummarizedExperiment containing the output from rifi_fit as an extension of
 rowRanges and metadata.}
 \format{
 Three data frames with 290 rows and 10 variables, 155 rows
@@ -12,7 +12,7 @@ and 5 variables, and 135 rows and 9 variables are generated. The columns of
 the first data frame are added to the rowRanges and the rest are added as
 metadata.
 \describe{
-\item{inp:}{The summarizedExperiment:
+\item{inp:}{The SummarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
@@ -58,7 +58,7 @@ data(fit_e_coli)
 }
 \description{
 The result of rifi_fit for E.coli example data
-A summarizedExperiment containing the output from rifi_fit as an extension of
+A SummarizedExperiment containing the output from rifi_fit as an extension of
 rowRanges and metadata.
 }
 \keyword{datasets}

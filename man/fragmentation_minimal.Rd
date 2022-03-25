@@ -4,7 +4,7 @@
 \name{fragmentation_minimal}
 \alias{fragmentation_minimal}
 \title{The result of rifi_fragmentation for artificial example data
-A summarizedExperiment containing the output from rifi_fragmentation as an
+A SummarizedExperiment containing the output from rifi_fragmentation as an
 extension of rowRanges and metadata.}
 \format{
 An object of class \code{RangedSummarizedExperiment} with 24 rows and 33 columns.
@@ -17,7 +17,7 @@ data(fragmentation_minimal)
 }
 \description{
 The result of rifi_fragmentation for artificial example data
-A summarizedExperiment containing the output from rifi_fragmentation as an
+A SummarizedExperiment containing the output from rifi_fragmentation as an
 extension of rowRanges and metadata.
 }
 \keyword{datasets}

@@ -5,7 +5,7 @@
 \alias{res_minimal}
 \title{The result of event_dataframe for E.coli artificial example.
 A data frame combining the processed genome annotation and a
-summarizedExperiment data from rifi_stats. The dataframe is}
+SummarizedExperiment data from rifi_stats. The dataframe is}
 \format{
 A list with 2 items:
 \describe{
@@ -49,6 +49,6 @@ data(res_minimal)
 \description{
 The result of event_dataframe for E.coli artificial example.
 A data frame combining the processed genome annotation and a
-summarizedExperiment data from rifi_stats. The dataframe is
+SummarizedExperiment data from rifi_stats. The dataframe is
 }
 \keyword{datasets}

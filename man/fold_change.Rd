@@ -18,7 +18,7 @@ fold_change(inp)
 \item{inp}{SummarizedExperiment: the input data frame with correct format.}
 }
 \value{
-the probe data frame with the columns regarding statistics:
+the SummarizedExperiment with the columns regarding statistics:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}

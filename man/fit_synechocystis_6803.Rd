@@ -4,7 +4,7 @@
 \name{fit_synechocystis_6803}
 \alias{fit_synechocystis_6803}
 \title{The result of rifi_fit for Synechocystis 6803 example data
-A summarizedExperiment containing the output from rifi_fit as an extension of
+A SummarizedExperiment containing the output from rifi_fit as an extension of
 rowRanges and metadata.}
 \format{
 Three data frames with 3000 rows and 10 variables, 2811 rows
@@ -12,7 +12,7 @@ and 5 variables, and 189 rows and 9 variable are generated. The columns of
 the first data frame are added to the rowRanges and the rest are added as
 metadata.
 \describe{
-\item{inp:}{the summarizedExperiment:
+\item{inp:}{the SummarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
@@ -59,7 +59,7 @@ data(fit_synechocystis_6803)
 }
 \description{
 The result of rifi_fit for Synechocystis 6803 example data
-A summarizedExperiment containing the output from rifi_fit as an extension of
+A SummarizedExperiment containing the output from rifi_fit as an extension of
 rowRanges and metadata.
 }
 \keyword{datasets}

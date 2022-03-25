@@ -41,7 +41,7 @@ predict_ps_itss(inp, maxDis = 300)
 fragments.}
 }
 \value{
-the probe data frame with the columns regarding statistics:
+the SummarizedExperiment with the columns regarding statistics:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}

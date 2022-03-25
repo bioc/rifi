@@ -15,7 +15,7 @@ TUgether(inp, cores = 1, pen = -0.75)
 Higher values result in fewer fragments. Default -0.75.}
 }
 \value{
-the inp data frame with the columns regarding the TU:
+the SummarizedExperiment with the columns regarding the TU:
 \describe{
 \item{ID:}{The bin/inp specific ID}
 \item{position:}{The bin/inp specific position}

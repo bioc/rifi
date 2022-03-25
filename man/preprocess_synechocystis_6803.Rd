@@ -9,7 +9,7 @@ extention to rowRanges}
 \format{
 A SummarizedExperiment:
 \describe{
-\item{inp:}{the summarizedExperiment:
+\item{inp:}{the SummarizedExperiment:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}

@@ -174,16 +174,23 @@ ID    | gene  | ...  | strand| event  | p_value  |
 
 ## Quick start
 
-To run the example, you would need to download the files cited below from rifi/data on the same directory of your work and run the script in R:
+Two examples with their corresponding annotation gff file are available. One from RNA-seq (E.coli) and the other from microarrays (Synechocystis 6803). To run E.coli example, you would need to download the data cited below from rifi/data and the annotation file from rifi/inst/extdata/ on the same directory of your work. 
 
 #### 1. Annotation file
-e_coli.gff3
+gff_e_coli.gff3.gz
+gff_synechocystis_6803.gff.gz
 
 #### 2. SummarizedExperiment input data
 example_input_e_coli.RData
+example_input_synechocystis_6803.RData
 
 ```
-wrapper <- rifi_wrapper(inp = example_input_e_coli, cores = 2, gff = "./e_coli.gff3", bg = 0, restr = 0.01)
+wrapper_e.coli <- rifi_wrapper(inp = example_input_e_coli, cores = 2, path = "gff_e_coli.gff3.gz", bg = 0, restr = 0.01)
+```
+
+```
+wrapper_synechocystis <- rifi_wrapper(inp = example_input_synechocystis_6803, 
+cores = 20, path = "./gff_synechocystis_6803.gff.gz", bg = 4000, restr = 0.01)
 ```
 #### check the result
 rifi_output and a plot are generated in your directory.

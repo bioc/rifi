@@ -5,7 +5,7 @@
 \alias{fragmentation_synechocystis_6803}
 \title{The result of rifi_fragmentation for Synechocystis 6803 example data
 A SummarizedExperiment containing the output from rifi_fragmentation as an
-extention fo rowRanges}
+extension fo rowRanges}
 \format{
 rowRanges of the SummarizedExperiment:
 \describe{
@@ -47,6 +47,6 @@ data(fragmentation_synechocystis_6803)
 \description{
 The result of rifi_fragmentation for Synechocystis 6803 example data
 A SummarizedExperiment containing the output from rifi_fragmentation as an
-extention fo rowRanges
+extension fo rowRanges
 }
 \keyword{datasets}

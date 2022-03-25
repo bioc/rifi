@@ -14,7 +14,7 @@ apply_t_test(inp, threshold = 300)
 \item{threshold}{integer: threshold.}
 }
 \value{
-the probe data frame with the columns regarding statistics:
+the SummarizedExperiment with the columns regarding statistics:
 \describe{
 \item{ID:}{The bin/probe specific ID}
 \item{position:}{The bin/probe specific position}
