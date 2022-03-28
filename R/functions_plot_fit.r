@@ -10,6 +10,7 @@ plot_nls2_function <-
     par(mfrow = c(2, 2))
     for (i in seq_len(nrow(inp))) {
       tmp_inp <- inp[i,]
+      row_max <- max(assay(tmp_inp), na.rm = TRUE)
       ID <- rowRanges(tmp_inp)$ID
       f<-data.frame(bg = 0)
       if(ID %in% fit_STD$ID){
@@ -19,13 +20,16 @@ plot_nls2_function <-
         f <- fit_TI[fit_TI$ID == ID,]
       }
       if(!all(is.na(assay(tmp_inp)))){
+        ylim_1 <- f$bg * row_max
+        ylim_2 <- max(row_max,0)
+        ylim_f <- (ylim_2 - ylim_1) * 0.1
         plot(time, assay(tmp_inp), pch = 16, xlab = "Time [min]",
              ylab = "Intensity [A.U.]",
              main = paste0("ID: ", ID,
                            " position: ", rowRanges(tmp_inp)$position,
                            " ", decode(strand(tmp_inp))
              ),
-             ylim = c(0.9*f$bg, max(max(assay(tmp_inp), na.rm = TRUE),0)),
+             ylim = c(ylim_1 - ylim_f, ylim_2 + ylim_f),
              col = colData(inp)$replicate + 1
         )
         mean_r <- tapply(as.numeric(assay(tmp_inp)), colData(inp)$timepoint,
@@ -35,14 +39,15 @@ plot_nls2_function <-
       if(ID %in% fit_STD$ID){
         f <- fit_STD[fit_STD$ID == ID,]
         if(!any(is.na(f))){
-          curve((f$k / f$decay * x / x + f$bg),
+          curve((f$k / f$decay * x / x + f$bg) * row_max,
                 from = 0,
                 to = f$delay,
                 type = "l",
                 add = TRUE,
                 pch = 7
           )
-          curve(((f$k / f$decay) * exp(-f$decay * (x - f$delay)) + f$bg),
+          curve(((f$k / f$decay) * exp(-f$decay * (x - f$delay)) + f$bg) *
+                  row_max,
                 from = f$delay,
                 to = max(time),
                 type = "l",
@@ -54,7 +59,7 @@ plot_nls2_function <-
             legend = c(
               paste0("delay = ", round(f$delay, digits = 1)),
               paste0("halflife = ", round(log(2) / f$decay, digits = 1)),
-              paste0("background = ", round(f$bg, digits = 1))
+              paste0("background = ", round(f$bg * row_max, digits = 1))
             ),
             bty = "n",
             cex = 0.8
@@ -64,25 +69,24 @@ plot_nls2_function <-
       if(ID %in% fit_TI$ID){
         f <- fit_TI[fit_TI$ID == ID,]
         if(!any(is.na(f))){
-          curve(((f$k / f$decay - f$ti / f$decay) * x / x + f$bg),
+          curve(((f$k / f$decay - f$ti / f$decay) * x / x + f$bg) * row_max,
                 from = 0,
                 to = f$ti_delay,
                 type = "l",
                 add = TRUE,
                 pch = 7
           )
-          curve(f$k / f$decay + f$bg - f$ti / f$decay *
-                  exp(-f$decay * (x - f$ti_delay)),
+          curve(((f$k / f$decay - f$ti / f$decay *
+                  exp(-f$decay * (x - f$ti_delay))) + f$bg) * row_max,
                 from = f$ti_delay,
                 to = f$ti_delay + f$rest_delay,
                 type = "l",
                 add = TRUE,
                 pch = 7
           )
-          curve(
-            f$bg + (f$k / f$decay - f$ti / f$decay * exp(
-              -f$decay * f$rest_delay)) * exp(-f$decay * (
-                x - (f$ti_delay + f$rest_delay))),
+          curve(((f$k / f$decay - f$ti / f$decay *
+                 exp(-f$decay * f$rest_delay)) * exp(-f$decay * (
+                x - (f$ti_delay + f$rest_delay))) + f$bg) * row_max,
             from = f$ti_delay + f$rest_delay,
             to = max(time),
             type = "l",
@@ -97,7 +101,7 @@ plot_nls2_function <-
               paste0("halflife = ", round(log(2) / f$decay, digits = 1)),
               paste0("ti = ", round(f$ti, digits = 1)),
               paste0("term_prob = ", round(f$ti / f$k, digits = 1)),
-              paste0("background = ", round(f$bg, digits = 1))
+              paste0("background = ", round(f$bg * row_max, digits = 1))
             ),
             bty = "n",
             cex = 0.8
