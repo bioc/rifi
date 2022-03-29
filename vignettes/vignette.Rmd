@@ -196,7 +196,7 @@ if (!"replicate" %in% names(colData(input_df))) {
 }
 repli <- unique(colData(input_df)$replicate)
 metadata(input_df)$replicates <- repli
-message("Number of repicates: ",paste(max(repli),collapse = " "))
+message("Number of replicates: ",paste(max(repli),collapse = " "))
 print("Rule 5")
 "Create position column"
 if (!"position" %in% names(mcols(rowRanges(input_df)))) {

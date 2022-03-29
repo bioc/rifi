@@ -102,11 +102,6 @@ In a first step, general data preprocessing e.g., filtering, segmentation based 
 <b>Figure 2:</b> The general workflow of rifi. Blue boxes are data structures, green boxes are visual outputs, orange boxes are function. Incoming arrows represent the required input, outgoing arrows represent the output produced by the function. The orange frames state the main tasks of the function they refer to with dotted arrows
 </sub>
 
-## Positional Arguments
-
-Rifi provides different functional arguments (subcalls) for individual procedures. These include `rifi_preprocess`, `rifi_fit`, `rifi_penalties`, `rifi_fragmentation`, `rifi_stats`, `rifi_summary` and `rifi_visualization`
-
-
 ## Input 
 
 The input is a summarizedExperiment data format containing the RNA-seq or microarray time series data from rifampicin treated microorganisms, including all potential replicates, column wise as relative intensities (assay), e.g, Table 1 shows an example input.
@@ -126,23 +121,31 @@ The input is a summarizedExperiment data format containing the RNA-seq or microa
 <sub>Table 1. Rifi input data table (assay). The columns contain the relative intensity measurements of all replicates, with the first column referring to timepoint zero, at or before the addition of rifampicin.
 </sub>
 
-## Parameters
+## Quick start
 
-Rifi runs in R and the command line for the workflow are: 
+Two examples with their corresponding annotation gff file are available. One from RNA-seq (E.coli) and the other from microarrays (Synechocystis 6803). To run E.coli example, you would need to download the data cited below from rifi/data and the annotation file from rifi/inst/extdata/ on the same directory of your work. 
 
-`prepro <- rifi_preprocess(...)`
+#### 1. Annotation file
+gff_e_coli.gff3.gz
 
-`probe_df <- rifi_fit(...)`
+gff_synechocystis_6803.gff.gz
 
-`probe_pen <- rifi_penalties(...)`
+#### 2. SummarizedExperiment input data
+example_input_e_coli.RData
 
-`probe_frag <- rifi_fragmentation(...)`
+example_input_synechocystis_6803.RData
 
-`probe_sta <- rifi_stats(...)`
+```
+wrapper_e.coli <- rifi_wrapper(inp = example_input_e_coli, cores = 2, path = "gff_e_coli.gff3.gz", bg = 0, restr = 0.01)
+```
 
-`probe_summary <- rifi_summary(...)`
-
-`rifi_visualization(...)`
+```
+wrapper_synechocystis <- rifi_wrapper(inp = example_input_synechocystis_6803, 
+cores = 20, path = "./gff_synechocystis_6803.gff.gz", bg = 4000, restr = 0.01)
+```
+#### check the result
+rifi_output and a plot are generated in your directory. A sample of result is shown on section results.
+rifi_output is a summarizedExperiment format containing assay, rowRanges, colData and metaData. More details could be found on vignette.
 
 ## Results
 
@@ -171,34 +174,6 @@ ID    | gene  | ...  | strand| event  | p_value  |
 
 
 <sub>Table 3: The event data frame output. All data given is the value averaged over the given fragment. Columns represented by the dots are additional information.</sub>
-
-## Quick start
-
-Two examples with their corresponding annotation gff file are available. One from RNA-seq (E.coli) and the other from microarrays (Synechocystis 6803). To run E.coli example, you would need to download the data cited below from rifi/data and the annotation file from rifi/inst/extdata/ on the same directory of your work. 
-
-#### 1. Annotation file
-gff_e_coli.gff3.gz
-gff_synechocystis_6803.gff.gz
-
-#### 2. SummarizedExperiment input data
-example_input_e_coli.RData
-example_input_synechocystis_6803.RData
-
-```
-wrapper_e.coli <- rifi_wrapper(inp = example_input_e_coli, cores = 2, path = "gff_e_coli.gff3.gz", bg = 0, restr = 0.01)
-```
-
-```
-wrapper_synechocystis <- rifi_wrapper(inp = example_input_synechocystis_6803, 
-cores = 20, path = "./gff_synechocystis_6803.gff.gz", bg = 4000, restr = 0.01)
-```
-#### check the result
-rifi_output and a plot are generated in your directory.
-rifi_output is a summarizedExperiment format containing assay, rowRanges, colData and metaData. More details could be found on vignette.
-
-## Testing
-
-Two data frames are provided to test Rifi: `example_input_e_coli` and `example_input_synechocystis_6803`
 
 # Troubleshooting
 
