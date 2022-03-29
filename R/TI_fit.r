@@ -72,6 +72,9 @@ TI_fit <-
     }
     FLT_inp <- inp
     assay(FLT_inp)[decode_FLT(FLT_inp)] <- NA
+    #normalize
+    row_max <- apply(assay(FLT_inp), 1, max, na.rm = TRUE)
+    assay(FLT_inp) <- assay(FLT_inp)/row_max
     #make the tmp_df
     tmp_df <- inp_df(FLT_inp, "ID", "position", "flag")
     #only STD
@@ -111,8 +114,6 @@ TI_fit <-
       # background coefficient,
       # otherwise the model without background coefficient is applied.
       if (tmp_df$ID[i] %in% ids_ABG) {
-        st_ABG$k <- st_ABG$k * st_ABG$decay * Data_fit$inty[1]
-        st_ABG$ti <- st_ABG$ti * st_ABG$k
         cc <- capture.output(type="message",
                              halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
@@ -129,8 +130,6 @@ TI_fit <-
                                }
                              ))
       } else {
-        st_STD$k <- st_STD$k * st_STD$decay * Data_fit$inty[1]
-        st_STD$ti <- st_STD$ti * st_STD$k
         cc <- capture.output(type="message",
                              halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
