@@ -165,8 +165,10 @@ nls2_fit <-
     metadata(inp)$fit_STD <- fit_nls2
     
     rowRanges(inp)$delay[rowRanges(inp)$ID %in% tmp_df$ID] <- fit_nls2$delay
+    rowData(inp)$delay[!is.finite(rowData(inp)$delay)]<-NA
     rowRanges(inp)$half_life[rowRanges(inp)$ID %in% tmp_df$ID] <-
       log(2) / fit_nls2$decay
+    rowData(inp)$half_life[!is.finite(rowData(inp)$half_life)]<-NA
     
     inp <- inp_order(inp)
     

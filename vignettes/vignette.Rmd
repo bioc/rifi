@@ -171,67 +171,8 @@ character strings that do not contains "|","_" or ",".
 
 ### 2. `check_input`
 
-Not complying to any of the rules will result in one of the following errors
+Not complying to any of the rules will result in errors
 and/or warnings by running "check_input": <br/><br/>
-
-<details><summary>**See all errors and warnings**</summary>
-<p>    
-
-```{r, echo = FALSE, error = TRUE, warning = TRUE, message = TRUE, purl = FALSE}
-input_df <- example_input_e_coli
-thrsh <- 0
-print("Rule 1")
-"thrsh must be numeric of length one"
-is.numeric(thrsh) & length(thrsh) == 1
-print("Rule 2")
-"The timepoints must be given as numeric"
-is.numeric(colData(input_df)$timepoint)
-print("Rule 3")
-"A timepoint 0 must be given"
-0 %in% colData(input_df)$timepoint
-print("Rule 4")
-"Check replicates"
-if (!"replicate" %in% names(colData(input_df))) {
-  colData(input_df)$replicate <- 1
-}
-repli <- unique(colData(input_df)$replicate)
-metadata(input_df)$replicates <- repli
-message("Number of replicates: ",paste(max(repli),collapse = " "))
-print("Rule 5")
-"Create position column"
-if (!"position" %in% names(mcols(rowRanges(input_df)))) {
-  rowRanges(input_df)$position <- end(resize(input_df, width = 1, fix = "end"))
-}
-print("Rule 6")
-"Get the time"
-time <- colData(input_df)$timepoint
-metadata(input_df)$timepoints <- time
-message("Timepoints: ",paste(unique(time),collapse = " "))
-if (!"ID" %in% names(mcols(rowRanges(input_df)))) {
-  rowRanges(input_df)$ID<-as.character(seq(nrow(input_df)))
-  message("No IDs were given in the input. Default IDs were assigned.")
-}
-if (!"FLT" %in% names(mcols(rowRanges(input_df)))) {
-  rowRanges(input_df)$FLT <- 0
-}
-if ("*" %in% decode(strand(input_df))) {
-  rows <- which(decode(strand(input_df)) %in% "*")
-  rep <- metadata(input_df)$replicate
-  inp <- encode_FLT(obj = inp, rows = rows, rep = rep)
-  warning("Probes without strand information cannot be considered.")
-}
-print("Rule7")
-"Checks if t0 is 0 or NA"
-  zero_tmp <- rowMeans(assay(input_df[,input_df$timepoint == "0"]), na.rm = T)
-if (any(is.na(zero_tmp) | any(zero_tmp <= thrsh))) {
-  rows <- which(is.na(zero_tmp) | zero_tmp <= thrsh)
-  rep <- metadata(input_df)$replicate
-  warning("Probes below ",thrsh," or NA at timepoint 0 connot be considered.")
-}
-```
-
-</p>
-</details>
 <br>
 As our standard input contains probes that are not expressed and thus have a
 relative intensity of 0 at time point 0, in our example check_input gives a
@@ -362,20 +303,7 @@ head(rowRanges(probe))
 ``` 
 <br/><br/>
 
-### 8. Fit Specific Filtrations
-
-Similar to the filtration below background (see. 3), filtration can be applied
-specifically for each of the two fits. When a custom function is applied within
-`rifi_preprocess`, the input variable x must refer to the intensity vector over
-all timepoints, the output must be a character string containing **FLT** for all
-replicates that should be filtered. Additional arguments must be hard coded or
-given as default value, as additional arguments can not be passed into
-`rifi_preprocess`.  
-Application outside of `rifi_preprocess` can modify the 'filtration' column in
-the input dataframe, as that rows with replicates that should be filtered
-contain the character string **FLT**.
-
-### 9. `rifi_preprocess`
+### 8. `rifi_preprocess`
 
 All preprocessing steps can be run with `rifi_preprocess` at once. This section
 will focus on all possible arguments that can be passed to the function.
@@ -536,15 +464,13 @@ knitr::include_graphics("nls2Plot.png")
 ```
 <br/><br/>
 
-### 4. `plot_singleProbe`
-
-`plot_singleProbe` plots the fit from TI with the corresponding coefficients,
+`plot_nls2` also plots the fit from TI with the corresponding coefficients,
 **delay**, **ti_delay**, **half_life**, **TI_termination_factor** and
 **TI**. Additional parameters are included on the legend a, the output is shown
 on TIPlot figure.
 <br/><br/>
-``` {r plot_singleProbe, eval=F}
-plot_singleProbe_function(inp = probe_df)
+``` {r plot_nls2_function, eval=F}
+plot_nls2_function(inp = probe_df)
 ```
 <br/><br/>
 ``` {r TIPlot, echo = FALSE, fig.cap="**TI model fit**", out.width = '100%'}

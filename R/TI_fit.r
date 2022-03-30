@@ -202,10 +202,14 @@ TI_fit <-
     
     rowRanges(inp)$delay[rowRanges(inp)$ID %in% tmp_df$ID] <-
       fit_nls2$ti_delay + fit_nls2$rest_delay
+    rowData(inp)$delay[!is.finite(rowData(inp)$delay)]<-NA
     rowRanges(inp)$half_life[rowRanges(inp)$ID %in% tmp_df$ID] <-
       log(2) / fit_nls2$decay
+    rowData(inp)$half_life[!is.finite(rowData(inp)$half_life)]<-NA
     rowRanges(inp)$TI_termination_factor[rowRanges(inp)$ID %in% tmp_df$ID] <-
       fit_nls2$ti / fit_nls2$k
+    rowData(inp)$TI_termination_factor[
+      !is.finite(rowData(inp)$TI_termination_factor)]<-NA
     
     inp <- inp_order(inp)
     
