@@ -74,16 +74,23 @@ nls2_fit <-
     rowRanges(inp)$half_life[rowRanges(inp)$ID %in% tmp_df$ID] <- NA
     #IDs
     ids_ABG<-tmp_df$ID[grepl("ABG",tmp_df$flag)]
+    #time points
+    time <- metadata(FLT_inp)$timepoints
     #start values
     st_STD <- expand.grid(decay = decay, delay = delay, k = k, bg = bg)
     st_ABG <- expand.grid(decay = decay, delay = delay, k = k)
+    #boarders
+    upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
+                      k = 1/(log(2)/(60)))
+    lower_STD <- list(decay = log(2)/(60), delay = 0, k = log(2)/(60), bg = 0)
+    upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
+                      k = 1/(log(2)/(60)))
+    lower_ABG <- list(decay = log(2)/(60), delay = 0, k = log(2)/(60))
     #models
     model_STD <- inty ~ I(time < delay) * I(k / decay + bg) + (time >= delay) * 
       I(bg + (k / decay) * (exp(-decay * (time - delay))))
     model_ABG <- inty ~ I(time < delay) * k / decay + (time >= delay) * 
       I(k / decay * (exp(-decay * (time - delay))))
-    #time points
-    time <- metadata(FLT_inp)$timepoints
     
     n_fit <- mclapply(seq_len(nrow(tmp_df)), function(i) {
       #get the Data
