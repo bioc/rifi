@@ -98,8 +98,7 @@ make_pen <- function(inp,
     res2[[i]] <- correct
     res3[[i]] <- wrong
     dif <- correct - wrong
-    ind <-
-      which(dif == max(dif[dif >= wrong], na.rm = TRUE), arr.ind = TRUE)[1, ]
+    ind <- which(dif == max(dif, na.rm = TRUE), arr.ind = TRUE)[1, ]
     sta_pen <- as.numeric(rownames(dif)[ind[1]]) - step_pen
     end_pen <- as.numeric(rownames(dif)[ind[1]]) + step_pen
     sta_pen_out <- as.numeric(colnames(dif)[ind[2]]) - step_pen_out
