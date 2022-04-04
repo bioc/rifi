@@ -85,11 +85,24 @@ TI_fit <-
     rowRanges(inp)$TI_termination_factor[rowRanges(inp)$ID %in% tmp_df$ID] <- NA
     #IDs
     ids_ABG <- tmp_df$ID[grepl("ABG",tmp_df$flag)]
+    #time points
+    time <- metadata(FLT_inp)$timepoints
     #start values
     st_STD <- expand.grid(decay = decay, ti_delay = ti_delay, k = k,
                           rest_delay = rest_delay, ti = ti, bg = bg)
     st_ABG <- expand.grid(decay = decay, ti_delay = ti_delay, k = k,
                           rest_delay = rest_delay, ti = ti)
+    #boarders
+    upper_STD <- list(decay = log(2)/(1/60), ti_delay = max(time),
+                      k = 1/(log(2)/(60)), rest_delay = max(time),
+                      ti = 1/(log(2)/(60)))
+    lower_STD <- list(decay = log(2)/(60), ti_delay = 0, k = log(2)/(60),
+                      rest_delay = 0, ti = 0, bg = 0)
+    upper_ABG <- list(decay = log(2)/(1/60), ti_delay = max(time),
+                      k = 1/(log(2)/(60)), rest_delay = max(time),
+                      ti = 1/(log(2)/(60)))
+    lower_ABG <- list(decay = log(2)/(60), ti_delay = 0, k = log(2)/(60),
+                      rest_delay = 0, ti = 0)
     #models
     model_STD <- inty ~ I(time < ti_delay) * I(k / decay - ti / decay + bg) +
       I(time < ti_delay + rest_delay & time >= ti_delay) *
@@ -103,8 +116,7 @@ TI_fit <-
       I(time >= ti_delay + rest_delay) *
       I((k / decay - ti / decay * exp(-decay * rest_delay)) *
           exp(-decay * (time - (ti_delay + rest_delay))))
-    #time points
-    time <- metadata(FLT_inp)$timepoints
+
     n_fit <- mclapply(seq_len(nrow(tmp_df)), function(i) {
       #get the Data
       tmp_Data <- assay(FLT_inp)[rowRanges(FLT_inp)$ID %in% tmp_df$ID[i],]
@@ -202,10 +214,14 @@ TI_fit <-
     
     rowRanges(inp)$delay[rowRanges(inp)$ID %in% tmp_df$ID] <-
       fit_nls2$ti_delay + fit_nls2$rest_delay
+    rowData(inp)$delay[!is.finite(rowData(inp)$delay)]<-NA
     rowRanges(inp)$half_life[rowRanges(inp)$ID %in% tmp_df$ID] <-
       log(2) / fit_nls2$decay
+    rowData(inp)$half_life[!is.finite(rowData(inp)$half_life)]<-NA
     rowRanges(inp)$TI_termination_factor[rowRanges(inp)$ID %in% tmp_df$ID] <-
       fit_nls2$ti / fit_nls2$k
+    rowData(inp)$TI_termination_factor[
+      !is.finite(rowData(inp)$TI_termination_factor)]<-NA
     
     inp <- inp_order(inp)
     
