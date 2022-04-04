@@ -132,7 +132,7 @@ individual fits for all *probes/bins* are produced.
 
 
 <br/><br/>
-``` {r hirarchy, echo = FALSE, fig.cap = "**Fragmentation hirarchy**. The hierarchy of the workflow is separated into five steps. At firstFinally, within TUs, TI fragments are formed based on the distance to the next data point. The threshold is 200 nucleotides. Next, segments are parted into delay fragments. The delay fragments are parted by the half-life and likewise the half-life fragments are parted by intensity. Groups of TUs are formed based on the distance between the starts and ends of the delay fragments. Finally, within TUs, TI fragments are formed.", out.width = '100%'}
+``` {r hirarchy, echo = FALSE, fig.cap = "**Fragmentation hirarchy**. The hierarchy of the workflow is separated into five steps. At first segments are formed based on the distance to the next data point. The threshold is 200 nucleotides. Next, segments are parted into delay fragments. The delay fragments are parted by the half-life and likewise the half-life fragments are parted by intensity. Groups of TUs are formed based on the distance between the starts and ends of the delay fragments. Finally, within TUs, TI fragments are formed.", out.width = '100%'}
 knitr::include_graphics("hirarchy3.png")
 ```
 <br/>
@@ -141,7 +141,8 @@ knitr::include_graphics("hirarchy3.png")
 
 If you have your data prepared as described in [The Input Data Frame](#the-input-data-frame) you can use the 
 `rifi_wrapper` to run 'rifi" with default options. `rifi_wrapper` conveniently wraps all functions included in rifi. 
-That allows the user to run the whole workflow with one function. 
+That allows the user to run the whole workflow with one function. If the data contain a background component, 
+e.g. in case of microarray data, take to define a meaningful background intensity. 
 
 The functions used are:
 
@@ -338,7 +339,7 @@ data from microarrays (data with averaged replicates, see. "input_df").
 <em>*E.coli*</em> is the input for this tutorial. In case of the <em>*E.coli*</em> 
 RNAseq dataset the intensities are binned for every 50 nt. We recommend to use a similar
 strategy if working with RNAseq data. The binning is not performed by 'rifi' and needs to be
-done beforehand.
+done beforehand. 
 <br/><br/>
 
 ``` {r echo = FALSE}
