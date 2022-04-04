@@ -32,7 +32,7 @@ apply_Ttest_delay <- function(inp) {
   rowRanges(inp)$event_ps_itss_p_value_Ttest <- NA
   
   if(length(event) != 0){
-    for (i in seq_len(length(event) - 1)) {
+    for (i in seq_len(length(event))) {
     ps <- unlist(str_split(rowRanges(inp)$ps_ts_fragment[event[i]], ":"))
     seg_1_d <-
       rowRanges(inp)$delay[which(rowRanges(inp)$delay_fragment %in% ps[1])]
@@ -50,7 +50,7 @@ apply_Ttest_delay <- function(inp) {
     # in case of segment has a length of one, its not considered for...
     # ...further analysis
     if (length(seg_1_d) == 1 | length(seg_2_d) == 1) {
-      (next)()
+        next ()
     } else {
       df_1 <- cbind.data.frame(seg_1_d, seg_1_p)
       df_2 <- cbind.data.frame(seg_2_d, seg_2_p)
@@ -76,12 +76,11 @@ apply_Ttest_delay <- function(inp) {
                  var.equal = FALSE)
         # extract the p_value from t-test
         p_value_Ttest <- t_h[[3]]
-        rowRanges(inp)$event_ps_itss_p_value_Ttest[event[i]] <-
-          p_value_Ttest
-      }, error = function(e) {
-      })
+        rowRanges(inp)$event_ps_itss_p_value_Ttest[event[i]] <-  p_value_Ttest
+          }, error = function(e) {
+       })
+      }
     }
-  }
   }
   return(inp)
 }
