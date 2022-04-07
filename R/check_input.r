@@ -40,7 +40,7 @@ check_input <- function(inp, thrsh = 0) {
   }
   repli <- unique(colData(inp)$replicate)
   metadata(inp)$replicates <- repli
-  message("Number of repicates: ",paste(max(repli),collapse = " "))
+  message("Number of replicates: ",paste(max(repli),collapse = " "))
   #create position column
   if(!"position" %in% names(mcols(rowRanges(inp)))){
     rowRanges(inp)$position <- end(resize(inp,width = 1,fix = "end"))

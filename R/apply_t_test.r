@@ -86,7 +86,8 @@ apply_t_test <- function(inp, threshold = 300) {
     hl_segs <- fragment_function(hl_segs)
     int_segs <- fragment_function(int_segs)
     # loop into all HL segments and apply t_test between consecutive segments
-    inp <-
+   tryCatch({
+      inp <-
       t_test_function(
         data = inp,
         seg = hl_segs,
@@ -104,6 +105,8 @@ apply_t_test <- function(inp, threshold = 300) {
         tu = tu,
         threshold = threshold
       )
+      }, error = function(e) {
+    })
   }
   return(inp)
 }

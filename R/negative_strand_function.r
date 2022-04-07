@@ -36,8 +36,8 @@ negative_strand_function <- function(data_n,
                                      HL_threshold_1 = HL_threshold_1,
                                      HL_threshold_2 = HL_threshold_2,
                                      vel_threshold = vel_threshold,
-                                     HL_threshold_color_1 = 
-                                         HL_threshold_color_1,
+                                     HL_threshold_color = 
+                                         HL_threshold_color,
                                      vel_threshold_color = vel_threshold_color,
                                      ps_color = ps_color,
                                      iTSS_I_color = iTSS_I_color) {
@@ -666,10 +666,7 @@ negative_strand_function <- function(data_n,
                  filter(is.na(
                      get('event_ps_itss_p_value_Ttest')
                  ))) != 0) {
-            df2_ps_b <-
-                df2_ps %>% filter(is.na(get(
-                    'event_ps_itss_p_value_Ttest'
-                )))
+            df2_ps_b <- df2_ps[which(is.na(df2_ps$event_ps_itss_p_value_Ttest)), ]
             p6 <-
                 my_segment_T(
                     p6,
@@ -741,11 +738,8 @@ negative_strand_function <- function(data_n,
                  filter(is.na(
                      get('event_ps_itss_p_value_Ttest')
                  ))) != 0) {
-            df2_itss_b <-
-                df2_itss %>%
-                filter(is.na(get(
-                    'event_ps_itss_p_value_Ttest'
-                )))
+            df2_itss_b <- df2_itss[which(is.na(df2_itss$
+                                                 event_ps_itss_p_value_Ttest)),]
             p6 <-
                 my_segment_NS(
                     p6,
@@ -823,7 +817,7 @@ negative_strand_function <- function(data_n,
                 yend = 3,
                 dis = 10,
                 ytext = 3.4,
-                color = HL_threshold_color_1,
+                color = HL_threshold_color,
                 linetype = "dashed",
                 fontface = fontface
             )
@@ -839,7 +833,7 @@ negative_strand_function <- function(data_n,
                 yend = 3,
                 dis = 10,
                 ytext = 3.4,
-                color = HL_threshold_color_1,
+                color = HL_threshold_color,
                 linetype = "dashed",
                 fontface = fontface
             )
@@ -861,7 +855,7 @@ negative_strand_function <- function(data_n,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = HL_threshold_color_1,
+                    color = HL_threshold_color,
                     linetype = "dashed",
                     fontface = fontface
                 )
@@ -878,7 +872,7 @@ negative_strand_function <- function(data_n,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = HL_threshold_color_1,
+                    color = HL_threshold_color,
                     linetype = "dashed",
                     fontface = fontface
                 )
@@ -901,7 +895,7 @@ negative_strand_function <- function(data_n,
                     yend = 3,
                     dis = 10,
                     ytext = 3.4,
-                    color = HL_threshold_color_1,
+                    color = HL_threshold_color,
                     linetype = "dashed",
                     fontface = fontface
                 )

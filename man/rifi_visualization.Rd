@@ -118,7 +118,7 @@ rifi_visualization(
   HL_threshold_1 = log2(1.5),
   HL_threshold_2 = -log2(1.5),
   vel_threshold = 200,
-  HL_threshold_color_1 = "black",
+  HL_threshold_color = "black",
   vel_threshold_color = "grey52",
   ps_color = "orange",
   iTSS_I_color = "blue"
@@ -235,7 +235,7 @@ and log2FC(1.5), FC is assigned by green color and HL*.}
 \item{vel_threshold}{integer: threshold for velocity ratio selected to plot,
 default 200.}
 
-\item{HL_threshold_color_1}{string: color for HL fold change plot.}
+\item{HL_threshold_color}{string: color for HL fold change plot.}
 
 \item{vel_threshold_color}{string: color for velocity ratio plot.}
 
