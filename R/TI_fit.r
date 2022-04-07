@@ -134,7 +134,8 @@ TI_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_ABG,
-                                 lower = c(0,0,0,0,0,0),
+                                 lower = lower_STD,
+                                 upper = upper_STD,
                                  all = TRUE
                                )},
                                error = function(e) {
@@ -150,7 +151,8 @@ TI_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_STD,
-                                 lower = c(0,0,0,0,0),
+                                 lower = lower_STD,
+                                 upper = upper_STD,
                                  all = TRUE
                                )},
                                error = function(e) {

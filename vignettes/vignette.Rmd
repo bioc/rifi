@@ -36,7 +36,7 @@ suppressPackageStartupMessages(library(SummarizedExperiment))
 
 ## 0. Installation
 
-Please note that **'rifi'** is only available for Unix based systems. 
+Please note that **'rifi'** is only available for unix based systems. 
 To install this package, start R (>= version "4.2") and enter: 
 
 ``` {r, eval = FALSE}
@@ -52,12 +52,10 @@ BiocManager::install("rifi")
 ## I. Introduction
 
 The stability or halflife of bacterial transcripts is often estimated using 
-Rifampicin timeseries data. Rifampicin has the special feature that it prevents
-the initiation of transcprition, but RNA polymerases which are already elongating are
-unaffected [@campbell_structural_2001].
-This has the implication that the RNA concentrations of positions downstream of 
-the transcriptional start site appear unchanged until the last polymerase has
-passed this point. The result is a delayed exponential decay [@chen_genome-wide_2015], 
+Rifampicin timeseries data. Rifampicin has the special feature that it prevents the 
+initiation of transcprition, but RNA polymerases which are already elongating are unaffected [@campbell_structural_2001].
+This has the implication that the RNA concentrations of positions downstream of the transcriptional start site
+appear unchanged until the last polymerase has passed this point. The result is a delayed exponential decay [@chen_genome-wide_2015], 
 which can be fitted by the following model:
 
 <br/>
@@ -66,22 +64,18 @@ $c(t,n) = \begin{cases} \frac{\alpha}{\lambda} & \quad \text{if } t < \frac{n}{v
 <br/>
 
 The model [@chen_genome-wide_2015] consists of
-two phases; the first phase describes the delay where the transcript concentration
-is in its steady state defined by the ratio of the synthesis rate *$\alpha$* and
-the decay constant *$\lambda$* ($steadystate = \frac{\alpha}{\lambda}$). 
-The delay is dependent on the distance from the transcriptional start site 
-***$n$*** and the transcription velocity ***$v$***. If the time after the
-Rifampicin addition is greater than the delay ($delay = \frac{n}{v}$)
+two phases; the firts phase describes the delay where the transcript concentration is in its
+steady state defined by the ratio of the synthesis rate *$\alpha$* and the decay constant *$\lambda$* ($steadystate = \frac{\alpha}{\lambda}$). The 
+delay is dependent on the distance from the transcriptional start site ***$n$*** and the transcription 
+velocity ***$v$***. If the time after the Rifampicin additon is greater than the delay ($delay = \frac{n}{v}$)
 the exponential decay phase starts.
 <br/>
 
-In addition to the standard model, we are using a second model which describes 
-the behaviour at positions where the concentration ***increases*** after 
-Rifampicin addition (Figure 1, right panel). This phenomenon can be explained by 
-Rifampicin relievable transcription termination, e.g. through the transcriptional
-interference (TI) collision mechanism [@shearwin_transcriptional_2005] or 
-termination by short-lived factors such as sRNAs [@wang_two-level_2015]. In the 
-following we will call this model the 'TI model' which consists of three phases:
+In addition to the standard model, we are using a second model which describes the behaviour at positions were
+the concentration ***increases*** after Rifampicin addition (Figure 1, right panel). This phenomenon can be explained by 
+Rifampicin relievable transcription termination, e.g. through the transcriptional interference (TI) collision mechanism [@shearwin_transcriptional_2005]
+or termination by short-lived factors such as sRNAs [@wang_two-level_2015]. In the following we will call this model the 'TI model' which consists of 
+three phases:
 
 <br/>
 $c(t,n) = \begin{cases} \frac{\alpha -  \alpha \times \beta}{\lambda} & \quad \text{if } t < \frac{n - n_{term}}{v}\\
@@ -90,15 +84,13 @@ $c(t,n) = \begin{cases} \frac{\alpha -  \alpha \times \beta}{\lambda} & \quad \t
     \end{cases}$
 <br/>
 
-The first phase describes again the steady state concentration at a given 
-transcript position, but here the synthesis rate *$\alpha$* is reduced by the  **TI-termination-factor $\beta$**.
-We assume a short lived factor responsible for the termination whose synthesis 
-is stopped after rifampicin addition. Thus after the relieve of termination all 
-polymerases that start at the transcriptional start site can reach positions 
-downstream of the former termination site ($n_{term}$), the time polymerases 
-need from the position of termination to the position $n$ is delay for the increase ($delay_{increase}= \frac{n - n_{term}}{v}$).
-After the last polymerase has passed the respective position, the exponential 
-decay phase starts. 
+The first phase describes again the steady state concentration at a given transcript position, but 
+here the synthesis rate *$\alpha$* is reduced by the  **TI-termination-factor $\beta$**.
+We assume a short lived factor responsible for the termination whose synthesis is stopped
+after rifampicin addition. Thus after the relieve of termination all polymerases that start at
+the transcriptional start site can reach positions downstream of the former termination site ($n_{term}$), the time
+polymerases need from the position of termination to the position $n$ is delay for the increase ($delay_{increase}= \frac{n - n_{term}}{v}$).
+After the last polymerase has passed the respective position, the exponential decay phase starts. 
 
 **'rifi'** is a tool to do a stability analysis on high-throughput 
 rifampicin data. RNA sequencing and microarray data derived from rifampicin treated
@@ -107,9 +99,8 @@ mechanics of transcription, RNAP velocity and RNA stability. **'rifi'** is a
 tool for the holistic identification of these transcription processes.
 The core part of the data analysis by rifi is the utilization of one
 of the two non linear regression models applied on the time series data of each
-*probe* (or *bin*), giving the *probe/bin* specific delay, decay constant 
-*$\lambda$* and half-life ($t_\frac{1}{2} = \frac{\ln(2)}{\lambda}$)
-(Figure 1, left panel). 
+*probe* (or *bin*), giving the *probe/bin* specific delay, decay constant *$\lambda$* and half-life 
+($t_\frac{1}{2} = \frac{\ln(2)}{\lambda}$) (Figure 1, left panel). 
 
 <br/><
 ``` {r models, echo = FALSE, fig.cap = "**Fit models**. Fits from both models. Left: the two-phase standard fit. Right the TI model fits the increase in intensity. Black dotes represent the average intensity for each timepoint, colored circles indicate the respective replicate.", out.width = '100%'}
@@ -120,9 +111,8 @@ knitr::include_graphics("fit_models.png")
 After the fit of the individual *probes/bins*, common worklfows usually combine the 
 individual **half-life** values based on the given genome annotation to get an 
 average for the gene based stability. This procedure can not deal with differences 
-within a given gene, e.g. due to processing sites. 'rifi' uses an annotation 
-agnostic approach to get an unbiased estimate of individual transcripts as they
-actually appear *in vivo*.
+within a given gene, e.g. due to processing sites. 'rifi' uses an annotation agnostic approach 
+to get an unbiased estimate of individual transcripts as they actually appear *in vivo*.
 *probes/bins* with equal properties in the extracted values **delay**, **half-life**,
 **TI_termination_factor** and the given **intensity** values
 are combined into segments by dynamic programming (called fragmentation in 'rifi'),
@@ -132,28 +122,27 @@ depth into **position_segments**. Those are grouped into **delay_fragments**
 by common velocity. Subsequently, each delay-fragment is grouped by similar
 half-life into **half_life_fragments**, on which the bins finally are grouped
 into **intensity_fragments** by similar intensity. From the fragmentation, many
-**events** can be extracted; **iTSS** (internal transcription start sites), 
-transcription **pausing_sites**, **velocity_changes**,**processing_sites**,
-partial **terminations**, as well as instances of Rifampicin relievable 
-transcription termination, e.g. by **TI** (transcription interference).
-All data are integrated to give an estimate of continous transcriptional units, 
-i.e. operons. 
+**events** can be extracted; **iTSS** (internal transcription start sites), transcription **pausing_sites**,
+**velocity_changes**,**processing_sites**,
+partial **terminations**, as well as instances of Rifampicin relievable transcription termination,
+e.g. by **TI** (transcription interference).
+All data are integrated to give an estimate of continous transcriptional units, i.e. operons. 
 Comprehensive output tables and visualizations of the full genome result and the 
 individual fits for all *probes/bins* are produced.
 
 
 <br/><br/>
-``` {r hirarchy, echo = FALSE, fig.cap = "**Fragmentation hierarchy**. The hierarchy of the workflow is separated into five steps. At firstFinally, within TUs, TI fragments are formed based on the distance to the next data point. The threshold is 200 nucleotides. Next, segments are parted into delay fragments. The delay fragments are parted by the half-life and likewise the half-life fragments are parted by intensity. Groups of TUs are formed based on the distance between the starts and ends of the delay fragments. Finally, within TUs, TI fragments are formed.", out.width = '100%'}
+``` {r hirarchy, echo = FALSE, fig.cap = "**Fragmentation hirarchy**. The hierarchy of the workflow is separated into five steps. At first segments are formed based on the distance to the next data point. The threshold is 200 nucleotides. Next, segments are parted into delay fragments. The delay fragments are parted by the half-life and likewise the half-life fragments are parted by intensity. Groups of TUs are formed based on the distance between the starts and ends of the delay fragments. Finally, within TUs, TI fragments are formed.", out.width = '100%'}
 knitr::include_graphics("hirarchy3.png")
 ```
 <br/>
 
 ### 1. Quickstart
 
-If you have your data prepared as described in [The Input Data Frame]
-(#the-input-data-frame) you can use the `rifi_wrapper` to run 'rifi" with
-default options. `rifi_wrapper` conveniently wraps all functions included in rifi. 
-That allows the user to run the whole workflow with one function. 
+If you have your data prepared as described in [The Input Data Frame](#the-input-data-frame) you can use the 
+`rifi_wrapper` to run 'rifi" with default options. `rifi_wrapper` conveniently wraps all functions included in rifi. 
+That allows the user to run the whole workflow with one function. If the data contain a background component, 
+e.g. in case of microarray data, take to define a meaningful background intensity. 
 
 The functions used are:
 
@@ -166,10 +155,9 @@ The functions used are:
   [`rifi_summary`](#rifi_summary)  
   [`rifi_visualization`](#rifi_visualization)
   
-For `rifi_wrapper` you only need to provide the path to a **.gff** file of the 
-respective genome and the input **SummarizedExperiment** object. The genome 
-annotation is needed for the visualization and to map fragmented segments to 
-annotated genes for an easier interpretation.
+For `rifi_wrapper` you only need to provide the path to a **.gff** file of the respective genome
+and the input **SummarizedExperiment** object. The genome annotation is needed for the visualization
+and to map fragmented segments to annotated genes for an easier interpretation.
 <br/><br/>
 ``` {r rifi_wrapper, eval = FALSE}
 Path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
@@ -185,8 +173,8 @@ wrapper_minimal <-
 ```
 <br/>
 The wrapper saves the output of each sub-function in a list. Thus each intermediate 
-result can be re-run with custom settings. the object 'wrapper_minimal' contains
-only minimal artificial data to reduce the runtime of the test run. 
+result can be re-run with custom settings. the object 'wrapper_minimal' contains only minimal
+artificial data to reduce the runtime of the test run. 
 
 ```{r, eval = TRUE}
 data(wrapper_minimal)
@@ -217,8 +205,8 @@ names(metadata(summary_minimal))
 
 #### 1. *bin/probe* based results
 Entry 6, **dataframe_summary_1**, contains
-all fit results for each individual *bin/probe* and a mapping to the genome 
-annotation. They can be exported to an **.csv** file using `write.csv()`.
+all fit results for each individual *bin/probe* and a mapping to the genome annotation. They can be exported to
+an **.csv** file using `write.csv()`.
 
 ```{r, eval = TRUE}
 # bin/probe probe based results
@@ -231,15 +219,12 @@ write.csv(metadata(summary_minimal)$dataframe_summary_1, file="filename.csv")
 
 #### 2. **fragment** based results
 Entry 7, **dataframe_summary_2**, contains
-all fit results for each **intensity_fragment**. Due to the hierachic 
-fragmentation strategy [Figure 2]
-several **intensity_fragment** (I_x) can belong to one **decay_fragment** (Dc_x),
-one **delay_fragment** (D_x) and one transcriptional unit (TU_x).  The fragment
-IDs can be used to locate the fragment in the output PDF file. The fragments are
-mapped to the genome annotation and the mean halflife given in minutes and the
-mean intensity is given with their standard deviations. Also the estimated 
-velocity in nt/min is given. The table can be exported as an **.csv** file 
-using `write.csv()`.
+all fit results for each **intensity_fragment**. Due to the hierachic fragmentation strategy [Figure 2]
+several **intensity_fragment** (I_x) can belong to one **decay_fragment** (Dc_x), one **delay_fragment** (D_x) and 
+one transcriptional unit (TU_x).  The fragment IDs can
+be used to locate the fragment in the output PDF file. The fragments are mapped to the genome annotation and the mean halflife given in minutes and the mean
+intensity is given with their standard deviations. Also the estimated velocity in nt/min is given. The table can be exported as
+an **.csv** file using `write.csv()`.
 
 
 ```{r, eval = TRUE}
@@ -252,8 +237,8 @@ write.csv(metadata(summary_minimal)$dataframe_summary_2, file="filename.csv")
 ```
 
 #### 3. transcription **events**
-Entry 8, **dataframe_summary_events**, contains all estimated transcriptional
-***events***. Events always appear between two transcript fragments.
+Entry 8, **dataframe_summary_events**, contains all estimated transcriptional ***events***. Events always appear
+between two transcript fragments.
 <br/>
 ```{r, eval = TRUE}
 # all estimated events
@@ -264,23 +249,19 @@ metadata(summary_minimal)$dataframe_summary_events
 write.csv(metadata(summary_minimal)$dataframe_summary_events, file="filename.csv")
 ```
 <br/>
-Changes in the linear increase of the delay indicate a potential **pausing site**
-if there is a sudden delay increase (Figure 3A), a potential internal starting
-site **iTSS_I** if there is a sudden decrease in the delay (Figure 3B) and
-a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C).
-The events are statistically evaluated by Ancova ([apply_ancova](#apply_ancova)) 
-or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
+Changes in the linear increase of the delay indicate a potential **pausing site** if there is a sudden delay increase (Figure 3A),
+a potential internal starting site **iTSS_I** if there is a sudden decrease in the delay (Figure 3B) and
+a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C). The events are statistically evaluated 
+by Ancova ([apply_ancova](#apply_ancova)) or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
 <br/>
-A fragment border between halflife segments (**HL_event**) which belong to the 
-same transriptional unit might indicate a processing site (Figure 3D) and a
-fragment border between intensity fragments (**Int_event**) (Figure 3E) can
-indicate a processing site (Figure 3F) ,a new transcriptional start site
-(**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending
-on the respective intensity fold-changes and the halflife fold-changes.
+A fragment border between halflife segments (**HL_event**) which belong to the same transriptional unit 
+might indicate a processing site (Figure 3D) and a fragment border 
+between intensity fragments (**Int_event**) (Figure 3E) can indicate a processing site (Figure 3F) ,a
+new transcriptional start site (**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending
+on the respective intensity foldchanges and the halflife foldchanges.
 <br/>
-Each **event** is described by is type, its p-Value and adjusted p-Value, the
-fold-change or event duration, the estimated event position, a mapping to existing
-annotations and the IDs of the two bordering fragments.
+Each **event** is described by is type, its p-Value and adjusted p-Value, the foldchange or event duration, the estimated
+event position, a mapping to existing annotations and the IDs of the two bordering fragments.
 
 <br/>
 ``` {r events1, echo = FALSE, fig.cap = "Transcriptional events", out.width = '100%'}
@@ -341,7 +322,9 @@ Significant events are assigned with an '*'
 
 The first step in the analysis of rifampicin time series data with rifi is
 preprocessing. The three major steps are filtration (to get rid of artifacts or background datapoints), fitting the data to the
-correct model (standard model or TI model) and merge the coefficients and the input data frame into one structure for the downstream process. The steps can be performed with five low level functions or the wrapper function `rifi_preprocess` (see section [`rifi_preprocess`] (#rifi_preprocess)).
+correct model (standard model or TI model) and merge the coefficients and the input data frame into one
+structure for the downstream process. The steps can be performed with five low
+level functions or the wrapper function `rifi_preprocess` (see section [`rifi_preprocess`] (#rifi_preprocess)).
 The following paragraphs describe the sub-steps of
 `rifi_preprocess`. To directly read about the application or `rifi_preprocess`
 jump to section [`rifi_preprocess`] (#rifi_preprocess).
@@ -351,15 +334,12 @@ jump to section [`rifi_preprocess`] (#rifi_preprocess).
 The Input Data Frame is a SummarizedExperiment (SE) input format. SE structure as known includes the colData (description of each sample), assays (probes/bins intensity measurements), rowRanges(coordinates of probes/bin including probe
 identifier and positions).
 Rifi package includes two example SE: <em>*E.coli*</em> data from
-RNAseq (data with replicates, input_df) [@dar_extensive_2018] and <em>*Synechocystis PCC 6803*</em> data from microarrays (data with averaged replicates, see. "input_df").
+RNAseq (data with replicates, input_df) [@dar_extensive_2018] and <em>*Synechocystis PCC 6803*</em>
+data from microarrays (data with averaged replicates, see. "input_df").
 <em>*E.coli*</em> is the input for this tutorial. In case of the <em>*E.coli*</em> 
 RNAseq dataset the intensities are binned for every 50 nt. We recommend to use a similar
 strategy if working with RNAseq data. The binning is not performed by 'rifi' and needs to be
-done beforehand.
-Data from microarrays need to be checked carefully for background. We recommend
-to run the workflow with low background e.g ~ 30 till `rifi_fit` and check the
-probes fit to get an idea about the background level. The value estimated is
-used to rerun rifi workflow.
+done beforehand. 
 <br/><br/>
 
 ``` {r echo = FALSE}
@@ -398,10 +378,9 @@ colData(example_input_synechocystis_6803)
 
 The SE needs to comply to the following rules:
 
-1. assays need to contains the intensities for the respective *probe* or *bin* 
-need to be numeric. The first column is called "0" and refers to the first time 
-point (before rifampicin addition). The intensities could contain 0 or NA except
-the column "0".
+1. assays need to contains the intensities for the respective *probe* or *bin* need to be numeric. The first column
+is called "0" and refers to the first time point (before rifampicin addition).
+The intensities could contain 0 or NA except the column "0".
 2. rowRanges includes two columns, "ID" and "position". Each ID in the column
 "ID" refers to the same, unique strand/position combination. Thus, each 
 replicate has to share the same ID. IDs could be either numeric (advised) or
@@ -430,14 +409,14 @@ probe <- check_input(inp = example_input_minimal, thrsh = 0)
 At this point, a custom filtration function can be applied to remove replicates
 that are below the background.
 
-This is especially useful for microarrays data. We supply a function 
-**filtration_below_backg** that filters for background but retains replicates
-that show a promising pattern even when they are below background. 
-When a different custom function is applied within `rifi_preprocess` the input 
-variable x must refer to the intensity vector over all timepoints. The output 
-must be a character string containing **FLT** for all replicates that should be
-filtered. Additional arguments must be hard coded or given as default value, as 
-additional arguments can not be passed into `rifi_preprocess`.  
+This is especially useful for microarrays data. We supply a function **filtration_below_backg**
+that filters for background but retains replicates that show a promising pattern
+even when they are below background. When a different custom function is applied
+within `rifi_preprocess` the input variable x must refer to the intensity vector
+over all timepoints. The output must be a character string containing **FLT**
+for all replicates that should be filtered. Additional arguments must be hard
+coded or given as default value, as additional arguments can not be passed into
+`rifi_preprocess`.  
 
 Application outside of `rifi_preprocess` can modify the 'filtration' column in
 the input dataframe in any way, as that rows with replicates that should be
@@ -501,10 +480,9 @@ head(rowRanges(probe))
 Under the assumption of the standard model the RNA concentration should be 
 the same over the whole length of the transcript, if the decay constant is unchanged
 and no partial premature termination appears. A linear or exponential intensity 
-decline indicates regions were something interesting happens. This could be in 
-theory a decay by the post transcription decay model (PDD) [@chen_genome-wide_2015],
-which is characterized by a linear decrease of intensity by position. More likely
-is a fixed termination probability after each elongation step (exponential decrease), 
+decline indicates regions were something interesting happens. This could be in theory a decay by the
+post transcription decay model (PDD) [@chen_genome-wide_2015], which is characterized by a linear decrease of
+intensity by position. More likely is a fixed termination probability after each elongation step (exponential decrease), 
 e.g. resulting from the collision mode of transcriptional interference.
 `finding_PDD` flags potential candidates for post
 transcription decay with "_PDD_". `finding_PDD` uses 'score_fun_linear'
@@ -530,10 +508,9 @@ head(rowRanges(probe))
 ### 7. `finding_TI`
 
 As described in the [introduction](#i.-introduction) we want to indentify regions 
-with a rifampicin relievable termination. Transcription interference (TI) is one
-explanation of the rifampicin relievable termination. Here TI is used as a synonym for 
-rifampicin relievable termination. `finding_TI` identifies regions of potential
-transcription interference (TI).
+with a rifampicin relieved termination. Transcription interference (TI) is one
+explanation of the rifampicin relieved termination. Here TI is used as a synonym for 
+rifampicin relieved termination. `finding_TI` identifies regions of potential transcription interference (TI).
 `finding_TI` uses `score_fun_ave` to make groups by the mean of "probe_TI". The
 identified regions and a defined number of probes before the potential TI event
 are flagged with '_TI_'. The identification is based on the probe_TI column,
@@ -585,8 +562,7 @@ head(rowRanges(preprocess_minimal))
 against the time series data. The first uses `nls2_fit` function to estimate
 **delay**, **half-life**, **first time point intensity** and **background
 intensity**. 
-The second uses `TI_fit` function to estimate **delay** and **half-life**
-additionally to the **TI-termination-factor**.
+The second uses `TI_fit` function to estimate **delay** and **half-life** additionally to the **TI-termination-factor**.
 
 The function used are:
 
@@ -629,14 +605,11 @@ head(rowRanges(fit_e_coli))
 
 `nls2_fit` function uses **nls2** function to fit a probe or bin using
 intensities from different time point. **nls2** is able to use different
-starting values using expand grid and select the best fit. The SE assays containing **intensity** of all timeserie and **ID** **intensity**, **position**, **probe_TI**, **flag** and **position_segment** columns from rowRanges are used as inputs (see below Table_2).
-`nls2_fit` function has two different models, one includes the background as
-parameter and estimates decay subtracting it. The other excludes the background
-coefficient and is applied for probes flagged with ***ABG***. All probes flagged
-with ***FLT*** are not fitted as they are below background. Finally probes 
-flagged with ***TI*** are fitted with TI model. The output data is an extension 
-of SE metaData, **delay** and **half-life** coefficients are added
-(see below "head(probe)").
+starting values using expand grid and select the best fit. The SE assays containing **intensity** of all timeserie and **ID** **intensity**, **position**, **probe_TI**, **flag** and **position_segment** columns from rowRanges are used as inputs (see below Table_2). `nls2_fit` function has two different models, one includes the background as parameter and estimates decay subtracting it. The other excludes the background coefficient and is applied for probes flagged with
+***ABG***. All probes flagged with ***FLT*** are not fitted as they are below
+background. Finally probes flagged with ***TI*** are fitted with TI model. The
+output data is an extension of SE metaData, **delay** and **half-life**
+coefficients are added (see below "head(probe)").
 
 <br/><br/>
 ``` {r echo = TRUE,  eval = FALSE}
@@ -736,14 +709,13 @@ knitr::include_graphics("TIPlot.png")
 
 ## IV. `rifi penalties`
 
-'rifi' uses dynamic programming to combine *probes/bins* with equal properties in
-the extracted values into segments (called fragmentation in 'rifi'). The penalties
-define the specificity and sensitivity of the fragmentation. Higher penalties 
-will result in less segments, i.e. a lower sensitivity but a higher specificity 
-and vice versa. For convenience 'rifi' provides an automatic method which tries 
-to maximize the correct segment splits and to minimize the wrong splits using
-statistics. The result can be best investigated in the final visualization.
-If needed the penalties can be manually adapted.
+'rifi' uses dynamic programming to combine *probes/bins* with equal properties in the extracted values 
+into segments (called fragmentation in 'rifi'). The penalties define the specificity and
+sensitivity of the fragmentation. Higher penalties will result in less segments, i.e. a lower 
+sensitivity but a higher specificity and vice versa. For convenience 'rifi' provides an 
+automatic method which tries to maximize the correct segment splits and to minimize the 
+wrong splits using statistics. The result can be best investigated in the final visualization. If needed
+the penalties can be manually adapted.
 
 `rifi_penalties` wraps all penalty steps, wraps the functions: `make_pen` and
 `viz_pen_obj.` For use of this wrapper jump to [`rifi_penalties`](#rifi_penalties)
@@ -1255,8 +1227,7 @@ head(rowRanges(probe))
 `apply_manova` checks if the ratio of HL ratio and intensity ratio is
 statistically significant. `apply_manova` compares the variance between two
 fold-changes, Half-life and intensity within the same TU ((half-life frgB / 
-half-life frgA) / (intensity frgB/intensity frgA)). One half-life fragment could
-cover two intensity fragments therefore the fragments borders should be set first.
+half-life frgA) / (intensity frgB/intensity frgA)). One half-life fragment could cover two intensity fragments therefore the fragments borders should be set first.
 
 the function used is:
 
