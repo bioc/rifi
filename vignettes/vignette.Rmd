@@ -254,7 +254,7 @@ a potential internal starting site **iTSS_I** if there is a sudden decrease in t
 a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C). The events are statistically evaluated 
 by Ancova ([apply_ancova](#apply_ancova)) or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
 <br/>
-A fragment border between halflife segments (**HL_event**) which belong to the same transriptional unit 
+A fragment border between halflife segments (**HL_event**) which belong to the same transcriptional unit 
 might indicate a processing site (Figure 3D) and a fragment border 
 between intensity fragments (**Int_event**) (Figure 3E) can indicate a processing site (Figure 3F) ,a
 new transcriptional start site (**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending
@@ -331,7 +331,8 @@ jump to section [`rifi_preprocess`] (#rifi_preprocess).
 
 ### 1. The Input Data Frame
 
-The Input Data Frame is a SummarizedExperiment (SE) input format. SE structure as known includes the colData (description of each sample), assays (probes/bins intensity measurements), rowRanges(coordinates of probes/bin including probe
+The Input Data Frame is a SummarizedExperiment (SE) input format. SE structure 
+as known includes the colData (description of each sample), assays (probes/bins intensity measurements), rowRanges(coordinates of probes/bin including probe
 identifier and positions).
 Rifi package includes two example SE: <em>*E.coli*</em> data from
 RNAseq (data with replicates, input_df) [@dar_extensive_2018] and <em>*Synechocystis PCC 6803*</em>
@@ -340,6 +341,10 @@ data from microarrays (data with averaged replicates, see. "input_df").
 RNAseq dataset the intensities are binned for every 50 nt. We recommend to use a similar
 strategy if working with RNAseq data. The binning is not performed by 'rifi' and needs to be
 done beforehand. 
+Data from microarrays need to be checked carefully for background. We recommend
+to run the workflow with low background e.g ~ 30 till `rifi_fit` and check the
+probes fit to get an idea about the background level. The value estimated is
+used to rerun rifi workflow.
 <br/><br/>
 
 ``` {r echo = FALSE}
