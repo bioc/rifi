@@ -93,24 +93,16 @@ TI_fit <-
     st_ABG <- expand.grid(decay = decay, ti_delay = ti_delay, k = k,
                           rest_delay = rest_delay, ti = ti)
     
-    ############################microarrays########################
-    ####start List_microarrays###
-    start_list2 <-
-      "list(ti_delay = pars[i,4], k = rep(pars[i,1],length(gr)),
-                    decay=pars[i,2], ti = pars[i,3],
-                    rest_delay = pars[i,5])"
-    lo <- "rep(0, ncol(pars) + 1)"
-    lo2 <- "rep(0, ncol(pars))"
     ###################################################################
     #boarders
-    upper_STD <- list(decay = log(2)/(1/60), ti_delay = max(time),
-                      k = 1/(log(2)/(60)), rest_delay = max(time),
-                      ti = 1/(log(2)/(60)))
+    # upper_STD <- list(decay = log(2)/(1/60), ti_delay = max(time),
+    #                   k = 1/(log(2)/(60)), rest_delay = max(time),
+    #                   ti = 1/(log(2)/(60)))
     lower_STD <- list(decay = log(2)/(60), ti_delay = 0, k = log(2)/(60),
                       rest_delay = 0, ti = 0, bg = 0)
-    upper_ABG <- list(decay = log(2)/(1/60), ti_delay = max(time),
-                      k = 1/(log(2)/(60)), rest_delay = max(time),
-                      ti = 1/(log(2)/(60)))
+    # upper_ABG <- list(decay = log(2)/(1/60), ti_delay = max(time),
+    #                   k = 1/(log(2)/(60)), rest_delay = max(time),
+    #                   ti = 1/(log(2)/(60)))
     lower_ABG <- list(decay = log(2)/(60), ti_delay = 0, k = log(2)/(60),
                       rest_delay = 0, ti = 0)
     #models
@@ -143,10 +135,8 @@ TI_fit <-
                                  data = Data_fit,
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
-                                 start = eval(parse(text = start_list2)),
-                                 lower = eval(parse(text = lo2)),
-                                 #start = st_ABG,
-                                 #lower = lower_STD,
+                                 start = st_ABG,
+                                 lower = lower_STD,
                                  #upper = upper_STD,
                                  all = TRUE
                                )},
@@ -162,10 +152,8 @@ TI_fit <-
                                  data = Data_fit,
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
-                                 start = eval(parse(text = start_list2)),
-                                 lower = eval(parse(text = lo2)),
-                                 # start = st_STD,
-                                 # lower = lower_STD,
+                                 start = st_STD,
+                                 lower = lower_STD,
                                  # upper = upper_STD,
                                  all = TRUE
                                )},

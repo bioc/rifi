@@ -80,11 +80,11 @@ nls2_fit <-
     st_STD <- expand.grid(decay = decay, delay = delay, k = k, bg = bg)
     st_ABG <- expand.grid(decay = decay, delay = delay, k = k)
     #boarders
-    upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
-                      k = 1/(log(2)/(60)))
+    # upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
+    #                   k = 1/(log(2)/(60)))
     lower_STD <- list(decay = log(2)/(60), delay = 0, k = log(2)/(60), bg = 0)
-    upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
-                      k = 1/(log(2)/(60)))
+    # upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
+    #                   k = 1/(log(2)/(60)))
     lower_ABG <- list(decay = log(2)/(60), delay = 0, k = log(2)/(60))
     #models
     model_STD <- inty ~ I(time < delay) * I(k / decay + bg) + (time >= delay) * 
@@ -109,7 +109,7 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_ABG,
-                                 lower = list(decay = 0.01, delay = 0.001)
+                                 lower = lower_ABG
                                  #upper = upper_ABG
                                )},
                                error = function(e) {
@@ -125,8 +125,8 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_STD,
-                                 lower = lower_STD,
-                                 upper = upper_STD
+                                 lower = lower_STD
+                                 #upper = upper_STD
                                )},
                                error = function(e) {
                                  return(NULL)

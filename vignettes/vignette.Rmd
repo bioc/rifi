@@ -90,7 +90,7 @@ The core part of the data analysis by rifi is the utilization of one of the two
 non linear regression models applied on the time series data of each *probe* (or *bin*), giving the *probe/bin* specific delay, decay constant *$\lambda$* and half-life 
 ($t_\frac{1}{2} = \frac{\ln(2)}{\lambda}$) (Figure 1, left panel). 
 
-<br/><
+<br/>
 ``` {r models, echo = FALSE, fig.cap = "**Fit models**. Fits from both models. Left: the two-phase standard fit. Right the TI model fits the increase in intensity. Black dotes represent the average intensity for each timepoint, colored circles indicate the respective replicate.", out.width = '100%'}
 knitr::include_graphics("fit_models.png")
 ```
@@ -295,7 +295,54 @@ Significant events are assigned with an '*'
 
 ### 4. Troubleshooting
 
+#### 1. Fit
 
+It is recommended to check the fit after running `rifi_fit`. If more than 30 % of the fits show a misfit, you may consider to check:
+
+* Row data
+
+* Background 
+
+* You may need to adapt the starting values used on the fit to your data
+
+#### 2. Penalties
+
+You may need to check your penalties if the last visualization shows:
+
+* A high frequency of considerable long segments.
+<br/><br/>
+``` {r longSegments, echo=FALSE, fig.cap="**Long segments**", out.width = '100%'}
+knitr::include_graphics("longSegments.png")
+```
+<br/><br/>
+
+* A high frequency of mini segments.
+<br/><br/>
+``` {r miniSegments, echo=FALSE, fig.cap="**;ini segments**", out.width = '100%'}
+knitr::include_graphics("miniSegments.png")
+```
+<br/><br/>
+
+* A high frequency of extreme high values.
+<br/><br/>
+``` {r highValues, echo=FALSE, fig.cap="**High values**", out.width = '100%'}
+knitr::include_graphics("highValues.png")
+```
+<br/><br/>
+
+* Absence of events in case you run big data.
+
+* Absence of outliers.
+
+The penalties could be adjusted manually in case you do not detect any anomaly
+in row data neither on fit step. 
+
+### 5. Citing `rifi`
+
+We hope you enjoy using `rifi`. Please cite the package in case of usage.
+``` {r echo = FALSE}
+citation("rifi")
+``` 
 
 ## II. rifi_preprocess
 
