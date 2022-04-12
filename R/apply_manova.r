@@ -118,6 +118,8 @@ apply_manova <- function(inp) {
     
     I_1$segment <- "S1"
     I_2$segment <- "S2"
+    hl_1$segment <- "S1"
+    hl_2$segment <- "S2"
     if (length(I_1$segment) < 2 |
         length(I_2$segment) < 2 | 
         length(hl_1$segment) < 2 |

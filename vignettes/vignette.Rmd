@@ -299,11 +299,9 @@ Significant events are assigned with an '*'
 
 It is recommended to check the fit after running `rifi_fit`. If more than 30 % of the fits show a misfit, you may consider to check:
 
-* Row data
+* Raw data
 
-* Background 
-
-* You may need to adapt the starting values used on the fit to your data
+* Background
 
 #### 2. Penalties
 
