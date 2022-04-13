@@ -82,13 +82,13 @@ nls2_fit <-
     #boarders
     # upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
     #                   k = 1/(log(2)/(60)))
-    lower_STD <- list(decay = log(2)/(60), delay = 0.01)
+    lower_STD <- list(decay = log(2)/(60), delay = 0.001, k = 0.01, bg = 0)
     # upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
     #                   k = 1/(log(2)/(60)))
-    lower_ABG <- list(decay = log(2)/(60), delay = 0.01)
+    lower_ABG <- list(decay = log(2)/(60), delay = 0.001, k= 0.01)
     #models
     model_STD <- inty ~ I(time < delay) * I(k / decay + bg) + (time >= delay) * 
-      I(bg + (k / decay) * (exp(-decay * (time - delay))))
+      I(bg + (k / decay - bg) * (exp(-decay * (time - delay))))
     model_ABG <- inty ~ I(time < delay) * k / decay + (time >= delay) * 
       I(k / decay * (exp(-decay * (time - delay))))
     
