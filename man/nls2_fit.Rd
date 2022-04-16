@@ -26,8 +26,8 @@ threshold.
 nls2_fit(
   inp,
   cores = 1,
-  decay = seq(0.08, 0.11, by = 0.02),
-  delay = seq(0, 10, by = 0.1),
+  decay = seq(0.08, 0.11, 0.02),
+  delay = seq(0, 10, 0.1),
   k = seq(0.1, 1, 0.2),
   bg = 0.2
 )

@@ -48,8 +48,8 @@
 nls2_fit <-
   function(inp,
            cores = 1,
-           decay = seq(.08, 0.11, by = .02),
-           delay = seq(0, 10, by = .1),
+           decay = seq(.08, 0.11, 0.02),
+           delay = seq(0, 10, 0.1),
            k = seq(0.1, 1, 0.2),
            bg = 0.2) {
     #order the input
@@ -82,15 +82,16 @@ nls2_fit <-
     #boarders
     # upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
     #                   k = 1/(log(2)/(60)))
-    lower_STD <- list(decay = log(2)/(60), delay = 0.001, k = 0.01, bg = 0)
+    lower_STD <- list(decay = 0.01, delay = 0.001)
     # upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
     #                   k = 1/(log(2)/(60)))
-    lower_ABG <- list(decay = log(2)/(60), delay = 0.001, k= 0.01)
+    lower_ABG <- list(decay = 0.01, delay = 0.001)
     #models
-    model_STD <- inty ~ I(time < delay) * I(k / decay + bg) + (time >= delay) * 
-      I(bg + (k / decay - bg) * (exp(-decay * (time - delay))))
-    model_ABG <- inty ~ I(time < delay) * k / decay + (time >= delay) * 
-      I(k / decay * (exp(-decay * (time - delay))))
+    model_STD <- inty ~ I(time < delay) * I(k / decay) + 
+      (time >= delay) * I(bg + (k / decay - bg) * (exp(-decay * (time - delay))))
+
+    model_ABG <- inty ~ I(time < delay) * I(k / decay) + 
+      (time >= delay) * I(k / decay * (exp(-decay * (time - delay))))
     
     n_fit <- mclapply(seq_len(nrow(tmp_df)), function(i) {
       #get the Data
