@@ -36,7 +36,7 @@ suppressPackageStartupMessages(library(SummarizedExperiment))
 
 ## 0. Installation
 
-Please note that **'rifi'** is only available for unix based systems. 
+Please note that **'rifi'** is only available for Unix based systems. 
 To install this package, start R (>= version "4.2") and enter: 
 
 ``` {r, eval = FALSE}
