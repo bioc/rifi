@@ -48,7 +48,7 @@
 nls2_fit <-
   function(inp,
            cores = 1,
-           decay = seq(.01, 1, by = .02),
+           decay = seq(.01, .11, by = .02),
            delay = seq(0, 10, by = 0.1),
            k = seq(0.1, 1, 0.2),
            bg = 0.2) {
@@ -80,12 +80,12 @@ nls2_fit <-
     st_STD <- expand.grid(decay = decay, delay = delay, k = k, bg = bg)
     st_ABG <- expand.grid(decay = decay, delay = delay, k = k)
     #boarders
-    # upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
-    #                   k = 1/(log(2)/(60)))
+    upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
+                       k = 1/(log(2)/(60)))
     lower_STD <- lower_STD <- list(decay = log(2)/(60), delay = 0.001, 
                                    k = 0.01, bg = 0)
-    # upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
-    #                   k = 1/(log(2)/(60)))
+    upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
+                       k = 1/(log(2)/(60)))
     lower_ABG <- list(decay = log(2)/(60), delay = 0.001, k= 0.01)
     #models
     model_STD <- inty ~ I(time < delay) * I(k / decay) + 
@@ -111,8 +111,8 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_ABG,
-                                 lower = lower_ABG
-                                 #upper = upper_ABG
+                                 lower = lower_ABG,
+                                 upper = upper_ABG
                                )},
                                error = function(e) {
                                  return(NULL)
@@ -127,8 +127,8 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_STD,
-                                 lower = lower_STD
-                                 #upper = upper_STD
+                                 lower = lower_STD,
+                                 upper = upper_STD
                                )},
                                error = function(e) {
                                  return(NULL)
