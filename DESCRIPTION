@@ -26,7 +26,7 @@ Description: 'rifi' analyses data from rifampicin time series created by microar
 	All data are integrated to give an estimate of continous transcriptional units, i.e. operons. 	
 	Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
 Depends:
-	R (>= 4.1)
+	R (>= 4.2)
 Imports:
 	car,
 	cowplot,
