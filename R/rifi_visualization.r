@@ -242,8 +242,7 @@ rifi_visualization <-
     frag <- splitGenome_function(x = fl, gLength = gLength)
     #################################plot###############################
     #IV. the general plot
-    pdf.options(
-      reset = TRUE,
+    pdf.options(      
       onefile = TRUE,
       width = 8,
       height = 5.3

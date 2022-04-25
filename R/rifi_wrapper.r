@@ -64,7 +64,7 @@ rifi_wrapper <- function(inp, cores, path, bg, restr) {
   
   # run fragmentation
   probe_fra <- rifi_fragmentation(
-    inp = probe,
+    inp = pen,
     cores = cores
     )
 
