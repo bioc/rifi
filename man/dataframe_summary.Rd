@@ -2,18 +2,15 @@
 % Please edit documentation in R/dataframe_summary.r
 \name{dataframe_summary}
 \alias{dataframe_summary}
-\title{dataframe_summary: creates two tables relating gene annotation to fragments.
-dataframe_summary creates two tables summary of segments and their
+\title{dataframe_summary creates two tables summary of segments and their
 half-lives. The first output is bin/probe features and the second one is
 intensity fragment based.
 The dataframe_summary creates one table with feature_type, gene, locus_tag,
-position, strand, TU, delay_fragment, HL_fragment,
-half_life, intensity_fragment, intensity and velocity. The second table is
-similar to the first one but in compact form.
+position, strand, TU, delay_fragment, HL_fragment, half_life, intensity_fragment,
+intensity and velocity. The second table is similar to the first one but in
+compact form.
 It contains the same columns, the only difference is on position where a
-start and end position are indicated separately.
-Strand is indicated in case of stranded data to select the corresponding
-positions.}
+start and end position are indicated separately.}
 \usage{
 dataframe_summary(data, input)
 }
@@ -25,9 +22,9 @@ dataframe_summary(data, input)
 \value{
 \item{bin_df:}{all information regarding bins:
 \describe{
-\item{feature_type:}{}
-\item{gene:}{}
-\item{locus_tag:}{}
+\item{feature_type:}{String, region annotation covering the fragments}
+\item{gene:}{String, gene annotation covering the fragments}
+\item{locus_tag:}{String, locus_tag annotation covering the fragments}
 \item{TU:}{The overarching transcription unit}
 \item{delay_fragment:}{The delay fragment the bin belongs to}
 \item{HL_fragment:}{The half-life fragment the bin belongs to}
@@ -39,33 +36,34 @@ dataframe_summary(data, input)
 }
 \item{frag_df:}{all information regarding fragments:
 \describe{
-\item{feature_type:}{}
-\item{gene:}{}
-\item{locus_tag:}{}
-\item{strand:}{The bin/probe specific strand}
-\item{TU:}{The overarching transcription unit}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
-\item{half_life:}{The half-life of the fragment}
-\item{intensity_fragment:}{The intensity fragment the bin belongs to}
-\item{intensity:}{The relative intensity at time point 0}
-\item{velocity:}{The velocity value of the respective delay fragment}
+\item{position:}{Integer, the bin/probe specific position}
+\item{feature_type:}{String, region annotation covering the fragments}
+\item{gene:}{String, gene annotation covering the fragments}
+\item{locus_tag:}{String, locus_tag annotation covering the fragments}
+\item{strand:}{Boolean. The bin/probe specific strand (+/-)}
+\item{TU:}{String, The overarching transcription unit}
+\item{delay_fragment:}{String, the delay fragment the bin belongs to}
+\item{delay:}{Integer, the delay value of the bin/probe}
+\item{HL_fragment:}{Integer, the half_life fragment of the bin/probe belongs to}
+\item{half_life:}{Integer, the half-life of the bin/probe}
+\item{intensity_mean_fragment:}{Integer, the mean intensity value of the respective
+intensity fragment}
+\item{intensity_fragment:}{Integer, the intensity fragment the bin belongs to}
+\item{intensity:}{Integer, the relative intensity of bin/probe at time point 0}
+\item{velocity_fragment:}{The velocity value of the respective delay fragment}
 }
 }
 }
 \description{
-dataframe_summary: creates two tables relating gene annotation to fragments.
 dataframe_summary creates two tables summary of segments and their
 half-lives. The first output is bin/probe features and the second one is
 intensity fragment based.
 The dataframe_summary creates one table with feature_type, gene, locus_tag,
-position, strand, TU, delay_fragment, HL_fragment,
-half_life, intensity_fragment, intensity and velocity. The second table is
-similar to the first one but in compact form.
+position, strand, TU, delay_fragment, HL_fragment, half_life, intensity_fragment,
+intensity and velocity. The second table is similar to the first one but in
+compact form.
 It contains the same columns, the only difference is on position where a
 start and end position are indicated separately.
-Strand is indicated in case of stranded data to select the corresponding
-positions.
 }
 \examples{
 data(stats_minimal)

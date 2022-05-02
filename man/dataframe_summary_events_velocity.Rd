@@ -2,9 +2,7 @@
 % Please edit documentation in R/dataframe_summary_events_velocity.r
 \name{dataframe_summary_events_velocity}
 \alias{dataframe_summary_events_velocity}
-\title{dataframe_summary_events_velocity creates one table with all events between
-the segments.
-The dataframe_summary_events_velocity creates one table with the following
+\title{The dataframe_summary_events_velocity creates one table with the following
 columns: event, features, p_value, event_position, event_duration,
 position, region, gene, locus_tag, strand, TU, segment_1, segment_2, length,
 velocity_ratio.
@@ -22,8 +20,7 @@ feature type covering the event.
 \item TU: TU covering the event.
 \item segment_1: the first segment of the event, includes the segment, TU,
 delay fragment in case of ps or iTSS_I. The rest of the events include HL
-fragment and could be extended
-intensity fragment.
+fragment and could be extended intensity fragment.
 \item segment_2: same description as segment_1 but is the second fragment of
 the event.
 \item event_position: the position of event, calculated dividing the last
@@ -46,26 +43,24 @@ dataframe_summary_events_velocity(data, data_annotation)
 }
 \value{
 \describe{
-\item{event:}{}
-\item{p_value:}{}
-\item{p_adjusted:}{}
-\item{event_position:}{}
-\item{velocity_ratio:}{}
-\item{feature_type:}{}
-\item{gene:}{}
-\item{locus_tag:}{}
-\item{strand:}{The bin/probe specific strand}
-\item{TU:}{The overarching transcription unit}
-\item{segment_1:}{}
-\item{segment_2:}{}
-\item{event_duration:}{}
-\item{gap_fragments:}{}
-\item{features:}{}
+\item{event:}{String, event type}
+\item{p_value:}{Integer, p_value of the event}
+\item{p_adjusted:}{Integer, p_value adjusted}
+\item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay fragments}
+\item{feature_type:}{String, region annotation covering the fragments}
+\item{gene:}{String, gene annotation covering the fragments}
+\item{locus_tag:}{String, locus_tag annotation covering the fragments}
+\item{strand:}{Boolean. The bin/probe specific strand (+/-)}
+\item{TU:}{String, The overarching transcription unit}
+\item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
+\item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
+\item{event_position:}{Integer, the position middle between 2 fragments with an event}
+\item{event_duration:}{Integer, the duration between two delay fragments}
+\item{gap_fragments:}{Integer, the distance between two delay fragments}
+\item{features:}{Integer, number of fragements involved on the event}
 }
 }
 \description{
-dataframe_summary_events_velocity creates one table with all events between
-the segments.
 The dataframe_summary_events_velocity creates one table with the following
 columns: event, features, p_value, event_position, event_duration,
 position, region, gene, locus_tag, strand, TU, segment_1, segment_2, length,
@@ -84,8 +79,7 @@ feature type covering the event.
 \item TU: TU covering the event.
 \item segment_1: the first segment of the event, includes the segment, TU,
 delay fragment in case of ps or iTSS_I. The rest of the events include HL
-fragment and could be extended
-intensity fragment.
+fragment and could be extended intensity fragment.
 \item segment_2: same description as segment_1 but is the second fragment of
 the event.
 \item event_position: the position of event, calculated dividing the last

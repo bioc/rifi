@@ -6,8 +6,10 @@
 #' 'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
 #' to the slope. The slope is further checked for steepness to decide for PDD.
 #' '_PDD_' is added to the 'flag' column.
+
 #' Post transcription decay is characterized by a strong decrease of intensity
 #' by position.
+
 #' The rowRanges need to contain at least 'ID', 'intensity', 'position' and
 #' 'position_segment'!
 #'
@@ -34,11 +36,6 @@
 #' @export
 
 
-# finding_PDD uses score_fun_linear_PDD to make groups by the difference to the
-# slope. Then the slope is checked for steepness to decide for PDD. We are
-# looking for steep decreasing slopes. The only input is the inp based df.
-# pen is the penalty for the dp, pen_out is the outlier penalty, thrsh is the
-# threshold for the slope. stranded should be TRUE if strand is not (all) NA.
 finding_PDD <- function(inp, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001) {
     stranded <- 1
     num_args <- c(pen, pen_out, thrsh)

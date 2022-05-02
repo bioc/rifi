@@ -12,26 +12,12 @@ apply_manova(inp)
 \value{
 the probe data frame with the columns regarding statistics:
 \describe{
-\item{position:}{Integer, the bin/probe specific position}
-\item{intensity:}{Integer, the relative intensity of bin/probe at time point 0}
-\item{half_life:}{Integer, the half-life of the bin/probe}
-\item{HL_fragment:}{Integer, the half-life fragment the bin/probe belongs to}
-\item{HL_mean_fragment:}{Integer, the mean half-life value of the respective
-half-life fragment}
-\item{HL_fragment:}{Integer, the half_life fragment of the bin/probe belongs to}
-\item{intensity_fragment:}{Integer, the intensity fragment of the bin/probe belongs to}
-\item{TU:}{String, the overarching transcription unit}
-\item{FC_HL_intensity:}{Integer, The fold change of half-life/ fold change of
-intensity}
-\item{FC_HL_intensity_fragment:}{String, the fragments corresponding to intensity
-and HL fold change}
 \item{p_value_Manova:}{Integer, the p_value added to the input}
 }
 }
 \description{
 apply_manova compares the variance between two fold-changes, HL and intensity
-within the same TU (half-life frgA/half-life frgB/
-intensity frgA/intensity frgB).
+within the same TU (half-life frgA/half-life frgB/intensity frgA/intensity frgB).
 HL fragment could cover two intensity fragments therefore this function sets
 first fragments borders and uses manova_function.
 Manova checks the variance between 2 segments (independent variables) and two

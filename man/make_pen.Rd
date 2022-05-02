@@ -2,15 +2,14 @@
 % Please edit documentation in R/make_pen.r
 \name{make_pen}
 \alias{make_pen}
-\title{make_pen: automatically assigns a penalties.
-'make_pen' calls one of four available penalty functions to automatically
+\title{'make_pen' calls one of four available penalty functions to automatically
 assign penalties for the dynamic programming.
 The four functions to be called are:
 \enumerate{
 \item fragment_delay_pen
 \item fragment_HL_pen
 \item fragment_inty_pen
-\item fragment_TI_pen.
+\item fragment_TI_pen
 These functions return the amount of statistically correct and statistically
 wrong splits at a specific pair of penalties.
 'make_pen' iterates over many penalty pairs and picks the most suitable pair
@@ -19,11 +18,11 @@ The sample size, penalty range and resolution as well as the number of cycles
 can be customized.
 The primary start parameters create a matrix with n = rez_pen rows and
 n = rez_pen_out columns with values between sta_pen/sta_pen_out
-and end_pen/end_pen_out. The best penalty pair is picked. If dept is bigger
-than 1 the same process is repeated with a new matrix of the same size
-based on the result of the previous cycle. Only position segments with length
-within the sample size range are considered for the penalties to increase
-run time.
+and end_pen/end_pen_out. The best penalty pair is picked.
+If dept is bigger than 1 the same process is repeated with a new matrix
+of the same size based on the result of the previous cycle. Only position
+segments with length within the sample size range are considered for the
+penalties to increase run time.
 Returns a penalty object (list of 4 objects) the first being the logbook.
 }}
 \usage{
@@ -78,15 +77,14 @@ the outlier penalty range. Default is 7.}
 \value{
 A list with 4 items:
 \describe{
-\item{logbook:}{The logbook vector containing all penalty information}
-\item{penalties:}{a vetor with the respective penalty and outlier
+\item{logbook:}{Interger, the logbook vector containing all penalty information}
+\item{penalties:}{Integer, a vetor with the respective penalty and outlier
 penalty}
-\item{correct:}{a matrix of the correct splits}
-\item{wrong:}{a matrix of the incorrect splits}
+\item{correct:}{Matrix, a matrix of the correct splits}
+\item{wrong:}{Matrix, a matrix of the incorrect splits}
 }
 }
 \description{
-make_pen: automatically assigns a penalties.
 'make_pen' calls one of four available penalty functions to automatically
 assign penalties for the dynamic programming.
 The four functions to be called are:
@@ -94,7 +92,7 @@ The four functions to be called are:
 \item fragment_delay_pen
 \item fragment_HL_pen
 \item fragment_inty_pen
-\item fragment_TI_pen.
+\item fragment_TI_pen
 These functions return the amount of statistically correct and statistically
 wrong splits at a specific pair of penalties.
 'make_pen' iterates over many penalty pairs and picks the most suitable pair
@@ -103,11 +101,11 @@ The sample size, penalty range and resolution as well as the number of cycles
 can be customized.
 The primary start parameters create a matrix with n = rez_pen rows and
 n = rez_pen_out columns with values between sta_pen/sta_pen_out
-and end_pen/end_pen_out. The best penalty pair is picked. If dept is bigger
-than 1 the same process is repeated with a new matrix of the same size
-based on the result of the previous cycle. Only position segments with length
-within the sample size range are considered for the penalties to increase
-run time.
+and end_pen/end_pen_out. The best penalty pair is picked.
+If dept is bigger than 1 the same process is repeated with a new matrix
+of the same size based on the result of the previous cycle. Only position
+segments with length within the sample size range are considered for the
+penalties to increase run time.
 Returns a penalty object (list of 4 objects) the first being the logbook.
 }
 }

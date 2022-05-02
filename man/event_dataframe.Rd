@@ -2,16 +2,16 @@
 % Please edit documentation in R/event_dataframe.r
 \name{event_dataframe}
 \alias{event_dataframe}
-\title{event_dataframe: creates a dataframe only with events for segments and genes.
+\title{event_dataframe creates a dataframe only with events for segments and genes.
 The function used are:
-position_function: adds the specific position of ps or iTSS event
+position_function: adds the specific position of ps or iTSS event.
 annotation_function_event: adds the events to the annotated genes.
 gff3 file has to be supplied. Strand is indicated in case of stranded data
 The event_dataframe selects columns with statistical features. ID, position,
 strand and TU columns are required.
 Two major dataframe are generated, df gathers t-test and Manova test and df1
-gathers ps and ITSS with the corresponding features. df selects only
-unique intensity fragments since they are the lowest on the hierarchy.
+gathers ps and ITSS with the corresponding features. df selects only unique
+intensity fragments since they are the lowest on the hierarchy.
 One new column is added to df, "synthesis_ratio_event", it corresponds
 to the FC-HL/FC-intensity and assignment of an event to the synthesis ratio
 respectively. df adds a new column to indicate the position of the ps or
@@ -28,16 +28,16 @@ event_dataframe(data, data_annotation)
 WIP
 }
 \description{
-event_dataframe: creates a dataframe only with events for segments and genes.
+event_dataframe creates a dataframe only with events for segments and genes.
 The function used are:
-position_function: adds the specific position of ps or iTSS event
+position_function: adds the specific position of ps or iTSS event.
 annotation_function_event: adds the events to the annotated genes.
 gff3 file has to be supplied. Strand is indicated in case of stranded data
 The event_dataframe selects columns with statistical features. ID, position,
 strand and TU columns are required.
 Two major dataframe are generated, df gathers t-test and Manova test and df1
-gathers ps and ITSS with the corresponding features. df selects only
-unique intensity fragments since they are the lowest on the hierarchy.
+gathers ps and ITSS with the corresponding features. df selects only unique
+intensity fragments since they are the lowest on the hierarchy.
 One new column is added to df, "synthesis_ratio_event", it corresponds
 to the FC-HL/FC-intensity and assignment of an event to the synthesis ratio
 respectively. df adds a new column to indicate the position of the ps or

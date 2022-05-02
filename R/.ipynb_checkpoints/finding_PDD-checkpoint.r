@@ -6,8 +6,10 @@
 #' 'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
 #' to the slope. The slope is further checked for steepness to decide for PDD.
 #' '_PDD_' is added to the 'flag' column.
+
 #' Post transcription decay is characterized by a strong decrease of intensity
 #' by position.
+
 #' The rowRanges need to contain at least 'ID', 'intensity', 'position' and
 #' 'position_segment'!
 #'

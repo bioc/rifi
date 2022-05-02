@@ -1,56 +1,46 @@
-#' fold_change: it sets a fold-change ratio between the neighboring fragments
-#' of Half-life (HL) and intensity.
+# =========================================================================
+# fold_change   Sets a fold-change ratio between the neighboring fragments
+#               of Half-life (HL) and intensity
+# -------------------------------------------------------------------------
+#'
+#' 
 #' fold_change sets fold change on intensity and fold change HL fragments of
 #' two successive fragments. Two intensity fragments could belong to one HL
 #' fragment.
+
 #' This function sets first the borders using the position and applies the fold
 #' change ratio between the neighboring fragments of HL and those from intensity
 #' (intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
 #' fragments are from the same TU excluding outliers.
 #'
 #' The function used is:
+
 #' synthesis_r_Function: assigns events depending on the ratio between HL and
 #' intensity of two consecutive fragments.
+
 #' intensity(int) = synthesis rate(k)/decay(deg) (steady state),
 #' int1/int2 = k1/deg1*deg2/k2
-#' int1 * (deg1/int2) * deg2 = k1/k2 => synthesis ratio. In case of synthesis
-#' ratio is:
+
+#' int1 * (deg1/int2) * deg2 = k1/k2 => synthesis ratio. 
+
+#' In case of synthesis ratio is:
+
 #' synthesis ratio > 1 -> New start
+
 #' synthesis ratio < 1 -> Termination
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' 
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
-#'   \item{ID:}{The bin/probe specific ID}
-#'   \item{position:}{The bin/probe specific position}
-#'   \item{intensity:}{The relative intensity at time point 0}
-#'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{HL_fragment:}{The half-life fragment the bin belongs to}
-#'   \item{HL_mean_fragment:}{The mean half-life value of the respective 
-#'   half-life fragment}
-#'   \item{intensity_fragment:}{The intensity fragment the bin belongs to}
-#'   \item{intensity_mean_fragment:}{The mean intensity value of the respective
-#'   intensity fragment}
-#'   \item{TU:}{The overarching transcription unit}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{velocity_ratio:}{}
-#'   \item{event_duration:}{}
-#'   \item{event_position:}{}
-#'   \item{FC_HL:}{}
-#'   \item{FC_fragment_HL:}{}
-#'   \item{p_value_HL:}{}
-#'   \item{FC_intensity:}{}
-#'   \item{FC_fragment_intensity:}{}
-#'   \item{p_value_intensity:}{}
-#'   \item{FC_HL_intensity:}{}
-#'   \item{FC_HL_intensity_fragment:}{}
-#'   \item{FC_HL_adapted:}{}
+#'   \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either 
+#'       Termination or iTSS}
+#'   \item{FC_HL_intensity:}{Integer, the value corresponding to HL and intensity fold change}
+#'   \item{FC_HL_intensity_fragment:}{String, the fragments corresponding to intensity 
+#'     and HL fold change}
+#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
 #' }
 #' 
 #' @examples

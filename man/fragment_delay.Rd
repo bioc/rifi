@@ -2,8 +2,7 @@
 % Please edit documentation in R/fragment_delay.r
 \name{fragment_delay}
 \alias{fragment_delay}
-\title{fragment_delay: performs the delay fragmentation.
-fragment_delay makes delay_fragments based on position_segments and assigns
+\title{fragment_delay makes delay_fragments based on position_segments and assigns
 all gathered information to the SummarizedExperiment object.
 The columns "delay_fragment", "velocity_fragment", "intercept" and "slope"
 are added.
@@ -33,7 +32,6 @@ the SummarizedExperiment object: with delay_fragment,
 velocity_fragment, intercept and slope added to the rowRanges.
 }
 \description{
-fragment_delay: performs the delay fragmentation.
 fragment_delay makes delay_fragments based on position_segments and assigns
 all gathered information to the SummarizedExperiment object.
 The columns "delay_fragment", "velocity_fragment", "intercept" and "slope"

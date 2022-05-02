@@ -12,8 +12,6 @@ apply_ancova(inp)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{position:}{Integer, the bin/probe specific position}
-\item{delay:}{Integer, the delay value of the bin/probe}
 \item{p_value_slope:}{Integer, tThe p_value added to the inp}
 \item{delay_frg_slope:}{Integer, the slope value of the fit through the respective
 delay fragment}

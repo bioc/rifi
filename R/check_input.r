@@ -6,15 +6,21 @@
 #' 'check_input' stops the operation if the input data frame has severe faults.
 #' Less severe faults lead to the removal of wrong IDs and a warnings describing
 #' the problem.
+
 #' The Summarized Experiment colData must have the columns "timepoint" with
 #' the timepoints convertible to numeric and containing the timepoint 0.
+
 #' If replicates are used the column in colData must be called "replicate".
 #' The replicate must be convertible to numeric.
+
 #' In the RowRanges, optionally, IDs can be given as character
 #' (except ",","|","_"),but need to refer to a unique position/strand
 #' combination.
+
 #' Strand information needs to be given.
+
 #' The relative intensity in the assay must be numeric.
+
 #' The relative intensity for the first time point cannot be 0 or NA.
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.

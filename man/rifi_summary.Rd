@@ -2,8 +2,7 @@
 % Please edit documentation in R/rifi_summary.r
 \name{rifi_summary}
 \alias{rifi_summary}
-\title{rifi_summary: conveniently wraps and summarize all rifi outputs.
-Wraps the functions: event_dataframe, dataframe_summary,
+\title{rifi_summary wraps the functions: event_dataframe, dataframe_summary,
 dataframe_summary_events, dataframe_summary_events_HL_int,
 dataframe_summary_events_ps_itss, dataframe_summary_events_velocity and
 dataframe_summary_TI.}
@@ -19,8 +18,7 @@ rifi_summary(inp, data_annotation = metadata(inp)$annot[[1]])
 WIP
 }
 \description{
-rifi_summary: conveniently wraps and summarize all rifi outputs.
-Wraps the functions: event_dataframe, dataframe_summary,
+rifi_summary wraps the functions: event_dataframe, dataframe_summary,
 dataframe_summary_events, dataframe_summary_events_HL_int,
 dataframe_summary_events_ps_itss, dataframe_summary_events_velocity and
 dataframe_summary_TI.

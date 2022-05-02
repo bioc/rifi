@@ -1,6 +1,6 @@
 # =========================================================================
 # dataframe_summary_events_HL_int  Creates one table with all events 
-#'                                 between the segments
+#                                  between the segments
 # -------------------------------------------------------------------------
 #'
 #' 
@@ -10,33 +10,48 @@
 #' FC_intensity, FC_HL/FC_intensity.
 #'
 #' The columns are:
+
 #' 1. event: event type, pausing site, iTSS_I, iTSS_II, Termination, HL_event,
 #' Int_event, HL_Int_event and velocity_change.
-#' 2. FC_HL: fold change of 2 half-life fragments
-#' 3. FC_intensity: fold change of 2 intensity fragments
+
+#' 2. FC_HL: fold change of 2 half-life fragments.
+
+#' 3. FC_intensity: fold change of 2 intensity fragments.
+
 #' 4. FC_HL/FC_intensity: ratio of fold change of 2 half-life fragments
 #' and fold change between 2 intensity fragments.
+
 #' 5. p_value: depending on the event, t-test, manova test p_value is assigned.
+
 #' 6. feature_type: indicated on the output data frame as region, are the
 #' feature type covering the event.
+
 #' 7. gene: gene covering the event.
+
 #' 8. locus_tag: locus_tag covering the event.
+
 #' 9. strand: +/- indicated in case of stranded data.
+
 #' 10. TU: TU covering the event.
+
 #' 11. segment_1: the first segment of the event, includes the segment, TU,
 #' delay fragment in case of ps or iTSS_I. The rest of the events include HL
-#' fragment and could be extended
-#' intensity fragment.
+#' fragment and could be extended intensity fragment.
+
 #' 12. segment_2: same description as segment_1 but is the second fragment
 #' of the event.
+
 #' 13. event_position: the position of event, calculated dividing the last
 #' position of the first fragment and the first position of the next fragment
 #' on 2.
+
 #' 14. event_duration: the difference (min) between 2 delay fragment when ps
 #' or iTSS_I happen.
+
 #' 15. gap_fragments: length in position (nt), calculated by the difference
 #' between the last position of the first fragment and the first position of
 #' the second fragment.
+
 #' 16. features: number of segment involved on the event.
 #' 
 #' @param data SummarizedExperiment: the input data frame with correct format.
@@ -45,31 +60,14 @@
 #' @return
 #' \describe{
 #'     \item{event:}{String, event type}
-#'     \item{position:}{Integer, the bin/probe specific position}
 #'     \item{p_value:}{Integer, p_value of the event}
 #'     \item{p_adjusted:}{Integer, p_value adjusted}
-#'     \item{TU:}{String, the overarching transcription unit}
-#'     \item{delay_fragment:}{String, the delay fragment the bin belongs to}
-#'     \item{HL_fragment:}{String, the half-life fragment the bin belongs to}
-#'     \item{intensity_fragment:}{Integer, the intensity fragment of the bin/probe belongs to}
 #'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
 #'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
 #'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{FC_HL_intensity_fragment:}{String, the fragments corresponding to intensity 
-#'     and HL fold change}
-#'     \item{event_position:}{Integer, position of the event added to the input}
-#'     \item{pausing_site:}{Boolean, pausing site event if happend, either + or -}
-#'     \item{iTSS_I:}{Boolean, iTSS_I event if happend, either + or -}
-#'     \item{ps_ts_fragment:}{String, the fragment where the event happend}
-#'     \item{p_value_Manova:}{Integer, the p_value corresponding to FC(HL-fragments)/
-#'      FC(intensity-fragments)}
-#'     \item{p_value_slope:}{Integer, the p_value of the delay fragment slope}
-#'     \item{delay_frg_slope:}{Integer, the slope value of the fit through the respective 
-#'      delay fragment}
-#'     \item{event_ps_itss_p_value_Ttest:}{Integer, the p_value of the point between 2 delay fragments}
 #'     \item{feature_type:}{String, region annotation covering the fragments}
 #'     \item{gene:}{String, gene annotation covering the fragments}
 #'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
@@ -77,12 +75,12 @@
 #'     \item{TU:}{String, The overarching transcription unit}
 #'     \item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
 #'     \item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 #'     \item{event_duration:}{Integer, the duration between two delay fragments}
 #'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
 #'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
-#' 
-#' 
+#'  
 #' 
 #' @examples 
 #' if(!require(SummarizedExperiment)){

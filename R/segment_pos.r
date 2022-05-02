@@ -1,4 +1,8 @@
-#' segment_pos: divides all IDs by position into position_segments.
+# =========================================================================
+# segment_pos       Divides all IDs by position into position_segments
+# -------------------------------------------------------------------------
+#'
+#'
 #' segment_pos adds the column "position_segment" to the rowRanges.
 #' To reduce run time, the data is divided by regions of no expression larger
 #' than "dist" nucleotides.

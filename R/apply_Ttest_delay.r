@@ -8,6 +8,7 @@
 #' apply_Ttest_delay: is a statistical test to check the significance
 #' of the point between 2 segments showing pausing site (ps) and
 #' internal starting site (ITSS) independently.
+
 #' apply_Ttest_delay uses t-test. The last point from the first segment
 #' and the first point from the second segment are selected and added
 #' to the residuals of each model. The sum is subjected to t-test.
@@ -16,12 +17,6 @@
 #' 
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
-#'   \item{position:}{Integer, the bin/probe specific position}
-#'   \item{delay:}{Integer, the delay value of the bin/probe}
-#'   \item{delay_fragment:}{String, the delay fragment the bin belongs to}
-#'   \item{pausing_site:}{Boolean, pausing site event if happend, either + or -}
-#'   \item{iTSS_I:}{Boolean, iTSS_I event if happend, either + or -}
-#'   \item{ps_ts_fragment:}{String, the fragment where the event happend}
 #'   \item{event_ps_itss_p_value_Ttest:}{Integer, the p_value added to the input}
 #' }
 #'

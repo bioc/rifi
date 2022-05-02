@@ -12,14 +12,6 @@ apply_t_test_ti(inp)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{Integer, the bin/probe specific position}
-\item{flag:}{String, information on which fitting model is applied}
-\item{intensity:}{Integer, the relative intensity of bin/probe at time point 0}
-\item{position_segment:}{String, the position based segment}
-\item{TI_termination_factor:}{Integer, the termination factor of the bin/probe}
-\item{TU:}{Charcetr, the overarching transcription unit}
-\item{TI_termination_fragment:}{String, the TI fragment the bin belongs to}
 \item{p_value_TI:}{Integer, the p_value added to the input}
 \item{TI_fragments_p_value:}{String, the fragments subjected to statistical test}
 }

@@ -2,8 +2,7 @@
 % Please edit documentation in R/gff3_preprocessing.r
 \name{gff3_preprocess}
 \alias{gff3_preprocess}
-\title{gff3_preprocess: process gff3 file from database for multiple usage.
-gff3_preprocess processes the gff3 file extracting gene names and locus_tag
+\title{gff3_preprocess processes the gff3 file extracting gene names and locus_tag
 from all coding regions (CDS), UTRs/ncRNA/asRNA are also extracted if
 available.
 The resulting dataframe contains region, positions, strand, gene and
@@ -19,19 +18,18 @@ A list with 2 items:
 \describe{
 \item{data annotation:}{
 \describe{
-\item{region:}{the region from the gff file}
-\item{start:}{the start of the annotation}
-\item{end:}{the end of the annotation}
-\item{strand:}{the strand of the annotation}
-\item{gene:}{the annotated gene name}
-\item{locus_tag:}{the annotated locus tag}
+\item{region:}{String, the region from the gff file}
+\item{start:}{Integer, the start of the annotation}
+\item{end:}{Integer, the end of the annotation}
+\item{strand:}{Boolean, the strand of the annotation}
+\item{gene:}{String, the annotated gene name}
+\item{locus_tag:}{String, the annotated locus tag}
 }
 }
 \item{genome length:}{a numeric vector containing the length of the genome}
 }
 }
 \description{
-gff3_preprocess: process gff3 file from database for multiple usage.
 gff3_preprocess processes the gff3 file extracting gene names and locus_tag
 from all coding regions (CDS), UTRs/ncRNA/asRNA are also extracted if
 available.

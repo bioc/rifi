@@ -2,35 +2,7 @@
 % Please edit documentation in R/predict_ps_itss.r
 \name{predict_ps_itss}
 \alias{predict_ps_itss}
-\title{predict_ps_itss: predicts pausing sites (ps) and internal starting sites
-(ITSS) between delay fragments.
-predict_ps_itss predicts ps and ITSS within the same TU. Neighboring delay
-segments are compared to
-each other by positioning the intercept of the second segment into the first
-segment using slope and intercept coefficients.#'
-predict_ps_itss uses 3 steps to identify ps and ITSS:
-\enumerate{
-\item select unique TU.
-\item select from the input dataframe the columns: ID, position, strand, delay,
-delay fragment, TU and slope coordinates, velocity_fragment and intercept.
-\item select delay segments in the TU.
-\item loop into all delay segments and estimate the coordinates of the last
-point of the first segment using the coefficients
-of the second segment and vice versa. We get two predicted positions, the
-difference between them is compared to the threshold.
-In case the strand is "-", additional steps are added:
-The positions of both segments are ordered from the last position to the
-first one.
-all positions are merged in one column and subtracted from the maximum
-position.
-the column is split in 2. The first and second correspond to the positions
-of the first and second segments respectively.
-Both segments are subjected to lm fit and the positions predicted are used
-on the same way as the opposite strand.
-if the difference between the positions predicted is lower than negative
-threshold, ps is assigned otherwise, and if the difference is higher than
-the positive threshold, ITSS is assigned.
-}}
+\title{(ITSS) between delay fragments.}
 \usage{
 predict_ps_itss(inp, maxDis = 300)
 }
@@ -43,14 +15,6 @@ fragments.}
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{delay:}{The delay value of the bin/probe}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{intercept:}{The vintercept of fit through the respective delay
-fragment}
-\item{slope:}{The slope of the fit through the respective delay fragment}
-\item{TU:}{The overarching transcription unit}
 \item{pausing_site:}{}
 \item{iTSS_I:}{}
 \item{ps_ts_fragment:}{}
@@ -58,32 +22,28 @@ fragment}
 }
 }
 \description{
-predict_ps_itss: predicts pausing sites (ps) and internal starting sites
-(ITSS) between delay fragments.
 predict_ps_itss predicts ps and ITSS within the same TU. Neighboring delay
-segments are compared to
-each other by positioning the intercept of the second segment into the first
-segment using slope and intercept coefficients.#'
+segments are compared to each other by positioning the intercept of the
+second segment into the first segment using slope and intercept coefficients.
 predict_ps_itss uses 3 steps to identify ps and ITSS:
 \enumerate{
 \item select unique TU.
-\item select from the input dataframe the columns: ID, position, strand, delay,
+\item select from the input dataframe the columns: ID, position, strand, delay.
 delay fragment, TU and slope coordinates, velocity_fragment and intercept.
 \item select delay segments in the TU.
 \item loop into all delay segments and estimate the coordinates of the last
-point of the first segment using the coefficients
-of the second segment and vice versa. We get two predicted positions, the
-difference between them is compared to the threshold.
+point of the first segment using the coefficients of the second segment
+and vice versa. We get two predicted positions, the difference between
+them is compared to the threshold.
 In case the strand is "-", additional steps are added:
 The positions of both segments are ordered from the last position to the
 first one.
-all positions are merged in one column and subtracted from the maximum
-position.
-the column is split in 2. The first and second correspond to the positions
-of the first and second segments respectively.
+All positions are merged in one column and subtracted from the maximum
+position. the column is split in 2. The first and second correspond to
+the positions of the first and second segments respectively.
 Both segments are subjected to lm fit and the positions predicted are used
 on the same way as the opposite strand.
-if the difference between the positions predicted is lower than negative
+If the difference between the positions predicted is lower than negative
 threshold, ps is assigned otherwise, and if the difference is higher than
 the positive threshold, ITSS is assigned.
 }

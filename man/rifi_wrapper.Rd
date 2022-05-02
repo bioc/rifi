@@ -2,8 +2,7 @@
 % Please edit documentation in R/rifi_wrapper.r
 \name{rifi_wrapper}
 \alias{rifi_wrapper}
-\title{rifi_wrapper: conveniently wraps all functions included on rifi workflow.
-Wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
+\title{rifi_wrapper wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.}
 \usage{
 rifi_wrapper(inp, cores, path, bg, restr)
@@ -25,8 +24,7 @@ avoid wrong TI-term_factors, ranges from 0 to 0.2}
 All intermediate objects
 }
 \description{
-rifi_wrapper: conveniently wraps all functions included on rifi workflow.
-Wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
+rifi_wrapper wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.
 }
 \examples{

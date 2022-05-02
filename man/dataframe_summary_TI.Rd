@@ -2,9 +2,7 @@
 % Please edit documentation in R/dataframe_summary_TI.r
 \name{dataframe_summary_TI}
 \alias{dataframe_summary_TI}
-\title{dataframe_summary_TI creates one table with all TI fragments, p_value and
-the coordinates.
-The dataframe_summary creates one table with the following columns: event,
+\title{The dataframe_summary creates one table with the following columns: event,
 TI_fragment, TI_factor, TI_fragments_TU, p_value, feature_type,
 gene, locus_tag, strand, TU, features, event_position, position_1 and
 position_2.
@@ -38,11 +36,25 @@ dataframe_summary_TI(data, input)
 \item{input}{dataframe: dataframe from event_dataframe function.}
 }
 \value{
+\describe{
+\item{event:}{String, event type}
+\item{p_value:}{Integer, p_value of the event}
+\item{p_adjusted:}{Integer, p_value adjusted}
+\item{TI_fragment:}{String, the fragment with TI}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
+\item{feature_type:}{String, region annotation covering the fragments}
+\item{gene:}{String, gene annotation covering the fragments}
+\item{locus_tag:}{String, locus_tag annotation covering the fragments}
+\item{strand:}{Boolean. The bin/probe specific strand (+/-)}
+\item{TU:}{String, The overarching transcription unit}
+\item{position_1:}{String, the first position of the TI fragment}
+\item{position_2:}{String, the last position of the TI fragment}
+\item{event_position:}{Integer, the position middle between 2 TI fragments}
+}
+
 WIP
 }
 \description{
-dataframe_summary_TI creates one table with all TI fragments, p_value and
-the coordinates.
 The dataframe_summary creates one table with the following columns: event,
 TI_fragment, TI_factor, TI_fragments_TU, p_value, feature_type,
 gene, locus_tag, strand, TU, features, event_position, position_1 and

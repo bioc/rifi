@@ -13,12 +13,6 @@ apply_Ttest_delay(inp)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{position:}{Integer, the bin/probe specific position}
-\item{delay:}{Integer, the delay value of the bin/probe}
-\item{delay_fragment:}{String, the delay fragment the bin belongs to}
-\item{pausing_site:}{Boolean, pausing site event if happend, either + or -}
-\item{iTSS_I:}{Boolean, iTSS_I event if happend, either + or -}
-\item{ps_ts_fragment:}{String, the fragment where the event happend}
 \item{event_ps_itss_p_value_Ttest:}{Integer, the p_value added to the input}
 }
 }

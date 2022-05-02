@@ -2,7 +2,14 @@
 % Please edit documentation in R/rifi_fragmentation.r
 \name{rifi_fragmentation}
 \alias{rifi_fragmentation}
-\title{rifi_fragmentation: conveniently wraps all fragmentation steps}
+\title{rifi_fragmentation wraps the following functions:
+\enumerate{
+\item fragment_delay
+\item fragment_HL
+\item fragment_inty
+\item TUgether
+\item fragment_TI
+}}
 \usage{
 rifi_fragmentation(
   inp,

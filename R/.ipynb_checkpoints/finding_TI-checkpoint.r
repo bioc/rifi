@@ -1,9 +1,16 @@
-#' finding_TI: flags potential candidates for transcription interference.
-#' 'finding_TI' uses 'score_fun_ave' to make groups by the mean of "probe_TI".
+# =========================================================================
+# finding_TI   Flags potential candidates for transcription interference
+# -------------------------------------------------------------------------
+#'
+#' 
+#' finding_TI uses 'score_fun_ave' to make groups by the mean of "probe_TI".
 #' "TI" is added to the "flag" column.
+
 #' TI is characterized by relative intensities at time points later than "0".
+
 #' The rowRanges need to contain at least "ID", "probe_TI" and
 #' "position_segment"!
+#'
 #' @param inp SummarizedExperiment: the input.
 #' @param cores integer: the number of assigned cores for the task
 #' @param pen numeric: an internal parameter for the dynamic programming.
@@ -27,10 +34,6 @@
 #' 
 #' @export
 
-# score_fun_ave is used to make groups, outliers are not wanted.
-# finally the mean of each groups values (-1 or 1) is used to filter groups over
-# a threshold thrsh. The only inputs are the input df and the probe based df.
-# pen is the penalty for the dp, thrsh is the threshold for the mean
 
 finding_TI <-
   function(inp, cores, pen = 10, thrsh = 0.5, add = 1000) {

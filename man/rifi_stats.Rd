@@ -2,10 +2,9 @@
 % Please edit documentation in R/rifi_stats.r
 \name{rifi_stats}
 \alias{rifi_stats}
-\title{rifi_stats: conveniently wraps all statistical prediction steps.
-Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-apply_event_position, apply_t_test, fold_change, apply_manova,
-apply_t_test_ti and gff3_preprocess.}
+\title{rifi_stats wraps the functions: predict_ps_itss, apply_Ttest_delay,
+apply_ancova, apply_event_position, apply_t_test, fold_change,
+apply_manova, apply_t_test_ti and gff3_preprocess.}
 \usage{
 rifi_stats(inp, dista = 300, path)
 }
@@ -18,66 +17,21 @@ fragments. Default is the auto generated value.}
 \item{path}{path: to the directory containing the gff3 file.}
 }
 \value{
-the probe data frame with the columns regarding statistics:
-\describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{strand:}{The bin/probe specific strand}
-\item{intensity:}{The relative intensity at time point 0}
-\item{probe_TI:}{An internal value to determine which fitting model is
-applied}
-\item{flag:}{Information on which fitting model is applied}
-\item{position_segment:}{The position based segment}
-\item{delay:}{The delay value of the bin/probe}
-\item{half_life:}{The half-life of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{velocity_fragment:}{The velocity value of the respective delay
-fragment}
-\item{intercept:}{The vintercept of fit through the respective delay
-fragment}
-\item{slope:}{The slope of the fit through the respective delay fragment}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
-\item{HL_mean_fragment:}{The mean half-life value of the respective
-half-life fragment}
-\item{intensity_fragment:}{The intensity fragment the bin belongs to}
-\item{intensity_mean_fragment:}{The mean intensity value of the respective
-intensity fragment}
-\item{TU:}{The overarching transcription unit}
-\item{TI_termination_fragment:}{The TI fragment the bin belongs to}
-\item{TI_mean_termination_factor:}{The mean termination factor of the
-respective TI fragment}
-\item{seg_ID:}{The combined ID of the fragment}
-\item{pausing_site:}{}
-\item{iTSS_I:}{}
-\item{ps_ts_fragment:}{}
-\item{event_ps_itss_p_value_Ttest:}{}
-\item{p_value_slope:}{}
-\item{delay_frg_slope:}{}
-\item{velocity_ratio:}{}
-\item{event_duration:}{}
-\item{event_position:}{}
-\item{FC_HL:}{}
-\item{FC_fragment_HL:}{}
-\item{p_value_HL:}{}
-\item{FC_intensity:}{}
-\item{FC_fragment_intensity:}{}
-\item{p_value_intensity:}{}
-\item{FC_HL_intensity:}{}
-\item{FC_HL_intensity_fragment:}{}
-\item{FC_HL_adapted:}{}
-\item{synthesis_ratio:}{}
-\item{synthesis_ratio_event:}{}
-\item{p_value_Manova:}{}
-\item{p_value_TI:}{}
-\item{TI_fragments_p_value:}{}
-}
+the SummarizedExperiment object: ID with position, strand, intensity,
+probe_TI, flag, position_segment, delay, half_life, TI_termination_factor,
+delay_fragment, velocity_fragment, intercept, slope, HL_fragment, HL_mean_fragment,
+intensity_fragment, intensity_mean_fragment, TU, TI_termination_fragment,
+TI_mean_termination_factor, seg_ID, pausing_site, iTSS_I, ps_ts_fragment,
+event_ps_itss_p_value_Ttest, p_value_slope, delay_frg_slope, velocity_ratio,
+event_duration, event_position, FC_HL, FC_fragment_HL, p_value_HL,
+FC_intensity, FC_fragment_intensity, p_value_intensity, FC_HL_intensity,
+FC_HL_intensity_fragment, FC_HL_adapted, synthesis_ratio, synthesis_ratio_event,
+p_value_Manova, p_value_TI, TI_fragments_p_value
 }
 \description{
-rifi_stats: conveniently wraps all statistical prediction steps.
-Wraps the functions: predict_ps_itss, apply_Ttest_delay, apply_ancova,
-apply_event_position, apply_t_test, fold_change, apply_manova,
-apply_t_test_ti and gff3_preprocess.
+rifi_stats wraps the functions: predict_ps_itss, apply_Ttest_delay,
+apply_ancova, apply_event_position, apply_t_test, fold_change,
+apply_manova, apply_t_test_ti and gff3_preprocess.
 }
 \examples{
 data(fragmentation_minimal)

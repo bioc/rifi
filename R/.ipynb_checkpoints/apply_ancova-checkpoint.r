@@ -3,10 +3,13 @@
 #' showing pausing site (ps) or internal starting site (ITSS) independently
 # -------------------------------------------------------------------------
 #'
-#' apply_ancova: is a statistical test to check if fragments showing ps and
+#'
+#' apply_ancova is a statistical test to check if fragments showing ps and
 #' ITSS events have significant slope using Ancova test.
+
 #' The function uses ancova test. Ancova is applied when the data contains
 #' independent variables, dependent variables and covariant variables.
+
 #' In this case, segments are independent variables, position is the dependent
 #' variable and the delay is the covariant.
 #'
@@ -14,8 +17,6 @@
 #'
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
-#'   \item{position:}{Integer, the bin/probe specific position}
-#'   \item{delay:}{Integer, the delay value of the bin/probe}
 #'   \item{p_value_slope:}{Integer, tThe p_value added to the inp}
 #'   \item{delay_frg_slope:}{Integer, the slope value of the fit through the respective 
 #' delay fragment}
