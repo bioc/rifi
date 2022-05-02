@@ -1,14 +1,9 @@
-# =========================================================================
-# finding_TI   Flags potential candidates for transcription interference
-# -------------------------------------------------------------------------
-#'
-#' 
-#' finding_TI uses 'score_fun_ave' to make groups by the mean of "probe_TI".
+#' finding_TI: flags potential candidates for transcription interference.
+#' 'finding_TI' uses 'score_fun_ave' to make groups by the mean of "probe_TI".
 #' "TI" is added to the "flag" column.
 #' TI is characterized by relative intensities at time points later than "0".
 #' The rowRanges need to contain at least "ID", "probe_TI" and
 #' "position_segment"!
-#'
 #' @param inp SummarizedExperiment: the input.
 #' @param cores integer: the number of assigned cores for the task
 #' @param pen numeric: an internal parameter for the dynamic programming.

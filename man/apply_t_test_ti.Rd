@@ -2,10 +2,7 @@
 % Please edit documentation in R/apply_t_test_ti.r
 \name{apply_t_test_ti}
 \alias{apply_t_test_ti}
-\title{apply_t_test_ti: compares the mean of two neighboring TI fragments
-within the same TU.
-apply_t_test_ti: this function uses the statistical t_test to check
-if two neighboring TI fragments are significant.}
+\title{within the same TU.}
 \usage{
 apply_t_test_ti(inp)
 }
@@ -16,44 +13,20 @@ apply_t_test_ti(inp)
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
 \item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{flag:}{Information on which fitting model is applied}
-\item{position_segment:}{The position based segment}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
-\item{TU:}{The overarching transcription unit}
-\item{TI_termination_fragment:}{The TI fragment the bin belongs to}
-\item{TI_mean_termination_factor:}{The mean termination factor of the
-respective TI fragment}
-\item{pausing_site:}{}
-\item{iTSS_I:}{}
-\item{ps_ts_fragment:}{}
-\item{event_ps_itss_p_value_Ttest:}{}
-\item{p_value_slope:}{}
-\item{delay_frg_slope:}{}
-\item{velocity_ratio:}{}
-\item{event_duration:}{}
-\item{event_position:}{}
-\item{FC_HL:}{}
-\item{FC_fragment_HL:}{}
-\item{p_value_HL:}{}
-\item{FC_intensity:}{}
-\item{FC_fragment_intensity:}{}
-\item{p_value_intensity:}{}
-\item{FC_HL_intensity:}{}
-\item{FC_HL_intensity_fragment:}{}
-\item{FC_HL_adapted:}{}
-\item{synthesis_ratio:}{}
-\item{synthesis_ratio_event:}{}
-\item{p_value_Manova:}{}
-\item{p_value_TI:}{}
-\item{TI_fragments_p_value:}{}
+\item{position:}{Integer, the bin/probe specific position}
+\item{flag:}{String, information on which fitting model is applied}
+\item{intensity:}{Integer, the relative intensity of bin/probe at time point 0}
+\item{position_segment:}{String, the position based segment}
+\item{TI_termination_factor:}{Integer, the termination factor of the bin/probe}
+\item{TU:}{Charcetr, the overarching transcription unit}
+\item{TI_termination_fragment:}{String, the TI fragment the bin belongs to}
+\item{p_value_TI:}{Integer, the p_value added to the input}
+\item{TI_fragments_p_value:}{String, the fragments subjected to statistical test}
 }
 }
 \description{
-apply_t_test_ti: compares the mean of two neighboring TI fragments
-within the same TU.
-apply_t_test_ti: this function uses the statistical t_test to check
-if two neighboring TI fragments are significant.
+apply_t_test_ti uses the statistical t_test to check if two neighboring
+TI fragments are significant.
 }
 \examples{
 data(stats_minimal)

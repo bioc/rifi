@@ -3,8 +3,7 @@
 #' showing pausing site (ps) or internal starting site (ITSS) independently
 # -------------------------------------------------------------------------
 #'
-#'
-#' apply_ancova is a statistical test to check if fragments showing ps and
+#' apply_ancova: is a statistical test to check if fragments showing ps and
 #' ITSS events have significant slope using Ancova test.
 #' The function uses ancova test. Ancova is applied when the data contains
 #' independent variables, dependent variables and covariant variables.

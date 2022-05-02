@@ -2,10 +2,8 @@
 % Please edit documentation in R/finding_PDD.r
 \name{finding_PDD}
 \alias{finding_PDD}
-\title{finding_PDD: flags potential candidates for post transcription decay.
-'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
-to the slope.
-Then the slope is checked for steepness to decide for PDD.
+\title{'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
+to the slope. The slope is further checked for steepness to decide for PDD.
 '\emph{PDD}' is added to the 'flag' column.
 Post transcription decay is characterized by a strong decrease of intensity
 by position.
@@ -36,10 +34,8 @@ the SummarizedExperiment object: with "\emph{PDD}" added to the flag
 column.
 }
 \description{
-finding_PDD: flags potential candidates for post transcription decay.
 'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
-to the slope.
-Then the slope is checked for steepness to decide for PDD.
+to the slope. The slope is further checked for steepness to decide for PDD.
 '\emph{PDD}' is added to the 'flag' column.
 Post transcription decay is characterized by a strong decrease of intensity
 by position.

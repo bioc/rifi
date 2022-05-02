@@ -1,8 +1,4 @@
-# =========================================================================
-# Check_input           reviews the input given by the user
-# -------------------------------------------------------------------------
-#'
-#'
+#' check_input: reviews the input given by the user.
 #' 'check_input' stops the operation if the input data frame has severe faults.
 #' Less severe faults lead to the removal of wrong IDs and a warnings describing
 #' the problem.
@@ -13,7 +9,7 @@
 #' In the RowRanges, optionally, IDs can be given as character
 #' (except ",","|","_"),but need to refer to a unique position/strand
 #' combination.
-#' Strand information needs to be given.
+#' Strand information need to be given.
 #' The relative intensity in the assay must be numeric.
 #' The relative intensity for the first time point cannot be 0 or NA.
 #'
