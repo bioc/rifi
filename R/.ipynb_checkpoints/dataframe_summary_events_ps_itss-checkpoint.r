@@ -14,7 +14,7 @@
 #' 1. event: event type, pausing site, iTSS_I, iTSS_II, Termination, HL_event,
 #' Int_event, HL_Int_event and velocity_change.
 
-#' 2. velocity_ratio: ratio between any two fragment where the event happen.
+#' 2. velocity_ratio: velocity ratio between two delay fragments.
 
 #' 3. p_value: depending on the event, t-test, manova test p_value is assigned.
 
@@ -56,6 +56,7 @@
 #'     \item{event:}{String, event type}
 #'     \item{p_value:}{Integer, p_value of the event}
 #'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 #'     \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay fragments}
 #'     \item{feature_type:}{String, region annotation covering the fragments}
 #'     \item{gene:}{String, gene annotation covering the fragments}
@@ -64,7 +65,6 @@
 #'     \item{TU:}{String, The overarching transcription unit}
 #'     \item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
 #'     \item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
-#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 #'     \item{event_duration:}{Integer, the duration between two delay fragments}
 #'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
 #'     \item{features:}{Integer, number of fragements involved on the event}

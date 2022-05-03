@@ -10,18 +10,18 @@ The columns are:
 \enumerate{
 \item event: event type, transcription interference.
 \item TI_fragment: Transcription interference fragment.
-\item TI_factor: Transcription interference factor.
-\item TI_fragments_TU: Transcription interference fragments included on the
-TU.
+\item TI_termination_factor: Transcription interference factor.
 \item p_value: TI p_value between two successive fragments is assigned.
+\item p_adjusted: TI p_value adjuted using FDR method.
 \item feature_type: indicated on the output data frame as region, are the
 feature type covering the TI.
 \item gene: the genes covering the TI.
 \item locus_tag: the locus_tags covering the TI.
 \item strand: +/- indicated in case of stranded data.
 \item TU: TU covering the TI.
-\item features: number of segment TI involved on a TU.
-\item event_position : position between two TI fragments.
+\item Features: Transcription interference fragments included on the
+TI.
+\item Event_position : position between two TI fragments.
 \item position_1 : the first position of TI fragment, if 2 fragments, first
 position is from the first fragment.
 \item position_2 : the last position of TI fragment, if 2 fragments, last
@@ -38,18 +38,19 @@ dataframe_summary_TI(data, input)
 \value{
 \describe{
 \item{event:}{String, event type}
-\item{p_value:}{Integer, p_value of the event}
-\item{p_adjusted:}{Integer, p_value adjusted}
 \item{TI_fragment:}{String, the fragment with TI}
 \item{TI_termination_factor:}{String, the factor of TI fragment}
+\item{p_value:}{Integer, p_value of the event}
+\item{p_adjusted:}{Integer, p_value adjusted}
 \item{feature_type:}{String, region annotation covering the fragments}
 \item{gene:}{String, gene annotation covering the fragments}
 \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 \item{strand:}{Boolean. The bin/probe specific strand (+/-)}
 \item{TU:}{String, The overarching transcription unit}
+\item{Features:}{Integer, The number of segments within the TI}
+\item{event_position:}{Integer, the position middle between 2 TI fragments}
 \item{position_1:}{String, the first position of the TI fragment}
 \item{position_2:}{String, the last position of the TI fragment}
-\item{event_position:}{Integer, the position middle between 2 TI fragments}
 }
 
 WIP
@@ -63,18 +64,18 @@ The columns are:
 \enumerate{
 \item event: event type, transcription interference.
 \item TI_fragment: Transcription interference fragment.
-\item TI_factor: Transcription interference factor.
-\item TI_fragments_TU: Transcription interference fragments included on the
-TU.
+\item TI_termination_factor: Transcription interference factor.
 \item p_value: TI p_value between two successive fragments is assigned.
+\item p_adjusted: TI p_value adjuted using FDR method.
 \item feature_type: indicated on the output data frame as region, are the
 feature type covering the TI.
 \item gene: the genes covering the TI.
 \item locus_tag: the locus_tags covering the TI.
 \item strand: +/- indicated in case of stranded data.
 \item TU: TU covering the TI.
-\item features: number of segment TI involved on a TU.
-\item event_position : position between two TI fragments.
+\item Features: Transcription interference fragments included on the
+TI.
+\item Event_position : position between two TI fragments.
 \item position_1 : the first position of TI fragment, if 2 fragments, first
 position is from the first fragment.
 \item position_2 : the last position of TI fragment, if 2 fragments, last

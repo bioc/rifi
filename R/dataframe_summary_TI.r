@@ -15,12 +15,11 @@
 
 #' 2. TI_fragment: Transcription interference fragment.
 
-#' 3. TI_factor: Transcription interference factor.
+#' 3. TI_termination_factor: Transcription interference factor.
 
-#' 4. TI_fragments_TU: Transcription interference fragments included on the
-#' TU.
+#' 4. p_value: TI p_value between two successive fragments is assigned. 
 
-#' 5. p_value: TI p_value between two successive fragments is assigned.
+#' 5. p_adjusted: TI p_value adjuted using FDR method. 
 
 #' 6. feature_type: indicated on the output data frame as region, are the
 #' feature type covering the TI.
@@ -33,9 +32,10 @@
 
 #' 10. TU: TU covering the TI.
 
-#' 11. features: number of segment TI involved on a TU.
+#' 11. Features: Transcription interference fragments included on the
+#' TI.
 
-#' 12. event_position : position between two TI fragments.
+#' 12. Event_position : position between two TI fragments.
 
 #' 13. position_1 : the first position of TI fragment, if 2 fragments, first
 #' position is from the first fragment.
@@ -49,18 +49,19 @@
 #' @return
 #'   \describe{
 #'     \item{event:}{String, event type}
-#'     \item{p_value:}{Integer, p_value of the event}
-#'     \item{p_adjusted:}{Integer, p_value adjusted}
 #'     \item{TI_fragment:}{String, the fragment with TI}
 #'     \item{TI_termination_factor:}{String, the factor of TI fragment}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
 #'     \item{feature_type:}{String, region annotation covering the fragments}
 #'     \item{gene:}{String, gene annotation covering the fragments}
 #'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{Boolean. The bin/probe specific strand (+/-)}
 #'     \item{TU:}{String, The overarching transcription unit}
+#'     \item{Features:}{Integer, The number of segments within the TI}
+#'     \item{event_position:}{Integer, the position middle between 2 TI fragments}
 #'     \item{position_1:}{String, the first position of the TI fragment}
 #'     \item{position_2:}{String, the last position of the TI fragment}
-#'     \item{event_position:}{Integer, the position middle between 2 TI fragments}
 #'     }
 #' @return WIP
 #' 

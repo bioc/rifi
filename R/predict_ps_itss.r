@@ -44,10 +44,10 @@
 #' 
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_duration:}{}
+#'   \item{pausing_site:}{Boolean, presence or absence of pausing_site event (ps)}
+#'   \item{iTSS_I:}{Boolean, presence or absence of internal starting site event (iTSS_I)}
+#'   \item{ps_ts_fragment:}{String, fragments involved on the event}
+#'   \item{event_duration:}{Integer, the duration between two delay fragments}
 #' }
 #' 
 #' @examples

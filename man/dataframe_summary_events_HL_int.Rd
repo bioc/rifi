@@ -47,6 +47,9 @@ Int_event, HL_Int_event and velocity_change.
 \item FC_intensity: fold change of 2 intensity fragments.
 \item FC_HL/FC_intensity: ratio of fold change of 2 half-life fragments
 and fold change between 2 intensity fragments.
+\item FC_HL_adapted: ratio of the fold change of half-life and fold change
+of intensity. The position of the half-life fragment is adapted to
+intensity fragment.
 \item p_value: depending on the event, t-test, manova test p_value is assigned.
 \item feature_type: indicated on the output data frame as region, are the
 feature type covering the event.

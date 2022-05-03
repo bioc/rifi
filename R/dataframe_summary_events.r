@@ -62,13 +62,15 @@
 #' @return 
 #' \describe{
 #'     \item{event:}{String, event type}
-#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
-#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
-#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
-#'     intensity}
 #'     \item{p_value:}{Integer, p_value of the event}
 #'     \item{p_adjusted:}{Integer, p_value adjusted}
-#'     \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay fragments}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     intensity}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 #'     \item{feature_type:}{String, region annotation covering the fragments}
 #'     \item{gene:}{String, gene annotation covering the fragments}
 #'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
@@ -76,7 +78,6 @@
 #'     \item{TU:}{String, The overarching transcription unit}
 #'     \item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
 #'     \item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
-#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 #'     \item{event_duration:}{Integer, the duration between two delay fragments}
 #'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
 #'     \item{features:}{Integer, number of fragements involved on the event}

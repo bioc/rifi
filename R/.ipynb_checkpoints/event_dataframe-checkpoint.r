@@ -1,22 +1,68 @@
-#' event_dataframe: creates a dataframe only with events for segments and genes.
-#' The function used are:
-#' position_function: adds the specific position of ps or iTSS event
+# =========================================================================
+# event_dataframe       Creates a dataframe only with events for 
+#                       segments and genes                                 
+# -------------------------------------------------------------------------
+#'
+#'
+#' event_dataframe creates a dataframe connecting segments, events and 
+#' the annotation.
+
+#' The functions used are:
+
+#' position_function: adds the specific position of ps or iTSS event.
+
 #' annotation_function_event: adds the events to the annotated genes.
-#' gff3 file has to be supplied. Strand is indicated in case of stranded data
-#' The event_dataframe selects columns with statistical features. ID, position,
-#' strand and TU columns are required.
-#' Two major dataframe are generated, df gathers t-test and Manova test and df1
-#' gathers ps and ITSS with the corresponding features. df selects only
-#' unique intensity fragments since they are the lowest on the hierarchy.
-#' One new column is added to df, "synthesis_ratio_event", it corresponds
-#' to the FC-HL/FC-intensity and assignment of an event to the synthesis ratio
-#' respectively. df adds a new column to indicate the position of the ps or
-#' ITSS event.
+
+#' annotation file needs to be supplied. Strand is indicated in case of 
+#' stranded data
+#' The event_dataframe selects columns with statistical features. 
+#' ID, position, strand and TU columns are required.
+
+#' A dataframe is generated. It gathers all events, the corresponding segments
+#' at bin/probe level. The dataframe selects unique intensity fragments since 
+#' they are the lowest on the hierarchy.
 #' 
 #' @param data dataframe: the probe based data frame.
 #' @param data_annotation dataframe: the coordinates are extracted from gff3
 #' 
-#' @return WIP
+#' @return
+#'   \describe{
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
+#'     \item{strand:}{Boolean. The bin/probe specific strand (+/-)}
+#'     \item{TU:}{String, The overarching transcription unit}
+#'     \item{position:}{Integer, position of the bin/probe on the genome}
+#'     \item{segment:}{String, the bin/probe segment on the genome}
+#'     \item{FC_fragment_intensity:}{String, the fragments subjected to
+#'           fold change}
+#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'     \item{p_value_intensity:}{Integer, p_value of the FC_intensity}
+#'     \item{FC_fragment_HL:}{String, the fragments subjected to fold change}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'     \item{p_value_HL:}{Integer, p_value of the FC_HL}
+#'     \item{FC_HL_FC_intensity_fragment:}{String, fragments subjected to 
+#'          FC_HL/FC_intensity}
+#'     \item{FC_HL_FC_intensity:}{Integer, the value of FC_HL/FC_intensity}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{p_value_manova:}{Integer, p_value of the event FC_HL/FC_intensity}
+#'     \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+#'     \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either 
+#'       Termination or iTSS}
+#'     \item{pausing_site:}{Boolean, presence or absence of pausing_site event (ps)}
+#'     \item{iTSS_I:}{Boolean, presence or absence of internal starting site event (iTSS_I)}
+#'     \item{ps_ts_fragment:}{String, fragments involved on the event ps or iTSS_I}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{delay:}{Integer, the delay value of the bin/probe}
+#'     \item{half_life:}{The half-life of the bin/probe}
+#'     \item{intensity:}{The relative intensity at time point 0}
+#'     \item{delay_frg_slope:}{Integer, the slope value of the fit through the respective 
+#'                            delay fragment}
+#'     \item{p_value_slope:}{Integer, tThe p_value added to the inp}
+#'     }
+#'   }
 #' 
 #' @examples
 #' if(!require(SummarizedExperiment)){

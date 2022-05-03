@@ -21,38 +21,42 @@
 #' 4. FC_HL/FC_intensity: ratio of fold change of 2 half-life fragments
 #' and fold change between 2 intensity fragments.
 
-#' 5. p_value: depending on the event, t-test, manova test p_value is assigned.
+#' 5. FC_HL_adapted: ratio of the fold change of half-life and fold change 
+#' of intensity. The position of the half-life fragment is adapted to 
+#' intensity fragment.
 
-#' 6. feature_type: indicated on the output data frame as region, are the
+#' 6. p_value: depending on the event, t-test, manova test p_value is assigned.
+
+#' 7. feature_type: indicated on the output data frame as region, are the
 #' feature type covering the event.
 
-#' 7. gene: gene covering the event.
+#' 8. gene: gene covering the event.
 
-#' 8. locus_tag: locus_tag covering the event.
+#' 9. locus_tag: locus_tag covering the event.
 
-#' 9. strand: +/- indicated in case of stranded data.
+#' 10. strand: +/- indicated in case of stranded data.
 
-#' 10. TU: TU covering the event.
+#' 11. TU: TU covering the event.
 
-#' 11. segment_1: the first segment of the event, includes the segment, TU,
+#' 12. segment_1: the first segment of the event, includes the segment, TU,
 #' delay fragment in case of ps or iTSS_I. The rest of the events include HL
 #' fragment and could be extended intensity fragment.
 
-#' 12. segment_2: same description as segment_1 but is the second fragment
+#' 13. segment_2: same description as segment_1 but is the second fragment
 #' of the event.
 
-#' 13. event_position: the position of event, calculated dividing the last
+#' 14. event_position: the position of event, calculated dividing the last
 #' position of the first fragment and the first position of the next fragment
 #' on 2.
 
-#' 14. event_duration: the difference (min) between 2 delay fragment when ps
+#' 15. event_duration: the difference (min) between 2 delay fragment when ps
 #' or iTSS_I happen.
 
-#' 15. gap_fragments: length in position (nt), calculated by the difference
+#' 16. gap_fragments: length in position (nt), calculated by the difference
 #' between the last position of the first fragment and the first position of
 #' the second fragment.
 
-#' 16. features: number of segment involved on the event.
+#' 17. features: number of segment involved on the event.
 #' 
 #' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: dataframe from processed gff3 file.
