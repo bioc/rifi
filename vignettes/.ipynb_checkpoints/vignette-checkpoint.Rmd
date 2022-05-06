@@ -1,5 +1,5 @@
 ---
-title: "rifi"
+title: "Rifi"
 
 author: "Walja Wanney, Loubna Youssar and Jens Georg"
 
@@ -282,7 +282,7 @@ write.csv(rowRanges(summary_minimal), file="filename.csv")
 ### 3. The whole genome visualization
 <br/>
 
-``` {r visua, echo = FALSE, fig.cap = "Whole genome visualization", fig.align = "left", out.height = "200%"}
+``` {r visua, echo = FALSE, fig.cap = "Whole genome visualization",fig.align = "left", out.height = "200%"}
 knitr::include_graphics("genome_fragments_plot.png")
 ```
 
@@ -309,21 +309,21 @@ You may need to check your penalties if the last visualization shows:
 
 * A high frequency of considerable long segments.
 <br/><br/>
-``` {r longSegments, echo = FALSE, fig.cap = "**Long segments**", out.width = '100%'}
+``` {r longSegments, echo=FALSE, fig.cap="**Long segments**", out.width = '100%'}
 knitr::include_graphics("longSegments.png")
 ```
 <br/><br/>
 
 * A high frequency of mini segments.
 <br/><br/>
-``` {r miniSegments, echo=FALSE, fig.cap="**Mini segments**", out.width = '250%'}
+``` {r miniSegments, echo=FALSE, fig.cap="**;ini segments**", out.width = '100%'}
 knitr::include_graphics("miniSegments.png")
 ```
 <br/><br/>
 
 * A high frequency of extreme high values.
 <br/><br/>
-``` {r highValues, echo=FALSE, fig.cap="**High values**", out.width = '250%'}
+``` {r highValues, echo=FALSE, fig.cap="**High values**", out.width = '100%'}
 knitr::include_graphics("highValues.png")
 ```
 <br/><br/>
