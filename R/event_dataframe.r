@@ -36,7 +36,8 @@
 #'     \item{segment:}{String, the bin/probe segment on the genome}
 #'     \item{FC_fragment_intensity:}{String, the fragments subjected to
 #'           fold change}
-#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity 
+#'     fragments}
 #'     \item{p_value_intensity:}{Integer, p_value of the FC_intensity}
 #'     \item{FC_fragment_HL:}{String, the fragments subjected to fold change}
 #'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
@@ -44,23 +45,30 @@
 #'     \item{FC_HL_FC_intensity_fragment:}{String, fragments subjected to 
 #'          FC_HL/FC_intensity}
 #'     \item{FC_HL_FC_intensity:}{Integer, the value of FC_HL/FC_intensity}
-#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change
+#'      of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{p_value_manova:}{Integer, p_value of the event FC_HL/FC_intensity}
-#'     \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
-#'     \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either 
+#'     \item{synthesis_ratio:}{Integer, the value correspomding to synthesis 
+#'     rate}
+#'     \item{synthesis_ratio_event:}{String, the event assigned by synthesis 
+#'     rate either 
 #'       Termination or iTSS}
-#'     \item{pausing_site:}{Boolean, presence or absence of pausing_site event (ps)}
-#'     \item{iTSS_I:}{Boolean, presence or absence of internal starting site event (iTSS_I)}
-#'     \item{ps_ts_fragment:}{String, fragments involved on the event ps or iTSS_I}
-#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
+#'     \item{pausing_site:}{Boolean, presence or absence of pausing_site event 
+#'     (ps)}
+#'     \item{iTSS_I:}{Boolean, presence or absence of internal starting site 
+#'     event (iTSS_I)}
+#'     \item{ps_ts_fragment:}{String, fragments involved on the event ps or 
+#'     iTSS_I}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
 #'     \item{event_duration:}{Integer, the duration between two delay fragments}
 #'     \item{delay:}{Integer, the delay value of the bin/probe}
 #'     \item{half_life:}{The half-life of the bin/probe}
 #'     \item{intensity:}{The relative intensity at time point 0}
-#'     \item{delay_frg_slope:}{Integer, the slope value of the fit through the respective 
-#'                            delay fragment}
-#'     \item{p_value_slope:}{Integer, tThe p_value added to the inp}
+#'     \item{delay_frg_slope:}{Integer, the slope value of the fit through the
+#'      respective delay fragment}
+#'     \item{p_value_slope:}{Integer, the p_value added to the inp}
 #'     }
 #'   }
 #' 
