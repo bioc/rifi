@@ -128,7 +128,7 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_ABG,
-                                 lower = list(decay = 0.01, delay = 0.001)
+                                 lower = lower_STD
                                  #upper = upper_ABG
                                )},
                                error = function(e) {
@@ -144,7 +144,7 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_STD,
-                                 lower = list(decay = 0.01, delay = 0.001)
+                                 lower = lower_STD
                                  #upper = upper_STD
                                )},
                                error = function(e) {
