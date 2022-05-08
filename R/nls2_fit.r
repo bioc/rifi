@@ -119,23 +119,23 @@ nls2_fit <-
       # probes with flag different from "_" are selected for the model with
       # background coefficient,
       # otherwise the model without background coefficient is applied.
-      if (tmp_df$ID[i] %in% ids_ABG) {
-        cc <- capture.output(type="message",
-                             halfLE2 <- tryCatch({
-                               halfLE2 <- nls2(
-                                 model_ABG,
-                                 data = Data_fit,
-                                 algorithm = "port",
-                                 control = list(warnOnly = TRUE),
-                                 start = st_ABG,
-                                 lower = lower_STD
-                                 #upper = upper_ABG
-                               )},
-                               error = function(e) {
-                                 return(NULL)
-                               }
-                             ))
-      } else {
+      # if (tmp_df$ID[i] %in% ids_ABG) {
+      #   cc <- capture.output(type="message",
+      #                        halfLE2 <- tryCatch({
+      #                          halfLE2 <- nls2(
+      #                            model_ABG,
+      #                            data = Data_fit,
+      #                            algorithm = "port",
+      #                            control = list(warnOnly = TRUE),
+      #                            start = st_ABG,
+      #                            lower = lower_STD
+      #                            #upper = upper_ABG
+      #                          )},
+      #                          error = function(e) {
+      #                            return(NULL)
+      #                          }
+      #                        ))
+      # } else {
         cc <- capture.output(type="message",
                              halfLE2 <- tryCatch({
                                halfLE2 <- nls2(
@@ -151,7 +151,7 @@ nls2_fit <-
                                  return(NULL)
                                }
                              ))
-      }
+      #}
       tryCatch({
         if (is.null(halfLE2)[1] | is.na(halfLE2)[1]) {
           decay_v <- NA
