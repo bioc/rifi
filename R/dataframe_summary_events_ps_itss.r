@@ -109,6 +109,7 @@ dataframe_summary_events_ps_itss <-
           "iTSS_I",
           "event_ps_itss_p_value_Ttest",
           "ps_ts_fragment",
+          "event_position",
           "event_duration",
           "delay_frg_slope",
           "p_value_slope"
@@ -148,12 +149,7 @@ dataframe_summary_events_ps_itss <-
       if (unique(as.character(d$strand) == "-")) {
         ev_fragments <- rev(ev_fragments)
       }
-      event_position <-
-        c(event_position, (tmp_merged[last(
-          which(tmp_merged$delay_fragment ==
-                  ev_fragments[1])), "position"] + tmp_merged[
-                    which(tmp_merged$delay_fragment ==
-                            ev_fragments[2]), "position"][1]) / 2)
+      event_position <- c(event_position, d$event_position)
       velocity_ratio <-
         c(velocity_ratio, tmp_merged[
           which(tmp_merged$delay_fragment ==
