@@ -10,7 +10,7 @@
 
 #' This function sets first the borders using the position and applies the fold
 #' change ratio between the neighboring fragments of HL and those from intensity
-#' (intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
+#' log2(intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
 #' fragments are from the same TU excluding outliers.
 #'
 #' The function used is:
@@ -25,9 +25,9 @@
 
 #' In case of synthesis ratio is:
 
-#' synthesis ratio > 1 -> New start
+#' synthesis ratio > 0 -> New start
 
-#' synthesis ratio < 1 -> Termination
+#' synthesis ratio < 0 -> Termination
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' 
@@ -128,12 +128,12 @@ fold_change <- function(inp) {
         }
         #the mean and ratio of HL and intensity is calculated after
         #adjusting the positions
-        FC_HL_adapted <- mean(hl.2$half_life) / mean(hl.1$half_life)
-        FC_int_adapted <- mean(I.2.1$intensity) / mean(I.1.1$intensity)
+        FC_HL_adapted <- log2(mean(hl.2$half_life) / mean(hl.1$half_life))
+        FC_int_adapted <- log2(mean(I.2.1$intensity) / mean(I.1.1$intensity))
         #plugging the output to the corresponding columns
         rowRanges(inp)$synthesis_ratio[
           which(rowRanges(inp)$FC_fragment_intensity %in% int_list[k])] <- 
-          FC_int_adapted / FC_HL_adapted
+          FC_int_adapted - FC_HL_adapted
         rowRanges(inp)$FC_HL_adapted[
           which(rowRanges(inp)$FC_fragment_intensity %in% int_list[k])] <- 
           FC_HL_adapted
@@ -145,7 +145,7 @@ fold_change <- function(inp) {
     }
   }
   # add FC synthesis_ratio events between half-life and intensity
-  rowRanges(inp)$FC_HL_intensity <- rowRanges(inp)$FC_intensity / 
+  rowRanges(inp)$FC_HL_intensity <- rowRanges(inp)$FC_intensity -
     rowRanges(inp)$FC_HL
   inp <- synthesis_r_Function("synthesis_ratio", inp)
   return(inp)

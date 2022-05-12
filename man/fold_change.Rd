@@ -7,7 +7,7 @@ two successive fragments. Two intensity fragments could belong to one HL
 fragment.
 This function sets first the borders using the position and applies the fold
 change ratio between the neighboring fragments of HL and those from intensity
-(intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
+log2(intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
 fragments are from the same TU excluding outliers.}
 \usage{
 fold_change(inp)
@@ -36,8 +36,8 @@ intensity(int) = synthesis rate(k)/decay(deg) (steady state),
 int1/int2 = k1/deg1*deg2/k2
 int1 * (deg1/int2) * deg2 = k1/k2 => synthesis ratio.
 In case of synthesis ratio is:
-synthesis ratio > 1 -> New start
-synthesis ratio < 1 -> Termination
+synthesis ratio > 0 -> New start
+synthesis ratio < 0 -> Termination
 }
 \examples{
 data(stats_minimal)

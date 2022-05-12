@@ -3,7 +3,7 @@
 \name{dataframe_summary_events_HL_int}
 \alias{dataframe_summary_events_HL_int}
 \title{The dataframe_summary_events_HL_int creates one table with the following
-columns: event, features, p_value, event_position, event_duration, position,
+columns: event, features, p_value, event_position, position,
 region, gene, locus_tag, strand, TU, segment_1, segment_2, length, FC_HL,
 FC_intensity, FC_HL/FC_intensity.}
 \usage{
@@ -33,7 +33,6 @@ intensity}
 \item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
 \item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
 \item{event_position:}{Integer, the position middle between 2 fragments with an event}
-\item{event_duration:}{Integer, the duration between two delay fragments}
 \item{gap_fragments:}{Integer, the distance between two delay fragments}
 \item{features:}{Integer, number of fragements involved on the event}
 }
@@ -65,8 +64,6 @@ of the event.
 \item event_position: the position of event, calculated dividing the last
 position of the first fragment and the first position of the next fragment
 on 2.
-\item event_duration: the difference (min) between 2 delay fragment when ps
-or iTSS_I happen.
 \item gap_fragments: length in position (nt), calculated by the difference
 between the last position of the first fragment and the first position of
 the second fragment.

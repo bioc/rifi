@@ -5,7 +5,7 @@
 #'
 #' 
 #' The dataframe_summary_events_HL_int creates one table with the following
-#' columns: event, features, p_value, event_position, event_duration, position,
+#' columns: event, features, p_value, event_position, position,
 #' region, gene, locus_tag, strand, TU, segment_1, segment_2, length, FC_HL,
 #' FC_intensity, FC_HL/FC_intensity.
 #'
@@ -49,14 +49,11 @@
 #' position of the first fragment and the first position of the next fragment
 #' on 2.
 
-#' 15. event_duration: the difference (min) between 2 delay fragment when ps
-#' or iTSS_I happen.
-
-#' 16. gap_fragments: length in position (nt), calculated by the difference
+#' 15. gap_fragments: length in position (nt), calculated by the difference
 #' between the last position of the first fragment and the first position of
 #' the second fragment.
 
-#' 17. features: number of segment involved on the event.
+#' 16. features: number of segment involved on the event.
 #' 
 #' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: dataframe from processed gff3 file.
@@ -80,7 +77,6 @@
 #'     \item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
 #'     \item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
 #'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
-#'     \item{event_duration:}{Integer, the duration between two delay fragments}
 #'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
 #'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
@@ -123,7 +119,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
       "iTSS_I",
       "event_ps_itss_p_value_Ttest",
       "ps_ts_fragment",
-      "event_duration",
       "delay_frg_slope",
       "p_value_slope"
     )]
@@ -136,7 +131,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   FC_HL <- c()
   FC_intensity <- c()
   FC_HL_adapted <- c()
-  FC_HL_FC_intensity <- c()
+  synthesis_ratio <- c()
   p_value <- c()
   feature_type <- c()
   gene <- c()
@@ -146,16 +141,16 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   segment_1 <- c()
   segment_2 <- c()
   event_position <- c()
-  event_duration <- c()
   gap_fragments <- c()
   features <- c()
-  #termination_and_iTSSII
+  #termination and iTSS_II
   tmp <-
     tmp_merged[!duplicated(tmp_merged$FC_HL_intensity_fragment), ]
   ter_frg <- which(tmp$synthesis_ratio_event == "Termination")
   itss2_frg <- which(tmp$synthesis_ratio_event == "iTSS_II")
   ter_its <- c(ter_frg, itss2_frg)
   for (i in seq_along(ter_its)) {
+    print(i)
     d <- tmp[ter_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     if (d$synthesis_ratio < 1) {
@@ -169,7 +164,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
     FC_HL <- c(FC_HL, d$FC_HL)
     FC_intensity <- c(FC_intensity, d$FC_intensity)
     FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, d$synthesis_ratio)
+    synthesis_ratio <- c(synthesis_ratio, d$synthesis_ratio)
     event_position <-
       c(event_position, (tmp_merged[last(which(
         tmp_merged$intensity_fragment == ev_fragments[3])), "position"] +
@@ -231,7 +226,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
         ),
         collapse = "|"
       ))
-    event_duration <- c(event_duration, NA)
     gap_fragments <-
       c(gap_fragments, abs(tmp_merged[last(which(
         tmp_merged$intensity_fragment == ev_fragments[3])), "position"] -
@@ -251,8 +245,8 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
     event <- c(event, "Int_event")
     FC_HL <- c(FC_HL, NA)
     FC_intensity <- c(FC_intensity, d$FC_intensity)
-    FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, NA)
+    FC_HL_adapted <- c(FC_HL_adapted, NA)
+    synthesis_ratio <- c(synthesis_ratio, NA)
     event_position <-
       c(event_position, (tmp_merged[last(which(
         tmp_merged$intensity_fragment == ev_fragments[1])), "position"] +
@@ -314,7 +308,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
         ),
         collapse = "|"
       ))
-    event_duration <- c(event_duration, NA)
     gap_fragments <-
       c(gap_fragments, abs(tmp_merged[last(which(
         tmp_merged$intensity_fragment == ev_fragments[1])), "position"] -
@@ -333,8 +326,8 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
     event <- c(event, "HL_event")
     FC_HL <- c(FC_HL, d$FC_HL)
     FC_intensity <- c(FC_intensity, NA)
-    FC_HL_adapted <- c(FC_HL_adapted, NA)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, NA)
+    FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
+    synthesis_ratio <- c(synthesis_ratio, NA)
     event_position <-
       c(event_position, (tmp_merged[last(which(
         tmp_merged$HL_fragment == ev_fragments[1])), "position"] +
@@ -384,7 +377,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
         c(d$position_segment, d$TU, d$delay_fragment, ev_fragments[2]),
         collapse = "|"
       ))
-    event_duration <- c(event_duration, NA)
     gap_fragments <-
       c(gap_fragments, abs(tmp_merged[last(which(
         tmp_merged$HL_fragment == ev_fragments[1])), "position"] -
@@ -399,7 +391,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
       FC_HL,
       FC_intensity,
       FC_HL_adapted,
-      FC_HL_FC_intensity,
+      synthesis_ratio,
       event_position,
       feature_type,
       gene,
@@ -408,10 +400,10 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
       TU,
       segment_1,
       segment_2,
-      event_duration,
       gap_fragments,
       features
     )
+  
   if(nrow(df) != 0){
   df$p_value <- formatC(as.numeric(df$p_value), format = "e", digits = 2)
   df <-
