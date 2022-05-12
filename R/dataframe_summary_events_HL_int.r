@@ -166,8 +166,8 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
     ev_fragments <-
       unlist(strsplit(d$FC_HL_intensity_fragment, split = ";"))
     ev_fragments <- unlist(strsplit(ev_fragments, split = ":"))
-    FC_HL <- c(FC_HL, NA)
-    FC_intensity <- c(FC_intensity, NA)
+    FC_HL <- c(FC_HL, d$FC_HL)
+    FC_intensity <- c(FC_intensity, d$FC_intensity)
     FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
     FC_HL_FC_intensity <- c(FC_HL_FC_intensity, d$synthesis_ratio)
     event_position <-
