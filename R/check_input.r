@@ -54,8 +54,6 @@ check_input <- function(inp, thrsh = 0) {
   #create position column
   if(!"position" %in% names(mcols(rowRanges(inp)))){
     rowRanges(inp)$position <- end(resize(inp, width = 1,fix = "end"))
-    rowRanges(inp[strand(inp) == "-",])$position <- 
-        end(resize(inp[strand(inp) == "-",], width = 1, fix = "start"))
   }
   #order the input
   inp <- inp_order(inp)

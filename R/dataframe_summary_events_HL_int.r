@@ -150,7 +150,6 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   itss2_frg <- which(tmp$synthesis_ratio_event == "iTSS_II")
   ter_its <- c(ter_frg, itss2_frg)
   for (i in seq_along(ter_its)) {
-    print(i)
     d <- tmp[ter_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     if (d$synthesis_ratio < 1) {
