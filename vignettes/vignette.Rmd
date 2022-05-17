@@ -107,9 +107,12 @@ depth into **position_segments**. Those are grouped into **delay_fragments**
 by common velocity. Subsequently, each delay-fragment is grouped by similar
 half-life into **half_life_fragments**, on which the bins finally are grouped
 into **intensity_fragments** by similar intensity. From the fragmentation, many
-**events** can be extracted; **iTSS** (internal transcription start sites), transcription **pausing_sites**, **velocity_changes**,**processing_sites**, partial **terminations**, as well as instances of Rifampicin relievable transcription termination, e.g. by **TI** (transcription interference).
-All data are integrated to give an estimate of continous transcriptional units, i.e. operons. Comprehensive output tables and visualizations of the full genome result and the 
-individual fits for all *probes/bins* are produced.
+**events** can be extracted; **iTSS** (internal transcription start sites), transcription **pausing_sites**, **velocity_changes**,**processing_sites**, partial **terminations**, 
+as well as instances of Rifampicin relievable transcription termination, e.g. 
+by **TI** (transcription interference).
+All data are integrated to give an estimate of continuous transcriptional units,
+i.e. operons. Comprehensive output tables and visualizations of the full genome 
+result and the individual fits for all *probes/bins* are produced.
 
 
 <br/><br/>
@@ -120,9 +123,12 @@ knitr::include_graphics("hirarchy3.png")
 
 ### 1. Quickstart
 
-If you have your data prepared as described in [The Input Data Frame](#the-input-data-frame) you can use the 
-`rifi_wrapper` to run 'rifi" with default options. `rifi_wrapper` conveniently wraps all functions included in rifi. That allows the user to run the whole workflow with one function. If the data contain a background component, e.g. in case of microarray data, 
-take to define a meaningful background intensity. 
+If you have your data prepared as described in [The Input Data Frame]
+(#the-input-data-frame) you can use the `rifi_wrapper` to run 'rifi" with 
+default options. `rifi_wrapper` conveniently wraps all functions included in rifi.
+That allows the user to run the whole workflow with one function. If the data 
+contain a background component, e.g. in case of microarray data, take to define 
+a meaningful background intensity. 
 
 The functions used are:
 
@@ -154,7 +160,8 @@ wrapper_minimal <-
 ```
 <br/>
 The wrapper saves the output of each sub-function in a list. Thus each intermediate 
-result can be re-run with custom settings. the object 'wrapper_minimal' contains only minimal artificial data to reduce the runtime of the test run. 
+result can be re-run with custom settings. the object 'wrapper_minimal' contains
+only minimal artificial data to reduce the runtime of the test run. 
 
 ```{r, eval = TRUE}
 data(wrapper_minimal)
@@ -198,11 +205,13 @@ write.csv(metadata(summary_minimal)$dataframe_summary_1, file="filename.csv")
 ```
 
 #### 2. **fragment** based results
-Entry 7, **dataframe_summary_2**, contains
-all fit results for each **intensity_fragment**. Due to the hierachic fragmentation strategy [Figure 2] several **intensity_fragment** (I_x) can belong to one **decay_fragment** (Dc_x), one **delay_fragment** (D_x) and one transcriptional
-unit (TU_x).  The fragment IDs can be used to locate the fragment in the output
-PDF file. The fragments are mapped to the genome annotation and the mean halflife
-given in minutes and the mean intensity is given with their standard deviations. 
+Entry 7, **dataframe_summary_2**, contains all fit results for each 
+**intensity_fragment**. Due to the hierachic fragmentation strategy [Figure 2]
+several **intensity_fragment** (I_x) can belong to one **decay_fragment** (Dc_x),
+one **delay_fragment** (D_x) and one transcriptional unit (TU_x).  The fragment
+IDs can be used to locate the fragment in the output PDF file. The fragments are
+mapped to the genome annotation and the mean halflife given in minutes and the
+mean intensity is given with their standard deviations. 
 Also the estimated velocity in nt/min is given. The table can be exported as
 an **.csv** file using `write.csv()`.
 
@@ -229,15 +238,23 @@ metadata(summary_minimal)$dataframe_summary_events
 write.csv(metadata(summary_minimal)$dataframe_summary_events, file="filename.csv")
 ```
 <br/>
-Changes in the linear increase of the delay indicate a potential **pausing site** if there is a sudden delay increase (Figure 3A),
-a potential internal starting site **iTSS_I** if there is a sudden decrease in the delay (Figure 3B) and
-a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C). The events are statistically evaluated 
-by Ancova ([apply_ancova](#apply_ancova)) or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
+Changes in the linear increase of the delay indicate a potential **pausing site**
+if there is a sudden delay increase (Figure 3A), a potential internal starting 
+site **iTSS_I** if there is a sudden decrease in the delay (Figure 3B) and
+a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C). 
+The events are statistically evaluated by Ancova ([apply_ancova](#apply_ancova))
+or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
 <br/>
-A fragment border between halflife segments (**HL_event**) which belong to the same transcriptional unit might indicate a processing site (Figure 3D) and a fragment border 
-between intensity fragments (**Int_event**) (Figure 3E) can indicate a processing site (Figure 3F), a new transcriptional start site (**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending on the respective intensity foldchanges and the halflife foldchanges.
+A fragment border between halflife segments (**HL_event**) which belong to the 
+same transcriptional unit might indicate a processing site (Figure 3D) and a 
+fragment border between intensity fragments (**Int_event**) (Figure 3E) can 
+indicate a processing site (Figure 3F), a new transcriptional start site 
+(**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending 
+on the respective intensity foldchanges and the halflife foldchanges.
 <br/>
-Each **event** is described by is type, its p-Value and adjusted p-Value, the foldchange or event duration, the estimated event position, a mapping to existing annotations and the IDs of the two bordering fragments.
+Each **event** is described by is type, its p-Value and adjusted p-Value, 
+the foldchange or event duration, the estimated event position, a mapping to 
+existing annotations and the IDs of the two bordering fragments.
 
 <br/>
 ``` {r events1, echo = FALSE, fig.cap = "Transcriptional events", out.width = '100%'}

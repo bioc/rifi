@@ -73,7 +73,7 @@ apply_t_test <- function(inp, threshold = 300) {
     # loop into all HL segments and apply t_test between consecutive segments
    tryCatch({
       inp <-
-      t_test_function(
+        t_test_function(
         data = inp,
         seg = hl_segs,
         param = "half_life",

@@ -152,11 +152,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   for (i in seq_along(ter_its)) {
     d <- tmp[ter_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
-    if (d$synthesis_ratio < 1) {
-      event <- c(event, "Termination")
-    } else{
-      event <- c(event, "iTSS_II")
-    }
+    event <- c(event, d$synthesis_ratio_event)
     ev_fragments <-
       unlist(strsplit(d$FC_HL_intensity_fragment, split = ";"))
     ev_fragments <- unlist(strsplit(ev_fragments, split = ":"))
@@ -325,7 +321,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
     event <- c(event, "HL_event")
     FC_HL <- c(FC_HL, d$FC_HL)
     FC_intensity <- c(FC_intensity, NA)
-    FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
+    FC_HL_adapted <- c(FC_HL_adapted, NA)
     synthesis_ratio <- c(synthesis_ratio, NA)
     event_position <-
       c(event_position, (tmp_merged[last(which(
