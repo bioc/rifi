@@ -68,7 +68,6 @@ respective delay fragment}
 \item{p_value_slope:}{Integer, the p_value added to the inp}
 }
 }
-}
 \description{
 event_dataframe creates a dataframe connecting segments, events and
 the annotation.

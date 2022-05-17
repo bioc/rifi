@@ -100,7 +100,7 @@ nls2_fit <-
     upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
                        k = 1/(log(2)/(60)))
     lower_STD <- lower_STD <- list(decay = log(2)/(60), delay = 0.001, 
-                                   k = 0.01, bg = 0)
+                                   k = 0.01, bg = 0.2)
     upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
                        k = 1/(log(2)/(60)))
     lower_ABG <- list(decay = log(2)/(60), delay = 0.001, k= 0.01)
@@ -128,7 +128,7 @@ nls2_fit <-
                                  algorithm = "port",
                                  control = list(warnOnly = TRUE),
                                  start = st_ABG,
-                                 lower = lower_STD
+                                 lower = lower_ABG
                                  #upper = upper_ABG
                                )},
                                error = function(e) {

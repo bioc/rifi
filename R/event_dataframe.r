@@ -70,7 +70,6 @@
 #'      respective delay fragment}
 #'     \item{p_value_slope:}{Integer, the p_value added to the inp}
 #'     }
-#'   }
 #' 
 #' @examples
 #' if(!require(SummarizedExperiment)){

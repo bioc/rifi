@@ -122,7 +122,6 @@ predict_ps_itss <- function(inp, maxDis = 300) {
         } else {
           y.dif <- y2 - y1
           if (y.dif >= 0) {
-            if (unique(strand(tu)) == "+") {
               rows <- match(last(del.1$ID), rowRanges(inp)$ID)
               rowRanges(inp)$pausing_site[rows] <- "+"
               rowRanges(inp)$event_duration[rows] <- abs(y.dif)
@@ -132,19 +131,7 @@ predict_ps_itss <- function(inp, maxDis = 300) {
                   ":",
                   del.2$delay_fragment[2]
                 )
-            } else {
-              rows <- match(last(del.2$ID), rowRanges(inp)$ID)
-              rowRanges(inp)$pausing_site[rows] <- "+"
-              rowRanges(inp)$event_duration[rows] <- abs(y.dif)
-              rowRanges(inp)$ps_ts_fragment[rows] <-
-                paste0(
-                  del.2$delay_fragment[1],
-                  ":",
-                  del.1$delay_fragment[2]
-                )
-            }
           } else if (y.dif < 0) {
-            if (unique(strand(tu)) == "+") {
               rows <- match(last(del.1$ID), rowRanges(inp)$ID)
               rowRanges(inp)$iTSS_I[rows] <- "+"
               rowRanges(inp)$event_duration[rows] <- y.dif
@@ -153,20 +140,9 @@ predict_ps_itss <- function(inp, maxDis = 300) {
                   del.1$delay_fragment[1],
                   ":",
                   del.2$delay_fragment[2]
-                )
-            } else {
-              rows <- match(last(del.2$ID), rowRanges(inp)$ID)
-              rowRanges(inp)$iTSS_I[rows] <- "+"
-              rowRanges(inp)$event_duration[rows] <- y.dif
-              rowRanges(inp)$ps_ts_fragment[rows] <-
-                paste0(
-                  del.2$delay_fragment[1],
-                  ":",
-                  del.1$delay_fragment[2]
                 )
             }
           }
-        }
       }
     }
   }
