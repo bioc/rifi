@@ -62,7 +62,7 @@ t_test_function <-
               rep(t_h, times = length(which(
                 rowRanges(data)$HL_fragment == seg[j]
               )))
-          } else {
+          } else if (o == "intensity") {
             rowRanges(data)$FC_fragment_intensity[rows] <-
               rep(frag_hl, times = length(which(Column %in% seg[j])))
             #assign the ratio of FC to the corresponding column
@@ -72,7 +72,7 @@ t_test_function <-
                 rowRanges(data)$intensity_fragment == seg[j]
               )))
             #assign the p_value to the corresponding column
-            rowRanges(data)$p_value_HL[
+            rowRanges(data)$p_value_intensity[
               which(rowRanges(data)$intensity_fragment == seg[j])] <-
               rep(t_h, times = length(which(
                 rowRanges(data)$intensity_fragment == seg[j]
