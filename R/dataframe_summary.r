@@ -191,6 +191,7 @@ dataframe_summary <- function(data, input) {
   int_frg <- unique(tmp_merged$intensity_fragment)
   int_frg <- int_frg[grep(paste0("\\I_", "\\d+", "$"), int_frg)]
   df <- data.frame()
+  if(length(int_frg) != 0){
   for (i in seq_along(int_frg)) {
     d <-
       tmp_merged[which(tmp_merged$intensity_fragment == int_frg[i]),
@@ -249,6 +250,7 @@ dataframe_summary <- function(data, input) {
                     "intensity"])
     df[i, "velocity"] <- unique(d$velocity)
   }
+    }
   df <-
     as.data.frame(df %>% mutate_if(is.numeric, round, digits = 2))
   tables <- list(tmp_df, df)

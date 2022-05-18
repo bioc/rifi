@@ -120,6 +120,7 @@ dataframe_summary_events <- function(data, data_annotation) {
       "iTSS_I",
       "event_ps_itss_p_value_Ttest",
       "ps_ts_fragment",
+      "event_position", 
       "event_duration",
       "delay_frg_slope",
       "p_value_slope"
@@ -154,6 +155,7 @@ dataframe_summary_events <- function(data, data_annotation) {
   ps_its <- c(ps_frg, itss1_frg)
   if(length(ps_its) != 0){
     for (i in seq_along(ps_its)) {
+      print(i)
     d <- tmp_merged[ps_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     if (d$pausing_site == "+") {
@@ -161,6 +163,7 @@ dataframe_summary_events <- function(data, data_annotation) {
     } else if (d$iTSS_I == "+") {
       event <- c(event, "iTSS_I")
     }
+    print(length(event))
     ev_fragments <- unlist(strsplit(d$ps_ts_fragment, split = ":"))
     if (unique(as.character(d$strand) == "-")) {
       ev_fragments <- rev(ev_fragments)
@@ -226,7 +229,7 @@ dataframe_summary_events <- function(data, data_annotation) {
                                                 ev_fragments[2]),
                                         "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
-  }
+    }
   }
   #termination and iTSSII
   tmp <-
@@ -402,7 +405,7 @@ dataframe_summary_events <- function(data, data_annotation) {
           tmp_merged[which(tmp_merged$intensity_fragment ==
                              ev_fragments[2]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
-  }
+    }
   }
   #FC HL fragments
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_HL), ]
