@@ -21,7 +21,7 @@ t_test_function <-
         frg.2.h <- tu[which(tu[, frag] == seg[j + 1]),]
         #if the dataframe has less than 3 probes/bins, will not be subjected to
         # t-test
-        if (nrow(frg.1.h) < 3) {
+        if (nrow(frg.1.h) < 2 | nrow(frg.2.h) < 2) {
           next ()
         } else if(o == "HL" & nrow(frg.1.h) >= 3 & nrow(frg.2.h) == 0){
           quot.hl <-1

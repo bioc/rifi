@@ -81,6 +81,9 @@ apply_t_test <- function(inp, threshold = 300) {
         tu = tu,
         threshold = threshold
       )
+        }, error = function(e) {
+      })
+    if(length(int_segs) > 1){
     inp <-
       t_test_function(
         data = inp,
@@ -90,8 +93,7 @@ apply_t_test <- function(inp, threshold = 300) {
         tu = tu,
         threshold = threshold
       )
-      }, error = function(e) {
-    })
+    }
   }
   return(inp)
 }
