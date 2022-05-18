@@ -83,7 +83,7 @@ fold_change <- function(inp) {
         next ()
       }
       #unlist the intensity fragments as pairs.
-      int_list <- unlist(strsplit(I, ":"))
+      int_list <- unlist(strsplit(I, ";"))
       #adjust the positioning of the half-life fragment and also the mean for
       # each part of the fragment when its 1
       for (k in seq_along(int_list)) {
