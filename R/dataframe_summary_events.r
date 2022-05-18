@@ -155,7 +155,6 @@ dataframe_summary_events <- function(data, data_annotation) {
   ps_its <- c(ps_frg, itss1_frg)
   if(length(ps_its) != 0){
     for (i in seq_along(ps_its)) {
-      print(i)
     d <- tmp_merged[ps_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
     if (d$pausing_site == "+") {
@@ -163,7 +162,6 @@ dataframe_summary_events <- function(data, data_annotation) {
     } else if (d$iTSS_I == "+") {
       event <- c(event, "iTSS_I")
     }
-    print(length(event))
     ev_fragments <- unlist(strsplit(d$ps_ts_fragment, split = ":"))
     if (unique(as.character(d$strand) == "-")) {
       ev_fragments <- rev(ev_fragments)
