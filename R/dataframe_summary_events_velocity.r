@@ -137,6 +137,7 @@ dataframe_summary_events_velocity <-
     #ratio velocity
     uniqDelay <- unique(na.omit(tmp_merged$delay_frg_slope))
     tmp <- tmp_merged[!duplicated(tmp_merged$delay_frg_slope), ]
+    if(nrow(tmp) != 0){
     for (i in seq_along(uniqDelay)) {
       ev_fragments <- unlist(strsplit(uniqDelay[i], split = ":"))
       d <- tmp[which(tmp$delay_frg_slope == uniqDelay[i]), ]
@@ -201,6 +202,7 @@ dataframe_summary_events_velocity <-
           "position"] - tmp_merged[which(
             tmp_merged$delay_fragment == ev_fragments[2]), "position"][1]))
       features <- c(features, length(unique(ev_fragments)))
+      }
     }
     df <-
       cbind.data.frame(

@@ -137,6 +137,7 @@ dataframe_summary_events_ps_itss <-
     ps_frg <- which(tmp_merged$pausing_site == "+")
     itss1_frg <- which(tmp_merged$iTSS_I == "+")
     ps_its <- c(ps_frg, itss1_frg)
+    if(length(ps_its) != 0){
     for (i in seq_along(ps_its)) {
       d <- tmp_merged[ps_its[i], ]
       d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
@@ -204,6 +205,7 @@ dataframe_summary_events_ps_itss <-
             tmp_merged[which(tmp_merged$delay_fragment ==
                                ev_fragments[2]), "position"][1]))
       features <- c(features, length(unique(ev_fragments)))
+    	}
     }
     df <-
       cbind.data.frame(

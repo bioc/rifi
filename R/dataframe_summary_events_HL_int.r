@@ -149,6 +149,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
   ter_frg <- which(tmp$synthesis_ratio_event == "Termination")
   itss2_frg <- which(tmp$synthesis_ratio_event == "iTSS_II")
   ter_its <- c(ter_frg, itss2_frg)
+  if(length(ter_its) != 0){
   for (i in seq_along(ter_its)) {
     d <- tmp[ter_its[i], ]
     d[which(d$velocity_fragment == Inf), "velocity_fragment"] <- NA
@@ -310,6 +311,7 @@ dataframe_summary_events_HL_int <- function(data, data_annotation) {
                                tmp_merged$intensity_fragment ==
                                  ev_fragments[2]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
+  	}
   }
   #FC_HL_fragments
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_HL), ]

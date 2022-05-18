@@ -54,7 +54,7 @@ dataframe_summary_events(data, data_annotation)
 \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
 \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
 position of the half-life fragment is adapted to intensity fragment}
-\item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+\item{synthesis_ratio:}{Fold change of half-life/ fold change of
 intensity}
 \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 \item{feature_type:}{String, region annotation covering the fragments}

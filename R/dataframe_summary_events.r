@@ -68,7 +68,7 @@
 #'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
 #'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
-#'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
+#'     \item{synthesis_ratio:}{Fold change of half-life/ fold change of
 #'     intensity}
 #'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
 #'     \item{feature_type:}{String, region annotation covering the fragments}
@@ -134,7 +134,7 @@ dataframe_summary_events <- function(data, data_annotation) {
   FC_HL <- c()
   FC_intensity <- c()
   FC_HL_adapted <- c()
-  FC_HL_FC_intensity <- c()
+  synthesis_ratio <- c()
   velocity_ratio <- c()
   p_value <- c()
   feature_type <- c()
@@ -168,14 +168,14 @@ dataframe_summary_events <- function(data, data_annotation) {
     FC_HL <- c(FC_HL, NA)
     FC_intensity <- c(FC_intensity, NA)
     FC_HL_adapted <- c(FC_HL_adapted, NA)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, NA)
-    event_position <- c(event_position,
-                        (tmp_merged[last(which(tmp_merged$delay_fragment ==
-                                                 ev_fragments[1])), "position"]
-                         + tmp_merged[which(tmp_merged$delay_fragment ==
-                                              ev_fragments[2]), "position"][1])
-                        / 2)
-    velocity_ratio <- c(velocity_ratio, NA)
+    synthesis_ratio <- c(synthesis_ratio, NA)
+    event_position <- c(event_position, d$event_position)
+    velocity_ratio <-
+      c(velocity_ratio, tmp_merged[
+        which(tmp_merged$delay_fragment ==
+                ev_fragments[2])[1], "velocity_fragment"] /
+          tmp_merged[which(tmp_merged$delay_fragment ==
+                             ev_fragments[1])[1], "velocity_fragment"])
     p_value <- c(p_value, as.numeric(d$event_ps_itss_p_value_Ttest))
     feature_type <-
       c(
@@ -242,10 +242,10 @@ dataframe_summary_events <- function(data, data_annotation) {
     ev_fragments <-
       unlist(strsplit(d$FC_HL_intensity_fragment, split = ";"))
     ev_fragments <- unlist(strsplit(ev_fragments, split = ":"))
-    FC_HL <- c(FC_HL, NA)
-    FC_intensity <- c(FC_intensity, NA)
+    FC_HL <- c(FC_HL, d$FC_HL)
+    FC_intensity <- c(FC_intensity, d$FC_intensity)
     FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, d$synthesis_ratio)
+    synthesis_ratio <- c(synthesis_ratio, d$synthesis_ratio)
     event_position <-
       c(event_position,
         (tmp_merged[last(which(
@@ -316,7 +316,7 @@ dataframe_summary_events <- function(data, data_annotation) {
                              tmp_merged[which(tmp_merged$intensity_fragment ==
                                  ev_fragments[4]), "position"][1]))
     features <- c(features, length(unique(ev_fragments)))
-  }
+    }
   }
   #FC intensity fragments
   tmp <- tmp_merged[!duplicated(tmp_merged$FC_fragment_intensity), ]
@@ -330,8 +330,8 @@ dataframe_summary_events <- function(data, data_annotation) {
     event <- c(event, "Int_event")
     FC_HL <- c(FC_HL, NA)
     FC_intensity <- c(FC_intensity, d$FC_intensity)
-    FC_HL_adapted <- c(FC_HL_adapted, d$FC_HL_adapted)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, NA)
+    FC_HL_adapted <- c(FC_HL_adapted, NA)
+    synthesis_ratio <- c(synthesis_ratio, NA)
     event_position <-
       c(event_position,
         (tmp_merged[last(which(tmp_merged$intensity_fragment ==
@@ -416,7 +416,7 @@ dataframe_summary_events <- function(data, data_annotation) {
     FC_HL <- c(FC_HL, d$FC_HL)
     FC_intensity <- c(FC_intensity, NA)
     FC_HL_adapted <- c(FC_HL_adapted, NA)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, NA)
+    synthesis_ratio <- c(synthesis_ratio, NA)
     event_position <-
       c(event_position, (tmp_merged[last(which(
         tmp_merged$HL_fragment == ev_fragments[1])), "position"] +
@@ -486,7 +486,7 @@ dataframe_summary_events <- function(data, data_annotation) {
     FC_HL <- c(FC_HL, NA)
     FC_intensity <- c(FC_intensity, NA)
     FC_HL_adapted <- c(FC_HL_adapted, NA)
-    FC_HL_FC_intensity <- c(FC_HL_FC_intensity, NA)
+    synthesis_ratio <- c(synthesis_ratio, NA)
     event_position <-
       c(event_position, (tmp_merged[last(which(
         tmp_merged$delay_fragment == ev_fragments[1])), "position"] +
@@ -554,7 +554,7 @@ dataframe_summary_events <- function(data, data_annotation) {
       FC_HL,
       FC_intensity,
       FC_HL_adapted,
-      FC_HL_FC_intensity,
+      synthesis_ratio,
       event_position,
       velocity_ratio,
       feature_type,
