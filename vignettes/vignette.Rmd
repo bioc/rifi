@@ -324,21 +324,27 @@ It is recommended to check the fit after running `rifi_fit`. If more than 30 % o
 
 You may need to check your penalties if the last visualization shows:
 
-* A high frequency of considerable long segments.
+##### 1. A high frequency of considerable long segments
 <br/><br/>
-``` {r longSegments, echo = FALSE, fig.cap = "**Long segments**", out.width = '100%'}
+``` {r longSegments, echo = FALSE, fig.cap = "**Long segments**", out.width="200%", out.height = "100%"}
 knitr::include_graphics("longSegments.png")
 ```
 <br/><br/>
 
-* A high frequency of mini segments.
+##### 2. A high frequency of mini segments
+
+In this case you may need to double check your data either the mini-segments are 
+artifact of rifi or the data. The example below shows rather an artifact of
+the data since the segmentation is hierarchical. The half-life and intensity 
+segments are rather short because of the delay segmentation. 
+
 <br/><br/>
 ``` {r miniSegments, echo=FALSE, fig.cap="**Mini segments**", out.width = '250%'}
 knitr::include_graphics("miniSegments.png")
 ```
 <br/><br/>
 
-* A high frequency of extreme high values.
+##### 3. A high frequency of extreme high values
 <br/><br/>
 ``` {r highValues, echo=FALSE, fig.cap="**High values**", out.width = '250%'}
 knitr::include_graphics("highValues.png")
@@ -348,9 +354,6 @@ knitr::include_graphics("highValues.png")
 * Absence of events in case you run big data.
 
 * Absence of outliers.
-
-The penalties could be adjusted manually in case you do not detect any anomaly
-in row data neither on fit step. 
 
 ### 5. Citing `rifi`
 
@@ -750,7 +753,7 @@ knitr::include_graphics("TIPlot.png")
 ```
 <br/><br/>
 
-## IV. `rifi penalties`
+## IV. rifi penalties
 
 'rifi' uses dynamic programming to combine *probes/bins* with equal properties in the extracted values 
 into segments (called fragmentation in 'rifi'). The penalties define the specificity and
@@ -1503,7 +1506,7 @@ on the first column. The table is added as metaData.
 transcription interference. The table is added as metaData.
 <br/><br/>
 
-## VIII. `rifi_visualization`
+## VIII. rifi_visualization
 
 `rifi_visualization` plots the whole genome with genes, transcription units
 (TUs), delay, half-life (HL), intensity fragments features, events, velocity,

@@ -84,12 +84,12 @@ apply_manova <- function(inp) {
         length(I_2$segment) < 2 | 
         length(hl_1$segment) < 2 |
         length(hl_2$segment) < 2)
-      {
+    {
       next ()
     }
     df <- cbind.data.frame(c(hl_1$half_life, hl_2$half_life),
                            c(I_1[, c("intensity", "segment")],
-                                            I_2[, c("intensity", "segment")]))
+                             I_2[, c("intensity", "segment")]))
     colnames(df)[1] <- "half_life"
     tryCatch({
       p_value_Manova <-

@@ -18,9 +18,11 @@
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{p_value_slope:}{Integer, tThe p_value added to the inp}
-#'   \item{delay_frg_slope:}{Integer, the slope value of the fit through the respective 
-#' delay fragment}
-#'   \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay fragments}
+#'   \item{delay_frg_slope:}{Integer, the slope value of the fit through the 
+#'   respective delay fragment}
+#'   \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay 
+#'   fragments
+#'   }
 #' }
 #' 
 #' @examples
@@ -77,7 +79,7 @@ apply_ancova <- function(inp) {
             model2 <- lm(delay ~ position, data = df_2)
             # apply the coefficients of both models to the last point...
             # ...of segment 1 and subtract the distance separating both
-            # segments to bring them later... ...to 0
+            # segments to bring them later to 0
             y1 <-
               model1$coefficients[1] + model1$coefficients[2] *
               last(df_1$position)
@@ -87,7 +89,7 @@ apply_ancova <- function(inp) {
             dif <- abs(abs(y1) - abs(y2))
             # set the dataframe with delay fragment and delay values
             # subtract the positions from both segments from last
-            # position... ...of segment_1
+            # position of segment_1
             df_2$position <-
               abs(last(df_1$position) - df_2$position)
             df_1$position <-
