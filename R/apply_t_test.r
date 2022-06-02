@@ -28,8 +28,10 @@
 #'   \item{FC_fragment_HL:}{String, the fragments corresponding to HL fold change}
 #'   \item{p_value_HL:}{Integer, the p_value added to the input of 2 HL fragments}
 #'   \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
-#'   \item{FC_fragment_intensity:}{String, the fragments corresponding to intensity fold change}
-#'   \item{p_value_intensity:}{Integer, the p_value added to the input of 2 intensity fragments}
+#'   \item{FC_fragment_intensity:}{String, the fragments corresponding to 
+#'   intensity fold change}
+#'   \item{p_value_intensity:}{Integer, the p_value added to the input of 2 
+#'   intensity fragments}
 #' }
 #'
 #' @examples
