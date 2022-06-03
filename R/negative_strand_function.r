@@ -17,6 +17,8 @@ negative_strand_function <- function(data_n,
                                      medianVelocity = medianVelocity,
                                      shape_above20 = shape_above20,
                                      col_above20 = col_above20,
+                                     col_outlierabove10 = col_outlierabove10,
+                                     shape_outlierabove10 = shape_outlierabove10,
                                      fontface = fontface,
                                      coverage = coverage,
                                      axis_text_y_size = axis_text_y_size,
@@ -82,6 +84,7 @@ negative_strand_function <- function(data_n,
         Breaks_h2 <- seq(0, Limit_h_df2, by = 2)
     }
     df2.h <- secondaryAxis(data_n, "half_life", ind = 1)
+    df2.h.o <- outlier_plot(data_p, "half_life", ind = 2, maxvalue = Limit_h_df2)
     #in case only one bin is available and the HL is above 20
     if (all(data_n$half_life > 20)) {
         data_n$half_life <- 20
@@ -454,6 +457,17 @@ negative_strand_function <- function(data_n,
                     shape = shape_above20,
                     size = .5
                 )
+        }
+        #add outlier between 10 and 30
+        if (nrow(df2.h.o >= 1)){
+          p5 <- p5 +
+            geom_point(
+              data = df2.h.o,
+          aes(y = Limit_h_df2),
+          col = col_outlierabove10,
+          shape = shape_outlierabove10,
+          size = .5
+          )
         }
         #######################delay plot reverse strand##################
         #plot delay segment and outliers

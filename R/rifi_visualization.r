@@ -52,7 +52,10 @@
 #' secondaryAxis: adjusts the half-life or delay to 20 in case of the dataframe
 #' row numbers is equal to 1 and the half-life or delay exceed the limit, 
 #' they are plotted with different shape and color.
-
+#' 
+#' outlier_plot: plot the outliers with half-life between 10 and 30 on the 
+#' maximum of the yaxis.
+#' 
 #' add_genomeBorders: when the annotated genes are on the borders, they can
 #' not be plotted, therefore the region was split in 2 adding the row 
 #' corresponding to the split part to the next annotation (i + 1) except 
@@ -131,6 +134,10 @@
 #' @param col_above20 string: color for probes/bin above value 20.
 #' @param fontface integer: font type
 #' @param shape_above20 integer: shape for probes/bins above value 20.
+#' @param col_outlierabove10 string: color for probes/bin outliers between 10 
+#' and 20,
+#' @param shape_outlierabove10 integer: shape for probes/bin outliers between 10 
+#' and 20,
 #' @param axis_text_y_size integer: text size for y-axis.
 #' @param axis_title_y_size integer: title size for y-axis.
 #' @param Alpha integer: color transparency degree.
@@ -228,6 +235,8 @@ rifi_visualization <-
            col_above20 = "#00FFFF",
            fontface = "plain",
            shape_above20 = 14,
+           col_outlierabove10 = "darkorchid",
+           shape_outlierabove10 = 5,
            axis_text_y_size = 3,
            axis_title_y_size = 6,
            TI_threshold = 1.1,
@@ -374,6 +383,8 @@ rifi_visualization <-
                                                medianVelocity = medianVelocity,
                                                shape_above20 = shape_above20,
                                                col_above20 = col_above20,
+                                               col_outlierabove10 = col_outlierabove10,
+                                               shape_outlierabove10 = shape_outlierabove10,
                                                fontface = fontface,
                                                coverage = coverage,
                                                axis_text_y_size = 
@@ -433,6 +444,8 @@ rifi_visualization <-
                                                medianVelocity = medianVelocity,
                                                shape_above20 = shape_above20,
                                                col_above20 = col_above20,
+                                               col_outlierabove10 = col_outlierabove10,
+                                               shape_outlierabove10 = shape_outlierabove10,
                                                fontface = fontface,
                                                coverage = coverage,
                                                axis_text_y_size = 

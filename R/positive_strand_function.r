@@ -22,6 +22,8 @@ positive_strand_function <-
            medianVelocity = medianVelocity,
            shape_above20 = shape_above20,
            col_above20 = col_above20,
+           col_outlierabove10 = col_outlierabove10,
+           shape_outlierabove10 = shape_outlierabove10,
            fontface = fontface,
            coverage = coverage,
            axis_text_y_size = axis_text_y_size,
@@ -229,6 +231,7 @@ positive_strand_function <-
       Breaks_h <- seq(0, Limit_h_df1, by = 2)
     }
     df1.h <- secondaryAxis(data_p, "half_life", ind = 1)
+    df1.h.o <- outlier_plot(data_p, "half_life", ind = 2, maxvalue = Limit_h_df1)
     #in case only one bin is available and the HL is above 20
     if (all(data_p$half_life > 20)) {
       data_p$half_life <- 20
@@ -458,6 +461,17 @@ positive_strand_function <-
             aes(y = Limit_h_df1),
             col = col_above20,
             shape = shape_above20,
+            size = .5
+          )
+      }
+      
+      if (nrow(df1.h.o) >= 1) {
+        p2 <- p2 +
+          geom_point(
+            data = df1.h.o,
+            aes(y = Limit_h_df1),
+            col = col_outlierabove10,
+            shape = shape_outlierabove10,
             size = .5
           )
       }

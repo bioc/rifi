@@ -755,13 +755,8 @@ knitr::include_graphics("TIPlot.png")
 
 ## IV. rifi penalties
 
-'rifi' uses dynamic programming to combine *probes/bins* with equal properties in the extracted values 
-into segments (called fragmentation in 'rifi'). The penalties define the specificity and
-sensitivity of the fragmentation. Higher penalties will result in less segments, i.e. a lower 
-sensitivity but a higher specificity and vice versa. For convenience 'rifi' provides an 
-automatic method which tries to maximize the correct segment splits and to minimize the 
-wrong splits using statistics. The result can be best investigated in the final visualization. If needed
-the penalties can be manually adapted.
+'rifi' uses dynamic programming to combine *probes/bins* with equal properties 
+in the extracted values into segments (called fragmentation in 'rifi'). The penalties define the specificity and sensitivity of the fragmentation. Higher penalties will result in less segments, i.e. a lower sensitivity but a higher specificity and vice versa. For convenience 'rifi' provides an automatic method which tries to maximize the correct segment splits and to minimize the wrong splits using statistics. The result can be best investigated in the final visualization. If needed the penalties can be manually adapted.
 
 `rifi_penalties` wraps all penalty steps, wraps the functions: `make_pen` and
 `viz_pen_obj.` For use of this wrapper jump to [`rifi_penalties`](#rifi_penalties)
@@ -1544,6 +1539,9 @@ The functions used are:
    `secondaryAxis`: adjusts the halflife or delay to 20 in case of the
     dataframe row numbers is equal to 1 and the halflife or delay exceed the
     limit, they are plotted with different shape and color
+    
+   `outlier_plot`: plot the outliers with half-life between 10 and 30 on the
+    maximum of the yaxis
     
    `add_genomeBorders`: resolves the issue when the annotated genes are on the
     borders and can not be plotted. The function splits the region in 2 adding
