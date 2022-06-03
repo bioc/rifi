@@ -84,7 +84,7 @@ negative_strand_function <- function(data_n,
         Breaks_h2 <- seq(0, Limit_h_df2, by = 2)
     }
     df2.h <- secondaryAxis(data_n, "half_life", ind = 1)
-    df2.h.o <- outlier_plot(data_p, "half_life", ind = 2, maxvalue = Limit_h_df2)
+    df2.h.o <- outlier_plot(data_n, "half_life", ind = 2, maxvalue = Limit_h_df2)
     #in case only one bin is available and the HL is above 20
     if (all(data_n$half_life > 20)) {
         data_n$half_life <- 20
