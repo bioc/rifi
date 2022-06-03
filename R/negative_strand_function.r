@@ -458,8 +458,8 @@ negative_strand_function <- function(data_n,
                     size = .5
                 )
         }
-        #add outlier between 10 and 30
-        if (nrow(df2.h.o >= 1)){
+        #add outliers between 10 and 30
+        if (nrow(df2.h.o) >= 1){
           p5 <- p5 +
             geom_point(
               data = df2.h.o,
