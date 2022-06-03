@@ -868,7 +868,7 @@ of y on how close they are to a linear fit, for more details check
 #### 2. `fragment_HL_pen`
 
 `fragment_HL_pen` is called by `make_pen` function to automatically assign
-penalties for the dynamic programming of delay fragment. The function used for
+penalties for the dynamic programming of half-life fragments. The function used for
 `fragment_HL_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y on
 how close they are to the mean, for more details check 'functions_scoring.r'.
 <br/><br/>
@@ -876,7 +876,7 @@ how close they are to the mean, for more details check 'functions_scoring.r'.
 #### 3. `fragment_inty_pen`
 
 `fragment_inty_pen` is called by `make_pen` function to automatically assign
-penalties for the dynamic programming of delay fragment. The function used for
+penalties for the dynamic programming of intensity fragments. The function used for
 `fragment_inty_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y
 on how close they are to the mean, for more details check
 'functions_scoring.r'.
@@ -885,7 +885,7 @@ on how close they are to the mean, for more details check
 #### 4. `fragment_TI_pen`
 
 `fragment_TI_pen` is called by `make_pen` function to automatically assign
-penalties for the dynamic programming of delay fragment. The function used for
+penalties for the dynamic programming of TI fragments. The function used for
 `fragment_TI_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y on
 how close they are to the mean, for more details check 'functions_scoring.r'.
 <br/>
