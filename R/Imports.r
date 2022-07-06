@@ -3,6 +3,7 @@
 #' @import ggplot2
 #' @import SummarizedExperiment
 #' @import scales
+#' @import reshape2
 #' @importFrom car Anova
 #' @importFrom cowplot background_grid
 #' @importFrom doMC registerDoMC

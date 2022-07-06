@@ -1,6 +1,6 @@
 # =========================================================================
 # rifi_visualization      Plots all the data with fragments and events 
-#                         from both strands.                                 
+#                                       from both strands
 # -------------------------------------------------------------------------
 #'
 #'

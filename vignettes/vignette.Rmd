@@ -46,9 +46,6 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
 BiocManager::install("rifi")
 ```
 
-``` {r test, echo = FALSE}
-```
-
 ## I. Introduction
 
 The stability or halflife of bacterial transcripts is often estimated using 

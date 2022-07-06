@@ -21,7 +21,7 @@
 #' 4. FC_HL/FC_intensity: ratio of fold change between 2 half-life fragments
 #' and fold change between 2 intensity fragments.
 
-#' 5. velocity_ratio: ratio between any two fragment where the event happen.
+#' 5. velocity_ratio: ratio of velocity between 2 delay fragments.
 
 #' 6. p_value: depending on the event, t-test, manova test p_value is assigned.
 
@@ -66,18 +66,23 @@
 #'     \item{p_adjusted:}{Integer, p_value adjusted}
 #'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
 #'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
-#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{synthesis_ratio:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{Integer, the position middle between 2 fragments with an event}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
 #'     \item{feature_type:}{String, region annotation covering the fragments}
 #'     \item{gene:}{String, gene annotation covering the fragments}
 #'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{Boolean. The bin/probe specific strand (+/-)}
 #'     \item{TU:}{String, The overarching transcription unit}
-#'     \item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
-#'     \item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
 #'     \item{event_duration:}{Integer, the duration between two delay fragments}
 #'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
 #'     \item{features:}{Integer, number of fragements involved on the event}

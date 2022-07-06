@@ -12,7 +12,7 @@ apply_ancova(inp)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{p_value_slope:}{Integer, tThe p_value added to the inp}
+\item{p_value_slope:}{Integer, the p_value added to the inp}
 \item{delay_frg_slope:}{Integer, the slope value of the fit through the
 respective delay fragment}
 \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay

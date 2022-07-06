@@ -2,7 +2,6 @@
 # rifi_fragmentation       Conveniently wraps all fragmentation steps
 # -------------------------------------------------------------------------
 #'
-#' 
 #' rifi_fragmentation wraps the following functions:
 
 #' 1. fragment_delay

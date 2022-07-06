@@ -38,6 +38,7 @@ Imports:
 	SummarizedExperiment,
 	tibble,
 	rtracklayer,
+	reshape2,
 	utils	
 Suggests:
 	DescTools,

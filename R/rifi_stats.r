@@ -14,14 +14,15 @@
 #' 
 #' @return the SummarizedExperiment object: ID with position, strand, intensity, 
 #'  probe_TI, flag, position_segment, delay, half_life, TI_termination_factor, 
-#'  delay_fragment, velocity_fragment, intercept, slope, HL_fragment, HL_mean_fragment, 
-#'  intensity_fragment, intensity_mean_fragment, TU, TI_termination_fragment, 
-#'  TI_mean_termination_factor, seg_ID, pausing_site, iTSS_I, ps_ts_fragment, 
-#'  event_ps_itss_p_value_Ttest, p_value_slope, delay_frg_slope, velocity_ratio, 
-#'  event_duration, event_position, FC_HL, FC_fragment_HL, p_value_HL, 
-#'  FC_intensity, FC_fragment_intensity, p_value_intensity, FC_HL_intensity, 
-#'  FC_HL_intensity_fragment, FC_HL_adapted, synthesis_ratio, synthesis_ratio_event, 
-#'  p_value_Manova, p_value_TI, TI_fragments_p_value
+#'  delay_fragment, velocity_fragment, intercept, slope, HL_fragment,
+#'  HL_mean_fragment, intensity_fragment, intensity_mean_fragment, TU,
+#'  TI_termination_fragment, TI_mean_termination_factor, seg_ID, pausing_site,
+#'  iTSS_I, ps_ts_fragment, event_ps_itss_p_value_Ttest, p_value_slope,
+#'  delay_frg_slope, velocity_ratio, event_duration, event_position, FC_HL,
+#'  FC_fragment_HL, p_value_HL, FC_intensity, FC_fragment_intensity,
+#'  p_value_intensity, FC_HL_intensity, FC_HL_intensity_fragment, FC_HL_adapted,
+#'  synthesis_ratio, synthesis_ratio_event, p_value_Manova, p_value_TI,
+#'  TI_fragments_p_value
 #' 
 #' 
 #' @seealso `predict_ps_itss`
