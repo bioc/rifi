@@ -429,7 +429,8 @@ rifi_visualization <-
       #############################reverse_strand_plot#######################
       if (nrow(df2) != 0) {
         p_negative <- negative_strand_function(data_n = df2, data = data, 
-                                               frag = frag, i = i,
+                                               frag = frag, tmp.c2 = tmp.c2, 
+                                               i = i,
                                                Limit = Limit,
                                                shape = shape,
                                                col_outiler = col_outiler,
