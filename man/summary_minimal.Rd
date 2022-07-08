@@ -11,11 +11,11 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 \describe{
 \item{bin_df:}{all information regarding bins:
 \describe{
-\item{ID:}
+\item{ID:}{The bin/probe specific ID}
 \item{feature_type:}{String, region annotation covering the fragments}
 \item{gene:}{String, gene annotation covering the fragments}
 \item{locus_tag:}{String, locus_tag annotation covering the fragments}
-\item{position:}
+\item{position:}{The bin/probe specific position}
 \item{strand:}{The bin/probe specific strand}
 \item{segment:}{The segment the bin/probe belongs to}
 \item{TU:}{The overarching transcription unit}
@@ -27,8 +27,7 @@ and 11 variables, 57 rows and 18 variables, and 8 rows and 14 variables:
 to}
 \item{intensity:}{The relative intensity at time point 0}
 \item{flag:}{The flag of the bin/probe(TI, PDD)}
-\item{TI_termination_factor:}{The TI_termination_factor of the bin/probe
-(in case TI is detected)}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 }
 }
 \item{frag_df:}{all information regarding fragments:
@@ -165,8 +164,8 @@ subjected to analysis}
 \item{TI_df:}{all information regarding TI:
 \describe{
 \item{event:}{String, event type}
-\item{TI_fragment:}
-\item{TI_termination_factor:}
+\item{TI_fragment:}{String, the fragment with TI}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 \item{p_value:}{Integer, p_value of the event}
 \item{p_adjusted:}{Integer, p_value adjusted}
 \item{feature_type:}{String, region annotation covering the fragments}
@@ -177,8 +176,10 @@ subjected to analysis}
 \item{features:}{Integer, number of fragements involved on the event}
 \item{event_position:}{Integer, the position middle between 2 fragments
 with an event}
-\item{position_1:}
-\item{position_2:}
+\item{position_1:}{the first position of TI fragment, if 2 fragments,
+first position is from the first fragment}
+\item{position_2:}{the last position of TI fragment, if 2 fragments,
+last position is from the second fragment.}
 }
 }
 }

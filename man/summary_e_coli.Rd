@@ -11,11 +11,11 @@ The rowRanges of SummarizedExperiment:
 \describe{
 \item{bin_df:}{all information regarding bins:
 \describe{
-\item{ID:}
+\item{ID:}{The bin/probe specific ID}
 \item{feature_type:}{String, region annotation covering the fragments}
 \item{gene:}{String, gene annotation covering the fragments}
 \item{locus_tag:}{String, locus_tag annotation covering the fragments}
-\item{position:}
+\item{position:}{The bin/probe specific position}
 \item{strand:}{The bin/probe specific strand}
 \item{segment:}{The segment the bin/probe belongs to}
 \item{TU:}{The overarching transcription unit}
@@ -27,8 +27,7 @@ The rowRanges of SummarizedExperiment:
 to}
 \item{intensity:}{The relative intensity at time point 0}
 \item{flag:}{The flag of the bin/probe(TI, PDD)}
-\item{TI_termination_factor:}{The TI_termination_factor of the bin/probe
-(in case TI is detected)}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 }
 }
 \item{frag_df:}{all information regarding fragments:
@@ -123,8 +122,8 @@ pausing sites and iTSS_I:
 with an event}
 \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
 \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change
-of intensity,
-position of the half-life fragment is adapted to intensity fragment}
+of intensity, position of the half-life fragment is adapted to intensity
+fragment}
 \item{feature_type:}{String, region annotation covering the fragments}
 \item{gene:}{String, gene annotation covering the fragments}
 \item{locus_tag:}{String, locus_tag annotation covering the fragments}
@@ -153,8 +152,10 @@ with an event}
 \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 \item{strand:}{The bin/probe specific strand}
 \item{TU:}{The overarching transcription unit}
-\item{segment_1:}{String, the first fragment of the two of fragments subjected to analysis}
-\item{segment_2:}{String, the second fragment of the two of fragments subjected to analysis}
+\item{segment_1:}{String, the first fragment of the two of fragments
+subjected to analysis}
+\item{segment_2:}{String, the second fragment of the two of fragments
+subjected to analysis}
 \item{event_duration:}{Integer, the duration between two delay fragments}
 \item{gap_fragments:}{Integer, the distance between two delay fragments}
 \item{features:}{Integer, number of fragements involved on the event}
@@ -163,8 +164,8 @@ with an event}
 \item{TI_df:}{all information regarding TI:
 \describe{
 \item{event:}{String, event type}
-\item{TI_fragment:}
-\item{TI_termination_factor:}
+\item{TI_fragment:}{String, the fragment with TI}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 \item{p_value:}{Integer, p_value of the event}
 \item{p_adjusted:}{Integer, p_value adjusted}
 \item{feature_type:}{String, region annotation covering the fragments}
@@ -175,8 +176,10 @@ with an event}
 \item{features:}{Integer, number of fragements involved on the event}
 \item{event_position:}{Integer, the position middle between 2 fragments
 with an event}
-\item{position_1:}
-\item{position_2:}
+\item{position_1:}{the first position of TI fragment, if 2 fragments,
+first position is from the first fragment}
+\item{position_2:}{the last position of TI fragment, if 2 fragments,
+last position is from the second fragment.}
 }
 }
 }

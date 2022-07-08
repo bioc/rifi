@@ -35,8 +35,8 @@ applied}
 \item{5:}{relative intensities at 5 min}
 \item{6:}{relative intensities at 6 min}
 \item{8:}{relative intensities at 8 min}
-\item{ID:}{unique IDs}
-\item{position:}{genome positions}
+\item{ID:}{The bin/probe specific ID}
+\item{position:}{The bin/probe specific position}
 \item{filtration:}{indicator wether the replicate is filtered or not}
 }
 }

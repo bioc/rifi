@@ -22,25 +22,30 @@ between 2 intensity fragments}
 \item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
 \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
 \item{p_value_HL:}{p_value of the fold change of HL fragments}
-\item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
-\item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+\item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change
+between 2 half-life fragments and fold change between 2 intensity fragments}
+\item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments
+and fold change between 2 intensity fragments}
 \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change
 of intensity, position of the half-life fragment is adapted to intensity
 fragment}
-\item{p_value_Manova:}{p_value of the variance between two fold-changes, HL and intensity}
+\item{p_value_Manova:}{p_value of the variance between two fold-changes, HL
+and intensity}
 \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
-\item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either Termination or iTSS}
+\item{synthesis_ratio_event:}{String, the event assigned by synthesis rate
+either Termination or iTSS}
 \item{pausing_site:}{presence of pausing site indicated by +/-}
 \item{iTSS_I:}{presence of iTSS_I indicated by +/-}
 \item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
 \item{ps_ts_fragment:}{The fragments involved in pausing site or iTSS_I}
-\item{event_position:}{Integer, the position middle between 2 fragments with an event}
+\item{event_position:}{Integer, the position middle between 2 fragments
+with an event}
 \item{event_duration:}{Integer, the duration between two delay fragments}
 \item{delay_frg_slope:}{the slope value of the respective delay fragment}
 \item{p_value_slope:}{p_value of the slope}
-\item{delay:}
-\item{half_life:}
-\item{intensity:}
+\item{delay:}{The delay value of the bin/probe}
+\item{half_life:}{The half-life of the bin/probe}
+\item{intensity:}{The relative intensity at time point 0}
 }
 }
 \source{

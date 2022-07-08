@@ -18,7 +18,7 @@ is applied}
 \item{position_segment:}{The position based segment}
 \item{delay:}{The delay value of the bin/probe}
 \item{half_life:}{The half-life of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 \item{delay_fragment:}{The delay fragment the bin belongs to}
 \item{velocity_fragment:}{The velocity value of the respective delay
 fragment}
