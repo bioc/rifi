@@ -176,10 +176,6 @@ arrange_byGroup <- function(input, parameter) {
                           arrange(get('position')) %>%
                           slice(n()))
   if (unique(data$strand) == "-") {
-    data <- as.data.frame(input %>%
-                            group_by(input[, parameter]) %>%
-                            arrange(get('position')) %>%
-                            slice(n()))
     data[which(data$pausing_site == "+"), "position"] <-
       data[which(data$pausing_site == "+"), "position"] + 40
     data[which(data$iTSS_I == "+"), "position"] <-
