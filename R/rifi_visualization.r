@@ -105,7 +105,7 @@
 #' @param col_coverage integer: color for coverage plot.
 #' @param TI_threshold integer: threshold for TI between two fragments in case
 #' the TI termination factor drops from the first segment to the second,
-#' default 1.1.
+#' default 1.1. If threshold is reached a line is drawn to seperates the two TI segments.
 #' @param p_value_TI integer: p_value of TI fragments selected to be plotted,
 #' default 0.05.
 #' @param p_value_manova integer: p_value of manova test fragments to plot,
