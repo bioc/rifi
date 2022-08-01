@@ -77,7 +77,7 @@
 #'     \item{postion_segment:}{The position based segment}
 #'     \item{delay:}{The delay value of the bin/probe}
 #'     \item{half_life:}{The half-life of the bin/probe}
-#'     \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     }
 #'   }
 #'   \item{fit_obj_STD:}{the fit object for the standard fit:
@@ -95,7 +95,7 @@
 #'     \item{ti_delay:}{The ti-delay value of the bin/probe}
 #'     \item{half_life:}{The half-life of the bin/probe}
 #'     \item{ti_value:}{The ti-value of the bin/probe}
-#'     \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     \item{synthesis_rate:}{The synthesis rate of the bin/probe}
 #'     \item{TI_background:}{The background value of the fit}
 #'     \item{position:}{The bin/probe specific position}
@@ -139,7 +139,7 @@
 #'     \item{postion_segment:}{The position based segment}
 #'     \item{delay:}{The delay value of the bin/probe}
 #'     \item{half_life:}{The half-life of the bin/probe}
-#'     \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     }
 #'   }
 #'   \item{fit_obj_STD:}{the fit object for the standard fit:
@@ -157,7 +157,7 @@
 #'     \item{ti_delay:}{The ti-delay value of the bin/probe}
 #'     \item{half_life:}{The half-life of the bin/probe}
 #'     \item{ti_value:}{The ti-value of the bin/probe}
-#'     \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     \item{synthesis_rate:}{The synthesis rate of the bin/probe}
 #'     \item{TI_background:}{The background value of the fit}
 #'     \item{position:}{The bin/probe specific position}
@@ -186,7 +186,7 @@
 #'   \item{position_segment:}{The position based segment}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'   \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'   \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'   \item{velocity_fragment:}{The velocity value of the respective delay
 #'   fragment}
@@ -237,7 +237,7 @@
 #'   \item{position_segment:}{The position based segment}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'   \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'   \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'   \item{velocity_fragment:}{The velocity value of the respective delay
 #'   fragment}
@@ -407,8 +407,8 @@
 #'     \item{5:}{relative intensities at 5 min}
 #'     \item{6:}{relative intensities at 6 min}
 #'     \item{8:}{relative intensities at 8 min}
-#'     \item{ID:}{unique IDs}
-#'     \item{position:}{genome positions}
+#'     \item{ID:}{The bin/probe specific ID}
+#'     \item{position:}{The bin/probe specific position}
 #'     \item{filtration:}{indicator wether the replicate is filtered or not}
 #'     }
 #'   }
@@ -456,8 +456,8 @@
 #'     \item{16:}{relative intensities at 16 min}
 #'     \item{32:}{relative intensities at 32 min}
 #'     \item{64:}{relative intensities at 64 min}
-#'     \item{ID:}{unique IDs}
-#'     \item{position:}{genome positions}
+#'     \item{ID:}{The bin/probe specific ID}
+#'     \item{position:}{The bin/probe specific position}
 #'     \item{filtration:}{indicator wether the replicate is filtered or not}
 #'     }
 #'   }
@@ -484,7 +484,7 @@
 #'   \item{position_segment:}{The position based segment}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'   \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'   \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'   \item{velocity_fragment:}{The velocity value of the respective delay
 #'   fragment}
@@ -502,29 +502,36 @@
 #'   \item{TI_mean_termination_factor:}{The mean termination factor of the
 #'   respective TI fragment}
 #'   \item{seg_ID:}{The combined ID of the fragment}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{velocity_ratio:}{}
-#'   \item{event_duration:}{}
-#'   \item{event_position:}{}
-#'   \item{FC_HL:}{}
-#'   \item{FC_fragment_HL:}{}
-#'   \item{p_value_HL:}{}
-#'   \item{FC_intensity:}{}
-#'   \item{FC_fragment_intensity:}{}
-#'   \item{p_value_intensity:}{}
-#'   \item{FC_HL_intensity:}{}
-#'   \item{FC_HL_intensity_fragment:}{}
-#'   \item{FC_HL_adapted:}{}
-#'   \item{synthesis_ratio:}{}
-#'   \item{synthesis_ratio_event:}{}
-#'   \item{p_value_Manova:}{}
-#'   \item{p_value_TI:}{}
-#'   \item{TI_fragments_p_value:}{}
+#'   \item{pausing_site:}{presence of pausing site indicated by +/-}
+#'   \item{iTSS_I:}{presence of iTSS_I indicated by +/-}
+#'   \item{ps_ts_fragment:}{The fragments involved in pausing site or iTSS_I}
+#'   \item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
+#'   \item{p_value_slope:}{p_value of the slope}
+#'   \item{delay_frg_slope:}{the slope value of the respective delay fragment}
+#'   \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'   \item{event_duration:}{Integer, the duration between two delay fragments}
+#'   \item{event_position:}{Integer, the position middle between 2 fragments 
+#'   with an event}
+#'   \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'   \item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{p_value_HL:}{p_value of the fold change of HL fragments}
+#'   \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{FC_fragment_intensity:}{String, fragments involved in fold change 
+#'   between 2 intensity fragments}
+#'   \item{p_value_intensity:}{p_value of the fold change of intensity fragments}
+#'   \item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments 
+#'   and fold change between 2 intensity fragments}
+#'   \item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change
+#'   between 2 half-life fragments and fold change between 2 intensity fragments}
+#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'   of intensity, position of the half-life fragment is adapted to intensity 
+#'   fragment}
+#'   \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either Termination or iTSS}
+#'   \item{p_value_Manova:}{p_value of the variance between two fold-changes, 
+#'   HL and intensity}
+#'   \item{p_value_TI:}{p_value of TI fragment}
+#'   \item{TI_fragments_p_value:}{p_value of 2 TI fragments} 
 #' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -549,7 +556,7 @@
 #'   \item{position_segment:}{The position based segment}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'   \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'   \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'   \item{velocity_fragment:}{The velocity value of the respective delay
 #'   fragment}
@@ -567,29 +574,35 @@
 #'   \item{TI_mean_termination_factor:}{The mean termination factor of the
 #'   respective TI fragment}
 #'   \item{seg_ID:}{The combined ID of the fragment}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{velocity_ratio:}{}
-#'   \item{event_duration:}{}
-#'   \item{event_position:}{}
-#'   \item{FC_HL:}{}
-#'   \item{FC_fragment_HL:}{}
-#'   \item{p_value_HL:}{}
-#'   \item{FC_intensity:}{}
-#'   \item{FC_fragment_intensity:}{}
-#'   \item{p_value_intensity:}{}
-#'   \item{FC_HL_intensity:}{}
-#'   \item{FC_HL_intensity_fragment:}{}
-#'   \item{FC_HL_adapted:}{}
-#'   \item{synthesis_ratio:}{}
-#'   \item{synthesis_ratio_event:}{}
-#'   \item{p_value_Manova:}{}
-#'   \item{p_value_TI:}{}
-#'   \item{TI_fragments_p_value:}{}
+#'   \item{pausing_site:}{presence of pausing site indicated by +/-}
+#'   \item{iTSS_I:}{presence of iTSS_I indicated by +/-}
+#'   \item{ps_ts_fragment:}{The fragments involved in pausing site or iTSS_I}
+#'   \item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
+#'   \item{p_value_slope:}{p_value of the slope}
+#'   \item{delay_frg_slope:}{the slope value of the respective delay fragment}
+#'   \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'   \item{event_duration:}{Integer, the duration between two delay fragments}
+#'   \item{event_position:}{Integer, the position middle between 2 fragments 
+#'   with an event}
+#'   \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'   \item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{p_value_HL:}{p_value of the fold change of HL fragments}
+#'   \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{FC_fragment_intensity:}{String, fragments involved in fold change 
+#'   between 2 intensity fragments}
+#'   \item{p_value_intensity:}{p_value of the fold change of intensity fragments}
+#'   \item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+#'   \item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of
+#'    intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'   \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate 
+#'   either Termination or iTSS}
+#'   \item{p_value_Manova:}{p_value of the variance between two fold-changes, 
+#'   HL and intensity}
+#'   \item{p_value_TI:}{p_value of TI fragment}
+#'   \item{TI_fragments_p_value:}{p_value of 2 TI fragments} 
 #' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -613,7 +626,7 @@
 #'   \item{position_segment:}{The position based segment}
 #'   \item{delay:}{The delay value of the bin/probe}
 #'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{TI_termination_factor:}{The termination factor of the bin/probe}
+#'   \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'   \item{delay_fragment:}{The delay fragment the bin belongs to}
 #'   \item{velocity_fragment:}{The velocity value of the respective delay
 #'   fragment}
@@ -631,29 +644,34 @@
 #'   \item{TI_mean_termination_factor:}{The mean termination factor of the
 #'   respective TI fragment}
 #'   \item{seg_ID:}{The combined ID of the fragment}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{velocity_ratio:}{}
-#'   \item{event_duration:}{}
-#'   \item{event_position:}{}
-#'   \item{FC_HL:}{}
-#'   \item{FC_fragment_HL:}{}
-#'   \item{p_value_HL:}{}
-#'   \item{FC_intensity:}{}
-#'   \item{FC_fragment_intensity:}{}
-#'   \item{p_value_intensity:}{}
-#'   \item{FC_HL_intensity:}{}
-#'   \item{FC_HL_intensity_fragment:}{}
-#'   \item{FC_HL_adapted:}{}
-#'   \item{synthesis_ratio:}{}
-#'   \item{synthesis_ratio_event:}{}
-#'   \item{p_value_Manova:}{}
-#'   \item{p_value_TI:}{}
-#'   \item{TI_fragments_p_value:}{}
+#'   \item{pausing_site:}{presence of pausing site indicated by +/-}
+#'   \item{iTSS_I:}{presence of iTSS_I indicated by +/-}
+#'   \item{ps_ts_fragment:}{The fragments involved in pausing site or iTSS_I}
+#'   \item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
+#'   \item{p_value_slope:}{p_value of the slope}
+#'   \item{delay_frg_slope:}{the slope value of the respective delay fragment}
+#'   \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'   \item{event_duration:}{Integer, the duration between two delay fragments}
+#'   \item{event_position:}{Integer, the position middle between 2 fragments 
+#'   with an event}
+#'   \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'   \item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{p_value_HL:}{p_value of the fold change of HL fragments}
+#'   \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{FC_fragment_intensity:}{String, fragments involved in fold change 
+#'   between 2 intensity fragments}
+#'   \item{p_value_intensity:}{p_value of the fold change of intensity fragments}
+#'   \item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+#'   \item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of
+#'    intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'   \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either Termination or iTSS}
+#'   \item{p_value_Manova:}{p_value of the variance between two fold-changes, 
+#'   HL and intensity}
+#'   \item{p_value_TI:}{p_value of TI fragment}
+#'   \item{TI_fragments_p_value:}{p_value of 2 TI fragments} 
 #' }
 #'
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -670,11 +688,11 @@
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
-#'     \item{ID:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
-#'     \item{position:}{}
+#'     \item{ID:}{The bin/probe specific ID}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
+#'     \item{position:}{The bin/probe specific position}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{segment:}{The segment the bin/probe belongs to}
 #'     \item{TU:}{The overarching transcription unit}
@@ -683,18 +701,17 @@
 #'     \item{HL_fragment:}{The half-life fragment the bin/probe belongs to}
 #'     \item{half_life:}{The half-life of the bin/probe}
 #'     \item{intensity_fragment:}{The intensity fragment the bin/probe belongs
-#'      to}
+#'     to}
 #'     \item{intensity:}{The relative intensity at time point 0}
 #'     \item{flag:}{The flag of the bin/probe(TI, PDD)}
-#'     \item{TI_termination_factor:}{The TI_termination_factor of the bin/probe 
-#'     (in case TI is detected)}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     }
 #'   }
 #'   \item{frag_df:}{all information regarding fragments:
 #'   \describe{
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{first_position_frg:}{The first position of the fragment on the
 #'      genome}
 #'     \item{last_position_frg:}{The last position of the fragment on the
@@ -716,111 +733,130 @@
 #'   }
 #'   \item{event_df:}{all information regarding events:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{FC_HL:}{Fold change of half-life}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
 #'     \item{FC_intensity:}{Fold change of intensity}
-#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_HL_int_df:}{all information regarding events related to 
 #'   half-life and intensity:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{FC_HL:}{}
-#'     \item{FC_intensity:}{}
-#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_ps_itss_df:}{all information regarding events related to 
 #'   pausing sites and iTSS_I:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{FC_HL_adapted:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity, position of the half-life fragment is adapted to intensity 
+#'     fragment}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_velocity_df:}{all information regarding events related to 
 #'   velocity:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{TI_df:}{all information regarding TI:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{TI_fragment:}{}
-#'     \item{TI_termination_factor:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{TI_fragment:}{String, the fragment with TI}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{features:}{}
-#'     \item{event_position:}{}
-#'     \item{position_1:}{}
-#'     \item{position_2:}{}
+#'     \item{features:}{Integer, number of fragements involved on the event}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{position_1:}{the first position of TI fragment, if 2 fragments, 
+#'     first position is from the first fragment}
+#'     \item{position_2:}{the last position of TI fragment, if 2 fragments, 
+#'     last position is from the second fragment.}
 #'     }
 #'   }
 #' }
@@ -839,11 +875,11 @@
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
-#'     \item{ID:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
-#'     \item{position:}{}
+#'     \item{ID:}{The bin/probe specific ID}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
+#'     \item{position:}{The bin/probe specific position}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{segment:}{The segment the bin/probe belongs to}
 #'     \item{TU:}{The overarching transcription unit}
@@ -855,15 +891,14 @@
 #'      to}
 #'     \item{intensity:}{The relative intensity at time point 0}
 #'     \item{flag:}{The flag of the bin/probe(TI, PDD)}
-#'     \item{TI_termination_factor:}{The TI_termination_factor of the bin/probe 
-#'     (in case TI is detected)}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     }
 #'   }
 #'   \item{frag_df:}{all information regarding fragments:
 #'   \describe{
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{first_position_frg:}{The first position of the fragment on the
 #'      genome}
 #'     \item{last_position_frg:}{The last position of the fragment on the
@@ -885,111 +920,130 @@
 #'   }
 #'   \item{event_df:}{all information regarding events:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{FC_HL:}{Fold change of half-life}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
 #'     \item{FC_intensity:}{Fold change of intensity}
-#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change
+#'      of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_HL_int_df:}{all information regarding events related to 
 #'   half-life and intensity:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{FC_HL:}{}
-#'     \item{FC_intensity:}{}
-#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_ps_itss_df:}{all information regarding events related to 
 #'   pausing sites and iTSS_I:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{FC_HL_adapted:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change
+#'     of intensity, position of the half-life fragment is adapted to intensity
+#'     fragment}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_velocity_df:}{all information regarding events related to 
 #'   velocity:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{TI_df:}{all information regarding TI:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{TI_fragment:}{}
-#'     \item{TI_termination_factor:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{TI_fragment:}{String, the fragment with TI}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{features:}{}
-#'     \item{event_position:}{}
-#'     \item{position_1:}{}
-#'     \item{position_2:}{}
+#'     \item{features:}{Integer, number of fragements involved on the event}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{position_1:}{the first position of TI fragment, if 2 fragments, 
+#'     first position is from the first fragment}
+#'     \item{position_2:}{the last position of TI fragment, if 2 fragments, 
+#'     last position is from the second fragment.}
 #'     }
 #'   }
 #' }
@@ -1010,11 +1064,11 @@
 #' \describe{
 #'   \item{bin_df:}{all information regarding bins:
 #'   \describe{
-#'     \item{ID:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
-#'     \item{position:}{}
+#'     \item{ID:}{The bin/probe specific ID}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
+#'     \item{position:}{The bin/probe specific position}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{segment:}{The segment the bin/probe belongs to}
 #'     \item{TU:}{The overarching transcription unit}
@@ -1026,15 +1080,14 @@
 #'      to}
 #'     \item{intensity:}{The relative intensity at time point 0}
 #'     \item{flag:}{The flag of the bin/probe(TI, PDD)}
-#'     \item{TI_termination_factor:}{The TI_termination_factor of the bin/probe 
-#'     (in case TI is detected)}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
 #'     }
 #'   }
 #'   \item{frag_df:}{all information regarding fragments:
 #'   \describe{
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{first_position_frg:}{The first position of the fragment on the
 #'      genome}
 #'     \item{last_position_frg:}{The last position of the fragment on the
@@ -1056,111 +1109,132 @@
 #'   }
 #'   \item{event_df:}{all information regarding events:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{FC_HL:}{Fold change of half-life}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
 #'     \item{FC_intensity:}{Fold change of intensity}
-#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
-#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity, position of the half-life fragment is adapted to intensity 
+#'     fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_HL_int_df:}{all information regarding events related to 
 #'   half-life and intensity:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{FC_HL:}{}
-#'     \item{FC_intensity:}{}
-#'     \item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'     \item{FC_intensity:}{Integer, the fold change value of 2 intensity 
+#'     fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity,
 #'     position of the half-life fragment is adapted to intensity fragment}
 #'     \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 #'     intensity}
-#'     \item{event_position:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_ps_itss_df:}{all information regarding events related to 
 #'   pausing sites and iTSS_I:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{FC_HL_adapted:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+#'     \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'     of intensity,
+#'     position of the half-life fragment is adapted to intensity fragment}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{events_velocity_df:}{all information regarding events related to 
 #'   velocity:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{event_position:}{}
-#'     \item{velocity_ratio:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments 
+#'     with an event}
+#'     \item{velocity_ratio:}{Integer, ratio of velocity between 2 delay 
+#'     fragments}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{segment_1:}{}
-#'     \item{segment_2:}{}
-#'     \item{event_duration:}{}
-#'     \item{gap_fragments:}{}
-#'     \item{features:}{}
+#'     \item{segment_1:}{String, the first fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{segment_2:}{String, the second fragment of the two of fragments 
+#'     subjected to analysis}
+#'     \item{event_duration:}{Integer, the duration between two delay fragments}
+#'     \item{gap_fragments:}{Integer, the distance between two delay fragments}
+#'     \item{features:}{Integer, number of fragements involved on the event}
 #'     }
 #'   }
 #'   \item{TI_df:}{all information regarding TI:
 #'   \describe{
-#'     \item{event:}{}
-#'     \item{TI_fragment:}{}
-#'     \item{TI_termination_factor:}{}
-#'     \item{p_value:}{}
-#'     \item{p_adjusted:}{}
-#'     \item{feature_type:}{}
-#'     \item{gene:}{}
-#'     \item{locus_tag:}{}
+#'     \item{event:}{String, event type}
+#'     \item{TI_fragment:}{String, the fragment with TI}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
+#'     \item{p_value:}{Integer, p_value of the event}
+#'     \item{p_adjusted:}{Integer, p_value adjusted}
+#'     \item{feature_type:}{String, region annotation covering the fragments}
+#'     \item{gene:}{String, gene annotation covering the fragments}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     \item{strand:}{The bin/probe specific strand}
 #'     \item{TU:}{The overarching transcription unit}
-#'     \item{features:}{}
-#'     \item{event_position:}{}
-#'     \item{position_1:}{}
-#'     \item{position_2:}{}
+#'     \item{features:}{Integer, number of fragements involved on the event}
+#'     \item{event_position:}{Integer, the position middle between 2 fragments
+#'     with an event}
+#'     \item{position_1:}{the first position of TI fragment, if 2 fragments,
+#'     first position is from the first fragment}
+#'     \item{position_2:}{the last position of TI fragment, if 2 fragments, 
+#'     last position is from the second fragment.}
 #'     }
 #'   }
 #' }
@@ -1219,34 +1293,42 @@
 #' @format A list with 2 items:
 #' \describe{
 #'   \item{region:}{the region from the gff file}
-#'   \item{gene:}{the annotated gene name}
-#'   \item{locus_tag:}{the annotated locus tag}
+#'   \item{gene:}{String, gene annotation covering the fragments}
+#'   \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'   \item{strand:}{the strand of the annotation}
 #'   \item{TU:}{The overarching transcription unit}
 #'   \item{position:}{The bin/probe specific position}
-#'   \item{FC_fragment_intensity:}{}
-#'   \item{FC_intensity:}{}
-#'   \item{p_value_intensity:}{}
-#'   \item{FC_fragment_HL:}{}
-#'   \item{FC_HL:}{}
-#'   \item{p_value_HL:}{}
-#'   \item{FC_HL_intensity_fragment:}{}
-#'   \item{FC_HL_intensity:}{}
-#'   \item{FC_HL_adapted:}{}
-#'   \item{p_value_Manova:}{}
-#'   \item{synthesis_ratio:}{}
-#'   \item{synthesis_ratio_event:}{}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_position:}{}
-#'   \item{event_duration:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay:}{}
-#'   \item{half_life:}{}
-#'   \item{intensity:}{}
+#'   \item{FC_fragment_intensity:}{String, fragments involved in fold change 
+#'   between 2 intensity fragments}
+#'   \item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{p_value_intensity:}{p_value of the fold change of intensity fragments}
+#'   \item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
+#'   \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+#'   \item{p_value_HL:}{p_value of the fold change of HL fragments}
+#'   \item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change
+#'   between 2 half-life fragments and fold change between 2 intensity fragments}
+#'   \item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments 
+#'   and fold change between 2 intensity fragments}
+#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'   of intensity, position of the half-life fragment is adapted to intensity 
+#'   fragment}
+#'   \item{p_value_Manova:}{p_value of the variance between two fold-changes, HL
+#'   and intensity}
+#'   \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate 
+#'   either Termination or iTSS}
+#'   \item{pausing_site:}{presence of pausing site indicated by +/-}
+#'   \item{iTSS_I:}{presence of iTSS_I indicated by +/-}
+#'   \item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
+#'   \item{ps_ts_fragment:}{The fragments involved in pausing site or iTSS_I}
+#'   \item{event_position:}{Integer, the position middle between 2 fragments 
+#'   with an event}
+#'   \item{event_duration:}{Integer, the duration between two delay fragments}
+#'   \item{delay_frg_slope:}{the slope value of the respective delay fragment}
+#'   \item{p_value_slope:}{p_value of the slope}
+#'   \item{delay:}{The delay value of the bin/probe}
+#'   \item{half_life:}{The half-life of the bin/probe}
+#'   \item{intensity:}{The relative intensity at time point 0}
 #' }
 #' 
 #' @source \url{https://github.com/CyanolabFreiburg/rifi}
@@ -1267,8 +1349,8 @@
 #'       \item{start:}{the start of the annotation}
 #'       \item{end:}{the end of the annotation}
 #'       \item{strand:}{the strand of the annotation}
-#'       \item{gene:}{the annotated gene name}
-#'       \item{locus_tag:}{the annotated locus tag}
+#'       \item{gene:}{String, gene annotation covering the fragments}
+#'       \item{locus_tag:}{String, locus_tag annotation covering the fragments}
 #'     }
 #'   }
 #'   \item{genome length:}{a numeric vector containing the length of the genome}

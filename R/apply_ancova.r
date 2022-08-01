@@ -1,40 +1,28 @@
-#' apply_ancova: is a statistical test to check variances between 2 segments
-#' showing pausing site (ps) or internal starting site (ITSS) independently.
-#' apply_ancova: is a statistical test to check if fragments showing ps and
+# =========================================================================
+#  apply_ancova    Statistical test to check variances between 2 segments
+#' showing pausing site (ps) or internal starting site (ITSS) independently
+# -------------------------------------------------------------------------
+#'
+#'
+#' apply_ancova is a statistical test to check if fragments showing ps and
 #' ITSS events have significant slope using Ancova test.
+
 #' The function uses ancova test. Ancova is applied when the data contains
 #' independent variables, dependent variables and covariant variables.
+
 #' In this case, segments are independent variables, position is the dependent
 #' variable and the delay is the covariant.
-#' The dataframe is prepared as depicted below. The lm fit is applied and
-#' p_value is extracted
-#'   delay  position  segment
-#'                         S1
-#'                         S1
-#'                         S1
-#'                         S1
-#'                         S2
-#'                         S2
-#'                         S2
-#'                         S2
+#'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
-#'   \item{ID:}{The bin/probe specific ID}
-#'   \item{position:}{The bin/probe specific position}
-#'   \item{delay:}{The delay value of the bin/probe}
-#'   \item{intercept:}{The vintercept of fit through the respective delay
-#'   fragment}
-#'   \item{slope:}{The slope of the fit through the respective delay
-#'   fragment}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{velocity_ratio:}{}
+#'   \item{p_value_slope:}{Integer, the p_value added to the inp}
+#'   \item{delay_frg_slope:}{Integer, the slope value of the fit through the 
+#'   respective delay fragment}
+#'   \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay 
+#'   fragments
+#'   }
 #' }
 #' 
 #' @examples
@@ -91,7 +79,7 @@ apply_ancova <- function(inp) {
             model2 <- lm(delay ~ position, data = df_2)
             # apply the coefficients of both models to the last point...
             # ...of segment 1 and subtract the distance separating both
-            # segments to bring them later... ...to 0
+            # segments to bring them later to 0
             y1 <-
               model1$coefficients[1] + model1$coefficients[2] *
               last(df_1$position)
@@ -101,7 +89,7 @@ apply_ancova <- function(inp) {
             dif <- abs(abs(y1) - abs(y2))
             # set the dataframe with delay fragment and delay values
             # subtract the positions from both segments from last
-            # position... ...of segment_1
+            # position of segment_1
             df_2$position <-
               abs(last(df_1$position) - df_2$position)
             df_1$position <-

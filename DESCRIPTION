@@ -1,20 +1,9 @@
 Package: rifi
-Title: 'rifi' anyalyses data from rifampicin time series ceated by microarray or RNAseq
+
+Title: 'rifi' analyses data from rifampicin time series created by microarray or RNAseq
 Version: 1.1.1
-Authors@R: 
-    person(given = "Loubna",
-           family = "Youssar",
-           role = c("aut", "cre"),
-           email = "loubna.youssar@biologie.uni-freiburg.de",
-           comment = c(ORCID = "0000-0002-3512-8333"))
-    person(given = "Walja",
-           family = "Wanney",
-           role = c("aut", "cre"),
-           email = "walja.wanney@students.uni-freiburg.de")
-    person(given = "Jens",
-           family = "Georg",
-           role = c("aut", "cre"),
-           email = "jens.georg@biologie.uni-freiburg.de")
+Authors@R: c(person("Loubna", "Youssar", email = "lyoussar@gmail.com", role = c("aut", "cre")), person("Walja", "Wanney", email = "jawalja@gmail.com", role = c("aut", "cre")),person("Jens", "Georg", email = "jens.georg@biologie.uni-freiburg.de", role = c("aut", "cre")))
+
 Description: 'rifi' analyses data from rifampicin time series created by microarray or RNAseq. 
 	'rifi' is a transcriptome data analysis tool for the holistic identification of transcription and decay associated processes.
 	The decay constants and the delay of the onset of decay is fitted for each probe/bin. Subsequently, probes/bins of equal properties
@@ -26,7 +15,7 @@ Description: 'rifi' analyses data from rifampicin time series created by microar
 	All data are integrated to give an estimate of continous transcriptional units, i.e. operons. 	
 	Comprehensive output tables and visualizations of the full genome result and the individual fits for all probes/bins are produced.
 Depends:
-	R (>= 4.1)
+	R (>= 4.2)
 Imports:
 	car,
 	cowplot,
@@ -50,6 +39,7 @@ Imports:
 	SummarizedExperiment,
 	tibble,
 	rtracklayer,
+	reshape2,
 	utils	
 Suggests:
 	DescTools,

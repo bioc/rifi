@@ -2,43 +2,10 @@
 % Please edit documentation in R/dataframe_summary_events_HL_int.r
 \name{dataframe_summary_events_HL_int}
 \alias{dataframe_summary_events_HL_int}
-\title{dataframe_summary_events_HL_int creates one table with all events between
-the segments.
-The dataframe_summary_events_HL_int creates one table with the following
-columns: event, features, p_value, event_position, event_duration, position,
+\title{The dataframe_summary_events_HL_int creates one table with the following
+columns: event, features, p_value, event_position, position,
 region, gene, locus_tag, strand, TU, segment_1, segment_2, length, FC_HL,
-FC_intensity, FC_HL/FC_intensity.
-The columns are:
-\enumerate{
-\item event: event type, pausing site, iTSS_I, iTSS_II, Termination, HL_event,
-Int_event, HL_Int_event and velocity_change.
-\item FC_HL: fold change between 2 half-life fragments
-\item FC_intensity: fold change between 2 intensity fragments
-\item FC_HL/FC_intensity: ratio of fold change between 2 half-life fragments
-and fold change between 2 intensity fragments.
-\item p_value: depending on the event, t-test, manova test p_value is assigned.
-\item feature_type: indicated on the output data frame as region, are the
-feature type covering the event.
-\item gene: gene covering the event.
-\item locus_tag: locus_tag covering the event.
-\item strand: +/- indicated in case of stranded data.
-\item TU: TU covering the event.
-\item segment_1: the first segment of the event, includes the segment, TU,
-delay fragment in case of ps or iTSS_I. The rest of the events include HL
-fragment and could be extended
-intensity fragment.
-\item segment_2: same description as segment_1 but is the second fragment
-of the event.
-\item event_position: the position of event, calculated dividing the last
-position of the first fragment and the first position of the next fragment
-on 2.
-\item event_duration: the difference (min) between 2 delay fragment when ps
-or iTSS_I happen.
-\item gap_fragments: length in position (nt), calculated by the difference
-between the last position of the first fragment and the first position of
-the second fragment.
-\item features: number of segment involved on the event.
-}}
+FC_intensity, FC_HL/FC_intensity.}
 \usage{
 dataframe_summary_events_HL_int(data, data_annotation)
 }
@@ -49,43 +16,44 @@ dataframe_summary_events_HL_int(data, data_annotation)
 }
 \value{
 \describe{
-\item{event:}{}
-\item{p_value:}{}
-\item{p_adjusted:}{}
-\item{FC_HL:}{}
-\item{FC_intensity:}{}
-\item{FC_HL_adapted:}{Fold change of half-life/ fold change of intensity,
-position of the half-life fragment is adapted to intensity fragment}
+\item{event:}{String, event type}
+\item{p_value:}{Integer, p_value of the event}
+\item{p_adjusted:}{Integer, p_value adjusted}
+\item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+\item{FC_intensity:}{Integer, the fold change value of 2 intensity
+fragments}
+\item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change
+of intensity, position of the half-life fragment is adapted to intensity
+fragment}
 \item{FC_HL_FC_intensity:}{Fold change of half-life/ fold change of
 intensity}
-\item{event_position:}{}
-\item{feature_type:}{}
-\item{gene:}{}
-\item{locus_tag:}{}
-\item{strand:}{The bin/probe specific strand}
-\item{TU:}{The overarching transcription unit}
-\item{segment_1:}{}
-\item{segment_2:}{}
-\item{event_duration:}{}
-\item{gap_fragments:}{}
-\item{features:}{}
+\item{feature_type:}{String, region annotation covering the fragments}
+\item{gene:}{String, gene annotation covering the fragments}
+\item{locus_tag:}{String, locus_tag annotation covering the fragments}
+\item{strand:}{Boolean. The bin/probe specific strand (+/-)}
+\item{TU:}{String, The overarching transcription unit}
+\item{segment_1:}{String, the first fragment of the two of fragments
+subjected to analysis}
+\item{segment_2:}{String, the second fragment of the two of fragments
+subjected to analysis}
+\item{event_position:}{Integer, the position middle between 2 fragments
+with an event}
+\item{gap_fragments:}{Integer, the distance between two delay fragments}
+\item{features:}{Integer, number of fragements involved on the event}
 }
 }
 \description{
-dataframe_summary_events_HL_int creates one table with all events between
-the segments.
-The dataframe_summary_events_HL_int creates one table with the following
-columns: event, features, p_value, event_position, event_duration, position,
-region, gene, locus_tag, strand, TU, segment_1, segment_2, length, FC_HL,
-FC_intensity, FC_HL/FC_intensity.
 The columns are:
 \enumerate{
 \item event: event type, pausing site, iTSS_I, iTSS_II, Termination, HL_event,
 Int_event, HL_Int_event and velocity_change.
-\item FC_HL: fold change between 2 half-life fragments
-\item FC_intensity: fold change between 2 intensity fragments
-\item FC_HL/FC_intensity: ratio of fold change between 2 half-life fragments
+\item FC_HL: fold change of 2 half-life fragments.
+\item FC_intensity: fold change of 2 intensity fragments.
+\item FC_HL/FC_intensity: ratio of fold change of 2 half-life fragments
 and fold change between 2 intensity fragments.
+\item FC_HL_adapted: ratio of the fold change of half-life and fold change
+of intensity. The position of the half-life fragment is adapted to
+intensity fragment.
 \item p_value: depending on the event, t-test, manova test p_value is assigned.
 \item feature_type: indicated on the output data frame as region, are the
 feature type covering the event.
@@ -95,15 +63,12 @@ feature type covering the event.
 \item TU: TU covering the event.
 \item segment_1: the first segment of the event, includes the segment, TU,
 delay fragment in case of ps or iTSS_I. The rest of the events include HL
-fragment and could be extended
-intensity fragment.
+fragment and could be extended intensity fragment.
 \item segment_2: same description as segment_1 but is the second fragment
 of the event.
 \item event_position: the position of event, calculated dividing the last
 position of the first fragment and the first position of the next fragment
 on 2.
-\item event_duration: the difference (min) between 2 delay fragment when ps
-or iTSS_I happen.
 \item gap_fragments: length in position (nt), calculated by the difference
 between the last position of the first fragment and the first position of
 the second fragment.

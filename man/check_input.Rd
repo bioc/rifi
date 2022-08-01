@@ -2,8 +2,7 @@
 % Please edit documentation in R/check_input.r
 \name{check_input}
 \alias{check_input}
-\title{check_input: reviews the input given by the user.
-'check_input' stops the operation if the input data frame has severe faults.
+\title{'check_input' stops the operation if the input data frame has severe faults.
 Less severe faults lead to the removal of wrong IDs and a warnings describing
 the problem.
 The Summarized Experiment colData must have the columns "timepoint" with
@@ -13,7 +12,7 @@ The replicate must be convertible to numeric.
 In the RowRanges, optionally, IDs can be given as character
 (except ",","|","_"),but need to refer to a unique position/strand
 combination.
-Strand information need to be given.
+Strand information needs to be given.
 The relative intensity in the assay must be numeric.
 The relative intensity for the first time point cannot be 0 or NA.}
 \usage{
@@ -29,7 +28,6 @@ the SummarizedExperiment object: checked, and with position, ID and
 filtration added to the rowRanges.
 }
 \description{
-check_input: reviews the input given by the user.
 'check_input' stops the operation if the input data frame has severe faults.
 Less severe faults lead to the removal of wrong IDs and a warnings describing
 the problem.
@@ -40,7 +38,7 @@ The replicate must be convertible to numeric.
 In the RowRanges, optionally, IDs can be given as character
 (except ",","|","_"),but need to refer to a unique position/strand
 combination.
-Strand information need to be given.
+Strand information needs to be given.
 The relative intensity in the assay must be numeric.
 The relative intensity for the first time point cannot be 0 or NA.
 }

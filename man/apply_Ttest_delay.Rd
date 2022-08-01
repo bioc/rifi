@@ -2,12 +2,8 @@
 % Please edit documentation in R/apply_Ttest_delay.r
 \name{apply_Ttest_delay}
 \alias{apply_Ttest_delay}
-\title{apply_Ttest_delay: is a statistical test to check the significance
-of the point between 2 segments showing pausing site (ps) and
-internal starting site (ITSS) independently.
-apply_Ttest_delay uses t-test. The last point from the first segment
-and the first point from the second segment are selected and added
-to the residuals of each model. The sum is subjected to t-test.}
+\title{segments showing pausing site (ps) and internal
+starting site (ITSS) independently}
 \usage{
 apply_Ttest_delay(inp)
 }
@@ -17,14 +13,7 @@ apply_Ttest_delay(inp)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{delay:}{The delay value of the bin/probe}
-\item{delay_fragment:}{The delay fragment the bin belongs to}
-\item{pausing_site:}{}
-\item{iTSS_I:}{}
-\item{ps_ts_fragment:}{}
-\item{event_ps_itss_p_value_Ttest:}{}
+\item{event_ps_itss_p_value_Ttest:}{Integer, the p_value added to the input}
 }
 }
 \description{

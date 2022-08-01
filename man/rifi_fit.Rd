@@ -2,7 +2,8 @@
 % Please edit documentation in R/rifi_fit.r
 \name{rifi_fit}
 \alias{rifi_fit}
-\title{rifi_fit: conveniently wraps all fitting steps}
+\title{rifi_fit wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
+plot_singleProbe_function.}
 \usage{
 rifi_fit(
   inp,
@@ -65,7 +66,7 @@ TI_termination_factor added to the rowRanges. The full fit data is saved in
 the metadata as "fit_STD" and "fit_TI". A plot is given if viz = TRUE.
 }
 \description{
-Wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
+rifi_fit wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
 plot_singleProbe_function.
 }
 \examples{

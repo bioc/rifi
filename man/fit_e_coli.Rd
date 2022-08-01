@@ -23,7 +23,7 @@ is applied}
 \item{postion_segment:}{The position based segment}
 \item{delay:}{The delay value of the bin/probe}
 \item{half_life:}{The half-life of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 }
 }
 \item{fit_obj_STD:}{the fit object for the standard fit:
@@ -41,7 +41,7 @@ is applied}
 \item{ti_delay:}{The ti-delay value of the bin/probe}
 \item{half_life:}{The half-life of the bin/probe}
 \item{ti_value:}{The ti-value of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 \item{synthesis_rate:}{The synthesis rate of the bin/probe}
 \item{TI_background:}{The background value of the fit}
 \item{position:}{The bin/probe specific position}

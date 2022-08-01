@@ -2,7 +2,7 @@
 % Please edit documentation in R/TUgether.r
 \name{TUgether}
 \alias{TUgether}
-\title{TUgether: combines delay fragments into TUs.}
+\title{TUgether combines delay fragments into TUs. The column "TU" is added.}
 \usage{
 TUgether(inp, cores = 1, pen = -0.75)
 }
@@ -28,10 +28,6 @@ fragment}
 }
 }
 \description{
-TUgether combines delay fragments into TUs.
-The column "TU" is added.
-}
-\details{
 TUgether combines delay fragments into TUs. It uses score fun_increasing
 on the start and end points of delay_fragments.
 The function used is:

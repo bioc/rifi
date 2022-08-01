@@ -2,8 +2,7 @@
 % Please edit documentation in R/fragment_inty.r
 \name{fragment_inty}
 \alias{fragment_inty}
-\title{fragment_inty: performs the intensity fragmentation
-fragment_inty makes intensity_fragments based on HL_fragments and assigns
+\title{fragment_inty makes intensity_fragments based on HL_fragments and assigns
 all gathered information to the SummarizedExperiment object.
 The columns "intensity_fragment" and "intensity_mean_fragment" are added.
 fragment_inty makes intensity_fragments and assigns the mean of each
@@ -33,7 +32,6 @@ the SummarizedExperiment object: with intensity_fragment and
 intensity_mean_fragment added to the rowRanges.
 }
 \description{
-fragment_inty: performs the intensity fragmentation
 fragment_inty makes intensity_fragments based on HL_fragments and assigns
 all gathered information to the SummarizedExperiment object.
 The columns "intensity_fragment" and "intensity_mean_fragment" are added.

@@ -18,7 +18,7 @@ applied}
 \item{position_segment:}{The position based segment}
 \item{delay:}{The delay value of the bin/probe}
 \item{half_life:}{The half-life of the bin/probe}
-\item{TI_termination_factor:}{The termination factor of the bin/probe}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
 \item{delay_fragment:}{The delay fragment the bin belongs to}
 \item{velocity_fragment:}{The velocity value of the respective delay
 fragment}
@@ -36,29 +36,34 @@ intensity fragment}
 \item{TI_mean_termination_factor:}{The mean termination factor of the
 respective TI fragment}
 \item{seg_ID:}{The combined ID of the fragment}
-\item{pausing_site:}{}
-\item{iTSS_I:}{}
-\item{ps_ts_fragment:}{}
-\item{event_ps_itss_p_value_Ttest:}{}
-\item{p_value_slope:}{}
-\item{delay_frg_slope:}{}
-\item{velocity_ratio:}{}
-\item{event_duration:}{}
-\item{event_position:}{}
-\item{FC_HL:}{}
-\item{FC_fragment_HL:}{}
-\item{p_value_HL:}{}
-\item{FC_intensity:}{}
-\item{FC_fragment_intensity:}{}
-\item{p_value_intensity:}{}
-\item{FC_HL_intensity:}{}
-\item{FC_HL_intensity_fragment:}{}
-\item{FC_HL_adapted:}{}
-\item{synthesis_ratio:}{}
-\item{synthesis_ratio_event:}{}
-\item{p_value_Manova:}{}
-\item{p_value_TI:}{}
-\item{TI_fragments_p_value:}{}
+\item{pausing_site:}{presence of pausing site indicated by +/-}
+\item{iTSS_I:}{presence of iTSS_I indicated by +/-}
+\item{ps_ts_fragment:}{The fragments involved in pausing site or iTSS_I}
+\item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
+\item{p_value_slope:}{p_value of the slope}
+\item{delay_frg_slope:}{the slope value of the respective delay fragment}
+\item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+\item{event_duration:}{Integer, the duration between two delay fragments}
+\item{event_position:}{Integer, the position middle between 2 fragments
+with an event}
+\item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+\item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
+\item{p_value_HL:}{p_value of the fold change of HL fragments}
+\item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+\item{FC_fragment_intensity:}{String, fragments involved in fold change
+between 2 intensity fragments}
+\item{p_value_intensity:}{p_value of the fold change of intensity fragments}
+\item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+\item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+\item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of
+intensity,
+position of the half-life fragment is adapted to intensity fragment}
+\item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
+\item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either Termination or iTSS}
+\item{p_value_Manova:}{p_value of the variance between two fold-changes,
+HL and intensity}
+\item{p_value_TI:}{p_value of TI fragment}
+\item{TI_fragments_p_value:}{p_value of 2 TI fragments}
 }
 }
 \source{

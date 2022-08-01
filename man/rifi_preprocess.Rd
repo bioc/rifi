@@ -2,8 +2,7 @@
 % Please edit documentation in R/rifi_preprocess.r
 \name{rifi_preprocess}
 \alias{rifi_preprocess}
-\title{rifi_preprocess: conveniently wraps all pre-processing steps.
-Wraps the functions:
+\title{rifi_preprocess wraps the functions:
 \enumerate{
 \item check_input
 \item make_df
@@ -88,8 +87,7 @@ intensity, probe_TI, position_segment, flag and filtration added to the
 rowRanges.
 }
 \description{
-rifi_preprocess: conveniently wraps all pre-processing steps.
-Wraps the functions:
+rifi_preprocess wraps the functions:
 \enumerate{
 \item check_input
 \item make_df

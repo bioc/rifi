@@ -21,8 +21,13 @@ t_test_function <-
         frg.2.h <- tu[which(tu[, frag] == seg[j + 1]),]
         #if the dataframe has less than 3 probes/bins, will not be subjected to
         # t-test
-        if (nrow(frg.1.h) < 3 | nrow(frg.2.h) < 3) {
+        if (nrow(frg.1.h) < 2 | nrow(frg.2.h) < 2) {
           next ()
+        } else if(o == "HL" & nrow(frg.1.h) >= 3 & nrow(frg.2.h) == 0){
+          quot.hl <-1
+          frag_hl <- paste0(seg[j], ":", seg[j])
+          #assign NA to a p_value
+          t_h <- NA
         } else if (abs(last(frg.1.h$position) - frg.2.h$position[1]) <=
                    threshold) {
           frg.1.h <- tu[which(tu[, frag] == seg[j]), param]
@@ -39,19 +44,19 @@ t_test_function <-
           #Fold change of the neighboring fragments, the mean of the
           #fragment2/the mean of the fragment1
           quot.hl <- log2(mean(frg.2.h) / mean(frg.1.h))
-          #assign the fragments name on the corresponding column
+          #assign the fragments name to the corresponding column
           Column <- last(as.data.frame(rowRanges(data)[, frag]))
           rows <- which(Column %in% seg[j])
           if (o == "HL") {
             rowRanges(data)$FC_fragment_HL[rows] <-
               rep(frag_hl, times = length(which(Column %in% seg[j])))
-            #assign the ratio of FC on the corresponding column
+            #assign the ratio of FC to the corresponding column
             rowRanges(data)$FC_HL[
               which(rowRanges(data)$HL_fragment == seg[j])] <-
               rep(quot.hl, times = length(which(
                 rowRanges(data)$HL_fragment == seg[j]
               )))
-            #assign the p_value on the corresponding column
+            #assign the p_value to the corresponding column
             rowRanges(data)$p_value_HL[
               which(rowRanges(data)$HL_fragment == seg[j])] <-
               rep(t_h, times = length(which(
@@ -60,24 +65,24 @@ t_test_function <-
           } else if (o == "intensity") {
             rowRanges(data)$FC_fragment_intensity[rows] <-
               rep(frag_hl, times = length(which(Column %in% seg[j])))
-            #assign the ratio of FC on the corresponding column
+            #assign the ratio of FC to the corresponding column
             rowRanges(data)$FC_intensity[
               which(rowRanges(data)$intensity_fragment == seg[j])] <-
               rep(quot.hl, times = length(which(
                 rowRanges(data)$intensity_fragment == seg[j]
               )))
-            #assign the p_value on the corresponding column
-            rowRanges(data)$p_value_HL[
+            #assign the p_value to the corresponding column
+            rowRanges(data)$p_value_intensity[
               which(rowRanges(data)$intensity_fragment == seg[j])] <-
               rep(t_h, times = length(which(
                 rowRanges(data)$intensity_fragment == seg[j]
               )))
-          }
-        } else{
-          next ()
+            }
+          } 
         }
+      } else {
+        next ()
       }
-    }
     return(data)
   }
 

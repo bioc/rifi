@@ -2,8 +2,7 @@
 % Please edit documentation in R/apply_t_test.r
 \name{apply_t_test}
 \alias{apply_t_test}
-\title{apply_t_test: it uses the statistical t_test to check if the
-fold-change of half-life (HL) fragments and the fold-change
+\title{of half-life (HL) fragments and the fold-change
 intensity fragments respectively are significant.}
 \usage{
 apply_t_test(inp, threshold = 300)
@@ -16,37 +15,19 @@ apply_t_test(inp, threshold = 300)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{intensity:}{The relative intensity at time point 0}
-\item{half_life:}{The half-life of the bin/probe}
-\item{HL_fragment:}{The half-life fragment the bin belongs to}
-\item{HL_mean_fragment:}{The mean half-life value of the respective
-half-life fragment}
-\item{intensity_fragment:}{The intensity fragment the bin belongs to}
-\item{intensity_mean_fragment:}{The mean intensity value of the respective
-intensity fragment}
-\item{TU:}{The overarching transcription unit}
-\item{pausing_site:}{}
-\item{iTSS_I:}{}
-\item{ps_ts_fragment:}{}
-\item{event_ps_itss_p_value_Ttest:}{}
-\item{p_value_slope:}{}
-\item{delay_frg_slope:}{}
-\item{velocity_ratio:}{}
-\item{event_duration:}{}
-\item{event_position:}{}
-\item{FC_HL:}{}
-\item{FC_fragment_HL:}{}
-\item{p_value_HL:}{}
-\item{FC_intensity:}{}
-\item{FC_fragment_intensity:}{}
-\item{p_value_intensity:}{}
+\item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
+\item{FC_fragment_HL:}{String, the fragments corresponding to HL fold change}
+\item{p_value_HL:}{Integer, the p_value added to the input of 2 HL fragments}
+\item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+\item{FC_fragment_intensity:}{String, the fragments corresponding to
+intensity fold change}
+\item{p_value_intensity:}{Integer, the p_value added to the input of 2
+intensity fragments}
 }
 }
 \description{
-apply_t_test compares the mean of two neighboring fragments within the same
-TU to check if the fold-change is significant.
+apply_t_test compares the mean of two neighboring fragments within the
+same TU to check if the fold-change is significant.
 Fragments with distance above threshold are not subjected to t-test.
 Dataframes with less than 3 rows are excluded.
 }
@@ -55,7 +36,7 @@ The functions used are:
 \enumerate{
 \item fragment_function: checks number of fragments inside TU, less
 than 2 are excluded otherwise they are gathered for analysis.
-\item t_test_function: exclude dataframes with less than 3 rows,
+\item t_test_function: excludes dataframes with less than 3 rows,
 makes fold-change and apply t-test, assign fragments names
 and ratio, add columns with the corresponding p_values.
 }

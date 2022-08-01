@@ -158,6 +158,17 @@ secondaryAxis <-  function(data, parameter, ind) {
   return(data)
 }
 
+outlier_plot <-  function(data, parameter, ind, maxvalue) {
+  data <- data %>%
+    filter(get('indice') == ind)
+  if (nrow(data) > 1 & length(data[, parameter] > 10 & 
+                              data[, parameter] < 30) >= 1) {
+    data[which(data[, parameter] > 10 & data[, parameter] < 30), 
+         parameter] <- maxvalue
+  }
+  return(data)
+}
+
 arrange_byGroup <- function(input, parameter) {
   slice <- slice
   data <- as.data.frame(input %>%
@@ -165,10 +176,6 @@ arrange_byGroup <- function(input, parameter) {
                           arrange(get('position')) %>%
                           slice(n()))
   if (unique(data$strand) == "-") {
-    data <- as.data.frame(input %>%
-                            group_by(input[, parameter]) %>%
-                            arrange(get('position')) %>%
-                            slice(n()))
     data[which(data$pausing_site == "+"), "position"] <-
       data[which(data$pausing_site == "+"), "position"] + 40
     data[which(data$iTSS_I == "+"), "position"] <-

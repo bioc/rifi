@@ -2,8 +2,7 @@
 % Please edit documentation in R/fragment_TI.r
 \name{fragment_TI}
 \alias{fragment_TI}
-\title{fragment_TI: performs the TI fragmentation.
-fragment_TI makes TI_fragments based on TUs and assigns all gathered
+\title{fragment_TI makes TI_fragments based on TUs and assigns all gathered
 information to the SummarizedExperiment object.
 The columns "TI_termination_fragment" and the TI_mean_termination_factor
 are added.
@@ -32,7 +31,6 @@ the SummarizedExperiment object: with TI_termination_fragment and
 TI_termination_mean_fragment added to the rowRanges.
 }
 \description{
-fragment_TI: performs the TI fragmentation.
 fragment_TI makes TI_fragments based on TUs and assigns all gathered
 information to the SummarizedExperiment object.
 The columns "TI_termination_fragment" and the TI_mean_termination_factor

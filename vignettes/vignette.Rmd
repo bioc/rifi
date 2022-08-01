@@ -1,5 +1,5 @@
 ---
-title: "Rifi"
+title: "rifi"
 
 author: "Walja Wanney, Loubna Youssar and Jens Georg"
 
@@ -36,7 +36,7 @@ suppressPackageStartupMessages(library(SummarizedExperiment))
 
 ## 0. Installation
 
-Please note that **'rifi'** is only available for unix based systems. 
+Please note that **'rifi'** is only available for Unix based systems. 
 To install this package, start R (>= version "4.2") and enter: 
 
 ``` {r, eval = FALSE}
@@ -44,9 +44,6 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
   install.packages("BiocManager")
 
 BiocManager::install("rifi")
-```
-
-``` {r test, echo = FALSE}
 ```
 
 ## I. Introduction
@@ -107,9 +104,12 @@ depth into **position_segments**. Those are grouped into **delay_fragments**
 by common velocity. Subsequently, each delay-fragment is grouped by similar
 half-life into **half_life_fragments**, on which the bins finally are grouped
 into **intensity_fragments** by similar intensity. From the fragmentation, many
-**events** can be extracted; **iTSS** (internal transcription start sites), transcription **pausing_sites**, **velocity_changes**,**processing_sites**, partial **terminations**, as well as instances of Rifampicin relievable transcription termination, e.g. by **TI** (transcription interference).
-All data are integrated to give an estimate of continous transcriptional units, i.e. operons. Comprehensive output tables and visualizations of the full genome result and the 
-individual fits for all *probes/bins* are produced.
+**events** can be extracted; **iTSS** (internal transcription start sites), transcription **pausing_sites**, **velocity_changes**,**processing_sites**, partial **terminations**, 
+as well as instances of Rifampicin relievable transcription termination, e.g. 
+by **TI** (transcription interference).
+All data are integrated to give an estimate of continuous transcriptional units,
+i.e. operons. Comprehensive output tables and visualizations of the full genome 
+result and the individual fits for all *probes/bins* are produced.
 
 
 <br/><br/>
@@ -120,9 +120,12 @@ knitr::include_graphics("hirarchy3.png")
 
 ### 1. Quickstart
 
-If you have your data prepared as described in [The Input Data Frame](#the-input-data-frame) you can use the 
-`rifi_wrapper` to run 'rifi" with default options. `rifi_wrapper` conveniently wraps all functions included in rifi. That allows the user to run the whole workflow with one function. If the data contain a background component, e.g. in case of microarray data, 
-take to define a meaningful background intensity. 
+If you have your data prepared as described in [The Input Data Frame]
+(#the-input-data-frame) you can use the `rifi_wrapper` to run 'rifi" with 
+default options. `rifi_wrapper` conveniently wraps all functions included in rifi.
+That allows the user to run the whole workflow with one function. If the data 
+contain a background component, e.g. in case of microarray data, take to define 
+a meaningful background intensity. 
 
 The functions used are:
 
@@ -154,7 +157,8 @@ wrapper_minimal <-
 ```
 <br/>
 The wrapper saves the output of each sub-function in a list. Thus each intermediate 
-result can be re-run with custom settings. the object 'wrapper_minimal' contains only minimal artificial data to reduce the runtime of the test run. 
+result can be re-run with custom settings. the object 'wrapper_minimal' contains
+only minimal artificial data to reduce the runtime of the test run. 
 
 ```{r, eval = TRUE}
 data(wrapper_minimal)
@@ -198,11 +202,13 @@ write.csv(metadata(summary_minimal)$dataframe_summary_1, file="filename.csv")
 ```
 
 #### 2. **fragment** based results
-Entry 7, **dataframe_summary_2**, contains
-all fit results for each **intensity_fragment**. Due to the hierachic fragmentation strategy [Figure 2] several **intensity_fragment** (I_x) can belong to one **decay_fragment** (Dc_x), one **delay_fragment** (D_x) and one transcriptional
-unit (TU_x).  The fragment IDs can be used to locate the fragment in the output
-PDF file. The fragments are mapped to the genome annotation and the mean halflife
-given in minutes and the mean intensity is given with their standard deviations. 
+Entry 7, **dataframe_summary_2**, contains all fit results for each 
+**intensity_fragment**. Due to the hierachic fragmentation strategy [Figure 2]
+several **intensity_fragment** (I_x) can belong to one **decay_fragment** (Dc_x),
+one **delay_fragment** (D_x) and one transcriptional unit (TU_x).  The fragment
+IDs can be used to locate the fragment in the output PDF file. The fragments are
+mapped to the genome annotation and the mean halflife given in minutes and the
+mean intensity is given with their standard deviations. 
 Also the estimated velocity in nt/min is given. The table can be exported as
 an **.csv** file using `write.csv()`.
 
@@ -229,15 +235,23 @@ metadata(summary_minimal)$dataframe_summary_events
 write.csv(metadata(summary_minimal)$dataframe_summary_events, file="filename.csv")
 ```
 <br/>
-Changes in the linear increase of the delay indicate a potential **pausing site** if there is a sudden delay increase (Figure 3A),
-a potential internal starting site **iTSS_I** if there is a sudden decrease in the delay (Figure 3B) and
-a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C). The events are statistically evaluated 
-by Ancova ([apply_ancova](#apply_ancova)) or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
+Changes in the linear increase of the delay indicate a potential **pausing site**
+if there is a sudden delay increase (Figure 3A), a potential internal starting 
+site **iTSS_I** if there is a sudden decrease in the delay (Figure 3B) and
+a **velocity** change of the RNA polymerase if there is a slope change (Figure 3C). 
+The events are statistically evaluated by Ancova ([apply_ancova](#apply_ancova))
+or a t-test ([apply_Ttest_delay](#apply_Ttest_delay)).
 <br/>
-A fragment border between halflife segments (**HL_event**) which belong to the same transcriptional unit might indicate a processing site (Figure 3D) and a fragment border 
-between intensity fragments (**Int_event**) (Figure 3E) can indicate a processing site (Figure 3F), a new transcriptional start site (**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending on the respective intensity foldchanges and the halflife foldchanges.
+A fragment border between halflife segments (**HL_event**) which belong to the 
+same transcriptional unit might indicate a processing site (Figure 3D) and a 
+fragment border between intensity fragments (**Int_event**) (Figure 3E) can 
+indicate a processing site (Figure 3F), a new transcriptional start site 
+(**iTSS_II**) (Figure 3G) or an partial **termination** (Figure 3H), depending 
+on the respective intensity foldchanges and the halflife foldchanges.
 <br/>
-Each **event** is described by is type, its p-Value and adjusted p-Value, the foldchange or event duration, the estimated event position, a mapping to existing annotations and the IDs of the two bordering fragments.
+Each **event** is described by is type, its p-Value and adjusted p-Value, 
+the foldchange or event duration, the estimated event position, a mapping to 
+existing annotations and the IDs of the two bordering fragments.
 
 <br/>
 ``` {r events1, echo = FALSE, fig.cap = "Transcriptional events", out.width = '100%'}
@@ -282,7 +296,7 @@ write.csv(rowRanges(summary_minimal), file="filename.csv")
 ### 3. The whole genome visualization
 <br/>
 
-``` {r visua, echo = FALSE, fig.cap = "Whole genome visualization",fig.align = "left", out.height = "200%"}
+``` {r visua, echo = FALSE, fig.cap = "Whole genome visualization", fig.align = "left", out.height = "200%"}
 knitr::include_graphics("genome_fragments_plot.png")
 ```
 
@@ -307,23 +321,29 @@ It is recommended to check the fit after running `rifi_fit`. If more than 30 % o
 
 You may need to check your penalties if the last visualization shows:
 
-* A high frequency of considerable long segments.
+##### 1. A high frequency of considerable long segments
 <br/><br/>
-``` {r longSegments, echo=FALSE, fig.cap="**Long segments**", out.width = '100%'}
+``` {r longSegments, echo = FALSE, fig.cap = "**Long segments**", out.width="200%", out.height = "100%"}
 knitr::include_graphics("longSegments.png")
 ```
 <br/><br/>
 
-* A high frequency of mini segments.
+##### 2. A high frequency of mini segments
+
+In this case you may need to double check your data either the mini-segments are 
+artifact of rifi or the data. The example below shows rather an artifact of
+the data since the segmentation is hierarchical. The half-life and intensity 
+segments are rather short because of the delay segmentation. 
+
 <br/><br/>
-``` {r miniSegments, echo=FALSE, fig.cap="**;ini segments**", out.width = '100%'}
+``` {r miniSegments, echo=FALSE, fig.cap="**Mini segments**", out.width = '250%'}
 knitr::include_graphics("miniSegments.png")
 ```
 <br/><br/>
 
-* A high frequency of extreme high values.
+##### 3. A high frequency of extreme high values
 <br/><br/>
-``` {r highValues, echo=FALSE, fig.cap="**High values**", out.width = '100%'}
+``` {r highValues, echo=FALSE, fig.cap="**High values**", out.width = '250%'}
 knitr::include_graphics("highValues.png")
 ```
 <br/><br/>
@@ -331,9 +351,6 @@ knitr::include_graphics("highValues.png")
 * Absence of events in case you run big data.
 
 * Absence of outliers.
-
-The penalties could be adjusted manually in case you do not detect any anomaly
-in row data neither on fit step. 
 
 ### 5. Citing `rifi`
 
@@ -733,15 +750,10 @@ knitr::include_graphics("TIPlot.png")
 ```
 <br/><br/>
 
-## IV. `rifi penalties`
+## IV. rifi penalties
 
-'rifi' uses dynamic programming to combine *probes/bins* with equal properties in the extracted values 
-into segments (called fragmentation in 'rifi'). The penalties define the specificity and
-sensitivity of the fragmentation. Higher penalties will result in less segments, i.e. a lower 
-sensitivity but a higher specificity and vice versa. For convenience 'rifi' provides an 
-automatic method which tries to maximize the correct segment splits and to minimize the 
-wrong splits using statistics. The result can be best investigated in the final visualization. If needed
-the penalties can be manually adapted.
+'rifi' uses dynamic programming to combine *probes/bins* with equal properties 
+in the extracted values into segments (called fragmentation in 'rifi'). The penalties define the specificity and sensitivity of the fragmentation. Higher penalties will result in less segments, i.e. a lower sensitivity but a higher specificity and vice versa. For convenience 'rifi' provides an automatic method which tries to maximize the correct segment splits and to minimize the wrong splits using statistics. The result can be best investigated in the final visualization. If needed the penalties can be manually adapted.
 
 `rifi_penalties` wraps all penalty steps, wraps the functions: `make_pen` and
 `viz_pen_obj.` For use of this wrapper jump to [`rifi_penalties`](#rifi_penalties)
@@ -853,7 +865,7 @@ of y on how close they are to a linear fit, for more details check
 #### 2. `fragment_HL_pen`
 
 `fragment_HL_pen` is called by `make_pen` function to automatically assign
-penalties for the dynamic programming of delay fragment. The function used for
+penalties for the dynamic programming of half-life fragments. The function used for
 `fragment_HL_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y on
 how close they are to the mean, for more details check 'functions_scoring.r'.
 <br/><br/>
@@ -861,7 +873,7 @@ how close they are to the mean, for more details check 'functions_scoring.r'.
 #### 3. `fragment_inty_pen`
 
 `fragment_inty_pen` is called by `make_pen` function to automatically assign
-penalties for the dynamic programming of delay fragment. The function used for
+penalties for the dynamic programming of intensity fragments. The function used for
 `fragment_inty_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y
 on how close they are to the mean, for more details check
 'functions_scoring.r'.
@@ -870,7 +882,7 @@ on how close they are to the mean, for more details check
 #### 4. `fragment_TI_pen`
 
 `fragment_TI_pen` is called by `make_pen` function to automatically assign
-penalties for the dynamic programming of delay fragment. The function used for
+penalties for the dynamic programming of TI fragments. The function used for
 `fragment_TI_pen` is `score_fun_ave`. `score_fun_ave` scores the values of y on
 how close they are to the mean, for more details check 'functions_scoring.r'.
 <br/>
@@ -1486,7 +1498,7 @@ on the first column. The table is added as metaData.
 transcription interference. The table is added as metaData.
 <br/><br/>
 
-## VIII. `rifi_visualization`
+## VIII. rifi_visualization
 
 `rifi_visualization` plots the whole genome with genes, transcription units
 (TUs), delay, half-life (HL), intensity fragments features, events, velocity,
@@ -1524,6 +1536,9 @@ The functions used are:
    `secondaryAxis`: adjusts the halflife or delay to 20 in case of the
     dataframe row numbers is equal to 1 and the halflife or delay exceed the
     limit, they are plotted with different shape and color
+    
+   `outlier_plot`: plot the outliers with half-life between 10 and 30 on the
+    maximum of the yaxis
     
    `add_genomeBorders`: resolves the issue when the annotated genes are on the
     borders and can not be plotted. The function splits the region in 2 adding

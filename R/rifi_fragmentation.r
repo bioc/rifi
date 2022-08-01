@@ -1,11 +1,19 @@
-#' rifi_fragmentation: conveniently wraps all fragmentation steps
+# =========================================================================
+# rifi_fragmentation       Conveniently wraps all fragmentation steps
+# -------------------------------------------------------------------------
 #'
 #' rifi_fragmentation wraps the following functions:
+
 #' 1. fragment_delay
+
 #' 2. fragment_HL
+
 #' 3. fragment_inty
+
 #' 4. TUgether
+
 #' 5. fragment_TI
+
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param cores integer: the number of assigned cores for the task.

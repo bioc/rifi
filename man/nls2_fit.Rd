@@ -2,8 +2,7 @@
 % Please edit documentation in R/nls2_fit.r
 \name{nls2_fit}
 \alias{nls2_fit}
-\title{nls2_fit: estimates decay for each probe or bin.
-nls2_fit uses nls2 function to fit a probe or bin using intensities of the
+\title{nls2_fit uses nls2 function to fit a probe or bin using intensities of the
 time series data from different time point.
 nls2 uses different starting values through expand grid and selects the best
 fit. Different filters could be applied prior fitting to the model.
@@ -18,16 +17,15 @@ usual case).
 above the background (recommended for special transcripts). Probes are
 flagged with "\emph{ABG}".
 Those transcripts are usually related to a specific function in bacteria.
-This filter selects all probes with the same ID,
-the mean is applied, the last time point is selected and compared to the
-threshold.
+This filter selects all probes with the same ID, the mean is applied,
+the last time point is selected and compared to the threshold.
 }}
 \usage{
 nls2_fit(
   inp,
   cores = 1,
-  decay = seq(0.08, 0.11, 0.02),
-  delay = seq(0, 10, 0.1),
+  decay = seq(0.01, 0.11, by = 0.02),
+  delay = seq(0, 10, by = 0.1),
   k = seq(0.1, 1, 0.2),
   bg = 0.2
 )
@@ -51,9 +49,13 @@ rate. Default is seq(0.1,1,0.2)}
 \value{
 the SummarizedExperiment object: with delay and decay added to the
 rowRanges. The full fit data is saved in the metadata as "fit_STD".
+\describe{
+\item{delay:}{Integer, the delay value of the bin/probe}
+\item{half_life:}{Integer, the half-life of the bin/probe}
+}
 }
 \description{
-the model used estimates the delay, decay, intensity of the first time
+The model used estimates the delay, decay, intensity of the first time
 point (synthesis rate/decay) and the background.
 The coefficients are gathered in vectors with the corresponding IDs.
 Absence of the fit or a very bad fit are assigned with NA.

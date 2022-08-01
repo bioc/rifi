@@ -2,8 +2,7 @@
 % Please edit documentation in R/make_df.r
 \name{make_df}
 \alias{make_df}
-\title{make_df: adds important columns to the SummarizedExperiment object.
-'make_df' adds to the SummarizedExperiment object with the columns:
+\title{'make_df' adds to the SummarizedExperiment object with the columns:
 "intensity", "probe_TI" and "flag".
 The replicates are collapsed into their respective means.
 "intensity" is the mean intensity from time point 0.
@@ -39,7 +38,6 @@ the SummarizedExperiment object: with intensity, probe_TI and
 flag added to the rowRanges.
 }
 \description{
-make_df: adds important columns to the SummarizedExperiment object.
 'make_df' adds to the SummarizedExperiment object with the columns:
 "intensity", "probe_TI" and "flag".
 The replicates are collapsed into their respective means.

@@ -2,8 +2,8 @@
 % Please edit documentation in R/apply_event_position.r
 \name{apply_event_position}
 \alias{apply_event_position}
-\title{apply_event_position: is a short version of apply_Ttest_delay function
-to extract event time duration as pausing site or iTSS happens.}
+\title{apply_event_position is a short version of apply_Ttest_delay function
+to extract event time duration for pausing site or iTSS.}
 \usage{
 apply_event_position(inp)
 }
@@ -13,17 +13,7 @@ apply_event_position(inp)
 \value{
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
-\item{ID:}{The bin/probe specific ID}
-\item{position:}{The bin/probe specific position}
-\item{delay:}{The delay value of the bin/probe}
-\item{pausing_site:}{}
-\item{iTSS_I:}{}
-\item{ps_ts_fragment:}{}
-\item{event_ps_itss_p_value_Ttest:}{}
-\item{p_value_slope:}{}
-\item{delay_frg_slope:}{}
-\item{velocity_ratio:}{}
-\item{event_position:}{}
+\item{event_position:}{Integer, position of the event added to the input}
 }
 }
 \description{

@@ -23,7 +23,7 @@ Significant events are assigned with an '*'.
 
 ### Dependencies
 
-Rifi framework has the following dependencies, whereas the brackets indicate the version Rifi has been build and tested on. Make sure the requirements are satisfied by your system. 
+Rifi framework is only available for Unix systems and has the following dependencies, whereas the brackets indicate the version Rifi has been build and tested on. Make sure the requirements are satisfied by your system. 
 
   [devtools](https://www.rdocumentation.org/packages/devtools/versions/1.13.6) (>= 1.13.6)
   

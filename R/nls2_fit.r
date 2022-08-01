@@ -1,29 +1,42 @@
-#' nls2_fit: estimates decay for each probe or bin.
+# =========================================================================
+# nls2_fit               Estimates decay for each probe or bin
+# -------------------------------------------------------------------------
+#'
+#'
 #' nls2_fit uses nls2 function to fit a probe or bin using intensities of the
 #' time series data from different time point.
+
 #' nls2 uses different starting values through expand grid and selects the best
 #' fit. Different filters could be applied prior fitting to the model.
+
 #' To apply nls2_fit function, prior filtration could applied.
+
 #' 1. generic_filter_BG: filter probes with intensities below background using
 #' threshold. Those probes are filtered.
+
 #' 2. filtration_below_backg: additional functions exclusive to microarrays
 #' could be applied. Its very strict to the background (not recommended in
 #' usual case).
+
 #' 3. filtration_above_backg: selects probes with a very high intensity and
 #' above the background (recommended for special transcripts). Probes are
 #' flagged with "_ABG_".
+
 #' Those transcripts are usually related to a specific function in bacteria.
-#' This filter selects all probes with the same ID,
-#' the mean is applied, the last time point is selected and compared to the
-#' threshold.
+#' This filter selects all probes with the same ID, the mean is applied, 
+#' the last time point is selected and compared to the threshold.
 #'
-#' the model used estimates the delay, decay, intensity of the first time
+#' The model used estimates the delay, decay, intensity of the first time
 #' point (synthesis rate/decay) and the background.
+
 #' The coefficients are gathered in vectors with the corresponding IDs.
 #' Absence of the fit or a very bad fit are assigned with NA.
+
 #' In case of probes with very high intensities and above the background,
 #' the model used makes abstinence of background coefficient.
+
 #' The output of all coefficients is saved in the metadata.
+
 #' The fits are plotted using the function_plot_fit.r through rifi_fit.
 #'
 #' @param inp SummarizedExperiment: the input with correct format.
@@ -38,6 +51,10 @@
 #'
 #' @return the SummarizedExperiment object: with delay and decay added to the
 #' rowRanges. The full fit data is saved in the metadata as "fit_STD".
+#'   \describe{
+#'   \item{delay:}{Integer, the delay value of the bin/probe}
+#'   \item{half_life:}{Integer, the half-life of the bin/probe}
+#'   }
 #' 
 #' @examples
 #' data(preprocess_minimal)
@@ -48,8 +65,8 @@
 nls2_fit <-
   function(inp,
            cores = 1,
-           decay = seq(.08, 0.11, 0.02),
-           delay = seq(0, 10, 0.1),
+           decay = seq(.01, .11, by = .02),
+           delay = seq(0, 10, by = 0.1),
            k = seq(0.1, 1, 0.2),
            bg = 0.2) {
     #order the input
@@ -80,15 +97,16 @@ nls2_fit <-
     st_STD <- expand.grid(decay = decay, delay = delay, k = k, bg = bg)
     st_ABG <- expand.grid(decay = decay, delay = delay, k = k)
     #boarders
-    # upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
-    #                   k = 1/(log(2)/(60)))
-    lower_STD <- list(decay = 0.01, delay = 0.001)
-    # upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
-    #                   k = 1/(log(2)/(60)))
-    lower_ABG <- list(decay = 0.01, delay = 0.001)
+    upper_STD <- list(decay = log(2)/(1/60), delay = max(time),
+                       k = 1/(log(2)/(60)))
+    lower_STD <- lower_STD <- list(decay = log(2)/(60), delay = 0.001, 
+                                   k = 0.01, bg = 0.2)
+    upper_ABG <- list(decay = log(2)/(1/60), delay = max(time),
+                       k = 1/(log(2)/(60)))
+    lower_ABG <- list(decay = log(2)/(60), delay = 0.001, k= 0.01)
     #models
-    model_STD <- inty ~ I(time < delay) * I(k / decay) + 
-      (time >= delay) * I(bg + (k / decay - bg) * (exp(-decay * (time - delay))))
+    model_STD <- inty ~ I(time < delay) * I(k / decay + bg) + 
+      (time >= delay) * I(bg + (k / decay) * (exp(-decay * (time - delay))))
 
     model_ABG <- inty ~ I(time < delay) * I(k / decay) + 
       (time >= delay) * I(k / decay * (exp(-decay * (time - delay))))

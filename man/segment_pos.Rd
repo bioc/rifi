@@ -2,8 +2,7 @@
 % Please edit documentation in R/segment_pos.r
 \name{segment_pos}
 \alias{segment_pos}
-\title{segment_pos: divides all IDs by position into position_segments.
-segment_pos adds the column "position_segment" to the rowRanges.
+\title{segment_pos adds the column "position_segment" to the rowRanges.
 To reduce run time, the data is divided by regions of no expression larger
 than "dist" nucleotides.}
 \usage{
@@ -20,7 +19,6 @@ the SummarizedExperiment object: with position_segment added to the
 rowRanges.
 }
 \description{
-segment_pos: divides all IDs by position into position_segments.
 segment_pos adds the column "position_segment" to the rowRanges.
 To reduce run time, the data is divided by regions of no expression larger
 than "dist" nucleotides.

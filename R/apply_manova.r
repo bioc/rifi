@@ -1,63 +1,23 @@
-#' apply_manova: this function checks if the ratio of hl ratio and
-#' intensity ratio is statistically significant.
-#' apply_manova compares the variance between two fold-changes,HL and intensity
-#' within the same TU (half-life frgA/half-life frgB/
-#' intensity frgA/intensity frgB).
+# =========================================================================
+# apply_manova   Checks if the ratio of hl ratio and intensity ratio 
+#'               is statistically significant
+# -------------------------------------------------------------------------
+#'
+#'
+#' apply_manova compares the variance between two fold-changes, HL and intensity
+#' within the same TU (half-life frgA/half-life frgB/intensity frgA/intensity frgB).
+
 #' HL fragment could cover two intensity fragments therefore this function sets
 #' first fragments borders and uses manova_function.
+
 #' Manova checks the variance between 2 segments (independent variables) and two
 #' dependents variables (HL and intensity).
-#'
-#' The functions used is:
-#' manova_function: applies Manova statistical test.
-#' The dataframe template is depicted below. The lm fit is applied
-#' and p_value is extracted.
-#' half_life  intensity  segment
-#' 1.10479637  1244.078      S1
-#' 1.19222097  1894.595      S1
-#' 1.16218422  1668.416      S1
-#' 1.08733743  1428.831      S1
-#' 0.72964160  1381.102      S2
-#' 0.06750874  2429.843      S2
-#' 0.61911329  1749.105      S2
-#' 0.51840661  1122.775      S2
-#'
+
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
 #' @return the probe data frame with the columns regarding statistics:
 #' \describe{
-#'   \item{ID:}{The bin/probe specific ID}
-#'   \item{position:}{The bin/probe specific position}
-#'   \item{intensity:}{The relative intensity at time point 0}
-#'   \item{half_life:}{The half-life of the bin/probe}
-#'   \item{HL_fragment:}{The half-life fragment the bin belongs to}
-#'   \item{HL_mean_fragment:}{The mean half-life value of the respective
-#'   half-life fragment}
-#'   \item{intensity_fragment:}{The intensity fragment the bin belongs to}
-#'   \item{intensity_mean_fragment:}{The mean intensity value of the respective
-#'   intensity fragment}
-#'   \item{TU:}{The overarching transcription unit}
-#'   \item{pausing_site:}{}
-#'   \item{iTSS_I:}{}
-#'   \item{ps_ts_fragment:}{}
-#'   \item{event_ps_itss_p_value_Ttest:}{}
-#'   \item{p_value_slope:}{}
-#'   \item{delay_frg_slope:}{}
-#'   \item{velocity_ratio:}{}
-#'   \item{event_duration:}{}
-#'   \item{event_position:}{}
-#'   \item{FC_HL:}{}
-#'   \item{FC_fragment_HL:}{}
-#'   \item{p_value_HL:}{}
-#'   \item{FC_intensity:}{}
-#'   \item{FC_fragment_intensity:}{}
-#'   \item{p_value_intensity:}{}
-#'   \item{FC_HL_intensity:}{}
-#'   \item{FC_HL_intensity_fragment:}{}
-#'   \item{FC_HL_adapted:}{}
-#'   \item{synthesis_ratio:}{}
-#'   \item{synthesis_ratio_event:}{}
-#'   \item{p_value_Manova:}{}
+#'   \item{p_value_Manova:}{Integer, the p_value added to the input}
 #' }
 #'
 #' @examples
@@ -124,12 +84,12 @@ apply_manova <- function(inp) {
         length(I_2$segment) < 2 | 
         length(hl_1$segment) < 2 |
         length(hl_2$segment) < 2)
-      {
+    {
       next ()
     }
     df <- cbind.data.frame(c(hl_1$half_life, hl_2$half_life),
                            c(I_1[, c("intensity", "segment")],
-                                            I_2[, c("intensity", "segment")]))
+                             I_2[, c("intensity", "segment")]))
     colnames(df)[1] <- "half_life"
     tryCatch({
       p_value_Manova <-
