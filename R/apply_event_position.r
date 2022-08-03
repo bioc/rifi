@@ -1,16 +1,17 @@
-# =========================================================================
-# apply_event_position Extract event time duration for pausing site or iTSS
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' apply_event_position 
+#' -------------------------------------------------------------------------
+#' apply_event_position extracts event time duration for pausing site or
+#' iTSS
 #'
+#' apply_event_position is a short version of apply_Ttest_delay function to
+#' extract event time duration for pausing site or iTSS. Its adds a new column 
+#' with the duration.
 #'
-#' apply_event_position is a short version of apply_Ttest_delay function
-#' to extract event time duration for pausing site or iTSS.
-#'
-#' apply_event_position adds a new column with the duration.
-#'
-#' @param inp SummarizedExperiment: the input data frame with correct format.
+#' @param inp SummarizedExperiment: the input data frame with correct 
+#' format.
 #' 
-#' @return the SummarizedExperiment with the columns regarding statistics:
+#' @return The SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{event_position:}{Integer, position of the event added to the input}
 #' }

@@ -2,35 +2,11 @@
 % Please edit documentation in R/dataframe_summary_events_ps_itss.r
 \name{dataframe_summary_events_ps_itss}
 \alias{dataframe_summary_events_ps_itss}
-\title{The dataframe_summary_events_ps_itss creates one table with the following
-columns: event, features, p_value, event_position, event_duration, position,
-region, gene, locus_tag, strand, TU, segment_1, segment_2, length,
-velocity_ratio.
-The columns are:
-\enumerate{
-\item event: event type, pausing site, iTSS_I, iTSS_II, Termination, HL_event,
-Int_event, HL_Int_event and velocity_change.
-\item velocity_ratio: velocity ratio between two delay fragments.
-\item p_value: depending on the event, t-test, manova test p_value is assigned.
-\item feature_type: indicated on the output data frame as region, are the
-feature type covering the event.
-\item gene: gene covering the event.
-\item locus_tag: locus_tag covering the event.
-\item strand: +/- indicated in case of stranded data.
-\item TU: TU covering the event.
-\item segment_1: the first segment of the event, includes the segment, TU,
-delay fragment in case of ps or iTSS_I.
-\item segment_2: same description as segment_1 but is the second fragment
-of the event.
-\item event_position: the position of event, calculated dividing the last
-position of the first fragment and the first position of the next fragment
-on 2.
-\item event_duration: the difference (min) between 2 delay fragment when ps or
-iTSS_I happen.
-\item gap_fragments: length in position (nt), calculated by the difference
-between the last position of the first fragment and the first position of
-the second fragment.
-\item features: number of segment involved on the event.
+\title{\subsection{=========================================================================
+dataframe_summary_events_ps_itss}{
+
+dataframe_summary_events_ps_itss  creates one table with all events between
+the segments.
 }}
 \usage{
 dataframe_summary_events_ps_itss(data, data_annotation)
@@ -42,24 +18,28 @@ dataframe_summary_events_ps_itss(data, data_annotation)
 }
 \value{
 \describe{
-\item{event:}{String, event type}
-\item{p_value:}{Integer, p_value of the event}
-\item{p_adjusted:}{Integer, p_value adjusted}
+\item{event:}{String, event type.}
+\item{p_value:}{Integer, p_value of the event.}
+\item{p_adjusted:}{Integer, p_value adjusted.}
 \item{event_position:}{Integer, the position middle between 2 fragments
-with an event}
+with an event.}
 \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay
-fragments}
-\item{feature_type:}{String, region annotation covering the fragments}
-\item{gene:}{String, gene annotation covering the fragments}
-\item{locus_tag:}{String, locus_tag annotation covering the fragments}
-\item{strand:}{Boolean. The bin/probe specific strand (+/-)}
-\item{TU:}{String, The overarching transcription unit}
-\item{segment_1:}{String, the first fragment of the two of fragments
-subjected to analysis}
+fragments.}
+\item{feature_type:}{String, region annotation covering the fragments.}
+\item{gene:}{String, gene annotation covering the fragments.}
+\item{locus_tag:}{String, locus_tag annotation covering the fragments.}
+\item{strand:}{Boolean. The bin/probe specific strand (+/-).}
+\item{TU:}{String, The overarching transcription unit.}
+\item{segment_1:}{String, the first segment of the event, includes the
+segment, TU, delay fragment in case of ps or iTSS_I. The rest of the
+events include HL fragment and could be extended intensity fragment.}
 \item{segment_2:}{String, the second fragment of the two of fragments
-subjected to analysis}
-\item{event_duration:}{Integer, the duration between two delay fragments}
-\item{gap_fragments:}{Integer, the distance between two delay fragments}
+subjected to analysis.}
+\item{event_duration:}{Integer, the difference (min) between 2 delay
+fragment when ps or iTSS_I happen.}
+\item{gap_fragments:}{Integer, length in position (nt), calculated by the
+difference between the last position of the first fragment and the first
+position of the second fragment.}
 \item{features:}{Integer, number of fragements involved on the event}
 }
 }
@@ -68,32 +48,6 @@ The dataframe_summary_events_ps_itss creates one table with the following
 columns: event, features, p_value, event_position, event_duration, position,
 region, gene, locus_tag, strand, TU, segment_1, segment_2, length,
 velocity_ratio.
-The columns are:
-\enumerate{
-\item event: event type, pausing site, iTSS_I, iTSS_II, Termination, HL_event,
-Int_event, HL_Int_event and velocity_change.
-\item velocity_ratio: velocity ratio between two delay fragments.
-\item p_value: depending on the event, t-test, manova test p_value is assigned.
-\item feature_type: indicated on the output data frame as region, are the
-feature type covering the event.
-\item gene: gene covering the event.
-\item locus_tag: locus_tag covering the event.
-\item strand: +/- indicated in case of stranded data.
-\item TU: TU covering the event.
-\item segment_1: the first segment of the event, includes the segment, TU,
-delay fragment in case of ps or iTSS_I.
-\item segment_2: same description as segment_1 but is the second fragment
-of the event.
-\item event_position: the position of event, calculated dividing the last
-position of the first fragment and the first position of the next fragment
-on 2.
-\item event_duration: the difference (min) between 2 delay fragment when ps or
-iTSS_I happen.
-\item gap_fragments: length in position (nt), calculated by the difference
-between the last position of the first fragment and the first position of
-the second fragment.
-\item features: number of segment involved on the event.
-}
 }
 \examples{
 data(stats_minimal)

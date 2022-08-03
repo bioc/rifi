@@ -2,9 +2,11 @@
 % Please edit documentation in R/viz_pen_obj.r
 \name{viz_pen_obj}
 \alias{viz_pen_obj}
-\title{viz_pen_obj provides an optional visualization of any penalty object
-created by make_pen. the function aan be customized to show only
-the n = top_i top results.}
+\title{\subsection{=========================================================================
+viz_pen_obj}{
+
+viz_pen_obj visualizes penalty objects
+}}
 \usage{
 viz_pen_obj(obj, top_i = nrow(obj[[3]][[1]]) * ncol(obj[[3]][[1]]))
 }

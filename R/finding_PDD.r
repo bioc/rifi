@@ -1,7 +1,7 @@
-# =========================================================================
-# finding_PDD   Flags potential candidates for post transcription decay
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' finding_PDD   
+#' -------------------------------------------------------------------------
+#' finding_PDD   Flags potential candidates for post transcription decay
 #' 
 #' 'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
 #' to the slope. The slope is further checked for steepness to decide for PDD.
@@ -25,7 +25,7 @@
 #' steeper than the thrsh to be flagged with '_PDD_'. Higher values result in
 #' fewer candidates. Advised to be kept at 0.001. Default is 0.001.
 #' 
-#' @return the SummarizedExperiment object: with "_PDD_" added to the flag
+#' @return The SummarizedExperiment object: with "_PDD_" added to the flag
 #' column.
 #'       
 #' @examples

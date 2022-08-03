@@ -2,7 +2,12 @@
 % Please edit documentation in R/predict_ps_itss.r
 \name{predict_ps_itss}
 \alias{predict_ps_itss}
-\title{(ITSS) between delay fragments.}
+\title{\subsection{=========================================================================
+predict_ps_itss}{
+
+predict_ps_itss predicts pausing sites (ps) and internal starting sites
+(ITSS) between delay fragments.
+}}
 \usage{
 predict_ps_itss(inp, maxDis = 300)
 }
@@ -13,7 +18,7 @@ predict_ps_itss(inp, maxDis = 300)
 fragments.}
 }
 \value{
-the SummarizedExperiment with the columns regarding statistics:
+The SummarizedExperiment with the columns regarding statistics:
 \describe{
 \item{pausing_site:}{Boolean, presence or absence of pausing_site event (ps)}
 \item{iTSS_I:}{Boolean, presence or absence of internal starting site event (iTSS_I)}
@@ -25,6 +30,8 @@ the SummarizedExperiment with the columns regarding statistics:
 predict_ps_itss predicts ps and ITSS within the same TU. Neighboring delay
 segments are compared to each other by positioning the intercept of the
 second segment into the first segment using slope and intercept coefficients.
+}
+\details{
 predict_ps_itss uses 3 steps to identify ps and ITSS:
 \enumerate{
 \item select unique TU.
@@ -35,18 +42,23 @@ delay fragment, TU and slope coordinates, velocity_fragment and intercept.
 point of the first segment using the coefficients of the second segment
 and vice versa. We get two predicted positions, the difference between
 them is compared to the threshold.
+}
+
 In case the strand is "-", additional steps are added:
+
 The positions of both segments are ordered from the last position to the
 first one.
+
 All positions are merged in one column and subtracted from the maximum
 position. the column is split in 2. The first and second correspond to
 the positions of the first and second segments respectively.
+
 Both segments are subjected to lm fit and the positions predicted are used
 on the same way as the opposite strand.
+
 If the difference between the positions predicted is lower than negative
 threshold, ps is assigned otherwise, and if the difference is higher than
 the positive threshold, ITSS is assigned.
-}
 }
 \examples{
 data(fragmentation_minimal)

@@ -1,17 +1,15 @@
-# =========================================================================
-# TUgether               Combines delay fragments into TUs
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' TUgether           
+#' -------------------------------------------------------------------------
+#'TUgether combines delay fragments into TUs
 #'
-#'
-#' TUgether combines delay fragments into TUs. The column "TU" is added.
-#'
-#' TUgether combines delay fragments into TUs. It uses score fun_increasing
-#' on the start and end points of delay_fragments.
-
+#' TUgether combines delay fragments into TUs. The column "TU" is added. It uses
+#' score fun_increasing on the start and end points of delay_fragments.
+#' 
 #' The function used is:
 
 #' .score_fun_increasing
-
+#' 
 #' The input is the SummarizedExperiment object.
 
 #' pen is the penalty for new fragments in the dynamic programming. Since high
@@ -22,7 +20,7 @@
 #' @param pen numeric: an internal parameter for the dynamic programming.
 #' Higher values result in fewer fragments. Default -0.75.
 #'
-#' @return the SummarizedExperiment with the columns regarding the TU:
+#' @return The SummarizedExperiment with the columns regarding the TU:
 #' \describe{
 #'   \item{ID:}{The bin/inp specific ID}
 #'   \item{position:}{The bin/inp specific position}

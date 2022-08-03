@@ -1,6 +1,7 @@
-# =========================================================================
-# rifi_penalties           Conveniently wraps all penalty steps
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' rifi_penalties          
+#' -------------------------------------------------------------------------
+#' rifi_penalties wraps conveniently all penalty steps
 #'
 #' rifi_penalties wraps the functions: make_pen and viz_pen_obj.
 #'
@@ -25,7 +26,7 @@
 #' @param rez_pen_out numeric: the number of outlier penalties iterated within
 #' the outlier penalty range. Default is 7.
 #' 
-#' @return the SummarizedExperiment object: with the penalties in the
+#' @return The SummarizedExperiment object: with the penalties in the
 #' logbook added to the metadata. Also adds logbook_details if details is TRUE,
 #' and plots the penalties if viz is TRUE.
 #'

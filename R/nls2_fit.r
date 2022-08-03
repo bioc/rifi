@@ -1,14 +1,13 @@
-# =========================================================================
-# nls2_fit               Estimates decay for each probe or bin
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' nls2_fit 
+#' -------------------------------------------------------------------------
+#'nls2_fit estimates decay for each probe or bin
 #'
 #' nls2_fit uses nls2 function to fit a probe or bin using intensities of the
-#' time series data from different time point.
-
-#' nls2 uses different starting values through expand grid and selects the best
-#' fit. Different filters could be applied prior fitting to the model.
-
+#' time series data from different time point. nls2 uses different starting 
+#' values through expand grid and selects the best fit. Different filters could 
+#' be applied prior fitting to the model.
+#' 
 #' To apply nls2_fit function, prior filtration could applied.
 
 #' 1. generic_filter_BG: filter probes with intensities below background using

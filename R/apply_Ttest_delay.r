@@ -1,17 +1,15 @@
-# =========================================================================
-# apply_Ttest_delay   checks the significance of the point between 2 
-#'                    segments showing pausing site (ps) and internal 
-#'                    starting site (ITSS) independently
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' apply_Ttest_delay   
+#' -------------------------------------------------------------------------
+#'apply_Ttest_delay checks the significance of the point between 2 segments 
+#'showing pausing site (ps) and internal starting site (ITSS) independently
 #'
 #' apply_Ttest_delay: is a statistical test to check the significance
 #' of the point between 2 segments showing pausing site (ps) and
-#' internal starting site (ITSS) independently.
-
-#' apply_Ttest_delay uses t-test. The last point from the first segment
-#' and the first point from the second segment are selected and added
-#' to the residuals of each model. The sum is subjected to t-test.
+#' internal starting site (ITSS) independently. The function uses t-test. 
+#' The last point from the first segment and the first point from the second
+#' segment are selected and added to the residuals of each model. The sum is
+#' subjected to t-test.
 #' 
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' 

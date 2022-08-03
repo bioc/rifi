@@ -1,8 +1,8 @@
-# =========================================================================
-# fold_change   Sets a fold-change ratio between the neighboring fragments
-#               of Half-life (HL) and intensity
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' fold_change   
+#' -------------------------------------------------------------------------
+#'fold_change sets a fold-change ratio between the neighboring fragments of 
+#'Half-life (HL) and intensity
 #' 
 #' fold_change sets fold change on intensity and fold change HL fragments of
 #' two successive fragments. Two intensity fragments could belong to one HL
@@ -10,8 +10,8 @@
 
 #' This function sets first the borders using the position and applies the fold
 #' change ratio between the neighboring fragments of HL and those from intensity
-#' log2(intensity frgA/intensity frgB/half-life frgA/half-life frgB). All grepped
-#' fragments are from the same TU excluding outliers.
+#' log2(intensity frgA/intensity frgB/half-life frgA/half-life frgB). All 
+#' grepped fragments are from the same TU excluding outliers.
 #'
 #' The function used is:
 
@@ -34,13 +34,15 @@
 #' @return the SummarizedExperiment with the columns regarding statistics:
 #' \describe{
 #'   \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
-#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either 
-#'       Termination or iTSS}
-#'   \item{FC_HL_intensity:}{Integer, the value corresponding to HL and intensity fold change}
-#'   \item{FC_HL_intensity_fragment:}{String, the fragments corresponding to intensity 
-#'     and HL fold change}
-#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of intensity,
-#'     position of the half-life fragment is adapted to intensity fragment}
+#'   \item{synthesis_ratio_event:}{String, the event assigned by synthesis 
+#'   rate either Termination or iTSS}
+#'   \item{FC_HL_intensity:}{Integer, the value corresponding to HL and
+#'   intensity fold change}
+#'   \item{FC_HL_intensity_fragment:}{String, the fragments corresponding to 
+#'   intensity and HL fold change}
+#'   \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change 
+#'   of intensity,position of the half-life fragment is adapted to intensity 
+#'   fragment}
 #' }
 #' 
 #' @examples

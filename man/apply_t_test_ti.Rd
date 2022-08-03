@@ -2,7 +2,12 @@
 % Please edit documentation in R/apply_t_test_ti.r
 \name{apply_t_test_ti}
 \alias{apply_t_test_ti}
-\title{within the same TU.}
+\title{\subsection{=========================================================================
+apply_t_test_ti}{
+
+apply_t_test_ti compares the mean of two neighboring TI fragments within the
+same TU.
+}}
 \usage{
 apply_t_test_ti(inp)
 }
@@ -13,7 +18,8 @@ apply_t_test_ti(inp)
 the SummarizedExperiment with the columns regarding statistics:
 \describe{
 \item{p_value_TI:}{Integer, the p_value added to the input}
-\item{TI_fragments_p_value:}{String, the fragments subjected to statistical test}
+\item{TI_fragments_p_value:}{String, the fragments subjected to statistical
+test}
 }
 }
 \description{

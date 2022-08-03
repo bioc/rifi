@@ -2,7 +2,6 @@
 # rifi_fit                Conveniently wraps all fitting steps
 # -------------------------------------------------------------------------
 #'
-#' 
 #' rifi_fit wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
 #' plot_singleProbe_function.
 #'

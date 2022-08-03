@@ -1,67 +1,36 @@
-# =========================================================================
-# dataframe_summary_TI  Creates one table with all TI fragments, 
-#                        p_value and the coordinates.
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' dataframe_summary_TI 
+#'-------------------------------------------------------------------------
+#' dataframe_summary_TI creates one table with all TI fragments,p_value and
+#' the coordinates
 #'
 #' The dataframe_summary creates one table with the following columns: event,
 #' TI_fragment, TI_factor, TI_fragments_TU, p_value, feature_type,
 #' gene, locus_tag, strand, TU, features, event_position, position_1 and
 #' position_2.
-
-#' The columns are:
-
-#' 1. event: event type, transcription interference.
-
-#' 2. TI_fragment: Transcription interference fragment.
-
-#' 3. TI_termination_factor: Transcription interference factor.
-
-#' 4. p_value: TI p_value between two successive fragments is assigned. 
-
-#' 5. p_adjusted: TI p_value adjuted using FDR method. 
-
-#' 6. feature_type: indicated on the output data frame as region, are the
-#' feature type covering the TI.
-
-#' 7. gene: the genes covering the TI.
-
-#' 8. locus_tag: the locus_tags covering the TI.
-
-#' 9. strand: +/- indicated in case of stranded data.
-
-#' 10. TU: TU covering the TI.
-
-#' 11. Features: Transcription interference fragments included on the
-#' TI.
-
-#' 12. Event_position : position between two TI fragments.
-
-#' 13. position_1 : the first position of TI fragment, if 2 fragments, first
-#' position is from the first fragment.
-
-#' 14. position_2 : the last position of TI fragment, if 2 fragments, last
-#' position is from the second fragment.
 #'
 #' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param input dataframe: dataframe from event_dataframe function.
 #' 
 #' @return
 #'   \describe{
-#'     \item{event:}{String, event type}
-#'     \item{TI_fragment:}{String, the fragment with TI}
-#'     \item{TI_termination_factor:}{String, the factor of TI fragment}
-#'     \item{p_value:}{Integer, p_value of the event}
-#'     \item{p_adjusted:}{Integer, p_value adjusted}
-#'     \item{feature_type:}{String, region annotation covering the fragments}
-#'     \item{gene:}{String, gene annotation covering the fragments}
-#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments}
-#'     \item{strand:}{Boolean. The bin/probe specific strand (+/-)}
-#'     \item{TU:}{String, The overarching transcription unit}
-#'     \item{Features:}{Integer, The number of segments within the TI}
-#'     \item{event_position:}{Integer, the position middle between 2 TI fragments}
-#'     \item{position_1:}{String, the first position of the TI fragment}
-#'     \item{position_2:}{String, the last position of the TI fragment}
+#'     \item{event:}{String, event type, transcription interference.}
+#'     \item{TI_fragment:}{String, the fragment with TI.}
+#'     \item{TI_termination_factor:}{String, the factor of TI fragment.}
+#'     \item{p_value:}{Integer, p_value of the event.}
+#'     \item{p_adjusted:}{Integer, p_value adjusted.}
+#'     \item{feature_type:}{String, region annotation covering the fragments.}
+#'     \item{gene:}{String, gene annotation covering the fragments.}
+#'     \item{locus_tag:}{String, locus_tag annotation covering the fragments.}
+#'     \item{strand:}{Boolean. The bin/probe specific strand (+/-).}
+#'     \item{TU:}{String, The overarching transcription unit.}
+#'     \item{Features:}{Integer, The number of segments within the TI.}
+#'     \item{event_position:}{Integer, the position middle between 2 TI 
+#'     fragments.}
+#'     \item{position_1:}{String, the first position of TI fragment, if 2
+#'     fragments, first position is from the first fragment.}
+#'     \item{position_2:}{String, the last position of TI fragment, if 2
+#'     fragments, last position is from the second fragment.}
 #'     }
 #' @return WIP
 #' 

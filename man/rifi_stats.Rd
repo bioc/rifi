@@ -2,9 +2,7 @@
 % Please edit documentation in R/rifi_stats.r
 \name{rifi_stats}
 \alias{rifi_stats}
-\title{rifi_stats wraps the functions: predict_ps_itss, apply_Ttest_delay,
-apply_ancova, apply_event_position, apply_t_test, fold_change,
-apply_manova, apply_t_test_ti and gff3_preprocess.}
+\title{rifi_stats wraps all statistical prediction steps conveniently}
 \usage{
 rifi_stats(inp, dista = 300, path)
 }

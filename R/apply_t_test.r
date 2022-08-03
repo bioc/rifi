@@ -1,14 +1,15 @@
-# =========================================================================
-# apply_t_test   Uses the statistical t_test to check if the fold-change 
-#'                  of half-life (HL) fragments and the fold-change
-#'                  intensity fragments respectively are significant.
-# -------------------------------------------------------------------------
+#'=========================================================================
+#' apply_t_test   
+#' -------------------------------------------------------------------------
+#' apply_t_test uses the statistical t_test to check if the fold-change of half
+#' -life (HL) fragments and the fold-change intensity fragments respectively are
+#' significant.
+#'
 #'
 #' apply_t_test compares the mean of two neighboring fragments within the
-#' same TU to check if the fold-change is significant.
-
-#' Fragments with distance above threshold are not subjected to t-test.
-#' Dataframes with less than 3 rows are excluded.
+#' same TU to check if the fold-change is significant.Fragments with distance
+#' above threshold are not subjected to t-test.Dataframes with less than 3 rows
+#' are excluded.
 #'
 #' The functions used are:
 #'

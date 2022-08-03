@@ -2,8 +2,12 @@
 % Please edit documentation in R/apply_Ttest_delay.r
 \name{apply_Ttest_delay}
 \alias{apply_Ttest_delay}
-\title{segments showing pausing site (ps) and internal
-starting site (ITSS) independently}
+\title{\subsection{=========================================================================
+apply_Ttest_delay}{
+
+apply_Ttest_delay checks the significance of the point between 2 segments
+showing pausing site (ps) and internal starting site (ITSS) independently
+}}
 \usage{
 apply_Ttest_delay(inp)
 }
@@ -19,10 +23,10 @@ the SummarizedExperiment with the columns regarding statistics:
 \description{
 apply_Ttest_delay: is a statistical test to check the significance
 of the point between 2 segments showing pausing site (ps) and
-internal starting site (ITSS) independently.
-apply_Ttest_delay uses t-test. The last point from the first segment
-and the first point from the second segment are selected and added
-to the residuals of each model. The sum is subjected to t-test.
+internal starting site (ITSS) independently. The function uses t-test.
+The last point from the first segment and the first point from the second
+segment are selected and added to the residuals of each model. The sum is
+subjected to t-test.
 }
 \examples{
 data(stats_minimal)

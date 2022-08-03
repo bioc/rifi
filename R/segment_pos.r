@@ -1,7 +1,7 @@
-# =========================================================================
-# segment_pos       Divides all IDs by position into position_segments
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' segment_pos
+#' -------------------------------------------------------------------------
+#'segment_pos divides all IDs by position into position_segments
 #'
 #' segment_pos adds the column "position_segment" to the rowRanges.
 #' To reduce run time, the data is divided by regions of no expression larger
@@ -11,7 +11,7 @@
 #' @param dista integer: the amount of nucleotides defining the gap. Default
 #' is 300.
 #' 
-#' @return the SummarizedExperiment object: with position_segment added to the
+#' @return The SummarizedExperiment object: with position_segment added to the
 #' rowRanges.
 #'       
 #' @examples

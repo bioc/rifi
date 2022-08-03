@@ -1,17 +1,15 @@
-# =========================================================================
-#  apply_ancova    Statistical test to check variances between 2 segments
-#' showing pausing site (ps) or internal starting site (ITSS) independently
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' apply_ancova    
+#' -------------------------------------------------------------------------
+#' apply_ancova checks the variances between 2 segments showing either pausing
+#' site (ps) or internal starting site (ITSS) independently.
 #'
 #' apply_ancova is a statistical test to check if fragments showing ps and
-#' ITSS events have significant slope using Ancova test.
-
-#' The function uses ancova test. Ancova is applied when the data contains
-#' independent variables, dependent variables and covariant variables.
-
-#' In this case, segments are independent variables, position is the dependent
-#' variable and the delay is the covariant.
+#' ITSS events have significant slope using Ancova test.The function uses ancova
+#' test. Ancova is applied when the data contains independent variables, 
+#' dependent variables and covariant variables. In this case, segments are 
+#' independent variables, position is the dependent variable and the delay is 
+#' the covariant.
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #'

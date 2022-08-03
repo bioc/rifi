@@ -1,11 +1,17 @@
-# =========================================================================
-# rifi_summary       conveniently wraps and summarize all rifi outputs                               
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' rifi_summary  
+#' -------------------------------------------------------------------------
+#' rifi_summary wraps conveniently and summarize all rifi outputs         
 #'
-#' rifi_summary wraps the functions: event_dataframe, dataframe_summary,
-#' dataframe_summary_events, dataframe_summary_events_HL_int,
-#' dataframe_summary_events_ps_itss, dataframe_summary_events_velocity and
-#' dataframe_summary_TI.
+#' rifi_summary wraps the functions:  
+ 
+#' event_dataframe,
+#' dataframe_summary,
+#' dataframe_summary_events,
+#' dataframe_summary_events_HL_int,
+#' dataframe_summary_events_ps_itss,
+#' dataframe_summary_events_velocity,
+#' dataframe_summary_TI
 #' 
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param data_annotation dataframe: gff3 dataframe after processing.

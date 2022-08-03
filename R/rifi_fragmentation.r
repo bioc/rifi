@@ -1,17 +1,17 @@
-# =========================================================================
-# rifi_fragmentation       Conveniently wraps all fragmentation steps
-# -------------------------------------------------------------------------
-#'
-#' rifi_fragmentation wraps the following functions:
-
+#' =========================================================================
+#' rifi_fragmentation 
+#' -------------------------------------------------------------------------
+#' rifi_fragmentation wraps conveniently all fragmentation steps
+#' 
+#' rifi_fragmentation is wrapper of the following functions: 
 #' 1. fragment_delay
-
+ 
 #' 2. fragment_HL
-
+ 
 #' 3. fragment_inty
-
+ 
 #' 4. TUgether
-
+ 
 #' 5. fragment_TI
 
 #'

@@ -2,18 +2,10 @@
 % Please edit documentation in R/rifi_preprocess.r
 \name{rifi_preprocess}
 \alias{rifi_preprocess}
-\title{rifi_preprocess wraps the functions:
-\enumerate{
-\item check_input
-\item make_df
-\item function_seg
-\item finding_PDD
-\item finding_TI
-Allows for the optional integration of filter functions.
-Filter functions mark replicates with TRUE. Those are then not considered
-in the fit!
-FUN_filter is a general filter usually to exclude probes with low
-expression or "bad" patterns.
+\title{\subsection{=========================================================================
+rifi_preprocess}{
+
+rifi_preprocess wraps convenientlyall pre-processing steps
 }}
 \usage{
 rifi_preprocess(
@@ -82,7 +74,7 @@ is 0.5.}
 in IDs are fitted with the TI fit.}
 }
 \value{
-the SummarizedExperiment object: checked, and with position, ID,
+The SummarizedExperiment object: checked, and with position, ID,
 intensity, probe_TI, position_segment, flag and filtration added to the
 rowRanges.
 }
@@ -94,12 +86,14 @@ rifi_preprocess wraps the functions:
 \item function_seg
 \item finding_PDD
 \item finding_TI
-Allows for the optional integration of filter functions.
+}
+}
+\details{
+rifi_preprocess allows for the optional integration of filter functions.
 Filter functions mark replicates with TRUE. Those are then not considered
 in the fit!
 FUN_filter is a general filter usually to exclude probes with low
 expression or "bad" patterns.
-}
 }
 \examples{
 data(example_input_minimal)

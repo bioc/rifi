@@ -1,7 +1,7 @@
-# =========================================================================
-# fragment_delay                Performs the delay fragmentation
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' fragment_delay 
+#' -------------------------------------------------------------------------
+#' fragment_delay performs the delay fragmentation
 #' 
 #' fragment_delay makes delay_fragments based on position_segments and assigns
 #' all gathered information to the SummarizedExperiment object.

@@ -1,7 +1,7 @@
-# =========================================================================
-# rifi_wrapper  Conveniently wraps all functions included on rifi workflow
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' rifi_wrapper
+#' -------------------------------------------------------------------------
+#'rifi_wrapper wraps conveniently all functions included on rifi workflow
 #'
 #' rifi_wrapper wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
 #' rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.

@@ -1,21 +1,22 @@
-# =========================================================================
-# fragment_inty            Performs the intensity fragmentation
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' fragment_inty   
+#' -------------------------------------------------------------------------
+#' fragment_inty performs the intensity fragmentation
 #'
 #' fragment_inty makes intensity_fragments based on HL_fragments and assigns
 #' all gathered information to the SummarizedExperiment object.
-
+#' 
 #' The columns "intensity_fragment" and "intensity_mean_fragment" are added.
-
+#' 
 #' fragment_inty makes intensity_fragments and assigns the mean of each
 #' fragment.
-
+#' 
 #' The function used is:
-
+#' 
 #' .score_fun_ave.
-
+#' 
 #' The input is the the SummarizedExperiment object.
-
+#' 
 #' pen is the penalty for new fragments in the dynamic programming, pen_out
 #' is the outlier penalty.
 #'

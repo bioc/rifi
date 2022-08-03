@@ -1,21 +1,21 @@
-# =========================================================================
-# fragment_HL              Performs the half_life fragmentation
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' fragment_HL             
+#' -------------------------------------------------------------------------
+#' fragment_HL performs the half_life fragmentation
 #' 
 #' fragment_HL makes HL_fragments based on delay_fragments and assigns all
 #' gathered information to the SummarizedExperiment object.
-
+#' 
 #' The columns "HL_fragment" and "HL_mean_fragment" are added.
-
+#' 
 #' fragment_HL makes half-life_fragments and assigns the mean of each fragment.
-
+#' 
 #' The function used is:
-
+#' 
 #' .score_fun_ave.
-
+#' 
 #' The input the SummarizedExperiment object.
-
+#' 
 #' pen is the penalty for new fragments in the dynamic programming, pen_out is
 #' the outlier penalty.
 #'

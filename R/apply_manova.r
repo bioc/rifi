@@ -1,21 +1,19 @@
-# =========================================================================
-# apply_manova   Checks if the ratio of hl ratio and intensity ratio 
-#'               is statistically significant
-# -------------------------------------------------------------------------
-#'
-#'
-#' apply_manova compares the variance between two fold-changes, HL and intensity
-#' within the same TU (half-life frgA/half-life frgB/intensity frgA/intensity frgB).
-
-#' HL fragment could cover two intensity fragments therefore this function sets
-#' first fragments borders and uses manova_function.
-
+#'=========================================================================
+#' apply_manova
+#'-------------------------------------------------------------------------
+#' apply_manova checks if the ratio of hl ratio and intensity ratio is
+#' statistically significant. 
+#' 
+#' apply_manova compares the variance between two fold-changes HL and intensity
+#' within the same TU (half-life frgA/half-life frgB/intensity
+#' frgA/intensity frgB). HL fragment could cover two intensity fragments 
+#' therefore this function sets first fragments borders and uses manova_function.
 #' Manova checks the variance between 2 segments (independent variables) and two
 #' dependents variables (HL and intensity).
 
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #'
-#' @return the probe data frame with the columns regarding statistics:
+#' @return The probe data frame with the columns regarding statistics:
 #' \describe{
 #'   \item{p_value_Manova:}{Integer, the p_value added to the input}
 #' }

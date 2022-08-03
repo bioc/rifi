@@ -2,15 +2,11 @@
 % Please edit documentation in R/dataframe_summary.r
 \name{dataframe_summary}
 \alias{dataframe_summary}
-\title{dataframe_summary creates two tables summary of segments and their
-half-lives. The first output is bin/probe features and the second one is
-intensity fragment based.
-The dataframe_summary creates one table with feature_type, gene, locus_tag,
-position, strand, TU, delay_fragment, HL_fragment, half_life, intensity_fragment,
-intensity and velocity. The second table is similar to the first one but in
-compact form.
-It contains the same columns, the only difference is on position where a
-start and end position are indicated separately.}
+\title{\subsection{=========================================================================
+dataframe_summary}{
+
+dataframe_summary creates two tables relating gene annotation to fragments
+}}
 \usage{
 dataframe_summary(data, input)
 }
@@ -66,13 +62,12 @@ or the distribution for the #'different fitting models}
 \description{
 dataframe_summary creates two tables summary of segments and their
 half-lives. The first output is bin/probe features and the second one is
-intensity fragment based.
-The dataframe_summary creates one table with feature_type, gene, locus_tag,
-position, strand, TU, delay_fragment, HL_fragment, half_life, intensity_fragment,
-intensity and velocity. The second table is similar to the first one but in
-compact form.
-It contains the same columns, the only difference is on position where a
-start and end position are indicated separately.
+intensity fragment based.The dataframe_summary creates one table with
+feature_type, gene, locus_tag, position, strand, TU, delay_fragment,
+HL_fragment, half_life, intensity_fragment, intensity and velocity. The
+second table is similar to the first one but in compact form. It contains the
+same columns, the only difference is on position where a start and end
+position are indicated separately.
 }
 \examples{
 data(stats_minimal)

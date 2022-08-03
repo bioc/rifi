@@ -2,28 +2,10 @@
 % Please edit documentation in R/make_pen.r
 \name{make_pen}
 \alias{make_pen}
-\title{'make_pen' calls one of four available penalty functions to automatically
-assign penalties for the dynamic programming.
-The four functions to be called are:
-\enumerate{
-\item fragment_delay_pen
-\item fragment_HL_pen
-\item fragment_inty_pen
-\item fragment_TI_pen
-These functions return the amount of statistically correct and statistically
-wrong splits at a specific pair of penalties.
-'make_pen' iterates over many penalty pairs and picks the most suitable pair
-based on the difference between wrong and correct splits.
-The sample size, penalty range and resolution as well as the number of cycles
-can be customized.
-The primary start parameters create a matrix with n = rez_pen rows and
-n = rez_pen_out columns with values between sta_pen/sta_pen_out
-and end_pen/end_pen_out. The best penalty pair is picked.
-If dept is bigger than 1 the same process is repeated with a new matrix
-of the same size based on the result of the previous cycle. Only position
-segments with length within the sample size range are considered for the
-penalties to increase run time.
-Returns a penalty object (list of 4 objects) the first being the logbook.
+\title{\subsection{=========================================================================
+make_pen}{
+
+make_pen assigns automatically a penalties
 }}
 \usage{
 make_pen(
@@ -87,12 +69,16 @@ penalty}
 \description{
 'make_pen' calls one of four available penalty functions to automatically
 assign penalties for the dynamic programming.
+}
+\details{
 The four functions to be called are:
 \enumerate{
 \item fragment_delay_pen
 \item fragment_HL_pen
 \item fragment_inty_pen
 \item fragment_TI_pen
+}
+
 These functions return the amount of statistically correct and statistically
 wrong splits at a specific pair of penalties.
 'make_pen' iterates over many penalty pairs and picks the most suitable pair
@@ -107,7 +93,6 @@ of the same size based on the result of the previous cycle. Only position
 segments with length within the sample size range are considered for the
 penalties to increase run time.
 Returns a penalty object (list of 4 objects) the first being the logbook.
-}
 }
 \examples{
 data(fit_minimal)

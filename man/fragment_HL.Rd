@@ -2,15 +2,11 @@
 % Please edit documentation in R/fragment_HL.r
 \name{fragment_HL}
 \alias{fragment_HL}
-\title{fragment_HL makes HL_fragments based on delay_fragments and assigns all
-gathered information to the SummarizedExperiment object.
-The columns "HL_fragment" and "HL_mean_fragment" are added.
-fragment_HL makes half-life_fragments and assigns the mean of each fragment.
-The function used is:
-.score_fun_ave.
-The input the SummarizedExperiment object.
-pen is the penalty for new fragments in the dynamic programming, pen_out is
-the outlier penalty.}
+\title{\subsection{=========================================================================
+fragment_HL}{
+
+fragment_HL performs the half_life fragmentation
+}}
 \usage{
 fragment_HL(inp, cores = 1, pen, pen_out)
 }
@@ -33,11 +29,18 @@ HL_mean_fragment added to the rowRanges.
 \description{
 fragment_HL makes HL_fragments based on delay_fragments and assigns all
 gathered information to the SummarizedExperiment object.
+}
+\details{
 The columns "HL_fragment" and "HL_mean_fragment" are added.
+
 fragment_HL makes half-life_fragments and assigns the mean of each fragment.
+
 The function used is:
+
 .score_fun_ave.
+
 The input the SummarizedExperiment object.
+
 pen is the penalty for new fragments in the dynamic programming, pen_out is
 the outlier penalty.
 }

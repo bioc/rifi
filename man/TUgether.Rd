@@ -2,7 +2,11 @@
 % Please edit documentation in R/TUgether.r
 \name{TUgether}
 \alias{TUgether}
-\title{TUgether combines delay fragments into TUs. The column "TU" is added.}
+\title{\subsection{=========================================================================
+TUgether}{
+
+TUgether combines delay fragments into TUs
+}}
 \usage{
 TUgether(inp, cores = 1, pen = -0.75)
 }
@@ -15,7 +19,7 @@ TUgether(inp, cores = 1, pen = -0.75)
 Higher values result in fewer fragments. Default -0.75.}
 }
 \value{
-the SummarizedExperiment with the columns regarding the TU:
+The SummarizedExperiment with the columns regarding the TU:
 \describe{
 \item{ID:}{The bin/inp specific ID}
 \item{position:}{The bin/inp specific position}
@@ -28,10 +32,13 @@ fragment}
 }
 }
 \description{
-TUgether combines delay fragments into TUs. It uses score fun_increasing
-on the start and end points of delay_fragments.
+TUgether combines delay fragments into TUs. The column "TU" is added. It uses
+score fun_increasing on the start and end points of delay_fragments.
+}
+\details{
 The function used is:
 .score_fun_increasing
+
 The input is the SummarizedExperiment object.
 pen is the penalty for new fragments in the dynamic programming. Since high
 scores are aimed, pen is negative.

@@ -2,7 +2,11 @@
 % Please edit documentation in R/rifi_penalties.r
 \name{rifi_penalties}
 \alias{rifi_penalties}
-\title{rifi_penalties wraps the functions: make_pen and viz_pen_obj.}
+\title{\subsection{=========================================================================
+rifi_penalties}{
+
+rifi_penalties wraps conveniently all penalty steps
+}}
 \usage{
 rifi_penalties(
   inp,
@@ -57,7 +61,7 @@ range. Default is 9.}
 the outlier penalty range. Default is 7.}
 }
 \value{
-the SummarizedExperiment object: with the penalties in the
+The SummarizedExperiment object: with the penalties in the
 logbook added to the metadata. Also adds logbook_details if details is TRUE,
 and plots the penalties if viz is TRUE.
 }

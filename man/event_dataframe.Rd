@@ -2,18 +2,11 @@
 % Please edit documentation in R/event_dataframe.r
 \name{event_dataframe}
 \alias{event_dataframe}
-\title{event_dataframe creates a dataframe connecting segments, events and
-the annotation.
-The functions used are:
-position_function: adds the specific position of ps or iTSS event.
-annotation_function_event: adds the events to the annotated genes.
-annotation file needs to be supplied. Strand is indicated in case of
-stranded data
-The event_dataframe selects columns with statistical features.
-ID, position, strand and TU columns are required.
-A dataframe is generated. It gathers all events, the corresponding segments
-at bin/probe level. The dataframe selects unique intensity fragments since
-they are the lowest on the hierarchy.}
+\title{\subsection{=========================================================================
+event_dataframe}{
+
+event_dataframe creates a dataframe only with events
+}}
 \usage{
 event_dataframe(data, data_annotation)
 }
@@ -23,6 +16,7 @@ event_dataframe(data, data_annotation)
 \item{data_annotation}{dataframe: the coordinates are extracted from gff3}
 }
 \value{
+A dataframe with unique intensity fragments
 \describe{
 \item{feature_type:}{String, region annotation covering the fragments}
 \item{gene:}{String, gene annotation covering the fragments}
@@ -71,16 +65,18 @@ respective delay fragment}
 \description{
 event_dataframe creates a dataframe connecting segments, events and
 the annotation.
+}
+\details{
 The functions used are:
+
 position_function: adds the specific position of ps or iTSS event.
+
 annotation_function_event: adds the events to the annotated genes.
+
 annotation file needs to be supplied. Strand is indicated in case of
 stranded data
 The event_dataframe selects columns with statistical features.
 ID, position, strand and TU columns are required.
-A dataframe is generated. It gathers all events, the corresponding segments
-at bin/probe level. The dataframe selects unique intensity fragments since
-they are the lowest on the hierarchy.
 }
 \examples{
 if(!require(SummarizedExperiment)){

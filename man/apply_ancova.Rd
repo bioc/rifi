@@ -2,7 +2,12 @@
 % Please edit documentation in R/apply_ancova.r
 \name{apply_ancova}
 \alias{apply_ancova}
-\title{showing pausing site (ps) or internal starting site (ITSS) independently}
+\title{\subsection{=========================================================================
+apply_ancova}{
+
+apply_ancova checks the variances between 2 segments showing either pausing
+site (ps) or internal starting site (ITSS) independently.
+}}
 \usage{
 apply_ancova(inp)
 }
@@ -22,11 +27,11 @@ fragments
 }
 \description{
 apply_ancova is a statistical test to check if fragments showing ps and
-ITSS events have significant slope using Ancova test.
-The function uses ancova test. Ancova is applied when the data contains
-independent variables, dependent variables and covariant variables.
-In this case, segments are independent variables, position is the dependent
-variable and the delay is the covariant.
+ITSS events have significant slope using Ancova test.The function uses ancova
+test. Ancova is applied when the data contains independent variables,
+dependent variables and covariant variables. In this case, segments are
+independent variables, position is the dependent variable and the delay is
+the covariant.
 }
 \examples{
 data(stats_minimal)

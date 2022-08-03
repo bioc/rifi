@@ -2,16 +2,11 @@
 % Please edit documentation in R/fragment_inty.r
 \name{fragment_inty}
 \alias{fragment_inty}
-\title{fragment_inty makes intensity_fragments based on HL_fragments and assigns
-all gathered information to the SummarizedExperiment object.
-The columns "intensity_fragment" and "intensity_mean_fragment" are added.
-fragment_inty makes intensity_fragments and assigns the mean of each
-fragment.
-The function used is:
-.score_fun_ave.
-The input is the the SummarizedExperiment object.
-pen is the penalty for new fragments in the dynamic programming, pen_out
-is the outlier penalty.}
+\title{\subsection{=========================================================================
+fragment_inty}{
+
+fragment_inty performs the intensity fragmentation
+}}
 \usage{
 fragment_inty(inp, cores = 1, pen, pen_out)
 }
@@ -34,12 +29,19 @@ intensity_mean_fragment added to the rowRanges.
 \description{
 fragment_inty makes intensity_fragments based on HL_fragments and assigns
 all gathered information to the SummarizedExperiment object.
+}
+\details{
 The columns "intensity_fragment" and "intensity_mean_fragment" are added.
+
 fragment_inty makes intensity_fragments and assigns the mean of each
 fragment.
+
 The function used is:
+
 .score_fun_ave.
+
 The input is the the SummarizedExperiment object.
+
 pen is the penalty for new fragments in the dynamic programming, pen_out
 is the outlier penalty.
 }

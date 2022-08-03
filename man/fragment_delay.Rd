@@ -2,16 +2,11 @@
 % Please edit documentation in R/fragment_delay.r
 \name{fragment_delay}
 \alias{fragment_delay}
-\title{fragment_delay makes delay_fragments based on position_segments and assigns
-all gathered information to the SummarizedExperiment object.
-The columns "delay_fragment", "velocity_fragment", "intercept" and "slope"
-are added.
-fragment_delay makes delay_fragments, assigns slopes, which are 1/velocity
-at the same time, and intercepts for the TU calculation.
-The function used is: score_fun_linear
-the input is the SummarizedExperiment object.
-pen is the penalty for new fragments in the dynamic programming, pen_out is
-the outlier penalty.}
+\title{\subsection{=========================================================================
+fragment_delay}{
+
+fragment_delay performs the delay fragmentation
+}}
 \usage{
 fragment_delay(inp, cores = 1, pen, pen_out)
 }

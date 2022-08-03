@@ -2,13 +2,11 @@
 % Please edit documentation in R/finding_PDD.r
 \name{finding_PDD}
 \alias{finding_PDD}
-\title{'finding_PDD' uses 'score_fun_linear_PDD' to make groups by the difference
-to the slope. The slope is further checked for steepness to decide for PDD.
-'\emph{PDD}' is added to the 'flag' column.
-Post transcription decay is characterized by a strong decrease of intensity
-by position.
-The rowRanges need to contain at least 'ID', 'intensity', 'position' and
-'position_segment'!}
+\title{\subsection{=========================================================================
+finding_PDD}{
+
+finding_PDD   Flags potential candidates for post transcription decay
+}}
 \usage{
 finding_PDD(inp, cores = 1, pen = 2, pen_out = 1, thrsh = 0.001)
 }
@@ -30,7 +28,7 @@ steeper than the thrsh to be flagged with '\emph{PDD}'. Higher values result in
 fewer candidates. Advised to be kept at 0.001. Default is 0.001.}
 }
 \value{
-the SummarizedExperiment object: with "\emph{PDD}" added to the flag
+The SummarizedExperiment object: with "\emph{PDD}" added to the flag
 column.
 }
 \description{

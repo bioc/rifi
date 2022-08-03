@@ -2,15 +2,11 @@
 % Please edit documentation in R/fragment_TI.r
 \name{fragment_TI}
 \alias{fragment_TI}
-\title{fragment_TI makes TI_fragments based on TUs and assigns all gathered
-information to the SummarizedExperiment object.
-The columns "TI_termination_fragment" and the TI_mean_termination_factor
-are added.
-The function used is:
-.score_fun_ave.
-The input is the SummarizedExperiment object.
-pen is the penalty for new fragments in the dynamic programming, pen_out is
-the outlier penalty.}
+\title{\subsection{=========================================================================
+fragment_TI}{
+
+fragment_TI performs the TI fragmentation
+}}
 \usage{
 fragment_TI(inp, cores = 1, pen, pen_out)
 }
@@ -32,12 +28,16 @@ TI_termination_mean_fragment added to the rowRanges.
 }
 \description{
 fragment_TI makes TI_fragments based on TUs and assigns all gathered
-information to the SummarizedExperiment object.
-The columns "TI_termination_fragment" and the TI_mean_termination_factor
-are added.
+information to the SummarizedExperiment object. The columns
+TI_termination_fragment" and the TI_mean_termination_factor are added.
+}
+\details{
 The function used is:
+
 .score_fun_ave.
+
 The input is the SummarizedExperiment object.
+
 pen is the penalty for new fragments in the dynamic programming, pen_out is
 the outlier penalty.
 }

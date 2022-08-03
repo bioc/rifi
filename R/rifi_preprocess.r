@@ -1,7 +1,7 @@
-# =========================================================================
-# rifi_preprocess        Conveniently wraps all pre-processing steps
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' rifi_preprocess
+#' -------------------------------------------------------------------------
+#' rifi_preprocess wraps convenientlyall pre-processing steps
 #'
 #' rifi_preprocess wraps the functions:
 
@@ -14,8 +14,9 @@
 #' 4. finding_PDD
 
 #' 5. finding_TI
+#' 
 
-#' Allows for the optional integration of filter functions.
+#' rifi_preprocess allows for the optional integration of filter functions.
 
 #' Filter functions mark replicates with TRUE. Those are then not considered
 #' in the fit!
@@ -57,7 +58,7 @@
 #' @param add integer: range of nucleotides before a potential TI event where
 #' in IDs are fitted with the TI fit.
 #' 
-#' @return the SummarizedExperiment object: checked, and with position, ID,
+#' @return The SummarizedExperiment object: checked, and with position, ID,
 #' intensity, probe_TI, position_segment, flag and filtration added to the
 #' rowRanges.
 #'

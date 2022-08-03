@@ -1,7 +1,7 @@
-# =========================================================================
-#    viz_pen_obj                  Visualizes penalty objects
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' viz_pen_obj 
+#' -------------------------------------------------------------------------
+#' viz_pen_obj visualizes penalty objects
 #' 
 #' viz_pen_obj provides an optional visualization of any penalty object 
 #' created by make_pen. the function aan be customized to show only

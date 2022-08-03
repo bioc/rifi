@@ -2,11 +2,11 @@
 % Please edit documentation in R/gff3_preprocessing.r
 \name{gff3_preprocess}
 \alias{gff3_preprocess}
-\title{gff3_preprocess processes the gff3 file extracting gene names and locus_tag
-from all coding regions (CDS), UTRs/ncRNA/asRNA are also extracted if
-available.
-The resulting dataframe contains region, positions, strand, gene and
-locus_tag.}
+\title{\subsection{=========================================================================
+gff3_preprocess}{
+
+gff3_preprocess process gff3 file from database for multiple usage
+}}
 \usage{
 gff3_preprocess(path)
 }
@@ -33,6 +33,8 @@ A list with 2 items:
 gff3_preprocess processes the gff3 file extracting gene names and locus_tag
 from all coding regions (CDS), UTRs/ncRNA/asRNA are also extracted if
 available.
+}
+\details{
 The resulting dataframe contains region, positions, strand, gene and
 locus_tag.
 }

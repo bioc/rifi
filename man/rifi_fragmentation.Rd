@@ -2,13 +2,10 @@
 % Please edit documentation in R/rifi_fragmentation.r
 \name{rifi_fragmentation}
 \alias{rifi_fragmentation}
-\title{rifi_fragmentation wraps the following functions:
-\enumerate{
-\item fragment_delay
-\item fragment_HL
-\item fragment_inty
-\item TUgether
-\item fragment_TI
+\title{\subsection{=========================================================================
+rifi_fragmentation}{
+
+rifi_fragmentation wraps conveniently all fragmentation steps
 }}
 \usage{
 rifi_fragmentation(
@@ -67,7 +64,7 @@ intensity_fragment, TI_termination_fragment and TU, and the respective values
 added to the rowRanges.
 }
 \description{
-rifi_fragmentation wraps the following functions:
+rifi_fragmentation is wrapper of the following functions:
 \enumerate{
 \item fragment_delay
 \item fragment_HL

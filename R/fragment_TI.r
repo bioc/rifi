@@ -1,19 +1,18 @@
-# =========================================================================
-# fragment_TI                Performs the TI fragmentation
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' fragment_TI  
+#' -------------------------------------------------------------------------
+#'fragment_TI performs the TI fragmentation
 #'
 #' fragment_TI makes TI_fragments based on TUs and assigns all gathered
-#' information to the SummarizedExperiment object.
-
-#' The columns "TI_termination_fragment" and the TI_mean_termination_factor
-#' are added.
-
+#' information to the SummarizedExperiment object. The columns
+#' TI_termination_fragment" and the TI_mean_termination_factor are added.
+#' 
 #' The function used is:
-
+#' 
 #'  .score_fun_ave.
-
+#'  
 #' The input is the SummarizedExperiment object.
-
+#' 
 #' pen is the penalty for new fragments in the dynamic programming, pen_out is
 #' the outlier penalty.
 #'

@@ -1,11 +1,11 @@
-# =========================================================================
-# make_pen          Automatically assigns a penalties
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' make_pen       
+#' -------------------------------------------------------------------------
+#'make_pen assigns automatically a penalties
 #' 
 #' 'make_pen' calls one of four available penalty functions to automatically
 #' assign penalties for the dynamic programming.
-
+#' 
 #' The four functions to be called are:
 
 #' 1. fragment_delay_pen
@@ -15,7 +15,7 @@
 #' 3. fragment_inty_pen
 
 #' 4. fragment_TI_pen
-
+#' 
 #' These functions return the amount of statistically correct and statistically
 #' wrong splits at a specific pair of penalties.
 

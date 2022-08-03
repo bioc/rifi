@@ -1,31 +1,26 @@
-# =========================================================================
-# event_dataframe       Creates a dataframe only with events for 
-#                       segments and genes                                 
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' event_dataframe                                    
+#' -------------------------------------------------------------------------
+#' event_dataframe creates a dataframe only with events 
 #'
 #' event_dataframe creates a dataframe connecting segments, events and 
 #' the annotation.
-
+#' 
 #' The functions used are:
-
+#' 
 #' position_function: adds the specific position of ps or iTSS event.
-
+#' 
 #' annotation_function_event: adds the events to the annotated genes.
-
+#' 
 #' annotation file needs to be supplied. Strand is indicated in case of 
 #' stranded data
 #' The event_dataframe selects columns with statistical features. 
 #' ID, position, strand and TU columns are required.
-
-#' A dataframe is generated. It gathers all events, the corresponding segments
-#' at bin/probe level. The dataframe selects unique intensity fragments since 
-#' they are the lowest on the hierarchy.
 #' 
 #' @param data dataframe: the probe based data frame.
 #' @param data_annotation dataframe: the coordinates are extracted from gff3
 #' 
-#' @return
+#' @return A dataframe with unique intensity fragments 
 #'   \describe{
 #'     \item{feature_type:}{String, region annotation covering the fragments}
 #'     \item{gene:}{String, gene annotation covering the fragments}

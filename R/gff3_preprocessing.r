@@ -1,12 +1,12 @@
-# =========================================================================
-# gff3_preprocess    Process gff3 file from database for multiple usage
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' gff3_preprocess 
+#' -------------------------------------------------------------------------
+#' gff3_preprocess process gff3 file from database for multiple usage
 #'
 #' gff3_preprocess processes the gff3 file extracting gene names and locus_tag
 #' from all coding regions (CDS), UTRs/ncRNA/asRNA are also extracted if
 #' available.
-
+#' 
 #' The resulting dataframe contains region, positions, strand, gene and
 #' locus_tag.
 #'

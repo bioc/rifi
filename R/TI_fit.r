@@ -1,10 +1,16 @@
-#' TI_fit: estimates transcription interference and termination factor using
+#' =========================================================================
+#' TI_fit               
+#' -------------------------------------------------------------------------
+#' TI_fit estimates transcription interference and termination factor using
 #' nls function for probe or bin flagged as "TI".
+#' 
 #' TI_fit uses nls2 function to fit the flagged probes or bins with "TI" found
 #' using finding_TI.r.
 #' It estimates the transcription interference level (referred later to TI) as
 #' well as the transcription factor fitting the probes/bins with nls function
 #' looping into several starting values.
+#' 
+#' 
 #' To determine TI and termination factor, TI_fit function is applied to the
 #' flagged probes and to the probes localized 1000 nucleotides upstream.
 #' Before applying TI_fit function, some probes/bins are filtered out if they

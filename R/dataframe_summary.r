@@ -1,22 +1,18 @@
-# =========================================================================
-# dataframe_summary      Creates two tables relating gene annotation 
-#                        to fragments                                  
-# -------------------------------------------------------------------------
-#'
+#' =========================================================================
+#' dataframe_summary                                       
+#' -------------------------------------------------------------------------
+#' dataframe_summary creates two tables relating gene annotation to fragments  
 #'
 #' dataframe_summary creates two tables summary of segments and their
 #' half-lives. The first output is bin/probe features and the second one is
-#' intensity fragment based.
-
-#' The dataframe_summary creates one table with feature_type, gene, locus_tag,
-#' position, strand, TU, delay_fragment, HL_fragment, half_life, intensity_fragment,
-#' intensity and velocity. The second table is similar to the first one but in
-#' compact form.
-
-#' It contains the same columns, the only difference is on position where a
-#' start and end position are indicated separately.
-
- 
+#' intensity fragment based.The dataframe_summary creates one table with
+#' feature_type, gene, locus_tag, position, strand, TU, delay_fragment,
+#' HL_fragment, half_life, intensity_fragment, intensity and velocity. The 
+#' second table is similar to the first one but in compact form. It contains the
+#' same columns, the only difference is on position where a start and end 
+#' position are indicated separately.
+#' 
+#' 
 #' @param data SummarizedExperiment: the input data frame with correct format.
 #' @param input dataframe: dataframe from event_dataframe function.
 #' 

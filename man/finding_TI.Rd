@@ -2,11 +2,11 @@
 % Please edit documentation in R/finding_TI.r
 \name{finding_TI}
 \alias{finding_TI}
-\title{finding_TI uses 'score_fun_ave' to make groups by the mean of "probe_TI".
-"TI" is added to the "flag" column.
-TI is characterized by relative intensities at time points later than "0".
-The rowRanges need to contain at least "ID", "probe_TI" and
-"position_segment"!}
+\title{\subsection{=========================================================================
+finding_TI}{
+
+finding_TI flags potential candidates for transcription interference
+}}
 \usage{
 finding_TI(inp, cores, pen = 10, thrsh = 0.5, add = 1000)
 }
@@ -29,15 +29,14 @@ Default is 0.5.}
 event wherein IDs are fitted with the TI fit.}
 }
 \value{
-the SummarizedExperiment object: with "\emph{TI}" added to the flag
+The SummarizedExperiment object: with "\emph{TI}" added to the flag
 column.
 }
 \description{
 finding_TI uses 'score_fun_ave' to make groups by the mean of "probe_TI".
-"TI" is added to the "flag" column.
-TI is characterized by relative intensities at time points later than "0".
-The rowRanges need to contain at least "ID", "probe_TI" and
-"position_segment"!
+"TI" is added to the "flag" column. TI is characterized by relative
+intensities at time points later than "0". The rowRanges need to contain at
+least "ID", "probe_TI" and "position_segment"!
 }
 \examples{
 data(preprocess_minimal)
