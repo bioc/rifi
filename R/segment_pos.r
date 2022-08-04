@@ -11,8 +11,14 @@
 #' @param dista integer: the amount of nucleotides defining the gap. Default
 #' is 300.
 #' 
-#' @return The SummarizedExperiment object: with position_segment added to the
-#' rowRanges.
+#' @return The SummarizedExperiment object: 
+#'   \item{ID:}{The bin/probe specific ID}
+#'   \item{position:}{The bin/probe specific position}
+#'   \item{intensity:}{The relative intensity at time point 0}
+#'   \item{probe_TI:}{An internal value to determine which fitting model is
+#'    applied}
+#'   \item{flag:}{Information on which fitting model is applied}
+#'   \item{position_segment:}{The position based segment}
 #'       
 #' @examples
 #' data(preprocess_minimal)

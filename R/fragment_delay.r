@@ -27,9 +27,23 @@
 #' Higher values result in fewer allowed outliers. Default is the auto generated
 #' value.
 #' 
-#' @return the SummarizedExperiment object: with delay_fragment,
-#' velocity_fragment, intercept and slope added to the rowRanges.
-#' 
+#' @return the SummarizedExperiment object: 
+#'   \item{ID:}{The bin/probe specific ID.}
+#'   \item{position:}{The bin/probe specific position.}
+#'   \item{intensity:}{The relative intensity at time point 0.}
+#'   \item{probe_TI:}{An internal value to determine which fitting model is
+#'   applied.}
+#'   \item{flag:}{Information on which fitting model is applied.}
+#'   \item{position_segment:}{The position based segment.}
+#'   \item{delay:}{The delay value of the bin/probe.}
+#'   \item{half_life:}{The half-life of the bin/probe.}
+#'   \item{TI_termination_factor:}{String, the factor of TI fragment.}
+#'   \item{delay_fragment:}{The delay fragment the bin belongs to.}
+#'   \item{velocity_fragment:}{The velocity value of the respective delay
+#'   fragment.}
+#'   \item{intercept:}{The vintercept of fit through the respective delay
+#'   fragment.}
+#'   \item{slope:}{The slope of the fit through the respective delay fragment.} 
 #' @examples
 #' data(fragmentation_minimal)
 #' fragment_delay(inp = fragmentation_minimal, cores = 2, pen = 2, pen_out = 1)

@@ -20,7 +20,7 @@
 #' fragments. Default is the auto generated value.
 #' @param path path: to the directory containing the gff3 file.
 #' 
-#' @return the SummarizedExperiment object: ID with position, strand, intensity, 
+#' @return The SummarizedExperiment object: ID with position, strand, intensity, 
 #'  probe_TI, flag, position_segment, delay, half_life, TI_termination_factor, 
 #'  delay_fragment, velocity_fragment, intercept, slope, HL_fragment,
 #'  HL_mean_fragment, intensity_fragment, intensity_mean_fragment, TU,

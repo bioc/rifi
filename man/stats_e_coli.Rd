@@ -42,14 +42,17 @@ respective TI fragment}
 \item{event_ps_itss_p_value_Ttest:}{p_value of pausing site or iTSS_I}
 \item{p_value_slope:}{p_value of the slope}
 \item{delay_frg_slope:}{the slope value of the respective delay fragment}
-\item{velocity_ratio:}{Integer, ratio of velocity between 2 delay fragments}
+\item{velocity_ratio:}{Integer, ratio of velocity between 2 delay
+fragments}
 \item{event_duration:}{Integer, the duration between two delay fragments}
 \item{event_position:}{Integer, the position middle between 2 fragments
 with an event}
 \item{FC_HL:}{Integer, the fold change value of 2 HL fragments}
-\item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity fragments}
+\item{FC_fragment_HL:}{Integer, the fold change value of 2 intensity
+fragments}
 \item{p_value_HL:}{p_value of the fold change of HL fragments}
-\item{FC_intensity:}{Integer, the fold change value of 2 intensity fragments}
+\item{FC_intensity:}{Integer, the fold change value of 2 intensity
+fragments}
 \item{FC_fragment_intensity:}{String, fragments involved in fold change
 between 2 intensity fragments}
 \item{p_value_intensity:}{p_value of the fold change of intensity fragments}
@@ -61,7 +64,8 @@ between 2 half-life fragments and fold change between 2 intensity fragments}
 of intensity, position of the half-life fragment is adapted to intensity
 fragment}
 \item{synthesis_ratio:}{Integer, the value correspomding to synthesis rate}
-\item{synthesis_ratio_event:}{String, the event assigned by synthesis rate either Termination or iTSS}
+\item{synthesis_ratio_event:}{String, the event assigned by synthesis rate
+either Termination or iTSS}
 \item{p_value_Manova:}{p_value of the variance between two fold-changes,
 HL and intensity}
 \item{p_value_TI:}{p_value of TI fragment}

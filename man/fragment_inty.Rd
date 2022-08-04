@@ -23,8 +23,29 @@ Higher values result in fewer allowed outliers. Default is the auto generated
 value.}
 }
 \value{
-the SummarizedExperiment object: with intensity_fragment and
-intensity_mean_fragment added to the rowRanges.
+The SummarizedExperiment object:
+\item{ID:}{The bin/probe specific ID}
+\item{position:}{The bin/probe specific position}
+\item{intensity:}{The relative intensity at time point 0}
+\item{probe_TI:}{An internal value to determine which fitting model is
+applied}
+\item{flag:}{Information on which fitting model is applied}
+\item{position_segment:}{The position based segment}
+\item{delay:}{The delay value of the bin/probe}
+\item{half_life:}{The half-life of the bin/probe}
+\item{TI_termination_factor:}{String, the factor of TI fragment}
+\item{delay_fragment:}{The delay fragment the bin belongs to}
+\item{velocity_fragment:}{The velocity value of the respective delay
+fragment}
+\item{intercept:}{The vintercept of fit through the respective delay
+fragment}
+\item{slope:}{The slope of the fit through the respective delay fragment}
+\item{HL_fragment:}{The half-life fragment the bin belongs to}
+\item{HL_mean_fragment:}{The mean half-life value of the respective
+half-life fragment}
+\item{intensity_fragment:}{The intensity fragment the bin belongs to}
+\item{intensity_mean_fragment:}{The mean intensity value of the respective
+intensity fragment}
 }
 \description{
 fragment_inty makes intensity_fragments based on HL_fragments and assigns

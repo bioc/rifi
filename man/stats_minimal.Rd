@@ -54,8 +54,10 @@ with an event}
 \item{FC_fragment_intensity:}{String, fragments involved in fold change
 between 2 intensity fragments}
 \item{p_value_intensity:}{p_value of the fold change of intensity fragments}
-\item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
-\item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change between 2 half-life fragments and fold change between 2 intensity fragments}
+\item{FC_HL_intensity:}{ratio of fold change between 2 half-life fragments
+and fold change between 2 intensity fragments}
+\item{FC_HL_intensity_fragment:}{fragments involved on ratio of fold change
+between 2 half-life fragments and fold change between 2 intensity fragments}
 \item{FC_HL_adapted:}{Integer, the fold change of half-life/ fold change of
 intensity,
 position of the half-life fragment is adapted to intensity fragment}
