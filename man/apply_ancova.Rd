@@ -16,7 +16,6 @@ apply_ancova(inp)
 }
 \value{
 the SummarizedExperiment with the columns regarding statistics:
-\describe{
 \item{ID:}{The bin/probe specific ID.}
 \item{position:}{The bin/probe specific position.}
 \item{strand:}{The bin/probe specific strand.}
@@ -55,7 +54,6 @@ respective TI fragment.}
 respective delay fragment}
 \item{velocity_ratio:}{Integer, the ratio value of velocity from 2 delay
 fragments
-}
 }
 }
 \description{

@@ -136,7 +136,7 @@ and 20,}
 
 \item{TI_threshold}{integer: threshold for TI between two fragments in case
 the TI termination factor drops from the first segment to the second,
-default 1.1.}
+default 1.1. If threshold is reached a line is drawn to seperates the two TI segments.}
 
 \item{termination_threshold}{integer: threshold for termination to plot,
 default .8.}
