@@ -27,8 +27,16 @@ avoid wrong TI-term_factors, ranges from 0 to 0.2}
 All intermediate objects
 }
 \description{
-rifi_wrapper wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
-rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.
+rifi_wrapper wraps the functions:
+\enumerate{
+\item rifi_preprocess
+\item rifi_fit
+\item rifi_penalties
+\item rifi_fragmentation
+\item rifi_stats
+\item rifi_summary
+\item rifi_visualization.
+}
 }
 \examples{
 data(example_input_minimal)

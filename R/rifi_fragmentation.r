@@ -4,6 +4,7 @@
 #' rifi_fragmentation wraps conveniently all fragmentation steps
 #' 
 #' rifi_fragmentation is wrapper of the following functions: 
+
 #' 1. fragment_delay
  
 #' 2. fragment_HL

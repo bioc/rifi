@@ -1,12 +1,19 @@
 # =========================================================================
 # rifi_stats        
 # -------------------------------------------------------------------------
-#'
 #' rifi_stats wraps all statistical prediction steps conveniently
 #' 
-#' rifi_stats wraps the functions: predict_ps_itss, apply_Ttest_delay, 
-#' apply_ancova, apply_event_position, apply_t_test, fold_change,
-#' apply_manova, apply_t_test_ti and gff3_preprocess.
+#' rifi_stats wraps the functions: 
+
+#' 1. predict_ps_itss 
+#' 2. apply_Ttest_delay
+#' 3. apply_ancova
+#' 4. apply_event_position
+#' 5. apply_t_test
+#' 6. fold_change
+#' 7. apply_manova
+#' 8. apply_t_test_ti 
+#' 9. gff3_preprocess
 #' 
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param dista integer: the maximal distance allowed between two successive

@@ -28,9 +28,18 @@ synthesis_ratio, synthesis_ratio_event, p_value_Manova, p_value_TI,
 TI_fragments_p_value
 }
 \description{
-rifi_stats wraps the functions: predict_ps_itss, apply_Ttest_delay,
-apply_ancova, apply_event_position, apply_t_test, fold_change,
-apply_manova, apply_t_test_ti and gff3_preprocess.
+rifi_stats wraps the functions:
+\enumerate{
+\item predict_ps_itss
+\item apply_Ttest_delay
+\item apply_ancova
+\item apply_event_position
+\item apply_t_test
+\item fold_change
+\item apply_manova
+\item apply_t_test_ti
+\item gff3_preprocess
+}
 }
 \examples{
 data(fragmentation_minimal)

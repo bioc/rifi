@@ -66,7 +66,11 @@ logbook added to the metadata. Also adds logbook_details if details is TRUE,
 and plots the penalties if viz is TRUE.
 }
 \description{
-rifi_penalties wraps the functions: make_pen and viz_pen_obj.
+rifi_penalties wraps the functions:
+\enumerate{
+\item make_pen,
+\item viz_pen_obj
+}
 }
 \examples{
 data(fit_minimal)

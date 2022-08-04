@@ -5,7 +5,7 @@
 \title{\subsection{=========================================================================
 rifi_preprocess}{
 
-rifi_preprocess wraps convenientlyall pre-processing steps
+rifi_preprocess wraps conveniently all pre-processing steps
 }}
 \usage{
 rifi_preprocess(

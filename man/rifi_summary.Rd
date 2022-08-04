@@ -20,13 +20,15 @@ WIP
 }
 \description{
 rifi_summary wraps the functions:
-event_dataframe,
-dataframe_summary,
-dataframe_summary_events,
-dataframe_summary_events_HL_int,
-dataframe_summary_events_ps_itss,
-dataframe_summary_events_velocity,
-dataframe_summary_TI
+\enumerate{
+\item event_dataframe
+\item dataframe_summary
+\item dataframe_summary_events
+\item dataframe_summary_events_HL_int
+\item dataframe_summary_events_ps_itss
+\item dataframe_summary_events_velocity
+\item dataframe_summary_TI
+}
 }
 \examples{
 data(stats_minimal)

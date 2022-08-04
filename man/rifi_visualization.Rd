@@ -204,92 +204,65 @@ between the neighboring fragment, significant t-test is assigned with '\emph{'.
 t-test and Manova statistical test are also depicted as '}'.
 
 The functions used are:
-
-annotation_plot: plots the corresponding annotation.
-
-positive_strand_function: plots delay, HL, intensity and events of positive
-strand.
-
-negative_strand_function: plots delay, HL, intensity and events of negative
-strand.
-
-empty_data_positive: plots empty boxes in case no data is available for
+\enumerate{
+\item annotation_plot: plots the corresponding annotation.
+\item positive_strand_function: plots delay, HL, intensity and events of
 positive strand.
-
-empty_data_negative: plots empty boxes in case no data is available for
+\item negative_strand_function: plots delay, HL, intensity and events of negative
+strand.
+\item empty_data_positive: plots empty boxes in case no data is available for
+positive strand.
+\item empty_data_negative: plots empty boxes in case no data is available for
 negative strand.
-
-strand_selection: check if data is stranded and arrange by position.
-splitGenome_function: splits the genome into fragments.
-
-indice_function: assign a new column to the data to distinguish between
+\item strand_selection: check if data is stranded and arrange by position.
+\item splitGenome_function: splits the genome into fragments.
+\item indice_function: assign a new column to the data to distinguish between
 fragments, outliers from delay or HL or intensity.
-
-TU_annotation: designs the segments border for the genes and TUs annotation
-gene_annot_function: it requires gff3 file, returns a dataframe adjusting
+\item TU_annotation: designs the segments border for the genes and TUs annotation
+\item gene_annot_function: it requires gff3 file, returns a dataframe adjusting
 each fragment according to its annotation. It allows as well the plot of
 genes and TUs shared into two pages.
-
-label_log2_function: used to add log scale to intensity values.
-
-label_square_function: used to add square scale to coverage values.
-
-coverage_function: this function is used only in case of coverage is
+\item label_log2_function: used to add log scale to intensity values.
+\item label_square_function: used to add square scale to coverage values.
+\item coverage_function: this function is used only in case of coverage is
 available.
-
-secondaryAxis: adjusts the half-life or delay to 20 in case of the dataframe
-row numbers is equal to 1 and the half-life or delay exceed the limit,
-they are plotted with different shape and color.
-
-outlier_plot: plot the outliers with half-life between 10 and 30 on the
+\item secondaryAxis: adjusts the half-life or delay to 20 in case of the
+dataframe row numbers is equal to 1 and the half-life or delay exceed
+the limit, they are plotted with different shape and color.
+\item outlier_plot: plot the outliers with half-life between 10 and 30 on the
 maximum of the yaxis.
-
-add_genomeBorders: when the annotated genes are on the borders, they can
+\item add_genomeBorders: when the annotated genes are on the borders, they can
 not be plotted, therefore the region was split in 2 adding the row
 corresponding to the split part to the next annotation (i + 1) except
 for the first page.
-
-my_arrow: creates an arrow for the annotation.
-
-arrange_byGroup: selects the last row for each segment and add 40 nucleotides
-in case of negative strand for a nice plot.
-regr: plots the predicted delay from linear regression if the data is on
+\item my_arrow: creates an arrow for the annotation.
+\item arrange_byGroup: selects the last row for each segment and add 40
+nucleotides in case of negative strand for a nice plot.
+\item regr: plots the predicted delay from linear regression if the data is on
 negative strand.
-
-meanPosition: assign a mean position for the plot.
-
-delay_mean: adds a column in case of velocity is NA or equal to 60.
+\item meanPosition: assign a mean position for the plot.
+\item delay_mean: adds a column in case of velocity is NA or equal to 60.
 The mean of the delay is calculated outliers.
-
-my_segment_T: plots terminals and pausing sites labels.
-
-my_segment_NS: plots internal starting sites 'iTSS'.
-
-min_value: returns minimum value for event plots in intensity plot.
-
-velocity_fun: function for velocity plot.
-
-limit_function: for values above 10 or 20 in delay and hl. Limit of the axis
-is set differently. y-axis limit is applied only if we have more than 3
+\item my_segment_T: plots terminals and pausing sites labels.
+\item my_segment_NS: plots internal starting sites 'iTSS'.
+\item min_value: returns minimum value for event plots in intensity plot.
+\item velocity_fun: function for velocity plot.
+\item limit_function: for values above 10 or 20 in delay and hl. Limit of the
+axis is set differently. y-axis limit is applied only if we have more than 3
 values above 10 and lower or equal to 20. An exception is added in case a
 dataframe has less than 3 rows and 1 or more values are above 10, the rest of
 the values above 20 are adjusted to 20 on "secondaryAxis" function.
-
-empty_boxes: used only in case the dataframe from the positive strand is not
-empty, the TU are annotated.
-
-function_TU_arrow: used to avoid plotting arrows when a TU is split into two
-pages.
-
-terminal_plot_lm: draws a linear regression line when terminal outliers have
-an intensity above a certain threshold and are consecutive. Usually are
+\item empty_boxes: used only in case the dataframe from the positive strand is
+not empty, the TU are annotated.
+\item function_TU_arrow: used to avoid plotting arrows when a TU is split into
+two pages.
+\item terminal_plot_lm: draws a linear regression line when terminal outliers
+have an intensity above a certain threshold and are consecutive. Usually are
 smallRNA (ncRNA, asRNA).
-
-slope_function: replaces slope lower than 0.0009 to 0.
-
-velo_function: replaces infinite velocity with NA.
-
-plot the coverage of RNA_seq in exponential phase growth
+\item slope_function: replaces slope lower than 0.0009 to 0.
+\item velo_function: replaces infinite velocity with NA.
+\item plot the coverage of RNA_seq in exponential phase growth
+}
 }
 \examples{
 data(stats_minimal)

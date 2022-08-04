@@ -1,10 +1,16 @@
 #' =========================================================================
 #' rifi_wrapper
 #' -------------------------------------------------------------------------
-#'rifi_wrapper wraps conveniently all functions included on rifi workflow
+#' rifi_wrapper wraps conveniently all functions included on rifi workflow
 #'
-#' rifi_wrapper wraps the functions: rifi_preprocess, rifi_fit, rifi_penalties,
-#' rifi_fragmentation, rifi_stats, rifi_summary and rifi_visualization.
+#' rifi_wrapper wraps the functions: 
+#' 1. rifi_preprocess
+#' 2. rifi_fit
+#' 3. rifi_penalties
+#' 4. rifi_fragmentation
+#' 5. rifi_stats
+#' 6. rifi_summary
+#' 7. rifi_visualization.
 #'
 #' @param inp data frame: the input data frame with correct format.
 #' @param cores integer: the number of assigned cores for the task.

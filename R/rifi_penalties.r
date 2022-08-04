@@ -3,7 +3,11 @@
 #' -------------------------------------------------------------------------
 #' rifi_penalties wraps conveniently all penalty steps
 #'
-#' rifi_penalties wraps the functions: make_pen and viz_pen_obj.
+#' rifi_penalties wraps the functions:
+
+#' 1. make_pen,
+
+#' 2. viz_pen_obj
 #'
 #' @param inp SummarizedExperiment: the input data frame with correct format.
 #' @param details logical: whether to return the penalty objects or just the

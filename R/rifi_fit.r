@@ -1,9 +1,17 @@
-# =========================================================================
-# rifi_fit                Conveniently wraps all fitting steps
-# -------------------------------------------------------------------------
+#' =========================================================================
+#' rifi_fit  
+#' -------------------------------------------------------------------------
+#' rifi_fit wraps conveniently all fitting steps
 #'
-#' rifi_fit wraps the functions: nls2_fit, TI_fit, plot_nls2_function and
-#' plot_singleProbe_function.
+#' rifi_fit wraps the functions:
+ 
+#' 1. nls2_fit
+ 
+#' 2. TI_fit
+
+#' 3. plot_nls2_function
+ 
+#' 4. plot_singleProbe_function
 #'
 #' @param inp SummarizedExperiment: the input with correct format.
 #' @param cores integer: the number of assigned cores for the task.
