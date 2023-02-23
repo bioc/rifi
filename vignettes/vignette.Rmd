@@ -906,36 +906,6 @@ knitr::include_graphics("penalty.png")
 
 <br/>
 
-### 3. `rifi_penalties`
-<br/><br/>
-``` {r rifi_penalties, echo=F}
-data(fit_minimal)
-penalties_minimal <-
-  rifi_penalties(
-    inp = fit_minimal,
-    details = TRUE,
-    viz = FALSE,
-    top_i = 25,
-    cores = 2,
-    dpt = 1,
-    smpl_min = 10, 
-    smpl_max = 100,
-    sta_pen = 0.5,
-    end_pen = 4.5, 
-    rez_pen = 9, 
-    sta_pen_out = 0.5, 
-    end_pen_out = 4.5,
-    rez_pen_out = 9
-  )
-```
-<br/><br/>
-``` {r output_penalties}
-#The output
-data(penalties_e_coli)
-head(rowRanges(penalties_e_coli))
-```
-<br/><br/>
-
 ## V. rifi fragmentation
 
 `rifi_fragmentation` conveniently wraps all fragmentation steps, wraps the
