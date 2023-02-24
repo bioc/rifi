@@ -181,7 +181,7 @@ rifi_penalties <- function(inp,
     x <- na.omit(x$TI)
   })
 
-  if (!any(between(lapply(A, length), smpl_min, smpl_max))) {
+  if (!any(unlist(lapply(lapply(A, length), between ,smpl_min, smpl_max)))) {
     warning(
       "There is no position segment with enough delay values in the given
       sample range! Default penalties for delay fragmentation will be returned!"
@@ -189,7 +189,7 @@ rifi_penalties <- function(inp,
     logbook[c("delay_penalty", "delay_outlier_penalty")] <- c(1.8, 0.7)
   }
 
-  if (!any(between(lapply(B, length), smpl_min, smpl_max))) {
+  if (!any(unlist(lapply(lapply(B, length), between ,smpl_min, smpl_max)))) {
     warning(
       "There is no position segment with enough half_life values in the given
       sample range! Default penalties for half_life fragmentation will be
@@ -199,7 +199,7 @@ rifi_penalties <- function(inp,
       c(1.5, 1)
   }
 
-  if (!any(between(lapply(C, length), smpl_min, smpl_max))) {
+  if (!any(unlist(lapply(lapply(C, length), between ,smpl_min, smpl_max)))) {
     warning(
       "There is no position segment with enough intensity values in the given
       sample range! Default penalties for intensity fragmentation will be
@@ -209,7 +209,7 @@ rifi_penalties <- function(inp,
       c(2, 1)
   }
 
-  if (!any(between(lapply(D, length), smpl_min, smpl_max))) {
+  if (!any(unlist(lapply(lapply(D, length), between ,smpl_min, smpl_max)))) {
     warning(
       "There is no position segment with enough TI_termination values in the
       given sample range! Default penalties for TI fragmentation will be
@@ -217,6 +217,7 @@ rifi_penalties <- function(inp,
     )
     logbook[c("TI_penalty", "TI_outlier_penalty")] <- c(1.5, 1)
   }
+
 
   if (details == TRUE) {
     res <-
