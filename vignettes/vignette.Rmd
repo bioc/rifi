@@ -144,12 +144,14 @@ annotation is needed for the visualization and to map fragmented segments to
 annotated genes for an easier interpretation.
 <br/><br/>
 ``` {r rifi_wrapper, eval = FALSE}
+library(rifi)
+data(example_input_e_coli)
 Path = gzfile(system.file("extdata", "gff_e_coli.gff3.gz", package = "rifi"))
 wrapper_minimal <-
   rifi_wrapper(
     inp = example_input_e_coli,
     cores = 2,
-    gff = Path,
+    path = Path,
     bg = 0,
     restr = 0.01
   )
