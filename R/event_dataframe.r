@@ -133,7 +133,7 @@ event_dataframe <- function(data, data_annotation) {
   events_df1 <-
     position_function("iTSS_I", events_df1, "position", "event_position")
   # add the specific position to each event
-  events_df <- full_join(events_df, events_df1, all = TRUE)
+  events_df <- full_join(events_df, events_df1)
   # add gene annotation to the dataframe events
   events_df$region <- NA
   events_df$gene <- NA
