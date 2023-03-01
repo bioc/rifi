@@ -6,7 +6,7 @@ plot_nls2_function <-
     fit_STD <- metadata(inp)$fit_STD
     fit_TI <- metadata(inp)$fit_TI
     #assign a data frame
-    pdf("fit_nls2.pdf")
+    pdf("fit_nls2.pdf",width = 7, height = 7)
     par(mfrow = c(2, 2))
     for (i in seq_len(nrow(inp))) {
       tmp_inp <- inp[i,]
