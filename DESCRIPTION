@@ -41,6 +41,7 @@ Imports:
 	utils	
 Suggests:
 	DescTools,
+	devtools,
 	knitr,
 	rmarkdown,
 	BiocStyle
